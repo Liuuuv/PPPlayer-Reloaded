@@ -41,7 +41,7 @@ func get_video_infos_from_url(url: String) -> Dictionary:
 
 	var output: Array = await download.download_completed
 	var infos: Dictionary = JSON.parse_string(output[0])
-	
+	#
 	print("Download infos complete")
 	return infos
 
