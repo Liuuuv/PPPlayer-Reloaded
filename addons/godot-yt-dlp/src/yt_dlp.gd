@@ -104,7 +104,7 @@ func _thread_finished(name: Signal) -> void:
 
 
 class Download extends RefCounted:
-	signal download_completed
+	signal download_completed(output: Array)
 
 	enum Status {
 		READY,
@@ -126,6 +126,8 @@ class Download extends RefCounted:
 	var _is_stopped: bool = false
 	var _gather_infos: bool = false
 	var _no_download: bool = false
+	
+	var _output: Array = []
 
 	func _init(url: String):
 		_url = url
@@ -224,7 +226,7 @@ class Download extends RefCounted:
 			options_and_arguments.append_array(["--no-continue", "-o", file_path])
 		
 		if _gather_infos:
-			pass
+			options_and_arguments.append_array(["--dump-json"])
 		
 		
 		options_and_arguments.append(_url)
@@ -238,14 +240,21 @@ class Download extends RefCounted:
 		
 		print("executable: ", executable)
 		print("YTDLP options_and_arguments: ", options_and_arguments)
-		OS.execute(executable, PackedStringArray(options_and_arguments), output)
-		print("output: ", output)
+		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
+		
+		if exit_code != 0:
+			push_error("yt-dlp, error when running the command. Exit code: ", exit_code)
+			self._thread_stopped.call_deferred()
+			return
+		
+		#print("output: ", output)
+		_output = output
 		
 		self._thread_finished.call_deferred()
 
 	func _thread_finished():
 		_status = Status.COMPLETED
-		self.download_completed.emit()
+		self.download_completed.emit(_output)
 		_thread.wait_to_finish()
 		unreference()
 	
