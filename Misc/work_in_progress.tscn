@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ycahaxmeicmd"]
+
+[ext_resource type="Texture2D" uid="uid://0aqj4x1mmq0s" path="res://Sprites/WorkInProgress.png" id="1_ddvu0"]
+
+[node name="WIP" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 422.0
+offset_top = 146.0
+offset_right = 368.2456
+offset_bottom = 650.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_ddvu0")

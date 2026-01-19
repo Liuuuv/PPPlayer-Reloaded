@@ -1,0 +1,1 @@
+Added a pull from the GitHub (https://github.com/Nolkaloid/godot-yt-dlp/pull/13) that handle abandoning DL/search requests.
