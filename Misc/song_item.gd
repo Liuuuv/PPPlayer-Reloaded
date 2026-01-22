@@ -13,6 +13,7 @@ class_name SongItem
 
 @onready var song_name: Label = %SongName
 @onready var artist: Label = %Artist
+@onready var thumbnail: TextureRect = %Thumbnail
 
 
 var hovered: bool = false
@@ -37,7 +38,29 @@ func initialize():
 	print("initializing song item.. : ", id)
 	tooltip_text = "ID: " + id
 	infos = Global.song_infos.get(id, {})
-	song_name.text = infos.get("name", "")
+	song_name.text = infos.get("display_name", "")
+	
+	load_thumbnail()
+
+func load_thumbnail() -> void:
+	var thumbnail_path: String = infos.get("thumbnail_path")
+	if thumbnail_path == "":
+		thumbnail_path = id + ".webp"
+	
+	var full_path: String = Global.get_downloads_path() + thumbnail_path
+	
+	if not FileAccess.file_exists(full_path):
+		print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
+		return
+	
+	var image := Image.new()
+	var error = image.load(full_path)
+	if error != OK:
+		push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
+		return
+	
+	var texture := ImageTexture.create_from_image(image)
+	thumbnail.texture = texture
 
 func _on_gui_input(event: InputEvent):
 	if not visible or not hovered:

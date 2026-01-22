@@ -5,6 +5,8 @@ var alphabet_length: int = alphabet.length()
 var alphabet_int_map: Dictionary = {} ## char: int
 var alphabet_base: int = alphabet_length - 1
 
+var youtube_id_alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123455789-_"
+
 func _ready() -> void:
 	initialize_alphabet_int_map()
 
@@ -19,6 +21,7 @@ func write_json_file(data: Dictionary, full_file_path: String):
 		var json_text = JSON.stringify(data, "\t")
 		
 		file.store_string(json_text)
+		file.close()
 
 
 func load_json_file(full_file_path: String) -> Dictionary:
@@ -37,6 +40,36 @@ func load_json_file(full_file_path: String) -> Dictionary:
 	else:
 		print("JSON Parse Error: ", json.get_error_message())
 		return {}
+
+func save_array_json(array: Array, full_file_path: String) -> void:
+	var file = FileAccess.open(full_file_path, FileAccess.ModeFlags.WRITE)
+	
+	if file:
+		var json_text = JSON.stringify(array, "\t")
+		
+		file.store_string(json_text)
+		file.close()
+
+func load_array_json(file_path: String) -> Array:
+	if not FileAccess.file_exists(file_path):
+		push_warning("Fichier non trouvé : ", file_path)
+		return []
+
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file:
+		var json_string = file.get_as_text()
+		file.close()
+
+		var json = JSON.new()
+		var error = json.parse(json_string)
+		if error == OK:
+			return json.data
+		else:
+			push_error("Erreur de parsing JSON : ", json.get_error_message())
+			return []
+	else:
+		push_error("Erreur lors de l'ouverture du fichier : ", file_path)
+		return []
 
 func filepath_to_global(path: String):
 	return ProjectSettings.globalize_path(path)
@@ -150,6 +183,15 @@ func get_next_id(id: String):
 func is_id(id: String):
 	for char in id:
 		if not char in alphabet:
+			return false
+	return true
+
+func is_youtube_id(id: String):
+	if id.length() != 11:
+		return false
+	
+	for char in id:
+		if not char in youtube_id_alphabet:
 			return false
 	
 	return true

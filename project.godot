@@ -25,6 +25,7 @@ GlobalInput="*res://addons/global_input/autoload/global_input_csharp/GlobalInput
 YtDlp="*res://addons/godot-yt-dlp/src/yt_dlp.gd"
 DownloadsManager="*res://Singetons/downloads_manager.gd"
 HtmlCleaner="*res://Singetons/HTMLCleaner.gd"
+LoggerManager="*res://logger_manager.gd"
 
 [display]
 

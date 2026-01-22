@@ -15,3 +15,4 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_ddvu0")
+stretch_mode = 5

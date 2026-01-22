@@ -11,8 +11,8 @@ func _ready() -> void:
 	
 	confirmed.connect(_on_confirmed)
 	close_requested.connect(_on_close_request)
-	focus_exited.connect(_on_close_request)
-	canceled.connect(_on_close_request)
+	#focus_exited.connect(_on_close_request)
+	#canceled.connect(_on_close_request)
 
 func ask_for_confirmation(custom_title: String = "Please confirm", extra_infos: String = ""):
 	ok = false
@@ -20,6 +20,7 @@ func ask_for_confirmation(custom_title: String = "Please confirm", extra_infos: 
 	extra_infos_label.text = extra_infos
 	show()
 	await closing_window
+	print("ok ", ok)
 	return ok
 
 func close_window() -> void:
@@ -27,8 +28,10 @@ func close_window() -> void:
 	hide()
 
 func _on_confirmed():
+	print("_on_confirmed")
 	ok = true
 	closing_window.emit()
 
 func _on_close_request():
+	print("_on_close_request")
 	close_window()

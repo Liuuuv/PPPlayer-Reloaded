@@ -125,13 +125,40 @@ class Download extends RefCounted:
 	var _audio_format: Audio = Audio.MP3
 	var _is_stopped: bool = false
 	var _gather_infos: bool = false
+	var _write_thumbnail: bool = false
 	var _no_download: bool = false
 	
+	var _progress_func: Callable
 	var _output: Array = []
+	
 
 	func _init(url: String):
 		_url = url
 		_file_name += Time.get_datetime_string_from_system()
+	
+	func progress_hook(d: Dictionary):
+		var progress: float = 0.0
+		var progress_str: String = ""
+		if d['status'] == 'downloading':
+			# Extraire le pourcentage au format XX.X%
+			if '_percent_str' in d:
+				progress_str = d['_percent_str'].strip().replace('%', '')
+				progress_str.to_float()
+			elif 'total_bytes' in d and d['total_bytes']:
+				progress = (d['downloaded_bytes'] / d['total_bytes']) * 100
+			else:
+				progress = 0
+			
+			_progress_func.call(progress)
+		
+	
+	func set_get_progression_function(function: Callable) -> Download:
+		_progress_func = function
+		return self
+	
+	#func track_progression() -> Download:
+		#_track_progression = true
+		#return self
 
 	func set_destination(destination: String) -> Download:
 		_destination = destination
@@ -152,6 +179,10 @@ class Download extends RefCounted:
 	
 	func gather_infos() -> Download:
 		_gather_infos = true
+		return self
+	
+	func write_thumbnail() -> Download:
+		_write_thumbnail = true
 		return self
 	
 	func no_download() -> Download:
@@ -179,6 +210,89 @@ class Download extends RefCounted:
 		return self
 
 	func _execute_on_thread() -> void:
+		if _progress_func:
+			_execute_on_thread_process()
+			return
+		var executable: String = (
+			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
+		)
+
+		var options_and_arguments: Array = []
+		
+		## ffmpeg
+		if not _no_download:
+			match OS.get_name():
+				"Windows":
+					options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://")])
+				"Linux", "macOS":
+					# Get the path of system ffmpeg 
+					var output := []
+					OS.execute("which", ["ffmpeg"], output)
+					var ffmpeg_path = output[0].get_base_dir()
+					
+					options_and_arguments.append_array(["--ffmpeg-location", ffmpeg_path])
+		if not _no_download:
+			if _convert_to_audio:
+				var format: String = (Audio.keys()[_audio_format] as String).to_lower()
+				options_and_arguments.append_array(["-x", "--audio-format", format])
+			else:
+				var format: String
+
+				match _video_format:
+					Video.WEBM:
+						format = "bestvideo[ext=webm]+bestaudio"
+					Video.MP4:
+						format = "bestvideo[ext=mp4]+m4a"
+
+				options_and_arguments.append_array(["--format", format])
+		
+		if not _no_download:
+			var file_path: String = (
+				"{destination}{file_name}.%(ext)s"
+				. format(
+					{
+						"destination": _destination,
+						"file_name": _file_name,
+					}
+				)
+			)
+
+			options_and_arguments.append_array(["--no-continue", "-o", file_path])
+		
+		if _gather_infos:
+			options_and_arguments.append_array(["--dump-json", "--no-simulate"])
+		
+		if _write_thumbnail:
+			options_and_arguments.append_array(["--write-thumbnail"])
+		
+		#if _track_progression:
+			#options_and_arguments.append_array(["--progress"])
+		
+		options_and_arguments.append(_url)
+		
+		# Check if the download request was stopped at some point between starting the download, and calling FFMPEG
+		if(_is_stopped):
+			self._thread_stopped.call_deferred()
+			return
+
+		var output: Array = []
+		
+		print("executable: ", executable)
+		print("YTDLP options_and_arguments: ", options_and_arguments)
+		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
+		
+		if exit_code != 0:
+			push_error("yt-dlp, error when running the command. Exit code: ", exit_code)
+			self._thread_stopped.call_deferred()
+			return
+		
+		_output = output
+		
+		self._thread_finished.call_deferred()
+	
+	
+	## need to be rewritten, does no support _write_thumbnail, does not work as intended (no real time progression)
+	func _execute_on_thread_process() -> void:
 		var executable: String = (
 			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
 		)
@@ -228,6 +342,8 @@ class Download extends RefCounted:
 		if _gather_infos:
 			options_and_arguments.append_array(["--dump-json"])
 		
+		#if _track_progression:
+			#options_and_arguments.append_array(["--progress"])
 		
 		options_and_arguments.append(_url)
 		
@@ -240,17 +356,29 @@ class Download extends RefCounted:
 		
 		print("executable: ", executable)
 		print("YTDLP options_and_arguments: ", options_and_arguments)
-		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
+		var info = OS.execute_with_pipe(executable, PackedStringArray(options_and_arguments))
 		
-		if exit_code != 0:
-			push_error("yt-dlp, error when running the command. Exit code: ", exit_code)
+		var process_io = info["stdio"]
+		var process_err = info["stderr"]
+		var process_id = info["pid"]
+		print("[START SERVER] Server Process created! ID: "+str(process_id))
+		
+		# https://www.reddit.com/r/godot/comments/1i8n0z4/any_way_to_get_live_output_from_osexecute_or/
+		if(process_io.get_error() != OK):
+			push_error("[START SERVER] An error occurred trying to start the dowload. Error ", process_io.get_error())
 			self._thread_stopped.call_deferred()
 			return
 		
-		#print("output: ", output)
-		_output = output
+		while process_io.is_open() and process_io.get_error() == OK:
+			print("process_io is open")
+			var mid_output: String = process_io.get_line()
+			#print()
+			_progress_func.call(mid_output)
+			OS.delay_msec(100)
 		
 		self._thread_finished.call_deferred()
+
+	
 
 	func _thread_finished():
 		_status = Status.COMPLETED

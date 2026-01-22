@@ -71,9 +71,10 @@ func add_song_from_file(path: String):
 	var extension: String = path.get_extension()
 	var song_name: String = path.get_file().get_basename()
 	
-	Global.change_song_info(id, "name", song_name)
-	Global.change_song_info(id, "extension", extension)
+	var infos = {"title": song_name}
+	Global.create_song_infos(id, infos, extension)
 	Global.downloads_folder_changed.emit()
+
 
 func add_to_current_playlist(id: String):
 	print("adding to current playlist: ", id)

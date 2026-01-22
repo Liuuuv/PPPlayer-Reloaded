@@ -15,6 +15,7 @@ func reload_song_items() -> void:
 		var song_item = Global.create_song_item(content_ids[index])
 		song_item.location = "current_playlist"
 		song_item.index = index
+		print("song item", song_item)
 		add_child(song_item)
 
 func clear_song_items() -> void:

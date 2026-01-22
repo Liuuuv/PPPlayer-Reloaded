@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dkw4a4rq083ma"]
 
-[ext_resource type="Script" uid="uid://be1qoeke8wcth" path="res://Misc/song_item.gd" id="1_r0gu4"]
+[ext_resource type="Script" uid="uid://cdmtsxb0145xr" path="res://Misc/download_item.gd" id="1_202ts"]
 [ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="2_nt1ge"]
 
 [sub_resource type="Theme" id="Theme_f8dde"]
@@ -13,7 +13,7 @@ anchor_bottom = 0.07700001
 offset_right = 0.35198975
 offset_bottom = 0.10399628
 theme = SubResource("Theme_f8dde")
-script = ExtResource("1_r0gu4")
+script = ExtResource("1_202ts")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false

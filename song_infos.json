@@ -1,10 +1,65 @@
 {
-	"a": {
+	"h": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
 		"extension": "mp3",
-		"name": "Welcome to the fam from Best AL Alter Ego"
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
 	},
-	"b": {
+	"i": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
 		"extension": "mp3",
-		"name": "Welcome to the fam from Best AL Alter Ego"
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
+	},
+	"j": {
+		"artist": "HANABIE. Official YouTube",
+		"artist_id": "UCktxySUG0-0FXaf6otPVbeg",
+		"display_name": "【花冷え。】 - ICONIC - Music Video 【HANABIE.】",
+		"extension": "mp3",
+		"release_date": "20260109",
+		"thumbnail_path": "",
+		"video_id": "JT_NgMk9n-4"
+	},
+	"k": {
+		"artist": "THOUSAND YARD OFFICIAL (YOD1K)",
+		"artist_id": "UC18iQPhYk4BT4-Cwb9xTS6w",
+		"display_name": "Digital Girlfriend - Kinda Functional [Full Project] (ft. Kasane Teto)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "6UAo0GEGV7Y"
+	},
+	"l": {
+		"artist": "9Lana",
+		"artist_id": "UCZvkU-ma74UOqHbD0vebUuw",
+		"display_name": "【MV】プロポーズ/ 9Lana cover",
+		"extension": "mp3",
+		"release_date": "20240823",
+		"thumbnail_path": "",
+		"video_id": "XPLkkdMFmco"
+	},
+	"m": {
+		"artist": "紫 今 - ムラサキ イマ",
+		"artist_id": "UCO_33qdYApF4dzGxGWv7gmg",
+		"display_name": "紫 今 - メンタルレンタル / Mulasaki Ima - Mental Rental (MUSIC VIDEO)",
+		"extension": "mp3",
+		"release_date": "20260116",
+		"thumbnail_path": "",
+		"video_id": "iXJMtQQMsco"
+	},
+	"n": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - 裂いて｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "5nRC8ZpJpRg"
 	}
 }

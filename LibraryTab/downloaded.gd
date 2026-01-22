@@ -1,6 +1,8 @@
 extends Control
 class_name DownloadedTab
 
+# TODO manage files that are not treated in song infos
+
 @onready var song_list: VBoxContainer = %DownloadedSongList
 
 func _ready() -> void:
@@ -25,7 +27,7 @@ func reload_song_list() -> void:
 		var file_name = dir.get_next()
 		while file_name != "":
 			id = file_name.get_basename()
-			if not Tools.is_id(id):
+			if not Tools.is_id(id) or not Global.song_infos.has(id):
 				file_name = dir.get_next()
 				continue
 			if not dir.current_is_dir():
