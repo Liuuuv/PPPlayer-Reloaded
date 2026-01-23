@@ -1,5 +1,6 @@
 # PP Player Reloaded
-A local music player with online integration (YouTube downloads and informations)
+## What's PP Player?
+PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot
 
 
 ## Addons:
@@ -9,7 +10,7 @@ A local music player with online integration (YouTube downloads and informations
 - GDContextMenu (https://github.com/Schimiongames/GDContextMenu)
 - Godot-GlobalInput-Addon (https://github.com/Darnoman/Godot-GlobalInput-Addon)
 
-### Changes to yt-dlp (https://github.com/Nolkaloid/godot-yt-dlp):
+### Changes to Godot YT-DLP (https://github.com/Nolkaloid/godot-yt-dlp):
 - Added a pull from the GitHub (https://github.com/Nolkaloid/godot-yt-dlp/pull/13) that handles abandoning DL/search requests.
 - Added possibility of not downloading or only get infos (not parsed)
 - Added a stop if there is an error (error != 0) when executing the command
@@ -20,7 +21,19 @@ WIP:
 
 The changed addon by itself does not work because I made it dependent of my project. I advise using the original addon: https://github.com/Nolkaloid/godot-yt-dlp
 
-### Changed to globalinput:
+### Changes to Godot Global Input Addon:
 - Set the pressed property of the returning object of GetInputEventMouseButton to false (had an issue with mouse inputs)
 
-
+### Changes to Godot Context Menu:
+- Modified the ContextMenu.cs to support subwindows
+Added these lines in the function ```show_item``` before setting the position of the menu (for supporting not embedded subwindows):
+```
+bool embededSubwindows = ProjectSettings.GetSetting("display/window/subwindows/embed_subwindows").AsBool();
+if (!embededSubwindows)
+{
+    int windowId = parent.GetWindow().GetWindowId();
+    Vector2I windowPos = DisplayServer.WindowGetPosition(windowId);
+    position += windowPos;
+}
+```
+(This is clearly not the most optimized way to do it, but hey it works and surely won't be used as often :D)

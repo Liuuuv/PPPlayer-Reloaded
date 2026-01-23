@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Threading.Tasks.Dataflow;
 
 [GlobalClass]
 public partial class ContextMenu : Control
@@ -195,6 +196,14 @@ public partial class ContextMenu : Control
 				break;
 		}
 
+		bool embededSubwindows = ProjectSettings.GetSetting("display/window/subwindows/embed_subwindows").AsBool();
+		if (!embededSubwindows)
+		{
+			int windowId = parent.GetWindow().GetWindowId();
+			Vector2I windowPos = DisplayServer.WindowGetPosition(windowId);
+			position += windowPos;
+		}
+		
 		_menu.SetPosition((Vector2I)position);
 		_menu.Popup();
 	}

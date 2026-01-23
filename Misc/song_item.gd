@@ -57,7 +57,7 @@ func initialize_context_menu():
 	var subMenu : ContextMenu = context_menu.add_submenu("Submenu")
 	subMenu.add_item("Run the Submenu Test", Callable(self, "_runTest"), false, null)
 	
-	context_menu.connect_to($".")
+	context_menu.connect_to(self)
 
 func _runTest() -> void:
 	print("(GD) Context Menu is working...")
