@@ -25,44 +25,71 @@ var id: String = "":
 var location: String = ""
 var index: int = 0
 
+var context_menu: ContextMenu
+
 func _ready() -> void:
 	highlight_color = default_color
 	highlight_color.v += 0.05
 	
+	initialize_context_menu()
 	
 	gui_input.connect(_on_gui_input)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
 func initialize():
-	print("initializing song item.. : ", id)
+	#print("initializing song item.. : ", id)
+	Global.logs_display.write("initializing song item... ID: %s " % id)
 	tooltip_text = "ID: " + id
 	infos = Global.song_infos.get(id, {})
 	song_name.text = infos.get("display_name", "")
 	
 	load_thumbnail()
 
+func initialize_context_menu():
+	context_menu = ContextMenu.new()
+	context_menu.attach_to(self)
+	context_menu.set_minimum_size(Vector2i(400, 0))
+	context_menu.add_item("Run the Test", Callable(self, "_runTest"), false, null)
+	#context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
+	context_menu.add_placeholder_item("Disabled", true, null)
+	context_menu.add_seperator()
+	var subMenu : ContextMenu = context_menu.add_submenu("Submenu")
+	subMenu.add_item("Run the Submenu Test", Callable(self, "_runTest"), false, null)
+	
+	context_menu.connect_to($".")
+
+func _runTest() -> void:
+	print("(GD) Context Menu is working...")
+
 func load_thumbnail() -> void:
 	var thumbnail_path: String = infos.get("thumbnail_path")
 	if thumbnail_path == "":
+		Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided. Trying using: %s" % id + ".webp", LogsDisplay.MESSAGE.WARNING)
 		thumbnail_path = id + ".webp"
 	
 	var full_path: String = Global.get_downloads_path() + thumbnail_path
 	
 	if not FileAccess.file_exists(full_path):
-		print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
+		#print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
+		Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % full_path, LogsDisplay.MESSAGE.ERROR)
 		return
 	
 	var image := Image.new()
 	var error = image.load(full_path)
 	if error != OK:
-		push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
+		#push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
+		Global.logs_display.write("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error], LogsDisplay.MESSAGE.ERROR)
 		return
 	
 	var texture := ImageTexture.create_from_image(image)
 	thumbnail.texture = texture
 
 func _on_gui_input(event: InputEvent):
+	if not visible:
+		print("not visible")
+	if not hovered:
+		print("not hovered")
 	if not visible or not hovered:
 		return
 	if event is InputEventMouseButton and event.pressed:
@@ -73,7 +100,18 @@ func _on_gui_input(event: InputEvent):
 					SongManager.play_from_index(index)
 				_:
 					SongManager.add_to_current_playlist(id)
-					
+			
+#func _unhandled_input(event: InputEvent) -> void:
+	#if not visible or not hovered:
+		#return
+	#if event is InputEventMouseButton and event.pressed:
+		#if event.button_index == MOUSE_BUTTON_LEFT:
+			#match location:
+				#"current_playlist":
+					##_on_clicked_in_current_playlist()
+					#SongManager.play_from_index(index)
+				#_:
+					#SongManager.add_to_current_playlist(id)
 
 #func _on_clicked_in_current_playlist():
 	#

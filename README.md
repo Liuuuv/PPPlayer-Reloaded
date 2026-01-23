@@ -1,2 +1,2 @@
-# pp-player
-Local music player with online features
+# PP Player Reloaded
+

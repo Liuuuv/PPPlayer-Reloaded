@@ -1,4 +1,5 @@
 extends ConfirmationDialog
+class_name CustomConfirmationDialog
 
 @onready var extra_infos_label: RichTextLabel = %ExtraInfos
 
@@ -10,6 +11,7 @@ func _ready() -> void:
 	Global.confirmation_dialog = self
 	
 	confirmed.connect(_on_confirmed)
+	canceled.connect(_on_canceled)
 	close_requested.connect(_on_close_request)
 	#focus_exited.connect(_on_close_request)
 	#canceled.connect(_on_close_request)
@@ -20,7 +22,6 @@ func ask_for_confirmation(custom_title: String = "Please confirm", extra_infos: 
 	extra_infos_label.text = extra_infos
 	show()
 	await closing_window
-	print("ok ", ok)
 	return ok
 
 func close_window() -> void:
@@ -28,10 +29,11 @@ func close_window() -> void:
 	hide()
 
 func _on_confirmed():
-	print("_on_confirmed")
 	ok = true
 	closing_window.emit()
 
+func _on_canceled():
+	close_window()
+
 func _on_close_request():
-	print("_on_close_request")
 	close_window()

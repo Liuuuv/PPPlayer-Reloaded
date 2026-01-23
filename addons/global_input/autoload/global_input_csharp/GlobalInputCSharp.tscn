@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dtqvsd027rpqs"]
 
-[ext_resource type="Script" path="res://addons/global_input/autoload/global_input_csharp/GlobalInputCSharp.cs" id="1_qfcfg"]
+[ext_resource type="Script" uid="uid://dl8a3dt33ti2i" path="res://addons/global_input/autoload/global_input_csharp/GlobalInputCSharp.cs" id="1_qfcfg"]
 
 [node name="GlobalInputCSharp" type="Node"]
 script = ExtResource("1_qfcfg")

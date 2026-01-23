@@ -14,6 +14,8 @@ anchor_right = 0.17400001
 anchor_bottom = 0.07700001
 offset_right = -0.4480133
 offset_bottom = 0.10399628
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_f8dde")
 script = ExtResource("1_f8dde")
 

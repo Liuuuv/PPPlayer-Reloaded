@@ -19,9 +19,9 @@ void fragment() {
 	vec2 uv = SCREEN_UV - 0.5;
 	uv = rot(uv, -0.2 + sin(TIME * speed) * 0.05);
 	float amplitude = sin(TIME * speed * 0.1) * 1.2;
-	float osc = sin(uv.x * (uv.x + 0.5) * 15.0) * amplitude;
-	float osc_y = sin(uv.y * (uv.y + 0.5) * 15.0) * amplitude;
-	uv.x += osc * sin(TIME * speed + uv.x * 2.0);
+	float osc = sin(uv.x * (uv.x + 0.5) * 15.0) * amplitude / 4.0;
+	float osc_y = sin(uv.y * (uv.y + 0.5) * 15.0) * amplitude * 2.0;
+	//uv.x += osc * sin(TIME * speed + uv.x * 2.0);
 	uv.y += osc * sin(TIME * speed + uv.x * 2.0);
 	uv.y = fract(uv.y * stripes);
 	float mask = smoothstep(0.5, 0.55, uv.y);

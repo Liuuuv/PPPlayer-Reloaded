@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://c35hv2fbaxjw0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3yi6g"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="LogLine" type="Panel"]
+custom_minimum_size = Vector2(0, 22)
+anchors_preset = -1
+anchor_right = 0.201
+anchor_bottom = 0.035
+offset_right = 0.44799805
+offset_bottom = 0.3199997
+theme_override_styles/panel = SubResource("StyleBoxFlat_3yi6g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Line" type="RichTextLabel" parent="HBoxContainer/Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "blablablablablablablabla"
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+
+[node name="Number" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32.44, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "150"
+horizontal_alignment = 2

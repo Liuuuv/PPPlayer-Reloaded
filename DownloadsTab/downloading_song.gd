@@ -24,14 +24,16 @@ func _ready() -> void:
 	queue_changed.connect(_on_queue_changed)
 
 func add_id_to_queue(id: String):
-	print("adding ", id, "to queue")
+	#print("adding ", id, "to queue")
+	Global.logs_display.write("adding (ID:) %s to queue" % id)
 	downloading_queue.push_front(id)
 	try_dl.emit()
 	queue_changed.emit()
 
 func add_multiple_ids_to_queue(ids: PackedStringArray):
 	downloading_queue.append_array(ids)
-	print("downloading_queue ", downloading_queue)
+	#print("downloading_queue ", downloading_queue)
+	Global.logs_display.write("downloading_queue " + str(downloading_queue))
 	try_dl.emit()
 	#queue_changed.emit()
 
@@ -48,14 +50,17 @@ func reload_queue_song_items() -> void:
 		var download_item: DownloadItem = Global.create_download_item(downloading_queue[index])
 		#song_item.location = "current_playlist"
 		#download_item.index = index
-		print("download item", download_item)
+		#print("download item", download_item)
+		Global.logs_display.write("download item" + str(download_item))
 		add_child(download_item)
 
 func _on_try_dl():
-	print("_on_try_dl")
+	#print("_on_try_dl")
+	Global.logs_display.write("_on_try_dl")
 	if not is_ready_to_dl or downloading_queue.size() == 0:
 		return
-	print("is_ready_to_dl")
+	#print("is_ready_to_dl")
+	Global.logs_display.write("is_ready_to_dl")
 	is_ready_to_dl = false
 	var video_id: String = downloading_queue[0]
 	var id: String = Global.generate_new_id()

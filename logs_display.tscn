@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://jgfisblgtvl4"]
+
+[ext_resource type="Script" uid="uid://ca7aus72bbqfb" path="res://logs_display.gd" id="1_yrq6w"]
+[ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://background.gdshader" id="2_6dheg"]
+[ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="3_v58hp"]
+[ext_resource type="Script" uid="uid://c7dflqa2j664e" path="res://clear_logs_button.gd" id="4_v58hp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ulfmk"]
+shader = ExtResource("2_6dheg")
+shader_parameter/stripes = 5.765
+shader_parameter/stripe_thickness = 1.36
+shader_parameter/speed = 0.37
+shader_parameter/stripe_color = Color(0.11, 0.071499996, 0.0869, 1)
+shader_parameter/background_color = Color(0.08, 0.0584, 0.0584, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydnwj"]
+bg_color = Color(0, 0, 0, 0.34117648)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x2m33"]
+
+[node name="LogDisplay" type="Window"]
+oversampling_override = 1.0
+position = Vector2i(0, 36)
+size = Vector2i(985, 535)
+script = ExtResource("1_yrq6w")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ulfmk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0888, 0.10232, 0.12, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Padding" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydnwj")
+
+[node name="ClearLogsButton" type="Button" parent="VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_x2m33")
+icon = ExtResource("3_v58hp")
+script = ExtResource("4_v58hp")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="Logs" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "blablablablabla
+blablablablablablablablablablablablablablablablablablablabla
+blablablablablablablablablablablablablablabla
+blablabla"
+scroll_following = true
+
+[node name="Padding2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2

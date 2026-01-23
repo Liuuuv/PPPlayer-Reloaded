@@ -13,7 +13,8 @@ func _ready() -> void:
 
 
 func reload_song_list() -> void:
-	print("reloading song list..")
+	#print("reloading song list..")
+	Global.logs_display.write("reloading song list..")
 	
 	for child in song_list.get_children():
 		child.queue_free()
@@ -34,7 +35,8 @@ func reload_song_list() -> void:
 				var extension = file_name.get_extension()
 				if extension in ["mp3", "ogg", "wav"]:
 					var full_path = Global.get_downloads_path() + file_name
-					print("reload_song_list > fullpath ", full_path)
+					#print("reload_song_list > fullpath ", full_path)
+					Global.logs_display.write("reload_song_list > fullpath " + full_path)
 					song_item = Global.create_song_item(id)
 					song_list.add_child(song_item)
 			file_name = dir.get_next()

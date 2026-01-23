@@ -34,7 +34,8 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 
 func initialize():
-	print("initializing song item.. : ", id)
+	#print("initializing song item.. : ", id)
+	Global.logs_display.write("initializing song item... ID: %s" % id)
 	tooltip_text = "ID: " + id
 	infos = Global.song_infos.get(id, {})
 	song_name.text = infos.get("name", "")

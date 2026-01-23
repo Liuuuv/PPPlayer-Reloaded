@@ -19,3 +19,6 @@ func _process(delta: float) -> void:
 	#if Input.is_action_just_pressed("debug"):
 		#var image = DisplayServer.clipboard_get_image()
 		#$UILayer/test.texture = ImageTexture.create_from_image(image)
+	
+	if Input.is_action_just_pressed("debug"):
+		print("debug")

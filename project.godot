@@ -13,6 +13,7 @@ config_version=5
 config/name="PPPlayer"
 run/main_scene="uid://ck2xb0mwofdp1"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
+run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
@@ -21,11 +22,11 @@ config/icon="res://icon.svg"
 Global="*res://Singetons/global.gd"
 SongManager="*res://Singetons/song_manager.gd"
 Tools="*res://Singetons/tools.gd"
-GlobalInput="*res://addons/global_input/autoload/global_input_csharp/GlobalInputCSharp.tscn"
 YtDlp="*res://addons/godot-yt-dlp/src/yt_dlp.gd"
 DownloadsManager="*res://Singetons/downloads_manager.gd"
 HtmlCleaner="*res://Singetons/HTMLCleaner.gd"
-LoggerManager="*res://logger_manager.gd"
+LogsManager="*res://Singetons/logs_manager.gd"
+GlobalInput="*res://addons/global_input/autoload/global_input_csharp/GlobalInputCSharp.tscn"
 
 [display]
 
@@ -39,7 +40,7 @@ project/assembly_name="PPPlayer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/global_input/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/global_input/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg")
 
 [gui]
 

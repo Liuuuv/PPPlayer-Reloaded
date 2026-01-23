@@ -1,4 +1,5 @@
 extends FileDialog
+class_name SelectSongDialog
 
 signal closing_window()
 

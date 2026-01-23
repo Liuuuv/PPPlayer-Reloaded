@@ -8,6 +8,7 @@ signal song_infos_changed()
 const SETTINGS_PATH: String = "res://settings.json"
 const SONG_INFOS_PATH: String = "res://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
+const LOGS_PATH: String = "res://logs.json"
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
 const download_item_scene = preload("res://Misc/download_item.tscn")
@@ -25,12 +26,13 @@ var downloaded_songs: Dictionary = {}
 
 var main: Main
 
-var select_file_dialog: FileDialog
-var select_song_dialog: FileDialog
+var select_folder_dialog: SelectFolderDialog
+var select_song_dialog: SelectSongDialog
 var insert_text_dialog: InsertTextDialog
-var confirmation_dialog: ConfirmationDialog
+var confirmation_dialog: CustomConfirmationDialog
 
 var logs_display: LogsDisplay
+var settings_window: SettingsWindow
 
 var current_playlist: CurrentPlaylist
 var songs_download: SongsDownload

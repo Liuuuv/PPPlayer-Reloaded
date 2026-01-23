@@ -38,8 +38,40 @@ func load_json_file(full_file_path: String) -> Dictionary:
 	if error == OK:
 		return json.data
 	else:
-		print("JSON Parse Error: ", json.get_error_message())
+		#print("JSON Parse Error: ", json.get_error_message())
+		Global.logs_display.write("JSON Parse Error: " + json.get_error_message(), LogsDisplay.MESSAGE.ERROR)
 		return {}
+
+
+func save_string(string: String, full_file_path: String) -> void:
+	var file = FileAccess.open(full_file_path, FileAccess.ModeFlags.WRITE_READ)
+	
+	if file:
+		
+		var json_text = JSON.stringify(string, "\t")
+		
+		file.store_string(json_text)
+		file.close()
+		file.close()
+
+
+func load_string(full_file_path: String) -> String:
+	var file = FileAccess.open(full_file_path, FileAccess.READ)
+	
+	if file == null:
+		#push_error("load_json_file, file is null")
+		return ""
+	#assert (file.file_exists(full_file_path), "load_json_file, file doesn't exist")
+	
+	var json = JSON.new()
+	
+	var error = json.parse(file.get_as_text())
+	if error == OK:
+		return json.data
+	else:
+		print("JSON Parse Error: ", json.get_error_message())
+		return ""
+
 
 func save_array_json(array: Array, full_file_path: String) -> void:
 	var file = FileAccess.open(full_file_path, FileAccess.ModeFlags.WRITE)
@@ -181,8 +213,8 @@ func get_next_id(id: String):
 	return next_id
 	
 func is_id(id: String):
-	for char in id:
-		if not char in alphabet:
+	for chara in id:
+		if not chara in alphabet:
 			return false
 	return true
 
@@ -190,8 +222,8 @@ func is_youtube_id(id: String):
 	if id.length() != 11:
 		return false
 	
-	for char in id:
-		if not char in youtube_id_alphabet:
+	for chara in id:
+		if not chara in youtube_id_alphabet:
 			return false
 	
 	return true

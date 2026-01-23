@@ -1,19 +1,15 @@
-[gd_scene format=3 uid="uid://bhlj3f6rlotp6"]
+[gd_scene load_steps=3 format=3 uid="uid://bhlj3f6rlotp6"]
 
-[node name="SettingsWindow" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[ext_resource type="Script" uid="uid://bshg530s1tmee" path="res://Windows/settings_window.gd" id="1_gxk38"]
+[ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 
-[node name="Window" type="Window" parent="."]
+[node name="SettingsWindow" type="Window"]
 oversampling_override = 1.0
 title = "Settings"
 size = Vector2i(670, 480)
+script = ExtResource("1_gxk38")
 
-[node name="TabContainer" type="TabContainer" parent="Window"]
+[node name="TabContainer" type="TabContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,11 +18,17 @@ grow_vertical = 2
 tab_alignment = 1
 current_tab = 0
 
-[node name="General" type="Control" parent="Window/TabContainer"]
+[node name="General" type="Control" parent="TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Window/TabContainer/General"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/General"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="RescanDownloadedSong" type="Button" parent="TabContainer/General/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "rescan"
+script = ExtResource("1_noev4")

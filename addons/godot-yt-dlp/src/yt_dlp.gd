@@ -277,11 +277,14 @@ class Download extends RefCounted:
 
 		var output: Array = []
 		
-		print("executable: ", executable)
-		print("YTDLP options_and_arguments: ", options_and_arguments)
+		#print("executable: ", executable)
+		#print("YTDLP options_and_arguments: ", options_and_arguments)
+		Global.logs_display.write("executable: " + executable)
+		Global.logs_display.write("YTDLP options_and_arguments: " + str(options_and_arguments))
 		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
 		
 		if exit_code != 0:
+			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s" % exit_code, LogsDisplay.MESSAGE.ERROR)
 			push_error("yt-dlp, error when running the command. Exit code: ", exit_code)
 			self._thread_stopped.call_deferred()
 			return

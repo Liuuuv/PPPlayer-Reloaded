@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ck2xb0mwofdp1"]
+[gd_scene load_steps=66 format=3 uid="uid://ck2xb0mwofdp1"]
 
 [ext_resource type="Script" uid="uid://dasg84e7rck3y" path="res://main.gd" id="1_4hl0s"]
 [ext_resource type="Script" uid="uid://du2xvdp847nw7" path="res://music_player.gd" id="1_fvyft"]
@@ -40,22 +40,21 @@
 [ext_resource type="Script" uid="uid://d2pd5vjkelwyg" path="res://SongPanel/play_button.gd" id="23_v8xb2"]
 [ext_resource type="Script" uid="uid://j8ady7t5adjr" path="res://SongPanel/progress_slider_bg.gd" id="24_lgqs7"]
 [ext_resource type="Script" uid="uid://bihy02amc4w7e" path="res://DownloadsTab/downloading_song.gd" id="25_aaaui"]
-[ext_resource type="Script" uid="uid://dn0eldk108qqj" path="res://vlc_media_player.gd" id="27_lt5s6"]
+[ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="27_iwouh"]
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="28_n3wwo"]
 [ext_resource type="Script" uid="uid://xsphvxmp7dn3" path="res://Misc/import_html_button.gd" id="30_sw7e0"]
 [ext_resource type="Script" uid="uid://kx6qytcy1ihl" path="res://Misc/import_a_song.gd" id="38_hl0rl"]
 [ext_resource type="Texture2D" uid="uid://b6rwloysnd7g1" path="res://Sprites/ClipboardSmall.png" id="41_r8dah"]
 [ext_resource type="Script" uid="uid://dfhna2vtin878" path="res://debug.gd" id="42_15o45"]
 [ext_resource type="Texture2D" uid="uid://cb8rctn4xqnpn" path="res://Sprites/ImportSmall.png" id="42_brhem"]
-[ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="42_r8dah"]
+[ext_resource type="Script" uid="uid://dqovcxxrjftrq" path="res://open_logs.gd" id="43_iwouh"]
 [ext_resource type="Texture2D" uid="uid://b1bg6mxi3kokb" path="res://Sprites/HTMLImportSmall.png" id="44_15o45"]
 [ext_resource type="Texture2D" uid="uid://ct2jxxcspcs7r" path="res://Sprites/DownloadsPathSmall.png" id="46_4vv4g"]
 [ext_resource type="Texture2D" uid="uid://ws7h8xr6h7q6" path="res://Sprites/StatsSmall.png" id="48_iwouh"]
 [ext_resource type="Texture2D" uid="uid://d0wd7a3vbc5q1" path="res://Sprites/SettingsSmall.png" id="49_m8kwp"]
-[ext_resource type="PackedScene" uid="uid://jgfisblgtvl4" path="res://logger_display.tscn" id="53_15o45"]
-
-[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_r2je0"]
-file = "res://downloads/output.ogv"
+[ext_resource type="Script" uid="uid://bqgyv2s6nk50w" path="res://settings_button.gd" id="52_iwouh"]
+[ext_resource type="PackedScene" uid="uid://jgfisblgtvl4" path="res://logs_display.tscn" id="53_15o45"]
+[ext_resource type="PackedScene" uid="uid://bhlj3f6rlotp6" path="res://Windows/settings_window.tscn" id="54_4vv4g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r2je0"]
 shader = ExtResource("11_hk3jj")
@@ -114,23 +113,14 @@ script = ExtResource("2_d8j6f")
 volume_db = -18.175
 script = ExtResource("1_fvyft")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 345.0
-offset_top = -51.0
-offset_right = 750.0
-offset_bottom = 669.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = SubResource("VideoStreamTheora_r2je0")
-volume_db = -9.09
-
 [node name="SelectFolderDialog" type="FileDialog" parent="."]
 oversampling_override = 1.0
 title = "Open a Directory"
 initial_position = 2
+transient = false
+exclusive = false
+always_on_top = true
+popup_window = true
 theme = ExtResource("3_15d85")
 file_mode = 2
 display_mode = 1
@@ -141,6 +131,10 @@ script = ExtResource("3_whcyh")
 oversampling_override = 1.0
 title = "Open a File"
 initial_position = 2
+transient = false
+exclusive = false
+always_on_top = true
+popup_window = true
 theme = ExtResource("3_15d85")
 ok_button_text = "Choose"
 file_mode = 0
@@ -151,10 +145,26 @@ script = ExtResource("5_5kp84")
 
 [node name="InsertTextDialog" parent="." instance=ExtResource("8_rievs")]
 visible = false
-transient = true
+always_on_top = true
+popup_window = true
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource("9_q3dvi")]
 visible = false
+transient = false
+exclusive = false
+always_on_top = true
+popup_window = true
+
+[node name="LogsDisplay" parent="." instance=ExtResource("53_15o45")]
+title = "Logs"
+initial_position = 2
+visible = false
+always_on_top = true
+
+[node name="SettingsWindow" parent="." instance=ExtResource("54_4vv4g")]
+initial_position = 2
+visible = false
+always_on_top = true
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -169,7 +179,6 @@ mouse_filter = 2
 script = ExtResource("2_k4xj7")
 
 [node name="BG" type="ColorRect" parent="UILayer/UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,11 +226,12 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_u8ia0")
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tab_focus_mode = 0
 script = ExtResource("4_ebnul")
 
 [node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("4_tsj6b")
@@ -238,7 +248,6 @@ mouse_filter = 2
 
 [node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer"]
 layout_mode = 2
-mouse_filter = 2
 placeholder_text = "search"
 clear_button_enabled = true
 
@@ -333,7 +342,6 @@ texture = ExtResource("4_rjark")
 stretch_mode = 5
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("5_u8ia0")
@@ -348,12 +356,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("16_j5n8o")
 
 [node name="Downloaded" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer"]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("11_y7jev")
@@ -372,21 +379,24 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "play all"
+icon = ExtResource("5_a2ugy")
+script = ExtResource("27_iwouh")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "play random"
+icon = ExtResource("11_hvfjo")
+script = ExtResource("27_iwouh")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
-placeholder_text = "search"
+placeholder_text = "Search for a song"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
-custom_minimum_size = Vector2(0, 322.44)
+custom_minimum_size = Vector2(0, 315.09)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -427,6 +437,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 1
@@ -528,51 +539,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
-mouse_filter = 2
 
 [node name="SongsDownload" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
 script = ExtResource("25_aaaui")
 
 [node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem8" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="SongItem9" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="Collection" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
 visible = false
@@ -808,14 +808,14 @@ alignment = 2
 [node name="debug" type="Button" parent="UILayer/UI/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
-text = "rescan"
+text = "debug"
 script = ExtResource("42_15o45")
 
-[node name="RescanDownloadedSong" type="Button" parent="UILayer/UI/HBoxContainer"]
+[node name="OpenLogs" type="Button" parent="UILayer/UI/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
-text = "rescan"
-script = ExtResource("42_r8dah")
+text = "logs"
+script = ExtResource("43_iwouh")
 
 [node name="ImportASong" type="Button" parent="UILayer/UI/HBoxContainer"]
 layout_mode = 2
@@ -844,12 +844,4 @@ icon = ExtResource("48_iwouh")
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("49_m8kwp")
-
-[node name="VLCMediaPlayer" type="VLCMediaPlayer" parent="."]
-visible = false
-offset_right = 782.0
-offset_bottom = 649.0
-mouse_filter = 2
-script = ExtResource("27_lt5s6")
-
-[node name="CustomLogger" parent="." instance=ExtResource("53_15o45")]
+script = ExtResource("52_iwouh")
