@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj7jqql5touiq"]
+
+[ext_resource type="Script" uid="uid://co2277w5u6scg" path="res://virtual_scroll_list.gd" id="1_wcovi"]
+
+[node name="VirtualScrollList" type="Control" node_paths=PackedStringArray("template_viewport")]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wcovi")
+template_viewport = NodePath("SubViewport")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+handle_input_locally = false
+gui_disable_input = true
+gui_embed_subwindows = true
+render_target_update_mode = 0

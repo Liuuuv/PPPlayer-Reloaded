@@ -44,6 +44,10 @@ func close():
 	hide()
 
 func write(message, type: MESSAGE = MESSAGE.DEBUG):
+	_write.call_deferred(message, type)
+	
+func _write(message, type: MESSAGE = MESSAGE.DEBUG):
+	return ## TEMP
 	var type_message: String = ""
 	match type:
 		MESSAGE.DEBUG:

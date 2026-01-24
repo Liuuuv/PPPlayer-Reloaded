@@ -6,11 +6,11 @@ public partial class CharacterBody2D : Godot.CharacterBody2D
 	public const float Speed = 300.0f;
 	public GlobalInputCSharp GlobalInput { get; set; }
 
-    public override void _Ready()
-    {
-    }
+	public override void _Ready()
+	{
+	}
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 
 		if (Input.IsActionJustPressed("mouse_left")){

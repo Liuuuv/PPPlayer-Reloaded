@@ -4,8 +4,6 @@ extends ButtonComponent
 func _ready() -> void:
 	Global.settings_changed.connect(_on_settings_changed)
 
-func _physics_process(delta: float) -> void:
-	return
 
 func _on_settings_changed():
 	print("_on_settings_changed")

@@ -1,4 +1,238 @@
 {
+	"0": {
+		"artist": "THE FIRST TAKE",
+		"artist_id": "UC9zY_E8mcAo_Oq772LEZq8Q",
+		"display_name": "ファントムシータ - ウタカタララバイ, キミと××××したいだけ, レディメイド, おともだち / THE FIRST TAKE",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "e5JxMRNwN0U"
+	},
+	"1": {
+		"artist": "Minami",
+		"artist_id": "UC2JzylaIF8qeowc7-5VwwmA",
+		"display_name": "美波「Good Morning」MV",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "4houEo1_9mI"
+	},
+	"2": {
+		"artist": "如月p",
+		"artist_id": "UCSpvfvblNGNfcpdP4AJLStg",
+		"display_name": "また来世で逢おうね - ft. ナースロボ_タイプT -",
+		"extension": "mp3",
+		"release_date": "20251202",
+		"thumbnail_path": "",
+		"video_id": "Fvj01bPxtWc"
+	},
+	"3": {
+		"artist": "POLKADOT STINGRAY",
+		"artist_id": "UCZ9DY_FlqUYh45R0uSmOIgA",
+		"display_name": "ポルカドットスティングレイ「キラーレコード」MV",
+		"extension": "mp3",
+		"release_date": "20251224",
+		"thumbnail_path": "",
+		"video_id": "vPx8ReF7GMY"
+	},
+	"A": {
+		"artist": "THE FIRST TAKE",
+		"artist_id": "UC9zY_E8mcAo_Oq772LEZq8Q",
+		"display_name": "【INTERVIEW FOR THE FIRST TAKE】  Ado × ファントムシータ / V/S THE FIRST TAKE",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "545--kkEpuU"
+	},
+	"E": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
+		"extension": "mp3",
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
+	},
+	"F": {
+		"artist": "HANABIE. Official YouTube",
+		"artist_id": "UCktxySUG0-0FXaf6otPVbeg",
+		"display_name": "【花冷え。】 - ICONIC - Music Video 【HANABIE.】",
+		"extension": "mp3",
+		"release_date": "20260109",
+		"thumbnail_path": "",
+		"video_id": "JT_NgMk9n-4"
+	},
+	"G": {
+		"artist": "THOUSAND YARD OFFICIAL (YOD1K)",
+		"artist_id": "UC18iQPhYk4BT4-Cwb9xTS6w",
+		"display_name": "Digital Girlfriend - Kinda Functional [Full Project] (ft. Kasane Teto)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "6UAo0GEGV7Y"
+	},
+	"H": {
+		"artist": "9Lana",
+		"artist_id": "UCZvkU-ma74UOqHbD0vebUuw",
+		"display_name": "【MV】プロポーズ/ 9Lana cover",
+		"extension": "mp3",
+		"release_date": "20240823",
+		"thumbnail_path": "",
+		"video_id": "XPLkkdMFmco"
+	},
+	"I": {
+		"artist": "紫 今 - ムラサキ イマ",
+		"artist_id": "UCO_33qdYApF4dzGxGWv7gmg",
+		"display_name": "紫 今 - メンタルレンタル / Mulasaki Ima - Mental Rental (MUSIC VIDEO)",
+		"extension": "mp3",
+		"release_date": "20260116",
+		"thumbnail_path": "",
+		"video_id": "iXJMtQQMsco"
+	},
+	"J": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - 裂いて｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "5nRC8ZpJpRg"
+	},
+	"K": {
+		"artist": "巡巡",
+		"artist_id": "UCFgDIWJn7efUcJW3VAHKBqQ",
+		"display_name": "【初音ミク・重音テトSV】あっはっは笑【巡巡】",
+		"extension": "mp3",
+		"release_date": "20251107",
+		"thumbnail_path": "",
+		"video_id": "bV-Q9KtDW84"
+	},
+	"L": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - ステレオタイプヒロイック｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "20260110",
+		"thumbnail_path": "",
+		"video_id": "0QfHwL3kFf4"
+	},
+	"M": {
+		"artist": "DangeresqueIII",
+		"artist_id": "UCpAqQ-s5Oxndza051sCyvUw",
+		"display_name": "Paranoia Agent OP (HD)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "nuncFLIR1Qw"
+	},
+	"O": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
+		"extension": "mp3",
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
+	},
+	"P": {
+		"artist": "HANABIE. Official YouTube",
+		"artist_id": "UCktxySUG0-0FXaf6otPVbeg",
+		"display_name": "【花冷え。】 - ICONIC - Music Video 【HANABIE.】",
+		"extension": "mp3",
+		"release_date": "20260109",
+		"thumbnail_path": "",
+		"video_id": "JT_NgMk9n-4"
+	},
+	"Q": {
+		"artist": "THOUSAND YARD OFFICIAL (YOD1K)",
+		"artist_id": "UC18iQPhYk4BT4-Cwb9xTS6w",
+		"display_name": "Digital Girlfriend - Kinda Functional [Full Project] (ft. Kasane Teto)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "6UAo0GEGV7Y"
+	},
+	"R": {
+		"artist": "9Lana",
+		"artist_id": "UCZvkU-ma74UOqHbD0vebUuw",
+		"display_name": "【MV】プロポーズ/ 9Lana cover",
+		"extension": "mp3",
+		"release_date": "20240823",
+		"thumbnail_path": "",
+		"video_id": "XPLkkdMFmco"
+	},
+	"S": {
+		"artist": "紫 今 - ムラサキ イマ",
+		"artist_id": "UCO_33qdYApF4dzGxGWv7gmg",
+		"display_name": "紫 今 - メンタルレンタル / Mulasaki Ima - Mental Rental (MUSIC VIDEO)",
+		"extension": "mp3",
+		"release_date": "20260116",
+		"thumbnail_path": "",
+		"video_id": "iXJMtQQMsco"
+	},
+	"T": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - 裂いて｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "5nRC8ZpJpRg"
+	},
+	"U": {
+		"artist": "巡巡",
+		"artist_id": "UCFgDIWJn7efUcJW3VAHKBqQ",
+		"display_name": "【初音ミク・重音テトSV】あっはっは笑【巡巡】",
+		"extension": "mp3",
+		"release_date": "20251107",
+		"thumbnail_path": "",
+		"video_id": "bV-Q9KtDW84"
+	},
+	"V": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - ステレオタイプヒロイック｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "20260110",
+		"thumbnail_path": "",
+		"video_id": "0QfHwL3kFf4"
+	},
+	"W": {
+		"artist": "DangeresqueIII",
+		"artist_id": "UCpAqQ-s5Oxndza051sCyvUw",
+		"display_name": "Paranoia Agent OP (HD)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "nuncFLIR1Qw"
+	},
+	"X": {
+		"artist": "THE FIRST TAKE",
+		"artist_id": "UC9zY_E8mcAo_Oq772LEZq8Q",
+		"display_name": "【INTERVIEW FOR THE FIRST TAKE】  Ado × ファントムシータ / V/S THE FIRST TAKE",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "545--kkEpuU"
+	},
+	"Y": {
+		"artist": "xoq",
+		"artist_id": "UC7lx2TLOpOA-RTchXlVhmyw",
+		"display_name": "暮しガスメータ（うた：x0o0x_とsekai）",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "aGuk6NmeFdI"
+	},
+	"Z": {
+		"artist": "THE FIRST TAKE",
+		"artist_id": "UC9zY_E8mcAo_Oq772LEZq8Q",
+		"display_name": "Ado - うっせぇわ / THE FIRST TAKE",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "ujyJRxAKpVE"
+	},
 	"h": {
 		"artist": "a子　Ako",
 		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
@@ -61,5 +295,95 @@
 		"release_date": "",
 		"thumbnail_path": "",
 		"video_id": "5nRC8ZpJpRg"
+	},
+	"p": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
+		"extension": "mp3",
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
+	},
+	"r": {
+		"artist": "a子　Ako",
+		"artist_id": "UCxhoYJ8r17MZ2nBIXQe63jA",
+		"display_name": "a子 - Turn It Up : MUSIC VIDEO",
+		"extension": "mp3",
+		"release_date": "20260121",
+		"thumbnail_path": "",
+		"video_id": "T57HYBSkci8"
+	},
+	"s": {
+		"artist": "HANABIE. Official YouTube",
+		"artist_id": "UCktxySUG0-0FXaf6otPVbeg",
+		"display_name": "【花冷え。】 - ICONIC - Music Video 【HANABIE.】",
+		"extension": "mp3",
+		"release_date": "20260109",
+		"thumbnail_path": "",
+		"video_id": "JT_NgMk9n-4"
+	},
+	"t": {
+		"artist": "THOUSAND YARD OFFICIAL (YOD1K)",
+		"artist_id": "UC18iQPhYk4BT4-Cwb9xTS6w",
+		"display_name": "Digital Girlfriend - Kinda Functional [Full Project] (ft. Kasane Teto)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "6UAo0GEGV7Y"
+	},
+	"u": {
+		"artist": "9Lana",
+		"artist_id": "UCZvkU-ma74UOqHbD0vebUuw",
+		"display_name": "【MV】プロポーズ/ 9Lana cover",
+		"extension": "mp3",
+		"release_date": "20240823",
+		"thumbnail_path": "",
+		"video_id": "XPLkkdMFmco"
+	},
+	"v": {
+		"artist": "紫 今 - ムラサキ イマ",
+		"artist_id": "UCO_33qdYApF4dzGxGWv7gmg",
+		"display_name": "紫 今 - メンタルレンタル / Mulasaki Ima - Mental Rental (MUSIC VIDEO)",
+		"extension": "mp3",
+		"release_date": "20260116",
+		"thumbnail_path": "",
+		"video_id": "iXJMtQQMsco"
+	},
+	"w": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - 裂いて｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "5nRC8ZpJpRg"
+	},
+	"x": {
+		"artist": "巡巡",
+		"artist_id": "UCFgDIWJn7efUcJW3VAHKBqQ",
+		"display_name": "【初音ミク・重音テトSV】あっはっは笑【巡巡】",
+		"extension": "mp3",
+		"release_date": "20251107",
+		"thumbnail_path": "",
+		"video_id": "bV-Q9KtDW84"
+	},
+	"y": {
+		"artist": "NELKE Channel",
+		"artist_id": "UCgwteC3ja-6FkDDHiK8diQw",
+		"display_name": "NELKE - ステレオタイプヒロイック｜Official Music Video",
+		"extension": "mp3",
+		"release_date": "20260110",
+		"thumbnail_path": "",
+		"video_id": "0QfHwL3kFf4"
+	},
+	"z": {
+		"artist": "DangeresqueIII",
+		"artist_id": "UCpAqQ-s5Oxndza051sCyvUw",
+		"display_name": "Paranoia Agent OP (HD)",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "nuncFLIR1Qw"
 	}
 }

@@ -1,9 +1,10 @@
-[gd_scene load_steps=66 format=3 uid="uid://ck2xb0mwofdp1"]
+[gd_scene load_steps=71 format=3 uid="uid://ck2xb0mwofdp1"]
 
 [ext_resource type="Script" uid="uid://dasg84e7rck3y" path="res://main.gd" id="1_4hl0s"]
 [ext_resource type="Script" uid="uid://du2xvdp847nw7" path="res://music_player.gd" id="1_fvyft"]
 [ext_resource type="Script" uid="uid://8jneb5kqnvyb" path="res://yt_dlp.gd" id="2_d8j6f"]
 [ext_resource type="Script" uid="uid://bhaigpccdaekp" path="res://ui.gd" id="2_k4xj7"]
+[ext_resource type="Script" uid="uid://bsqo4o5k6y2r1" path="res://temp.gd" id="2_ncdb3"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_15d85"]
 [ext_resource type="Script" uid="uid://cn440x8llh28j" path="res://select_folder_dialog.gd" id="3_whcyh"]
 [ext_resource type="Script" uid="uid://bpa3qoixuf532" path="res://SearchTab/current_playlist.gd" id="4_a2ugy"]
@@ -42,12 +43,15 @@
 [ext_resource type="Script" uid="uid://bihy02amc4w7e" path="res://DownloadsTab/downloading_song.gd" id="25_aaaui"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="27_iwouh"]
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="28_n3wwo"]
+[ext_resource type="Script" uid="uid://r3xw6k14o5fi" path="res://downloaded_song_list.gd" id="29_m8kwp"]
 [ext_resource type="Script" uid="uid://xsphvxmp7dn3" path="res://Misc/import_html_button.gd" id="30_sw7e0"]
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://VirtualScrollList.tscn" id="32_27lq4"]
+[ext_resource type="Texture2D" uid="uid://odsn034de4mv" path="res://downloads/L.webp" id="32_451yd"]
 [ext_resource type="Script" uid="uid://kx6qytcy1ihl" path="res://Misc/import_a_song.gd" id="38_hl0rl"]
 [ext_resource type="Texture2D" uid="uid://b6rwloysnd7g1" path="res://Sprites/ClipboardSmall.png" id="41_r8dah"]
 [ext_resource type="Script" uid="uid://dfhna2vtin878" path="res://debug.gd" id="42_15o45"]
 [ext_resource type="Texture2D" uid="uid://cb8rctn4xqnpn" path="res://Sprites/ImportSmall.png" id="42_brhem"]
-[ext_resource type="Script" uid="uid://dqovcxxrjftrq" path="res://open_logs.gd" id="43_iwouh"]
+[ext_resource type="Script" uid="uid://dqovcxxrjftrq" path="res://open_logs_button.gd" id="43_iwouh"]
 [ext_resource type="Texture2D" uid="uid://b1bg6mxi3kokb" path="res://Sprites/HTMLImportSmall.png" id="44_15o45"]
 [ext_resource type="Texture2D" uid="uid://ct2jxxcspcs7r" path="res://Sprites/DownloadsPathSmall.png" id="46_4vv4g"]
 [ext_resource type="Texture2D" uid="uid://ws7h8xr6h7q6" path="res://Sprites/StatsSmall.png" id="48_iwouh"]
@@ -80,6 +84,8 @@ shader_parameter/is_rotating = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8ia0"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+
 [sub_resource type="ImageTexture" id="ImageTexture_lgqs7"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_hl0rl"]
@@ -105,6 +111,13 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4hl0s")
+
+[node name="temp" type="Control" parent="." node_paths=PackedStringArray("scroll_list", "scroll_grid")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_ncdb3")
+scroll_list = NodePath("../UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList")
+scroll_grid = NodePath("../UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList")
 
 [node name="YtDlp" type="Node2D" parent="."]
 script = ExtResource("2_d8j6f")
@@ -393,6 +406,7 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "Search for a song"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
@@ -401,40 +415,138 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="DownloadedSongList" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer"]
+[node name="DownloadedSongListOLD" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
+script = ExtResource("29_m8kwp")
 
-[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="DownloadedSongList" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" instance=ExtResource("32_27lq4")]
+unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
+size_flags_vertical = 3
 
-[node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongList" instance=ExtResource("7_1iiig")]
+[node name="TemplateOLD" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList"]
+visible = false
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 64.0
+color = Color(0, 0, 1, 0)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+texture = ExtResource("4_rjark")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="-DisplayName" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "{0}"
+
+[node name="-StaticField" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "{0}"
+horizontal_alignment = 3
+
+[node name="-Price" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/TemplateOLD/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "{0:C2}"
+horizontal_alignment = 2
+
+[node name="Template" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 64.0
+color = Color(0, 0, 1, 0)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 37.0
+grow_horizontal = 2
+size_flags_vertical = 3
+
+[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
+
+[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Thumbnail"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("32_451yd")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-SongName" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG ITEM"
+vertical_alignment = 1
+
+[node name="-Artist" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
 
 [node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer"]
 visible = false

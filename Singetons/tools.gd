@@ -109,6 +109,9 @@ func filepath_to_global(path: String):
 func get_song_stream(global_path: String) -> AudioStreamMP3:
 	var audio_stream = AudioStreamMP3.new()  # ou AudioStreamWAV, AudioStreamOggVorbis
 	var file = FileAccess.open(global_path, FileAccess.READ)
+	if not file:
+		Global.logs_display.write("get_song_stream, Can't open the file at %s" % global_path, LogsDisplay.MESSAGE.ERROR)
+		return audio_stream
 	var bytes = file.get_buffer(file.get_length())
 	audio_stream.data = bytes
 	return audio_stream

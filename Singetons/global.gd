@@ -34,15 +34,80 @@ var confirmation_dialog: CustomConfirmationDialog
 var logs_display: LogsDisplay
 var settings_window: SettingsWindow
 
-var current_playlist: CurrentPlaylist
-var songs_download: SongsDownload
+var current_playlist: CurrentPlaylist ## what's playing now
+var downloaded_tab: DownloadedTab ## all the downloaded songs
+var songs_download: SongsDownload ## currently downloading
 var music_player: MusicPlayer
 var song_panel: SongPanel
 
 
-var song_streams: Dictionary = {} ## {id: SongItem}
+var song_streams: Dictionary = {} ## {id: SongItemOLD}
 
-
+class SongItem:
+	var SongName: String = "SONG NAME"
+	var Artist: String = "ARTIST"
+	var DurationString: String = "XX:XX"
+	
+	var id: String = "":
+		set(new_id):
+			id = new_id
+			initialize.call_deferred()
+	var infos: Dictionary = {}
+	var location: String = ""
+	var index: int = 0
+	
+	
+	func _init() -> void:
+		pass
+	
+	func initialize():
+		Global.logs_display.write("initializing song item... ID: %s " % id)
+		#tooltip_text = "ID: " + id
+		infos = Global.song_infos.get(id, {})
+		SongName = infos.get("display_name", "") + "          " + id
+		
+		#load_thumbnail()
+		
+	#func initialize_context_menu():
+		#context_menu = ContextMenu.new()
+		#context_menu.attach_to(self)
+		#context_menu.set_minimum_size(Vector2i(400, 0))
+		#context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
+		#context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
+		##context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
+		#context_menu.add_placeholder_item("Disabled", true, null)
+		#context_menu.add_seperator()
+		#var subMenu : ContextMenu = context_menu.add_submenu("Submenu")
+		#subMenu.add_item("Run the Submenu Test", Callable(self, "_runTest"), false, null)
+		#
+		#context_menu.connect_to(self)
+	
+	
+	
+	#func load_thumbnail() -> void:
+		##request_thumbnail_later()
+		##return
+		#
+		#var thumbnail_path: String = Global.get_thumbnail_path(id)
+		#if thumbnail_path == "":
+			#return
+		#
+		#if not FileAccess.file_exists(thumbnail_path):
+			##print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
+			#Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
+			#return
+		#
+		#var image := Image.new()
+		#var error = image.load(thumbnail_path)
+		## TODO W 0:02:39:139   song_item.gd:89 @ load_thumbnail(): Loaded resource as image file, this will not work on export: 'res://downloads/z.webp'. Instead, import the image file as an Image resource and load it normally as a resource.
+#
+		#if error != OK:
+			##push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
+			#Global.logs_display.write("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
+			#return
+		#
+		#var texture := ImageTexture.create_from_image(image)
+		#thumbnail.texture = texture
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -54,7 +119,7 @@ func initialize() -> void:
 	initialize_song_infos()
 	initialize_downloaded_songs()
 	print("settings ", settings)
-	print("song_infos ", song_infos)
+	#print("song_infos ", song_infos)
 	
 	#init_song_items()
 	#init_download_path()
@@ -157,8 +222,13 @@ func change_song_info(id: String, info_name: String, value: Variant) -> void:
 	save_song_infos()
 
 
-func create_song_item(id: String) -> SongItem:
+func create_song_itemOLD(id: String) -> SongItemOLD:
 	var song_item = song_item_scene.instantiate()
+	song_item.id = id
+	return song_item
+
+func create_song_item(id: String) -> SongItem:
+	var song_item = SongItem.new()
 	song_item.id = id
 	return song_item
 
@@ -187,3 +257,56 @@ func create_song_infos(id: String, infos: Dictionary, extension: String, video_i
 	Global.change_song_info(id, "artist", infos.get("channel", ""))
 	Global.change_song_info(id, "artist_id", infos.get("channel_id", ""))
 	#Global.change_song_info(id, "album", album)
+
+func get_thumbnail_path(id: String):
+	var song_info: Dictionary = song_infos.get(id)
+	if song_info:
+		var thumbnail_path: String = song_info.get("thumbnail_path")
+		if thumbnail_path == "":
+			#Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided. Trying using: %s" % id + ".webp", LogsDisplay.MESSAGE.WARNING)
+			thumbnail_path = id + ".webp"
+		
+		var full_path: String = Global.get_downloads_path() + thumbnail_path
+		return full_path
+	else:
+		logs_display.write("get_thumbnail_path, Can't find the song info for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
+		return ""
+
+func delete_song(id: String):
+	logs_display.write("Deleting song from ID %s" % id, LogsDisplay.MESSAGE.DEBUG)
+	var song_info: Dictionary = song_infos.get(id)
+	var error: Error
+	if song_info:
+		var extension: String = song_info.get("extension", "")
+		if extension:
+			var full_path: String = get_downloads_path() + id + "." + extension
+			error = DirAccess.remove_absolute(full_path)
+			if error != OK:
+				push_error("delete_song, can't delete the song %s" % full_path)
+				logs_display.write("delete_song, Can't delete the file. can't remove the file %s" % full_path, LogsDisplay.MESSAGE.ERROR)
+			
+			if not downloaded_songs.erase(song_info.get("video_id")):
+				logs_display.write("delete_song, the video_id was not available for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
+			save_downloaded_songs()
+			
+			var thumbnail_path: String = get_thumbnail_path(id)
+			if thumbnail_path != "":
+				error = DirAccess.remove_absolute(thumbnail_path)
+				if error != OK:
+					push_error("delete_song, Can't delete the thumbnail %s" % thumbnail_path)
+					logs_display.write("delete_song, Can't delete the thumbnail %s" % full_path, LogsDisplay.MESSAGE.ERROR)
+			
+			song_info.erase(id)
+			save_song_infos()
+			
+			if current_playlist.content_ids.has(id):
+				current_playlist.content_ids.erase(id)
+			
+		else:
+			logs_display.write("delete_song, Can't delete the song. no extension found in song_infos for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
+			return
+	else:
+		logs_display.write("delete_song, Can't delete the song. Can't find the song info for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
+		return
+	
+	logs_display.write("Successfully deleted the song for the ID: %s" % id, LogsDisplay.MESSAGE.INFO)

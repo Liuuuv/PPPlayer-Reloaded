@@ -199,6 +199,7 @@ class Download extends RefCounted:
 	func start() -> Download:
 		if not _status == Status.READY:
 			push_error(self, "Download previously started.")
+			Global.logs_display.write("Download previously started. Can't start it.")
 			return self
 
 		_status = Status.DOWNLOADING
@@ -279,8 +280,8 @@ class Download extends RefCounted:
 		
 		#print("executable: ", executable)
 		#print("YTDLP options_and_arguments: ", options_and_arguments)
-		Global.logs_display.write("executable: " + executable)
-		Global.logs_display.write("YTDLP options_and_arguments: " + str(options_and_arguments))
+		Global.logs_display.write("Executable: " + executable)
+		Global.logs_display.write("YTDLP options and arguments: " + str(options_and_arguments))
 		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
 		
 		if exit_code != 0:
@@ -290,6 +291,7 @@ class Download extends RefCounted:
 			return
 		
 		_output = output
+		Global.logs_display.write("Download: Thread finished")
 		
 		self._thread_finished.call_deferred()
 	
@@ -391,6 +393,7 @@ class Download extends RefCounted:
 	
 	func _thread_stopped():
 		_status = Status.INTERRUPTED
+		self.download_completed.emit(["interrupt"])
 		_thread.wait_to_finish()
 		unreference()
 

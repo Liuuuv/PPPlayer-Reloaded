@@ -2,6 +2,8 @@
 ## What's PP Player?
 PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot
 
+## Uses/inspiration of other projects (excluding addons):
+- Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
 
 ## Addons:
 ### Addons used:

@@ -25,17 +25,18 @@ func _ready() -> void:
 
 func add_id_to_queue(id: String):
 	#print("adding ", id, "to queue")
-	Global.logs_display.write("adding (ID:) %s to queue" % id)
+	Global.logs_display.write("Adding an ID to the download queue: %s" % id, LogsDisplay.MESSAGE.DEBUG)
 	downloading_queue.push_front(id)
 	try_dl.emit()
 	queue_changed.emit()
 
 func add_multiple_ids_to_queue(ids: PackedStringArray):
+	Global.logs_display.write("Adding multiple IDs to the download queue: %s" % ids, LogsDisplay.MESSAGE.DEBUG)
 	downloading_queue.append_array(ids)
 	#print("downloading_queue ", downloading_queue)
-	Global.logs_display.write("downloading_queue " + str(downloading_queue))
+	
 	try_dl.emit()
-	#queue_changed.emit()
+	queue_changed.emit()
 
 func remove_from_queue(id: String):
 	if id in downloading_queue:
@@ -43,6 +44,7 @@ func remove_from_queue(id: String):
 		queue_changed.emit()
 
 func reload_queue_song_items() -> void:
+	Global.logs_display.write("Reloading download items...", LogsDisplay.MESSAGE.DEBUG)
 	for child in get_children():
 		child.queue_free()
 	
@@ -51,7 +53,6 @@ func reload_queue_song_items() -> void:
 		#song_item.location = "current_playlist"
 		#download_item.index = index
 		#print("download item", download_item)
-		Global.logs_display.write("download item" + str(download_item))
 		add_child(download_item)
 
 func _on_try_dl():
@@ -60,12 +61,17 @@ func _on_try_dl():
 	if not is_ready_to_dl or downloading_queue.size() == 0:
 		return
 	#print("is_ready_to_dl")
-	Global.logs_display.write("is_ready_to_dl")
+	
 	is_ready_to_dl = false
 	var video_id: String = downloading_queue[0]
+	Global.logs_display.write("Downloading a new content, video ID %s" % video_id)
 	var id: String = Global.generate_new_id()
 	var url: String = Tools.build_youtube_url(video_id)
+	Global.logs_display.write("Starting the download, video ID %s" % video_id)
 	var infos: Dictionary = await DownloadsManager.download_video_from_url(url, id, true, true)
+	if "interrupt" in infos:
+		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s" % [video_id, id], LogsDisplay.MESSAGE.ERROR)
+	
 	var extension: String = "mp3"
 	var thumbnail_path: String = ""
 	
@@ -75,4 +81,6 @@ func _on_try_dl():
 	try_dl.emit()
 
 func _on_queue_changed():
+	return
 	reload_queue_song_items()
+	Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))

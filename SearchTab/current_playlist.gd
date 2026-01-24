@@ -16,6 +16,7 @@ func reload_song_items() -> void:
 		song_item.location = "current_playlist"
 		song_item.index = index
 		add_child(song_item)
+		# FAIRE QUE LE LOAD SE FAIT A UN ENDROIT AVEC UNE LISTE ET ASYNC
 
 func clear_song_items() -> void:
 	for child in get_children():

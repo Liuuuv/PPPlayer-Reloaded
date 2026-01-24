@@ -29,28 +29,29 @@ func _ready() -> void:
 	highlight_color.v += 0.05
 	
 	
-	gui_input.connect(_on_gui_input)
+	#gui_input.connect(_on_gui_input)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
 func initialize():
 	#print("initializing song item.. : ", id)
-	Global.logs_display.write("initializing song item... ID: %s" % id)
-	tooltip_text = "ID: " + id
-	infos = Global.song_infos.get(id, {})
-	song_name.text = infos.get("name", "")
+	Global.logs_display.write("Initializing download item... videoID: %s" % id)
+	tooltip_text = "videoID: " + id
+	song_name.text = id
+	#infos = Global.song_infos.get(id, {})
+	#song_name.text = infos.get("name", "")
 
-func _on_gui_input(event: InputEvent):
-	if not visible or not hovered:
-		return
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			match location:
-				"current_playlist":
-					#_on_clicked_in_current_playlist()
-					SongManager.play_from_index(index)
-				_:
-					SongManager.add_to_current_playlist(id)
+#func _on_gui_input(event: InputEvent):
+	#if not visible or not hovered:
+		#return
+	#if event is InputEventMouseButton and event.pressed:
+		#if event.button_index == MOUSE_BUTTON_LEFT:
+			#match location:
+				#"current_playlist":
+					##_on_clicked_in_current_playlist()
+					#SongManager.play_from_index(index)
+				#_:
+					#SongManager.add_to_current_playlist(id)
 					
 
 #func _on_clicked_in_current_playlist():

@@ -13,7 +13,6 @@ config_version=5
 config/name="PPPlayer"
 run/main_scene="uid://ck2xb0mwofdp1"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
-run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 

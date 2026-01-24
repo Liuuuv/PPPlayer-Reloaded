@@ -12,6 +12,6 @@ func _pressed() -> void:
 		"IDs detected: " + ", ".join(ids_found)
 	)
 	if confirm:
-		print("clipboard ", clipboard)
-		print(ids_found)
+		#print("clipboard ", clipboard)
+		Global.logs_display.write("IDs found: %s" % ids_found, LogsDisplay.MESSAGE.DEBUG)
 		Global.songs_download.add_multiple_ids_to_queue(ids_found)
