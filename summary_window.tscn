@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm3bhi0rsuwwx"]
+
+[ext_resource type="Script" uid="uid://cq80ca7amkt6d" path="res://summary_window.gd" id="1_fsc2t"]
+[ext_resource type="Script" uid="uid://docg1y8vc4mf2" path="res://addons/godot_tree_table/Table.gd" id="2_icci0"]
+
+[node name="SummaryWindow" type="Window"]
+oversampling_override = 1.0
+title = "Summary"
+initial_position = 4
+size = Vector2i(800, 500)
+script = ExtResource("1_fsc2t")
+
+[node name="Table" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_icci0")
+auto_reload = true
+metadata/_custom_type_script = "uid://docg1y8vc4mf2"

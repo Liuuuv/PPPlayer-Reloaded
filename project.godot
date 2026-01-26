@@ -21,10 +21,10 @@ config/icon="res://icon.svg"
 Global="*res://Singetons/global.gd"
 SongManager="*res://Singetons/song_manager.gd"
 Tools="*res://Singetons/tools.gd"
-YtDlp="*res://addons/godot-yt-dlp/src/yt_dlp.gd"
 DownloadsManager="*res://Singetons/downloads_manager.gd"
 HtmlCleaner="*res://Singetons/HTMLCleaner.gd"
 LogsManager="*res://Singetons/logs_manager.gd"
+YtDlp="*res://addons/godot-yt-dlp/src/yt_dlp.gd"
 
 [display]
 
@@ -38,7 +38,7 @@ project/assembly_name="PPPlayer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-table-container-main/addons/table_container/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/godot_tree_table/plugin.cfg")
 
 [gui]
 

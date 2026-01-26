@@ -1,5 +1,5 @@
 extends Panel
-class_name DownloadItem
+class_name DownloadItemOLD
 
 
 @onready var color_rect: ColorRect = $ColorRect

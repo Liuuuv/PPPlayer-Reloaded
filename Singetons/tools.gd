@@ -1,5 +1,9 @@
 extends Node
 
+# Ajoutez cette variable en haut de votre script (au niveau de la classe)
+var _thumbnail_cache: Dictionary = {}
+
+
 var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123455789"
 var alphabet_length: int = alphabet.length()
 var alphabet_int_map: Dictionary = {} ## char: int
@@ -251,3 +255,88 @@ func load_html_file(file_path: String) -> String:
 func build_youtube_url(id: String):
 	# https://www.youtube.com/watch?v=5nRC8ZpJpRg
 	return "https://www.youtube.com/watch?v=" + id
+
+
+func get_thumbnail(id: String) -> ImageTexture:
+		#request_thumbnail_later()
+		#return
+		
+		var thumbnail_path: String = Global.get_thumbnail_path(id)
+		if thumbnail_path == "":
+			return
+		
+		if not FileAccess.file_exists(thumbnail_path):
+			#print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
+			Global.logs_display.write("get_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
+			return
+		
+		#if error != OK:
+			##push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
+			#Global.logs_display.write("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
+			#return
+		
+		#var texture := ImageTexture.create_from_image(image)
+		var texture: Texture2D = ResourceLoader.load(thumbnail_path, "", ResourceLoader.CACHE_MODE_IGNORE)
+		
+		return texture
+
+
+func get_cached_thumbnail(id: String) -> Texture2D:
+	# Vérifier si la texture est déjà en cache
+	if id in _thumbnail_cache:
+		var cached_texture: Texture2D = _thumbnail_cache[id]
+		# Vérifier que la texture n'est pas null et est valide
+		if cached_texture != null and cached_texture.get_width() > 0:
+			return cached_texture
+	
+	# Créer le dossier cache s'il n'existe pas
+	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
+	if not DirAccess.dir_exists_absolute(path_to_cach_dir):
+		var dir = DirAccess.open(Global.get_downloads_path())
+		if dir:
+			var error = dir.make_dir(Global.CACHE_DIR_NAME)
+			if error != OK:
+				push_warning("Impossible de créer le dossier cache: %s" % error)
+	
+	# Chemin du fichier cache
+	var full_path: String = path_to_cach_dir + id + ".res"
+	
+	# Essayer de charger depuis le cache sur disque
+	if ResourceLoader.exists(full_path):
+		var texture: Texture2D = ResourceLoader.load(full_path)
+		if texture != null:
+			_thumbnail_cache[id] = texture
+			return texture
+	
+	# Si pas en cache, générer la thumbnail via get_thumbnail()
+	var thumbnail: Texture2D = get_thumbnail(id)
+	
+	if thumbnail != null:
+		# Mettre en cache mémoire
+		_thumbnail_cache[id] = thumbnail
+		
+		# Sauvegarder sur disque (asynchrone pour éviter les blocages)
+		_save_to_cache.call_deferred(id, thumbnail, full_path)
+	
+	return thumbnail
+
+func _save_to_cache(id: String, texture: Texture2D, cache_path: String) -> void:
+	# Sauvegarder la texture en tant que ressource
+	var error = ResourceSaver.save(texture, cache_path)
+	if error != OK:
+		print("Erreur lors de la sauvegarde du cache: ", error)
+
+func from_dict_data_to_array(dict: Dictionary, attibutes: Array) -> Array[Array]:
+	# {id: {name: value}} -> [id, value]
+	var array: Array[Array] = []
+	var sub_array: Array = []
+	for key in dict:
+		var values = dict.get(key, {})
+		sub_array = [key]
+		for attribute in attibutes:
+			var value = values.get(attribute)
+			if value != null:
+				sub_array.append(value)
+		array.append(sub_array)
+	
+	return array

@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhlj3f6rlotp6"]
+[gd_scene load_steps=5 format=3 uid="uid://bhlj3f6rlotp6"]
 
 [ext_resource type="Script" uid="uid://bshg530s1tmee" path="res://Windows/settings_window.gd" id="1_gxk38"]
 [ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
+[ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Settings/do_checkup.gd" id="2_e3bw5"]
+[ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Settings/remove_duplicate.gd" id="3_y72ja"]
 
 [node name="SettingsWindow" type="Window"]
 oversampling_override = 1.0
 title = "Settings"
+position = Vector2i(0, 36)
 size = Vector2i(670, 480)
 script = ExtResource("1_gxk38")
 
@@ -27,8 +30,20 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="DoCheckup" type="Button" parent="TabContainer/General/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "do checkup"
+script = ExtResource("2_e3bw5")
+
 [node name="RescanDownloadedSong" type="Button" parent="TabContainer/General/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "rescan"
 script = ExtResource("1_noev4")
+
+[node name="RemoveDuplicate" type="Button" parent="TabContainer/General/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "delete duplicate"
+script = ExtResource("3_y72ja")

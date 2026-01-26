@@ -17,7 +17,7 @@ var scroll: float = 0.0
 var selected_idx: int = -1
 
 var _pressed: bool = false
-var _debug_draw: bool = true
+var _debug_draw: bool = false
 
 func _ready() -> void:
 	#template = get_node_or_null("Template")
@@ -28,13 +28,13 @@ func _ready() -> void:
 			return
 		
 		remove_child(template)
-		template_viewport.add_child(template)
+		if template_viewport:
+			template_viewport.add_child(template)
 	
 	if template:
 		template.tree_exiting.connect(_on_template_exiting)
 
 func _on_template_exiting() -> void:
-	print("nuuul")
 	template = null
 
 func add_item(item: Variant) -> void:
@@ -191,7 +191,7 @@ func _draw() -> void:
 		
 		draw_item(template, item_bbox, items[i])
 
-func draw_item(template_control: Control, box: Rect2, item: Variant) -> void:
+func draw_item(template_control: Control, box: Rect2, item) -> void:
 	var item_box: Rect2 = template_control.get_global_rect()
 	item_box.position += box.position
 	
@@ -202,12 +202,15 @@ func draw_item(template_control: Control, box: Rect2, item: Variant) -> void:
 		if str(template_control.name)[0] == '-':
 			var property_name: String = template_control.name.substr(1)
 			var property_value = get_property(item, property_name)
-			
 			# formatting
 			#text = label.text.format([property_value]) if property_value != null else label.text
 			
 			# replacing
 			text = str(property_value) if property_value != null else label.text
+		elif str(template_control.name)[0] == '+': ## TODO generalize this
+			var method_name: String = template_control.name.substr(1)
+			var value = item.call(method_name)
+			text = label.text if value == item.video_id else ""
 		else:
 			text = label.text
 		
@@ -225,9 +228,14 @@ func draw_item(template_control: Control, box: Rect2, item: Variant) -> void:
 		)
 	
 	elif template_control is TextureRect:
-		var texture_rect: TextureRect = template_control
-		if texture_rect.texture:
-			draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+		if item is Global.SongItem:
+			var texture_rect: TextureRect = template_control
+			#var thumbnail: Texture2D = item.get_thumbnail()
+			var thumbnail: Texture2D = Tools.get_cached_thumbnail(item.id)
+			if thumbnail:
+				draw_texture_rect(thumbnail, item_box, false)
+			elif texture_rect.texture:
+				draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
 	
 	elif template_control is ColorRect:
 		var color_rect: ColorRect = template_control

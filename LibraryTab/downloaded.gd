@@ -27,8 +27,8 @@ func initialize():
 	reload_song_list()
 	
 func reload_song_list() -> void:
-	reload_song_listOLD()
-	return
+	#reload_song_listOLD()
+	#return
 	
 	#print("reloading song list..")
 	Global.logs_display.write("reloading song list..")

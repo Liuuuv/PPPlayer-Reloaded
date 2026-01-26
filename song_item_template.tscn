@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4k824d22jefw"]
+
+[ext_resource type="Texture2D" uid="uid://odsn034de4mv" path="res://downloads/L.webp" id="1_ni5ic"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+
+[node name="Template" type="Panel"]
+custom_minimum_size = Vector2(200, 50)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Thumbnail" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
+
+[node name="Thumbnail" type="TextureRect" parent="HBoxContainer/Thumbnail"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("1_ni5ic")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Infos" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-SongName" type="Label" parent="HBoxContainer/Infos"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG ITEM"
+vertical_alignment = 1
+
+[node name="-Artist" type="Label" parent="HBoxContainer/Infos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2

@@ -1,6 +1,6 @@
 extends Node
 
-signal downloads_folder_changed()
+signal downloads_folder_changed() ## emitted when a new song has been added to the downloads folder (added by file, downloaded)
 signal settings_changed()
 signal song_infos_changed()
 
@@ -9,6 +9,7 @@ const SETTINGS_PATH: String = "res://settings.json"
 const SONG_INFOS_PATH: String = "res://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
 const LOGS_PATH: String = "res://logs.json"
+const CACHE_DIR_NAME: String = "_cache" ## in downloads
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
 const download_item_scene = preload("res://Misc/download_item.tscn")
@@ -33,10 +34,12 @@ var confirmation_dialog: CustomConfirmationDialog
 
 var logs_display: LogsDisplay
 var settings_window: SettingsWindow
+var summary_window: SummaryWindow
 
 var current_playlist: CurrentPlaylist ## what's playing now
 var downloaded_tab: DownloadedTab ## all the downloaded songs
-var songs_download: SongsDownload ## currently downloading
+var downloads_tab: DownloadsTab ## currently downloading
+#var songs_download: SongsDownload ## currently downloading
 var music_player: MusicPlayer
 var song_panel: SongPanel
 
@@ -65,49 +68,34 @@ class SongItem:
 		#tooltip_text = "ID: " + id
 		infos = Global.song_infos.get(id, {})
 		SongName = infos.get("display_name", "") + "          " + id
-		
-		#load_thumbnail()
-		
-	#func initialize_context_menu():
-		#context_menu = ContextMenu.new()
-		#context_menu.attach_to(self)
-		#context_menu.set_minimum_size(Vector2i(400, 0))
-		#context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-		#context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
-		##context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
-		#context_menu.add_placeholder_item("Disabled", true, null)
-		#context_menu.add_seperator()
-		#var subMenu : ContextMenu = context_menu.add_submenu("Submenu")
-		#subMenu.add_item("Run the Submenu Test", Callable(self, "_runTest"), false, null)
-		#
-		#context_menu.connect_to(self)
+
+class DownloadSongItem:
+	var SongName: String = "SONG NAME"
+	
+	var video_id: String = "":
+		set(new_id):
+			video_id = new_id
+			initialize.call_deferred()
+	var infos: Dictionary = {}
+	var location: String = ""
+	var index: int = 0
+	var is_downloading: bool = false
 	
 	
+	func _init() -> void:
+		pass
 	
-	#func load_thumbnail() -> void:
-		##request_thumbnail_later()
-		##return
-		#
-		#var thumbnail_path: String = Global.get_thumbnail_path(id)
-		#if thumbnail_path == "":
-			#return
-		#
-		#if not FileAccess.file_exists(thumbnail_path):
-			##print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
-			#Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
-			#return
-		#
-		#var image := Image.new()
-		#var error = image.load(thumbnail_path)
-		## TODO W 0:02:39:139   song_item.gd:89 @ load_thumbnail(): Loaded resource as image file, this will not work on export: 'res://downloads/z.webp'. Instead, import the image file as an Image resource and load it normally as a resource.
-#
-		#if error != OK:
-			##push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
-			#Global.logs_display.write("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
-			#return
-		#
-		#var texture := ImageTexture.create_from_image(image)
-		#thumbnail.texture = texture
+	func initialize():
+		pass
+		#Global.logs_display.write("initializing song item... ID: %s " % id)
+		##tooltip_text = "ID: " + id
+		#infos = Global.song_infos.get(id, {})
+		#SongName = infos.get("display_name", "") + "          " + id
+	
+	func get_current_downloading_song():
+		return Global.downloads_tab.current_downloading_song
+
+
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -210,6 +198,7 @@ func downloaded_song_remove(video_id: String):
 func change_settings(setting_name: String, value: Variant) -> void:
 	settings.set(setting_name, value)
 	print("settings changed ", setting_name, " ", value)
+	logs_display.write("Settings changed. Setting name: %s, Value: %s" % [setting_name, value])
 	save_settings()
 
 func change_song_info(id: String, info_name: String, value: Variant) -> void:
@@ -218,7 +207,8 @@ func change_song_info(id: String, info_name: String, value: Variant) -> void:
 		
 	
 	song_infos.get(id).set(info_name, value)
-	print("song infos changed ", change_settings)
+	logs_display.write("Song infos changed. ID: %s, Info Name: %s, Value: %s" % [id, info_name, value])
+	#print("song infos changed ", change_settings)
 	save_song_infos()
 
 
@@ -232,9 +222,14 @@ func create_song_item(id: String) -> SongItem:
 	song_item.id = id
 	return song_item
 
-func create_download_item(id: String) -> DownloadItem:
+func create_download_itemOLD(id: String) -> DownloadItemOLD:
 	var download_item = download_item_scene.instantiate()
 	download_item.id = id
+	return download_item
+
+func create_download_item(video_id: String) -> DownloadSongItem:
+	var download_item = DownloadSongItem.new()
+	download_item.video_id = video_id
 	return download_item
 
 func generate_new_id() -> String:

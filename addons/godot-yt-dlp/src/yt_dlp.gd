@@ -286,7 +286,7 @@ class Download extends RefCounted:
 		
 		if exit_code != 0:
 			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s" % exit_code, LogsDisplay.MESSAGE.ERROR)
-			push_error("yt-dlp, error when running the command. Exit code: ", exit_code)
+			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s. Output: %s" % [_file_name, exit_code, output])
 			self._thread_stopped.call_deferred()
 			return
 		
@@ -389,6 +389,7 @@ class Download extends RefCounted:
 		_status = Status.COMPLETED
 		self.download_completed.emit(_output)
 		_thread.wait_to_finish()
+		Global.logs_display.write("Thread finished")
 		unreference()
 	
 	func _thread_stopped():
@@ -485,6 +486,7 @@ class Search extends RefCounted:
 	func _thread_finished():
 		self.search_completed.emit()
 		_thread.wait_to_finish()
+		Global.logs_display.write("Thread finished")
 		unreference()
 
 	func _thread_stopped():

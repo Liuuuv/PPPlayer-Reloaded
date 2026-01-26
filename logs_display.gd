@@ -13,7 +13,13 @@ enum MESSAGE {
 }
 
 var is_open: bool = false
-
+var must_be_saved: bool = false:
+	set(on):
+		if on != must_be_saved:
+			must_be_saved = on
+			if must_be_saved:
+				save.call_deferred()
+var num_errors: int = 0
 
 func _ready() -> void:
 	Global.logs_display = self
@@ -45,9 +51,31 @@ func close():
 
 func write(message, type: MESSAGE = MESSAGE.DEBUG):
 	_write.call_deferred(message, type)
+	#_write(message, type)
 	
+
+func save() -> void:
+	Tools.save_string(logs.text, Global.LOGS_PATH)
+	must_be_saved = false
+	update_num_errors()
+
+func update_num_errors():
+	var count: int = 0
+	
+	# Format court youtu.be
+	var short_pattern = "\\[ERROR\\]"
+	var regex = RegEx.new()
+	if regex.compile(short_pattern) == OK:
+		var results = regex.search_all(logs.text)
+		for result in results:
+			count += 1
+		num_errors = count
+	if num_errors > 0:
+		title = "Logs (%s errors)" % num_errors
+	else:
+		title = "Logs"
+
 func _write(message, type: MESSAGE = MESSAGE.DEBUG):
-	return ## TEMP
 	var type_message: String = ""
 	match type:
 		MESSAGE.DEBUG:
@@ -58,8 +86,9 @@ func _write(message, type: MESSAGE = MESSAGE.DEBUG):
 			type_message = "[color=yellow][WARNING][/color] "
 		MESSAGE.ERROR:
 			type_message = "[color=red][ERROR][/color] "
-	logs.text += type_message + message + "\n"
-	Tools.save_string(logs.text, Global.LOGS_PATH)
+	logs.text += type_message + message + "\n "
+	#Tools.save_string(logs.text, Global.LOGS_PATH)
+	must_be_saved = true
 
 func _on_close_requested():
 	close()

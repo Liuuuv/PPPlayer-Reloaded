@@ -27,15 +27,21 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 	download.start()
 
 	var output: Array = await download.download_completed
-	Global.logs_display.write("Download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name])
+	Global.logs_display.write("Download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
 	print("Download complete")
+	
+	# if interrupted (error or hand interrupted)
+	if output.size() >= 1:
+		if output[0] == "interrupt":
+			Global.logs_display.write("Download was interrupted", LogsDisplay.MESSAGE.WARNING)
+			return {"interrupt": 0}
+	
+	# success
+	Global.downloads_folder_changed.emit()
 	
 	if get_infos:
 		var infos: Dictionary
 		if output.size() >= 1:
-			if output[0] == "interrupt":
-				Global.logs_display.write("Download was interrupted", LogsDisplay.MESSAGE.WARNING)
-				return {"interrupt": 0}
 			infos = JSON.parse_string(output[0])
 		else:
 			infos = {"output size was 0": 0}

@@ -1,41 +1,70 @@
-extends Control
-
-@export var scroll_list: VirtualScrollList
-@export var scroll_grid: VirtualScrollList
-
-var items: Array = []
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	if scroll_grid:
-		scroll_grid.items = items
-	if scroll_list:
-		scroll_list.items = items
-
-func add_item() -> void:
-	#scroll_list.items.append(create_random_item())
-	scroll_list.items.append(SongItem2.new())
-	scroll_list.queue_redraw()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-#func create_random_item() -> ListItem:
-	#var names: Array[String] = ["Apple", "Milk", "Beans", "Water"]
-	#var rng := RandomNumberGenerator.new()
-	#
-	#var i := SongItem.new()
-	#i.SongName = names[rng.randi_range(0, names.size() - 1)]
-	#i.Price = rng.randi_range(10, 45) / 10.0
-	#
-	#return i
+extends Tree
 
 
-class SongItem2:
-	var SongName: String = "SONG NAME"
-	var Artist: String = "ARTIST"
-	var DurationString: String = "XX:XX"
-	
-	func _init() -> void:
-		pass
+# Connect signals from the Tree
+func _ready():
+	var _err = item_selected.connect(_on_tree_item_selected)
+	_err = item_edited.connect(_on_tree_item_edited)
+
+
+# This draws the tree from a data structure provided ("model")
+func update_tree(model):
+
+	clear()
+
+	# Create the root TreeItem ("model")
+	var item_model = create_item()
+
+	# Set the text label for this item (the 0 specifies the Tree column)
+	item_model.set_text(0, model.name) 
+
+	# Set the actual model node as the TreeItem's metadata.
+	# This means I can get the actual model node from the TreeItem using tree_item.get_metadata(0)
+	item_model.set_metadata(0, model) 
+
+	# Create a subheading / child TreeItem ("bodies")
+	var item_bodies = create_item(item_model)
+	item_bodies.set_text(0, "Bodies")
+	item_bodies.set_selectable(0, false)
+
+	# Few lines to sort all the bodies in the model into alphabetical order and add them to the tree as children to the Bodies subheading
+	var bodies_array = []
+	for body_name in model.bodies.keys():
+		bodies_array.append(body_name)
+		bodies_array.sort()
+		if !bodies_array.empty():
+			for body_name_ in bodies_array:
+				create_tree_item(model.bodies[body_name_], item_bodies)
+
+
+# Sub function to create a TreeItem for a body or joint (_item)
+# Creates a selectable text label in column 0 and a check box in column 1
+func create_tree_item(_item, _parent_item):
+	var item = create_item(_parent_item)
+	item.set_text(0, _item.name)
+	item.set_metadata(0, _item)
+	item.set_cell_mode(1, TreeItem.CELL_MODE_CHECK)
+	item.set_checked(1, _item.visible)
+	item.set_tooltip(1, "Show/Hide")
+	item.set_editable(1, true)
+	item.set_tooltip(0, "this shows when you mouse hover over the item")
+
+
+# item selected (if the TreeItem is set to selectable, clicking it will fire this signal)
+func _on_tree_item_selected():
+	# Get the node from the selected tree_item
+	if get_selected().get_metadata(0) == null:
+		return
+	var selected_node = get_selected().get_metadata(0)
+	selected_node._on_selected() # Do something with it
+
+
+# Name change (if the TreeItem is set to editable, clicking it lets you change the TreeItem's label)
+# Here we use the updated label to change the name of the node represented by the tree_item
+func _on_tree_item_edited():
+	if get_edited_column() == 0:
+		if get_edited().get_metadata(0) == null:
+			return
+		var edited_node = get_edited().get_metadata(0)
+		var new_name = get_edited().get_text(0)
+		edited_node.name = new_name

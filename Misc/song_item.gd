@@ -78,7 +78,7 @@ func _delete() -> void:
 			#_on_clicked_in_current_playlist()
 			Global.current_playlist.reload_song_items()
 		"downloads":
-			Global.songs_download.reload_song_items()
+			Global.downloads_tab.reload_song_items()
 		_:
 			pass
 
