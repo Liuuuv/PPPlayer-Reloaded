@@ -273,6 +273,6 @@ static func custom_sorter_descending(a, b, column:int) -> bool:
 		return a[column] if a[column] != b[column] else false
 	
 	
-	print('finifnalalenet non')
 	# For any other case (mixed types or non-numeric strings), convert to string and compare
 	return str(a[column]) >= str(b[column])
+	
