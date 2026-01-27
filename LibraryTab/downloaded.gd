@@ -1,6 +1,8 @@
 extends Control
 class_name DownloadedTab
 
+signal song_item_clicked(id: String)
+
 # TODO manage files that are not treated in song infos/downlaoded songs
 
 @onready var song_listOLD: VBoxContainer = %DownloadedSongListOLD
@@ -18,6 +20,7 @@ func _ready() -> void:
 	
 	initialize.call_deferred()
 	
+	song_item_clicked.connect(_on_song_item_clicked)
 
 func initialize():
 	
@@ -26,7 +29,9 @@ func initialize():
 	
 	reload_song_list()
 	
-func reload_song_list() -> void:
+	song_list.on_item_selected.connect(_on_item_selected)
+	
+func reload_song_list(id_to_display: Array = ["all"]) -> void:
 	#reload_song_listOLD()
 	#return
 	
@@ -35,12 +40,24 @@ func reload_song_list() -> void:
 	
 	song_list.items.clear()
 	
+	
+	
+	#var num: int = 0
+	
+	# if a filter is applied
+	if id_to_display != ["all"]:
+		for id in id_to_display:
+			song_list.items.append(Global.create_song_item(id))
+		song_list.queue_redraw()
+		return
+	
+	# if no filter applied
 	var id: String
 	var dir = DirAccess.open(Global.get_downloads_path())
 
 	var time = Time.get_ticks_msec()
 	print('start ', time)
-	var num: int = 0
+	var all_displayed_names: Dictionary = {}
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
@@ -59,6 +76,10 @@ func reload_song_list() -> void:
 					Global.logs_display.write("reload_song_list > fullpath " + full_path)
 					song_list.items.append(Global.create_song_item(id))
 					
+					# for search queries
+					if Global.song_infos.has(id):
+						all_displayed_names.set(Global.song_infos.get(id).get("display_name"), id)
+					
 					#num += 1
 					#ids_to_add.append(id)
 					
@@ -66,6 +87,8 @@ func reload_song_list() -> void:
 					
 					
 			file_name = dir.get_next()
+	
+	Global.all_displayed_names = all_displayed_names
 	
 	song_list.queue_redraw()
 	print('end ', Time.get_ticks_msec())
@@ -117,6 +140,18 @@ func reload_song_listOLD() -> void: ## OLD, LAGGY
 			
 	print('end ', Time.get_ticks_msec())
 	print("elapsed time create ", Time.get_ticks_msec() - time)
+
+func _on_item_selected(idx: int):
+	if idx >= song_list.items.size(): # TODO make this check before
+		push_error("idx > song_list.items.size()")
+		return
+	song_item_clicked.emit(song_list.items[idx].id)
+
+func _on_song_item_clicked(id: String):
+	if Input.is_action_pressed("ctrl"):
+		var video_id: String = Global.song_infos.get(id, {}).get("video_id", "")
+		if video_id:
+			OS.shell_open(Tools.build_youtube_url(video_id))
 
 #func _physics_process(delta: float) -> void:
 	#if ids_to_add != []:

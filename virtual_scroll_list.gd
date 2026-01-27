@@ -16,8 +16,17 @@ var items: Array = []
 var scroll: float = 0.0
 var selected_idx: int = -1
 
-var _pressed: bool = false
-var _debug_draw: bool = false
+var _pressed: bool = false:
+	set(on):
+		if on == _pressed:
+			return
+		_pressed = on
+		if on:
+			if selected_idx != -1:
+				on_item_selected.emit(selected_idx)
+		else:
+			selected_idx = -1
+var _debug_draw: bool = true
 
 func _ready() -> void:
 	#template = get_node_or_null("Template")
@@ -77,9 +86,9 @@ func _gui_input(event: InputEvent) -> void:
 		var mb: InputEventMouseButton = event
 		
 		if mb.button_index == MOUSE_BUTTON_LEFT:
-			_pressed = mb.pressed
 			if mb.pressed:
 				selected_idx = get_index_at_position(mb.position)
+			_pressed = mb.pressed # order is important, need to be processed after changing selected_idx
 			queue_redraw()
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			scroll += scroll_tick_amount
@@ -128,7 +137,7 @@ func get_index_at_position(pos: Vector2) -> int:
 	
 	return (row * cols) + col
 
-func select_item(idx: int) -> void:
+func select_item(idx: int) -> void: ## unused? ig
 	selected_idx = idx
 	on_item_selected.emit(idx)
 

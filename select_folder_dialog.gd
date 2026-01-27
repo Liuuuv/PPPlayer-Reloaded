@@ -25,11 +25,10 @@ func close_window() -> void:
 	hide()
 
 func _on_dir_selected(dir: String):
-	print(dir)
+	print("_on_dir_selected ", dir)
 	selected_dir_path = dir
 
 func _on_canceled():
-	selected_dir_path = ""
 	close_window()
 
 func _on_close_window():

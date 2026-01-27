@@ -7,9 +7,12 @@ func _ready() -> void:
 	Global.main = self
 	
 	
-	
+	#benchmark.call_deferred()
 	#select_folder_dialog.dir_selected.connect(_on_select_folder_dialog_selected)
-#
+
+func benchmark():
+	Benchmark.benchmark(Global.downloaded_tab.reload_song_list)
+
 #func _on_select_folder_dialog_selected(dir: String):
 	#print(dir)
 
@@ -23,4 +26,4 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("debug"):
 		print("debug")
-		print("noting to do")
+		#benchmark()

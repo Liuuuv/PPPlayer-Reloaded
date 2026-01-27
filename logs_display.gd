@@ -51,7 +51,7 @@ func close():
 
 func write(message, type: MESSAGE = MESSAGE.DEBUG):
 	_write.call_deferred(message, type)
-	#_write(message, type)
+	#_write(message, type) # write the same frame for the benchmark
 	
 
 func save() -> void:

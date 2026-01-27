@@ -43,6 +43,7 @@ var downloads_tab: DownloadsTab ## currently downloading
 var music_player: MusicPlayer
 var song_panel: SongPanel
 
+var all_displayed_names: Dictionary = {}
 
 var song_streams: Dictionary = {} ## {id: SongItemOLD}
 

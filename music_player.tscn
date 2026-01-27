@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://ck2xb0mwofdp1"]
+[gd_scene load_steps=76 format=3 uid="uid://ck2xb0mwofdp1"]
 
 [ext_resource type="Script" uid="uid://dasg84e7rck3y" path="res://main.gd" id="1_4hl0s"]
 [ext_resource type="Script" uid="uid://du2xvdp847nw7" path="res://music_player.gd" id="1_fvyft"]
@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="28_n3wwo"]
 [ext_resource type="Script" uid="uid://r3xw6k14o5fi" path="res://downloaded_song_list.gd" id="29_m8kwp"]
 [ext_resource type="Script" uid="uid://xsphvxmp7dn3" path="res://Misc/import_html_button.gd" id="30_sw7e0"]
+[ext_resource type="Script" uid="uid://cfn5i4ai7i2br" path="res://LibraryTab/downloaded_search_bar.gd" id="30_yp42n"]
 [ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://VirtualScrollList.tscn" id="32_27lq4"]
 [ext_resource type="Texture2D" uid="uid://odsn034de4mv" path="res://downloads/L.webp" id="32_451yd"]
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://downloads_tab.gd" id="34_ycudd"]
@@ -176,6 +177,7 @@ visible = false
 always_on_top = true
 
 [node name="SummaryWindow" parent="." instance=ExtResource("11_silr4")]
+visible = false
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -405,8 +407,8 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 [node name="DownloadedSearchBar" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_mode = 0
 placeholder_text = "Search for a song"
+script = ExtResource("30_yp42n")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
 visible = false

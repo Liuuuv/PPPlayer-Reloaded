@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhlj3f6rlotp6"]
+[gd_scene load_steps=6 format=3 uid="uid://bhlj3f6rlotp6"]
 
 [ext_resource type="Script" uid="uid://bshg530s1tmee" path="res://Windows/settings_window.gd" id="1_gxk38"]
 [ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Settings/do_checkup.gd" id="2_e3bw5"]
+[ext_resource type="Script" uid="uid://dm7cqtwn6us8q" path="res://Settings/clear_cache.gd" id="2_kbi0k"]
 [ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Settings/remove_duplicate.gd" id="3_y72ja"]
 
 [node name="SettingsWindow" type="Window"]
@@ -26,9 +27,18 @@ layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/General"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ClearCache" type="Button" parent="TabContainer/General/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "clear cache [TOFIX]"
+script = ExtResource("2_kbi0k")
 
 [node name="DoCheckup" type="Button" parent="TabContainer/General/VBoxContainer"]
 layout_mode = 2
@@ -47,3 +57,16 @@ layout_mode = 2
 focus_mode = 0
 text = "delete duplicate"
 script = ExtResource("3_y72ja")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/General/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "TODO:
+- optimize logs
+- right click pannel on song items
+- download progress hook
+- check \"#TODO\" in code
+- fix clear cache
+- fix infos in summary
+- update info from youtube (by right click on song item)
+"
