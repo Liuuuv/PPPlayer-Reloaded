@@ -14,6 +14,11 @@ public partial class ContextMenu : Control
 	private Dictionary<int, Callable?> _checkboxActions = new();
 
 	private int _nextId = 0;
+	
+	private bool has_header = false;
+	
+	[Signal]
+	public delegate void MenuOpenedEventHandler();
 
 	public ContextMenu()
 	{
@@ -22,6 +27,7 @@ public partial class ContextMenu : Control
 		_menu.Hide();
 		_menu.Connect("id_pressed", Callable.From((int id) => _on_item_pressed(id)));
 	}
+	
 
 	#region "Public Functions"
 	public void attach_to(Node parent)
@@ -73,6 +79,20 @@ public partial class ContextMenu : Control
 
 		_nextId++;
 	}
+	
+	public void add_header_item(string label, Texture2D icon = null)
+	{
+		_menu.AddItem(label, _nextId);
+		_menu.SetItemDisabled(_nextId, true);
+
+		if (icon != null)
+		{
+			_menu.SetItemIcon(_nextId, icon);
+		}
+		
+		has_header = true;
+		_nextId++;
+	}
 
 	public void add_seperator()
 	{
@@ -86,6 +106,7 @@ public partial class ContextMenu : Control
 			if (@event is InputEventMouseButton mb && mb.ButtonIndex == MouseButton.Right && mb.Pressed)
 			{
 				show_item(node);
+				EmitSignal(SignalName.MenuOpened);
 			}
 		};
 	}

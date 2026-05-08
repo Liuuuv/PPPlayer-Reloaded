@@ -17,6 +17,8 @@ func start_song(full_path: String):
 	stream = Tools.get_song_stream(full_path)
 	stream_changed.emit()
 	
+	WindowsOverlay.ShowOverlay()
+	
 	#if not Global.song_streams.has(id):
 		#return
 	#stream = Global.song_streams[id]
@@ -25,9 +27,12 @@ func start_song(full_path: String):
 
 func pause_song() -> void:
 	stream_paused = true
+	
+	WindowsOverlay.SetPlaybackStatus(false) # pause
 	playing_changed.emit()
 
 func unpause_song() -> void:
+	WindowsOverlay.SetPlaybackStatus(true) # play
 	stream_paused = false
 	if not stream:
 		SongManager.play_from_index(SongManager.playing_song_index)
@@ -38,6 +43,7 @@ func clear_stream():
 	playing_changed.emit()
 	stream = null
 	stream_changed.emit()
+	WindowsOverlay.HideOverlay()
 
 func _physics_process(delta: float) -> void:
 	if playing:

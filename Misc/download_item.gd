@@ -21,7 +21,7 @@ var id: String = "":
 	set(new_id):
 		id = new_id
 		initialize.call_deferred()
-var location: String = ""
+var location: Global.SONG_IDS_LOCATIONS = Global.SONG_IDS_LOCATIONS.NONE
 var index: int = 0
 
 func _ready() -> void:

@@ -19,16 +19,22 @@ func initialize():
 	Global.music_player.stream_changed.connect(_on_stream_changed)
 	Global.music_player.finished.connect(_on_song_finished)
 	
+	WindowsOverlay.PlayPressed.connect(_on_play)
+	WindowsOverlay.PausePressed.connect(_on_pause)
+	WindowsOverlay.NextPressed.connect(_on_next_pressed)
+	WindowsOverlay.PreviousPressed.connect(_on_previous_pressed)
+	
+	
 	has_stream_changed.emit()
 
-func start_song(full_path: String):
+func start_song(full_path: String): ## starts the song from the given path.
 	print("starting song : ", full_path)
 	Global.music_player.start_song(full_path)
 	
 	var id: String = full_path.get_file().get_basename()
 	var song_infos = Global.song_infos.get(id)
 	if song_infos:
-		Global.song_panel.song_label.text = song_infos.get("name", "[i]Untitled[/i]")
+		Global.song_panel.song_label.text = song_infos.get("display_name", "[i]Untitled[/i]")
 
 func pause_song() -> void:
 	print("pausing song")
@@ -39,6 +45,20 @@ func unpause_song():
 	print("unpausing song")
 	Global.music_player.unpause_song()
 	song_unpaused.emit()
+
+func play_next_song() -> void:
+	playing_song_index += 1
+	if playing_song_index >= (Global.current_playlist.content_ids).size():
+		Global.music_player.clear_stream()
+		return
+	play_from_index(playing_song_index)
+
+func play_previous_song() -> void:
+	playing_song_index -= 1
+	if playing_song_index < 0:
+		playing_song_index = 0
+		print("This is already the first song!")
+	play_from_index(playing_song_index)
 
 func change_song_progression(progression: float): ## 0-100
 	if Global.music_player.stream:
@@ -51,18 +71,21 @@ func play_from_index(index: int) -> void:
 		return
 		
 	var id: String = Global.current_playlist.content_ids[index]
-	var song_info = Global.song_infos.get(id)
-	if song_info:
-		var extension = song_info.get("extension")
-		if extension:
-			var full_path = Global.get_downloads_path() + id + "." + extension
-			start_song(full_path)
-		else:
-			push_error("no extension available for index ", index)
-			return
-	else:
-		push_error("no song info available for index ", index)
-		return
+	play_from_id(id)
+	
+	#var song_info = Global.song_infos.get(id)
+	#if song_info:
+		#var extension = song_info.get("extension")
+		#if extension:
+			#var full_path = Global.get_downloads_path() + id + "." + extension
+			#start_song(full_path)
+		#else:
+			#push_error("no extension available for index ", index)
+			#return
+	#else:
+		#push_error("no song info available for index ", index)
+		#return
+
 
 func add_song_from_file(path: String):
 	print("adding song from file.. : ", path)
@@ -80,12 +103,30 @@ func add_to_current_playlist(id: String):
 	print("adding to current playlist: ", id)
 	Global.current_playlist.content_ids.append(id)
 	Global.current_playlist.reload_song_items()
+	
 
-func clear_current_playlist():
+func add_to_queue_end(id: String):
+	print("Adding last to queue %s" % id)
+	Global.current_playlist.queue_ids.append(id)
+	Global.current_playlist.reload_song_items()
+
+func play_last_song_from_current_playlist() -> void: ## plays the last song in the current_playlist
+	if Global.current_playlist.content_ids.is_empty():
+		push_error("Current playlist empty!")
+		return
+	
+	var id: String = Global.current_playlist.content_ids.get(-1)
+	play_from_id(id)
+
+func play_from_id(id: String) -> void:
+	var full_path: String = _get_full_path_from_id(id)
+	if full_path:
+		start_song(full_path)
+
+func clear_current_playlist(): ## clears the current_playlist
 	Global.current_playlist.clear_song_items()
 	playing_song_index = 0
 	Global.music_player.clear_stream()
-
 
 func _on_stream_changed(): ## from the music player
 	has_stream = Global.music_player.stream != null
@@ -97,4 +138,36 @@ func _on_song_finished():
 	else:
 		Global.music_player.clear_stream()
 	
-	
+func _get_full_path_from_id(id: String) -> String:
+	var song_info = Global.song_infos.get(id)
+	if song_info:
+		var extension = song_info.get("extension")
+		if extension:
+			var full_path = Global.get_downloads_path() + id + "." + extension
+			return full_path
+		else:
+			push_error("no extension available for id %s" % id)
+			return ""
+	else:
+		push_error("no song info available for id  %s" % id)
+		return ""
+
+
+func _on_play():
+	print("osdsdsdd")
+	unpause_song()
+
+func _on_pause():
+	pause_song()
+
+func _on_next_pressed() -> void:
+	pass
+
+func _on_previous_pressed() -> void:
+	pass
+
+
+
+
+
+#

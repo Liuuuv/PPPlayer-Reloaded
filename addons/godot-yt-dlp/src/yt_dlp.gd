@@ -286,7 +286,7 @@ class Download extends RefCounted:
 		
 		if exit_code != 0:
 			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s" % exit_code, LogsDisplay.MESSAGE.ERROR)
-			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s. Output: %s" % [_file_name, exit_code, output])
+			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s." % [_file_name, exit_code])
 			self._thread_stopped.call_deferred()
 			return
 		

@@ -1,0 +1,2 @@
+extends SongVirtualScrollList
+class_name DownloadedSongs

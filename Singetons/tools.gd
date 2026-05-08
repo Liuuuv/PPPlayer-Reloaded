@@ -4,12 +4,12 @@ extends Node
 var _thumbnail_cache: Dictionary = {}
 
 
-var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123455789"
+var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 var alphabet_length: int = alphabet.length()
 var alphabet_int_map: Dictionary = {} ## char: int
 var alphabet_base: int = alphabet_length - 1
 
-var youtube_id_alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123455789-_"
+var youtube_id_alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 
 func _ready() -> void:
 	initialize_alphabet_int_map()
@@ -227,10 +227,12 @@ func is_id(id: String):
 
 func is_youtube_id(id: String):
 	if id.length() != 11:
+		print("not 11 length")
 		return false
 	
 	for chara in id:
 		if not chara in youtube_id_alphabet:
+			print("not chara in youtube_id_alphabet")
 			return false
 	
 	return true
@@ -265,7 +267,7 @@ func get_thumbnail(id: String) -> ImageTexture:
 		if thumbnail_path == "":
 			return
 		
-		if not FileAccess.file_exists(thumbnail_path):
+		if not ResourceLoader.exists(thumbnail_path):
 			#print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
 			Global.logs_display.write("get_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
 			return

@@ -4,7 +4,9 @@ func _pressed() -> void:
 	var text_entered: String = await Global.insert_text_dialog.ask_for_text("Past a Youtube URL here")
 	if text_entered != "":
 		var video_id: String = HtmlCleaner.get_video_id(text_entered)
+		print("video id ", video_id)
 		if Tools.is_youtube_id(video_id):
+			print("est video id")
 			Global.downloads_tab.add_id_to_queue(video_id)
 		#var url: String = Tools.build_youtube_url(id)
 		#var infos: Dictionary = await DownloadsManager.download_video_from_url(url, "feur", true, true)

@@ -20,6 +20,24 @@ const DEFAULT_SETTINGS: Dictionary = {
 	"user_path": "",
 }
 
+const DEFAULT_SONG_INFOS: Dictionary = {
+	"display_name": "",
+	"extension": "",
+	"video_id": "",
+	"thumbnail_path": "",
+	"release_date": "",
+	"artist": "",
+	"artist_id": "",
+}
+
+
+enum SONG_IDS_LOCATIONS {
+	NONE,
+	CURRENT_PLAYLIST,
+	DOWNLOADED,
+	DOWNLOADS,
+}
+
 var settings: Dictionary = DEFAULT_SETTINGS
 var song_infos: Dictionary = {} ## {id: {url, name, extension, release_date, artist, album}}
 var downloaded_songs: Dictionary = {}
@@ -35,12 +53,13 @@ var confirmation_dialog: CustomConfirmationDialog
 var logs_display: LogsDisplay
 var settings_window: SettingsWindow
 var summary_window: SummaryWindow
+var info_window: InfoWindow
 
 var current_playlist: CurrentPlaylist ## what's playing now
 var downloaded_tab: DownloadedTab ## all the downloaded songs
 var downloads_tab: DownloadsTab ## currently downloading
 #var songs_download: SongsDownload ## currently downloading
-var music_player: MusicPlayer
+var music_player: MusicPlayer ## not meant to be accesed
 var song_panel: SongPanel
 
 var all_displayed_names: Dictionary = {}
@@ -51,13 +70,14 @@ class SongItem:
 	var SongName: String = "SONG NAME"
 	var Artist: String = "ARTIST"
 	var DurationString: String = "XX:XX"
+	var IsInQueue: bool = false
 	
 	var id: String = "":
 		set(new_id):
 			id = new_id
 			initialize.call_deferred()
 	var infos: Dictionary = {}
-	var location: String = ""
+	var location: SONG_IDS_LOCATIONS = SONG_IDS_LOCATIONS.NONE
 	var index: int = 0
 	
 	
@@ -69,6 +89,7 @@ class SongItem:
 		#tooltip_text = "ID: " + id
 		infos = Global.song_infos.get(id, {})
 		SongName = infos.get("display_name", "") + "          " + id
+		Artist = infos.get("artist", "")
 
 class DownloadSongItem:
 	var SongName: String = "SONG NAME"
@@ -268,6 +289,7 @@ func get_thumbnail_path(id: String):
 		logs_display.write("get_thumbnail_path, Can't find the song info for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
 		return ""
 
+
 func delete_song(id: String):
 	logs_display.write("Deleting song from ID %s" % id, LogsDisplay.MESSAGE.DEBUG)
 	var song_info: Dictionary = song_infos.get(id)
@@ -292,7 +314,7 @@ func delete_song(id: String):
 					push_error("delete_song, Can't delete the thumbnail %s" % thumbnail_path)
 					logs_display.write("delete_song, Can't delete the thumbnail %s" % full_path, LogsDisplay.MESSAGE.ERROR)
 			
-			song_info.erase(id)
+			song_infos.erase(id)
 			save_song_infos()
 			
 			if current_playlist.content_ids.has(id):

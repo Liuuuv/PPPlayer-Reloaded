@@ -1,53 +1,56 @@
-[gd_scene load_steps=76 format=3 uid="uid://ck2xb0mwofdp1"]
+[gd_scene format=3 uid="uid://ck2xb0mwofdp1"]
 
 [ext_resource type="Script" uid="uid://dasg84e7rck3y" path="res://main.gd" id="1_4hl0s"]
 [ext_resource type="Script" uid="uid://du2xvdp847nw7" path="res://music_player.gd" id="1_fvyft"]
 [ext_resource type="Script" uid="uid://8jneb5kqnvyb" path="res://yt_dlp.gd" id="2_d8j6f"]
 [ext_resource type="Script" uid="uid://bhaigpccdaekp" path="res://ui.gd" id="2_k4xj7"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_15d85"]
-[ext_resource type="Script" uid="uid://cn440x8llh28j" path="res://select_folder_dialog.gd" id="3_whcyh"]
-[ext_resource type="Script" uid="uid://bpa3qoixuf532" path="res://SearchTab/current_playlist.gd" id="4_a2ugy"]
+[ext_resource type="Script" uid="uid://cn440x8llh28j" path="res://Windows/select_folder_dialog.gd" id="3_whcyh"]
+[ext_resource type="Script" uid="uid://bpa3qoixuf532" path="res://Tabs/SearchTab/current_playlistOLD.gd" id="4_a2ugy"]
 [ext_resource type="Script" uid="uid://dfhj1tn3wl8od" path="res://main_tab_container.gd" id="4_ebnul"]
 [ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="4_rjark"]
-[ext_resource type="Script" uid="uid://m3xvncrc860y" path="res://SearchTab/search.gd" id="4_tsj6b"]
-[ext_resource type="Script" uid="uid://b35e1v0dnw52n" path="res://select_song_dialog.gd" id="5_5kp84"]
+[ext_resource type="Script" uid="uid://m3xvncrc860y" path="res://Tabs/SearchTab/search.gd" id="4_tsj6b"]
+[ext_resource type="Script" uid="uid://b35e1v0dnw52n" path="res://Windows/select_song_dialog.gd" id="5_5kp84"]
 [ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="5_a2ugy"]
-[ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://LibraryTab/library.gd" id="5_u8ia0"]
+[ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="5_u8ia0"]
 [ext_resource type="Texture2D" uid="uid://b81hfk3hr60pq" path="res://Sprites/ReloadSmall.png" id="6_hvfjo"]
 [ext_resource type="Texture2D" uid="uid://b17uax2pb6n4b" path="res://Sprites/Previous.png" id="6_o5jr7"]
 [ext_resource type="PackedScene" uid="uid://b76u0h5xxnc8p" path="res://Misc/song_item.tscn" id="7_1iiig"]
 [ext_resource type="Texture2D" uid="uid://ca2pjilq2aot6" path="res://Sprites/Next.png" id="7_4hl0s"]
-[ext_resource type="PackedScene" uid="uid://h5omux40mwov" path="res://Popup/InsertTextDialog/insert_text_dialog.tscn" id="8_rievs"]
 [ext_resource type="Texture2D" uid="uid://044f4mvdi84d" path="res://Sprites/Add.png" id="8_tsj6b"]
 [ext_resource type="PackedScene" uid="uid://br5ly536s08iq" path="res://Popup/confirmation_dialog.tscn" id="9_q3dvi"]
 [ext_resource type="Texture2D" uid="uid://33hr1l6vjapt" path="res://Sprites/Radio.png" id="10_0jgpm"]
 [ext_resource type="Script" uid="uid://d1ck4eu4by7ud" path="res://SongPanel/add_button.gd" id="11_1i1ll"]
-[ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://background.gdshader" id="11_hk3jj"]
+[ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://Shaders/background.gdshader" id="11_hk3jj"]
 [ext_resource type="Texture2D" uid="uid://c4ocsfn8yjx5k" path="res://Sprites/Random.png" id="11_hvfjo"]
-[ext_resource type="PackedScene" uid="uid://bm3bhi0rsuwwx" path="res://summary_window.tscn" id="11_silr4"]
-[ext_resource type="Script" uid="uid://d20y7kvi7nsu1" path="res://LibraryTab/downloaded.gd" id="11_y7jev"]
-[ext_resource type="Shader" uid="uid://woqxo8qyhdsb" path="res://bataltro.gdshader" id="12_r2je0"]
+[ext_resource type="PackedScene" uid="uid://bm3bhi0rsuwwx" path="res://Windows/SummaryWindow/summary_window.tscn" id="11_silr4"]
+[ext_resource type="Script" uid="uid://d20y7kvi7nsu1" path="res://Tabs/LibraryTab/downloaded.gd" id="11_y7jev"]
+[ext_resource type="Shader" uid="uid://woqxo8qyhdsb" path="res://Shaders/bataltro.gdshader" id="12_r2je0"]
+[ext_resource type="PackedScene" uid="uid://cej6v7oecv1vj" path="res://Windows/InfoWindow/info_window.tscn" id="12_upnju"]
 [ext_resource type="Texture2D" uid="uid://db52aihjdrdga" path="res://Sprites/Loop.png" id="12_y7jev"]
-[ext_resource type="Script" uid="uid://bt4w4rxknl8su" path="res://SearchTab/reload.gd" id="13_v4vu2"]
-[ext_resource type="Script" uid="uid://x8r21vq7ja58" path="res://SearchTab/clear.gd" id="14_hiood"]
-[ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://LibraryTab/library_tab_container.gd" id="16_j5n8o"]
+[ext_resource type="Script" uid="uid://bt4w4rxknl8su" path="res://Tabs/SearchTab/reload.gd" id="13_v4vu2"]
+[ext_resource type="Script" uid="uid://x8r21vq7ja58" path="res://Tabs/SearchTab/clear.gd" id="14_hiood"]
+[ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="16_j5n8o"]
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="16_vh2qp"]
 [ext_resource type="PackedScene" uid="uid://ycahaxmeicmd" path="res://Misc/work_in_progress.tscn" id="17_lj740"]
 [ext_resource type="Texture2D" uid="uid://cislskyolqr7h" path="res://Sprites/Like.png" id="18_5oa1o"]
+[ext_resource type="Shader" uid="uid://0aovud3r8gw0" path="res://Shaders/waveform.gdshader" id="18_60qda"]
 [ext_resource type="Texture2D" uid="uid://coh0kjgo3d7au" path="res://Sprites/Favorite.png" id="19_whcyh"]
 [ext_resource type="Script" uid="uid://c6o27ovfe4wv6" path="res://Misc/downloads_path_button.gd" id="22_5oa1o"]
 [ext_resource type="Script" uid="uid://qtim1nkj32c5" path="res://SongPanel/progress_slider.gd" id="23_1xdyp"]
 [ext_resource type="Script" uid="uid://b4my2vvfb820g" path="res://song_panel.gd" id="23_rbuj6"]
 [ext_resource type="Script" uid="uid://d2pd5vjkelwyg" path="res://SongPanel/play_button.gd" id="23_v8xb2"]
 [ext_resource type="Script" uid="uid://j8ady7t5adjr" path="res://SongPanel/progress_slider_bg.gd" id="24_lgqs7"]
-[ext_resource type="Script" uid="uid://bihy02amc4w7e" path="res://DownloadsTab/downloading_song.gd" id="25_aaaui"]
+[ext_resource type="Script" uid="uid://cbx6j1uenupxw" path="res://Tabs/SearchTab/current_playlist.gd" id="24_yp42n"]
+[ext_resource type="Script" uid="uid://bihy02amc4w7e" path="res://Tabs/DownloadsTab/downloading_song.gd" id="25_aaaui"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="26_60qda"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="27_iwouh"]
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="28_n3wwo"]
-[ext_resource type="Script" uid="uid://r3xw6k14o5fi" path="res://downloaded_song_list.gd" id="29_m8kwp"]
+[ext_resource type="Script" uid="uid://r3xw6k14o5fi" path="res://Tabs/LibraryTab/downloaded_song_list.gd" id="29_m8kwp"]
 [ext_resource type="Script" uid="uid://xsphvxmp7dn3" path="res://Misc/import_html_button.gd" id="30_sw7e0"]
-[ext_resource type="Script" uid="uid://cfn5i4ai7i2br" path="res://LibraryTab/downloaded_search_bar.gd" id="30_yp42n"]
-[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://VirtualScrollList.tscn" id="32_27lq4"]
-[ext_resource type="Texture2D" uid="uid://odsn034de4mv" path="res://downloads/L.webp" id="32_451yd"]
+[ext_resource type="Script" uid="uid://cfn5i4ai7i2br" path="res://Tabs/LibraryTab/downloaded_search_bar.gd" id="30_yp42n"]
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="32_27lq4"]
+[ext_resource type="Script" uid="uid://cea6vcsudf8sf" path="res://Tabs/LibraryTab/downloaded_songs.gd" id="34_xrftb"]
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://downloads_tab.gd" id="34_ycudd"]
 [ext_resource type="Script" uid="uid://kx6qytcy1ihl" path="res://Misc/import_a_song.gd" id="38_hl0rl"]
 [ext_resource type="Texture2D" uid="uid://b6rwloysnd7g1" path="res://Sprites/ClipboardSmall.png" id="41_r8dah"]
@@ -56,14 +59,15 @@
 [ext_resource type="Script" uid="uid://dqovcxxrjftrq" path="res://open_logs_button.gd" id="43_iwouh"]
 [ext_resource type="Texture2D" uid="uid://b1bg6mxi3kokb" path="res://Sprites/HTMLImportSmall.png" id="44_15o45"]
 [ext_resource type="Texture2D" uid="uid://ct2jxxcspcs7r" path="res://Sprites/DownloadsPathSmall.png" id="46_4vv4g"]
+[ext_resource type="Script" uid="uid://0saw2xa5abyh" path="res://SongPanel/next_button.gd" id="48_7vusf"]
 [ext_resource type="Texture2D" uid="uid://ws7h8xr6h7q6" path="res://Sprites/StatsSmall.png" id="48_iwouh"]
 [ext_resource type="Script" uid="uid://dclplmnhsbyxd" path="res://top_bar_overlay.gd" id="49_451yd"]
 [ext_resource type="Texture2D" uid="uid://d0wd7a3vbc5q1" path="res://Sprites/SettingsSmall.png" id="49_m8kwp"]
 [ext_resource type="Script" uid="uid://cx8kn7tkkmrld" path="res://download_songs_count.gd" id="50_ycudd"]
 [ext_resource type="Script" uid="uid://4x2lgeox11q0" path="res://downloading_songs_count.gd" id="51_q8th8"]
 [ext_resource type="Script" uid="uid://bqgyv2s6nk50w" path="res://settings_button.gd" id="52_iwouh"]
-[ext_resource type="PackedScene" uid="uid://jgfisblgtvl4" path="res://logs_display.tscn" id="53_15o45"]
-[ext_resource type="PackedScene" uid="uid://bhlj3f6rlotp6" path="res://Windows/settings_window.tscn" id="54_4vv4g"]
+[ext_resource type="PackedScene" uid="uid://jgfisblgtvl4" path="res://Logs/logs_display.tscn" id="53_15o45"]
+[ext_resource type="PackedScene" uid="uid://bhlj3f6rlotp6" path="res://Windows/SettingsWindow/Scenes/settings_window.tscn" id="54_4vv4g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r2je0"]
 shader = ExtResource("11_hk3jj")
@@ -89,7 +93,28 @@ shader_parameter/is_rotating = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8ia0"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6my56"]
+shader = ExtResource("18_60qda")
+shader_parameter/lines = 15
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.10000000475
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 0.5
+shader_parameter/line_size = 0.8
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = -0.1999999145
+shader_parameter/edge = 0.5
+shader_parameter/speed = 0.36
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = true
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_silr4"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_lgqs7"]
 
@@ -114,17 +139,17 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbuj6"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=995402728]
 script = ExtResource("1_4hl0s")
 
-[node name="YtDlp" type="Node2D" parent="."]
+[node name="YtDlp" type="Node2D" parent="." unique_id=1992123459]
 script = ExtResource("2_d8j6f")
 
-[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="." unique_id=452158658]
 volume_db = -18.175
 script = ExtResource("1_fvyft")
 
-[node name="SelectFolderDialog" type="FileDialog" parent="."]
+[node name="SelectFolderDialog" type="FileDialog" parent="." unique_id=2033249292]
 oversampling_override = 1.0
 title = "Open a Directory"
 initial_position = 2
@@ -138,7 +163,7 @@ display_mode = 1
 access = 2
 script = ExtResource("3_whcyh")
 
-[node name="SelectSongDialog" type="FileDialog" parent="."]
+[node name="SelectSongDialog" type="FileDialog" parent="." unique_id=1668479360]
 oversampling_override = 1.0
 title = "Open a File"
 initial_position = 2
@@ -154,34 +179,37 @@ access = 2
 filters = PackedStringArray("*.mp3", "*.wav")
 script = ExtResource("5_5kp84")
 
-[node name="InsertTextDialog" parent="." instance=ExtResource("8_rievs")]
+[node name="InsertTextDialog" parent="." unique_id=1873839097 instance=ExtResource("9_q3dvi")]
 visible = false
 always_on_top = true
 popup_window = true
 
-[node name="ConfirmationDialog" parent="." instance=ExtResource("9_q3dvi")]
+[node name="ConfirmationDialog" parent="." unique_id=771532876 instance=ExtResource("9_q3dvi")]
 visible = false
 transient = false
 exclusive = false
 always_on_top = true
 popup_window = true
 
-[node name="LogsDisplay" parent="." instance=ExtResource("53_15o45")]
+[node name="LogsDisplay" parent="." unique_id=1166103157 instance=ExtResource("53_15o45")]
 title = "Logs"
 initial_position = 2
 visible = false
 
-[node name="SettingsWindow" parent="." instance=ExtResource("54_4vv4g")]
+[node name="SettingsWindow" parent="." unique_id=815223223 instance=ExtResource("54_4vv4g")]
 initial_position = 2
 visible = false
 always_on_top = true
 
-[node name="SummaryWindow" parent="." instance=ExtResource("11_silr4")]
+[node name="SummaryWindow" parent="." unique_id=1140663521 instance=ExtResource("11_silr4")]
 visible = false
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="InfoWindow" parent="." unique_id=1919218813 instance=ExtResource("12_upnju")]
+visible = false
 
-[node name="UI" type="Control" parent="UILayer"]
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1406862746]
+
+[node name="UI" type="Control" parent="UILayer" unique_id=1320133011]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -191,7 +219,8 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_k4xj7")
 
-[node name="BG" type="ColorRect" parent="UILayer/UI"]
+[node name="BG" type="ColorRect" parent="UILayer/UI" unique_id=1336338879]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -201,7 +230,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.14, 0.14, 0.14, 1)
 
-[node name="BG2" type="ColorRect" parent="UILayer/UI"]
+[node name="BG2" type="ColorRect" parent="UILayer/UI" unique_id=1259281039]
 material = SubResource("ShaderMaterial_r2je0")
 layout_mode = 1
 anchors_preset = 15
@@ -212,7 +241,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.14, 0.14, 0.14, 1)
 
-[node name="BG3" type="ColorRect" parent="UILayer/UI"]
+[node name="BG3" type="ColorRect" parent="UILayer/UI" unique_id=1313330392]
 visible = false
 material = SubResource("ShaderMaterial_aaaui")
 layout_mode = 1
@@ -224,7 +253,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.14, 0.14, 0.14, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI" unique_id=1929581135]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -233,7 +262,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MainTabContainer" type="TabContainer" parent="UILayer/UI/VBoxContainer"]
+[node name="MainTabContainer" type="TabContainer" parent="UILayer/UI/VBoxContainer" unique_id=1845107992]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -243,14 +272,14 @@ current_tab = 1
 tab_focus_mode = 0
 script = ExtResource("4_ebnul")
 
-[node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
+[node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=2111112156]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("4_tsj6b")
 metadata/_tab_index = 0
 
-[node name="SearchContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search"]
+[node name="SearchContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1984302747]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,51 +288,65 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer"]
+[node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer" unique_id=1828313418]
 layout_mode = 2
 placeholder_text = "search"
 clear_button_enabled = true
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Current playlist"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Reload" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-icon = ExtResource("6_hvfjo")
-script = ExtResource("13_v4vu2")
-
-[node name="Clear" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-icon = ExtResource("16_vh2qp")
-script = ExtResource("14_hiood")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer"]
-custom_minimum_size = Vector2(0, 348.775)
+[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer" unique_id=1964252526]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="CurrentPlaylist" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3" unique_id=1945480464]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer" unique_id=6887791]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer" unique_id=1825221851]
+layout_mode = 2
+text = "Current playlist"
+
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer" unique_id=544863921]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Waveform" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer/Control" unique_id=1550242482]
+material = SubResource("ShaderMaterial_6my56")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer" unique_id=1960289868]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Reload" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1534598592]
+layout_mode = 2
+icon = ExtResource("6_hvfjo")
+script = ExtResource("13_v4vu2")
+
+[node name="Clear" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1471378842]
+layout_mode = 2
+icon = ExtResource("16_vh2qp")
+script = ExtResource("14_hiood")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer" unique_id=770712495]
+visible = false
+custom_minimum_size = Vector2(0, 348.775)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="CurrentPlaylist" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer" unique_id=1500613489]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -311,56 +354,128 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("4_a2ugy")
 
-[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" unique_id=1768556942 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" unique_id=116212028 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" unique_id=1856455897 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" unique_id=1125812982 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="CurrentPlaylist" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer" unique_id=1986626170 instance=ExtResource("32_27lq4")]
 layout_mode = 2
-mouse_filter = 2
+size_flags_vertical = 3
+script = ExtResource("24_yp42n")
+location = 1
+template_path = NodePath("PlaylistTemplate")
 
-[node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="PlaylistTemplate" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist" unique_id=1213927294]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate" unique_id=1473730408]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer" unique_id=1877593411]
+custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
-mouse_filter = 2
 
-[node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="-IsInQueue" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer/Control" unique_id=521534234]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer" unique_id=1173880899]
 layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
 
-[node name="SongItem8" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=776093636]
 layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
+texture = ExtResource("26_60qda")
+expand_mode = 3
+stretch_mode = 5
 
-[node name="SongItem9" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/ScrollContainer/CurrentPlaylist" instance=ExtResource("7_1iiig")]
+[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer" unique_id=497791629]
 layout_mode = 2
-mouse_filter = 2
+size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3"]
+[node name="-SongName" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer/Infos" unique_id=1797854685]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG ITEM"
+vertical_alignment = 1
+
+[node name="-Artist" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer/Infos" unique_id=419398580]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate/HBoxContainer" unique_id=1875443306]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
+
+[node name="Separator" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3/VBoxContainer/CurrentPlaylist/PlaylistTemplate" unique_id=798152968]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer3" unique_id=1923877201]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 texture = ExtResource("4_rjark")
 stretch_mode = 5
 
-[node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
+[node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("5_u8ia0")
 metadata/_tab_index = 1
 
-[node name="LibraryTabContainer" type="TabContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library"]
+[node name="LibraryTabContainer" type="TabContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library" unique_id=330737005]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -373,13 +488,13 @@ current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("16_j5n8o")
 
-[node name="Downloaded" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer"]
+[node name="Downloaded" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=754179337]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("11_y7jev")
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded" unique_id=1562136682]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,36 +503,36 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" unique_id=918343467]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Label" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer" unique_id=982494450]
 layout_mode = 2
 icon = ExtResource("5_a2ugy")
 script = ExtResource("27_iwouh")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="Label2" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Button" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/HBoxContainer" unique_id=238556777]
 layout_mode = 2
 icon = ExtResource("11_hvfjo")
 script = ExtResource("27_iwouh")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="DownloadedSearchBar" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
+[node name="DownloadedSearchBar" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" unique_id=1036028527]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Search for a song"
 script = ExtResource("30_yp42n")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" unique_id=2089123880]
 visible = false
 custom_minimum_size = Vector2(0, 315.09)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="DownloadedSongListOLD" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer"]
+[node name="DownloadedSongListOLD" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer" unique_id=37007130]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -425,34 +540,38 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("29_m8kwp")
 
-[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
+[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" unique_id=1344044614 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
+[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" unique_id=728832693 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
+[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" unique_id=797951544 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
+[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" unique_id=206877705 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" instance=ExtResource("7_1iiig")]
+[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/ScrollContainer/DownloadedSongListOLD" unique_id=2134702939 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="DownloadedSongList" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" instance=ExtResource("32_27lq4")]
+[node name="DownloadedSongList" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer" unique_id=1511468065 instance=ExtResource("32_27lq4")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("34_xrftb")
+location = 2
+template_path = NodePath("Template")
 
-[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList"]
+[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList" unique_id=388166530]
+editor_description = "Used as a template for the virtual scroll list."
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template" unique_id=2124906202]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -466,26 +585,26 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=1217436344]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
 
-[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Thumbnail"]
+[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Thumbnail" unique_id=2078536819]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-texture = ExtResource("32_451yd")
+texture = ExtResource("26_60qda")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=1629722539]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="-SongName" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos"]
+[node name="-SongName" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos" unique_id=1548112059]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -493,27 +612,28 @@ size_flags_vertical = 6
 text = "SONG ITEM"
 vertical_alignment = 1
 
-[node name="-Artist" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos"]
+[node name="-Artist" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos" unique_id=1699810760]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(0.64, 0.64, 0.64, 1)
+theme_override_font_sizes/font_size = 12
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="-DurationString" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer"]
+[node name="-DurationString" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=822616994]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 10
 text = "XX:XX"
 horizontal_alignment = 2
 
-[node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer"]
+[node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=634236178]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists" unique_id=297000195]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -523,71 +643,71 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer" unique_id=1933398021]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/HBoxContainer" unique_id=1072692061]
 layout_mode = 2
 text = "BUTTONS"
 
-[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/HBoxContainer" unique_id=1164832566]
 layout_mode = 2
 text = "BUTTONS"
 
-[node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer" unique_id=1201810509]
 layout_mode = 2
 mouse_filter = 2
 text = "seach bar"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer" unique_id=302162945]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 8
 mouse_filter = 2
 
-[node name="SongList" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer"]
+[node name="SongList" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer" unique_id=324842593]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=378058385]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=346483207]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label3" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label3" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=298196405]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label4" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label4" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=1038814880]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label5" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label5" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=1512811899]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label6" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label6" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=2070995945]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="Label7" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList"]
+[node name="Label7" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists/VBoxContainer/ScrollContainer/SongList" unique_id=1132159374]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SONG"
 
-[node name="WIP" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists" instance=ExtResource("17_lj740")]
+[node name="WIP" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Playlists" unique_id=1325937200 instance=ExtResource("17_lj740")]
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
@@ -595,14 +715,14 @@ offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
 
-[node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
+[node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=312709688]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("34_ycudd")
 metadata/_tab_index = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=477153478]
 visible = false
 custom_minimum_size = Vector2(0, 348.775)
 layout_mode = 1
@@ -613,51 +733,52 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="SongsDownload" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer"]
+[node name="SongsDownload" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer" unique_id=1413926323]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("25_aaaui")
 
-[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=201934641 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem2" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1231568893 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=467667103 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=170459338 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1012562009 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1359222515 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1807980789 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem8" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem8" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=55618719 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongItem9" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" instance=ExtResource("7_1iiig")]
+[node name="SongItem9" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=2066184654 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
-[node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" instance=ExtResource("32_27lq4")]
+[node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=108100736 instance=ExtResource("32_27lq4")]
 unique_name_in_owner = true
 layout_mode = 1
+template_path = NodePath("Template")
 
-[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload"]
+[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload" unique_id=1606439624]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template" unique_id=620587830]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -671,52 +792,52 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer"]
+[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=84546871]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
 
-[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Thumbnail"]
+[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Thumbnail" unique_id=2052990202]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-texture = ExtResource("32_451yd")
+texture = SubResource("CompressedTexture2D_silr4")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer"]
+[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=1973343711]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos"]
+[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=239237941]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "VIDEO ID"
 vertical_alignment = 1
 
-[node name="-video_id2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos"]
+[node name="-video_id2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=1290787650]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="+get_current_downloading_song" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer"]
+[node name="+get_current_downloading_song" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=606000019]
 layout_mode = 2
 text = "DOWNLOADING"
 
-[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer"]
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=45841735]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Collection" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer"]
+[node name="Collection" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1121885582]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 3
 
-[node name="WIP" parent="UILayer/UI/VBoxContainer/MainTabContainer/Collection" instance=ExtResource("17_lj740")]
+[node name="WIP" parent="UILayer/UI/VBoxContainer/MainTabContainer/Collection" unique_id=72506176 instance=ExtResource("17_lj740")]
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
@@ -724,13 +845,13 @@ offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
 
-[node name="SongPanel" type="VBoxContainer" parent="UILayer/UI/VBoxContainer"]
+[node name="SongPanel" type="VBoxContainer" parent="UILayer/UI/VBoxContainer" unique_id=218371547]
 layout_mode = 2
 mouse_filter = 2
 alignment = 2
 script = ExtResource("23_rbuj6")
 
-[node name="SongLabel" type="RichTextLabel" parent="UILayer/UI/VBoxContainer/SongPanel"]
+[node name="SongLabel" type="RichTextLabel" parent="UILayer/UI/VBoxContainer/SongPanel" unique_id=1331498196]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -739,22 +860,22 @@ text = "song label"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel" unique_id=377300520]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3"]
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3" unique_id=1140783022]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ProgressSlider" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3"]
+[node name="ProgressSlider" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3" unique_id=490176692]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="ProgressSliderBG" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3/ProgressSlider"]
+[node name="ProgressSliderBG" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3/ProgressSlider" unique_id=978288808]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -775,7 +896,7 @@ scrollable = false
 script = ExtResource("24_lgqs7")
 metadata/_custom_type_script = "uid://qtim1nkj32c5"
 
-[node name="ProgressSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3/ProgressSlider"]
+[node name="ProgressSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3/ProgressSlider" unique_id=109459561]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -790,71 +911,71 @@ theme_override_styles/slider = SubResource("StyleBoxEmpty_rbuj6")
 value = 25.0
 script = ExtResource("23_1xdyp")
 
-[node name="Control2" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3"]
+[node name="Control2" type="Control" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer3" unique_id=1003700675]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="TimeLabel" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel"]
+[node name="TimeLabel" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel" unique_id=1865624539]
 unique_name_in_owner = true
 layout_mode = 2
 text = "time label"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel" unique_id=1868098569]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer" unique_id=501833900]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer" unique_id=171667811]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer" unique_id=2069022654]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "Volume offset"
 horizontal_alignment = 1
 
-[node name="VolumeOffsetSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="VolumeOffsetSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer" unique_id=1576425147]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer" unique_id=222574286]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="RadioButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="RadioButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=299464672]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("10_0jgpm")
 
-[node name="RandomButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="RandomButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1141565624]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("11_hvfjo")
 
-[node name="LoopButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="LoopButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1576227519]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("12_y7jev")
 
-[node name="PreviousButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="PreviousButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1122753363]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("6_o5jr7")
 
-[node name="PlayButton" type="TextureButton" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="PlayButton" type="TextureButton" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=888663423]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -864,75 +985,77 @@ texture_pressed = ExtResource("28_n3wwo")
 stretch_mode = 3
 script = ExtResource("23_v8xb2")
 
-[node name="NextButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="NextButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1777644032]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("7_4hl0s")
+script = ExtResource("48_7vusf")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="AddButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="AddButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=752102455]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("8_tsj6b")
 script = ExtResource("11_1i1ll")
 
-[node name="LikeButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="LikeButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1083709570]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("18_5oa1o")
 
-[node name="FavoriteButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2"]
+[node name="FavoriteButton" type="Button" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=2020270323]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("19_whcyh")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer" unique_id=82392164]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3" unique_id=276854358]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=608289512]
 layout_mode = 2
 text = "Volume"
 horizontal_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="VolumeSlider" type="HSlider" parent="UILayer/UI/VBoxContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=807801032]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/SongPanel" unique_id=1277317178]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer" unique_id=652964921]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Button" type="Button" parent="UILayer/UI/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="UILayer/UI/VBoxContainer/HBoxContainer" unique_id=926622719]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("41_r8dah")
 
-[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/HBoxContainer" unique_id=1603046687]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "status"
 
-[node name="Label3" type="Label" parent="UILayer/UI/VBoxContainer/HBoxContainer"]
+[node name="Label3" type="Label" parent="UILayer/UI/VBoxContainer/HBoxContainer" unique_id=1833143582]
 layout_mode = 2
 text = "infos"
 horizontal_alignment = 2
 
-[node name="TopBarOverlay" type="HBoxContainer" parent="UILayer/UI"]
+[node name="TopBarOverlay" type="HBoxContainer" parent="UILayer/UI" unique_id=1841541088]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -942,16 +1065,16 @@ mouse_filter = 2
 alignment = 2
 script = ExtResource("49_451yd")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/TopBarOverlay"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/TopBarOverlay" unique_id=1298418952]
 clip_contents = true
 layout_mode = 2
 
-[node name="DownloadSongsLabel" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer"]
+[node name="DownloadSongsLabel" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer" unique_id=1922855759]
 layout_mode = 2
 mouse_filter = 1
 text = "Downloaded songs:"
 
-[node name="DownloadSongsCount" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer"]
+[node name="DownloadSongsCount" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer" unique_id=143796674]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(43, 0)
 layout_mode = 2
@@ -960,15 +1083,15 @@ text = "99.9k"
 vertical_alignment = 1
 script = ExtResource("50_ycudd")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/TopBarOverlay"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/UI/TopBarOverlay" unique_id=1729434032]
 layout_mode = 2
 
-[node name="DownloadingSongsLabel" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer2"]
+[node name="DownloadingSongsLabel" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer2" unique_id=427024590]
 layout_mode = 2
 mouse_filter = 1
 text = "Downloading songs:"
 
-[node name="DownloadingSongsCount" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer2"]
+[node name="DownloadingSongsCount" type="Label" parent="UILayer/UI/TopBarOverlay/HBoxContainer2" unique_id=832206213]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(43, 0)
 layout_mode = 2
@@ -977,47 +1100,47 @@ text = "99.9k"
 clip_text = true
 script = ExtResource("51_q8th8")
 
-[node name="Control" type="Control" parent="UILayer/UI/TopBarOverlay"]
+[node name="Gap" type="Control" parent="UILayer/UI/TopBarOverlay" unique_id=1838177055]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debug" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="debug" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=96322044]
 layout_mode = 2
 focus_mode = 0
 text = "debug"
 script = ExtResource("42_15o45")
 
-[node name="OpenLogs" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="OpenLogs" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=1253780704]
 layout_mode = 2
 focus_mode = 0
 text = "logs"
 script = ExtResource("43_iwouh")
 
-[node name="ImportASong" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="ImportASong" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=365009609]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("42_brhem")
 script = ExtResource("38_hl0rl")
 
-[node name="ImportHTML" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="ImportHTML" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=1679747817]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("44_15o45")
 script = ExtResource("30_sw7e0")
 
-[node name="DownloadPath" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="DownloadPath" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=1521308637]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("46_4vv4g")
 script = ExtResource("22_5oa1o")
 
-[node name="Stats" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="Stats" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=1431457647]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("48_iwouh")
 
-[node name="Settings" type="Button" parent="UILayer/UI/TopBarOverlay"]
+[node name="Settings" type="Button" parent="UILayer/UI/TopBarOverlay" unique_id=1864812800]
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("49_m8kwp")

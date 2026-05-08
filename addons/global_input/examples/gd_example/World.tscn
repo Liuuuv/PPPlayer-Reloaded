@@ -1,28 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://nch1rd8egy2g"]
+[gd_scene format=3 uid="uid://nch1rd8egy2g"]
 
-[ext_resource type="Script" path="res://addons/global_input/examples/gd_example/World.gd" id="1_a7dwo"]
-[ext_resource type="Script" path="res://addons/global_input/examples/gd_example/Player.gd" id="1_dtvkm"]
-[ext_resource type="Texture2D" uid="uid://dkw1qoeyvsuwo" path="res://icon.png" id="1_r35ff"]
+[ext_resource type="Script" uid="uid://dsy3gdrhxjxm5" path="res://addons/global_input/examples/gd_example/World.gd" id="1_a7dwo"]
+[ext_resource type="Script" uid="uid://buoh2mqrufnm" path="res://addons/global_input/examples/gd_example/Player.gd" id="1_dtvkm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hts2e"]
 size = Vector2(128, 129)
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" unique_id=767050724]
 script = ExtResource("1_a7dwo")
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=175959760]
 position = Vector2(593, 303)
 script = ExtResource("1_dtvkm")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("1_r35ff")
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1005417069]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=979348706]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_hts2e")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=372069417]
 offset_right = 241.0
 offset_bottom = 75.0
 text = "Wasd to move

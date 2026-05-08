@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://cej6v7oecv1vj"]
+
+[ext_resource type="Script" uid="uid://bpajiibwgsy25" path="res://Windows/InfoWindow/info_window.gd" id="1_3nq6m"]
+
+[node name="InfoWindow" type="Window" unique_id=1919218813 node_paths=PackedStringArray("lines_container")]
+oversampling_override = 1.0
+title = "Song informations"
+initial_position = 4
+size = Vector2i(800, 500)
+script = ExtResource("1_3nq6m")
+lines_container = NodePath("TabContainer/General/VBoxContainer")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1627635791]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+current_tab = 0
+
+[node name="General" type="Control" parent="TabContainer" unique_id=574390742]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/General" unique_id=2121928988]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="display_name" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=1458705019]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/display_name" unique_id=1176101046]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Display name"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/display_name" unique_id=1958783950]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="artist" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=1510016284]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/artist" unique_id=1193921345]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Artist"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/artist" unique_id=493635852]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="release_date" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=1248245807]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/release_date" unique_id=863094523]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Release date"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/release_date" unique_id=2014852451]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="extension" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=503799663]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/extension" unique_id=1658954893]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Extension"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/extension" unique_id=1296109902]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="artist_id" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=660304127]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/artist_id" unique_id=841064613]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Artist ID (YouTube)"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/artist_id" unique_id=1377574633]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="video_id" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=75122670]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/video_id" unique_id=74978803]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Video ID (YouTube)"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/video_id" unique_id=88979560]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="thumbnail_path" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=1791242506]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/thumbnail_path" unique_id=1497990226]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Thumbnail Path"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/VBoxContainer/thumbnail_path" unique_id=118059757]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false

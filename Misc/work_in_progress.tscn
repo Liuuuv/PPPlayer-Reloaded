@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ycahaxmeicmd"]
+[gd_scene format=3 uid="uid://ycahaxmeicmd"]
 
-[ext_resource type="Texture2D" uid="uid://0aqj4x1mmq0s" path="res://Sprites/WorkInProgress.png" id="1_ddvu0"]
+[ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="1_ddvu0"]
 
 [node name="WIP" type="TextureRect"]
 anchors_preset = 15
