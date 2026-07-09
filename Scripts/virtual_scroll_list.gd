@@ -39,12 +39,13 @@ func _initialize_context_menu():
 			context_menu.add_item("Add to current playlist", _add_selected_song_to_current_playlist, false, null)
 			context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-			context_menu.add_item("Delete (WIP)", Callable(self, "_delete"), false, null)
+			context_menu.add_item("Delete [WIP]", Callable(self, "_delete"), false, null)
+			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
 		Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST:
 			context_menu.add_item("Play from here", _play_from_here, false, null)
 			context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
+			context_menu.add_item("Remove [kinda WIP]", Callable(self, "_remove_selected"), false, null)
 	#context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
 	
 	context_menu.add_seperator()
@@ -103,3 +104,19 @@ func _remove_selected() -> void:
 func _show_infos() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)
 	Global.info_window.display_info(song_item.id)
+
+func _redownload_thumbnail() -> void:
+	var song_item: Global.SongItem = items.get(selected_idx)
+	var song_info: Dictionary = song_item.infos
+	var video_id: String = song_info.get("video_id", "")
+	if video_id == "":
+		Global.logs_display.write("No \"video_id\" for ID %s, skipping thumbnail downloading." % song_item.id)
+		return
+	var url: String = Tools.build_youtube_url(video_id)
+	DownloadsManager.download_thumbnail_from_url(url, song_item.id)
+
+
+
+
+
+#

@@ -5,3 +5,8 @@ downloads/
 downloads/*
 downloads/*.*
 build/
+
+downloaded_songs.json
+/.history
+logs.json
+/temp

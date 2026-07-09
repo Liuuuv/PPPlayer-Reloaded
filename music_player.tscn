@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://b17uax2pb6n4b" path="res://Sprites/Previous.png" id="6_o5jr7"]
 [ext_resource type="PackedScene" uid="uid://b76u0h5xxnc8p" path="res://Misc/song_item.tscn" id="7_1iiig"]
 [ext_resource type="Texture2D" uid="uid://ca2pjilq2aot6" path="res://Sprites/Next.png" id="7_4hl0s"]
+[ext_resource type="PackedScene" uid="uid://h5omux40mwov" path="res://Popup/InsertTextDialog/insert_text_dialog.tscn" id="7_6my56"]
 [ext_resource type="Texture2D" uid="uid://044f4mvdi84d" path="res://Sprites/Add.png" id="8_tsj6b"]
 [ext_resource type="PackedScene" uid="uid://br5ly536s08iq" path="res://Popup/confirmation_dialog.tscn" id="9_q3dvi"]
 [ext_resource type="Texture2D" uid="uid://33hr1l6vjapt" path="res://Sprites/Radio.png" id="10_0jgpm"]
@@ -179,10 +180,8 @@ access = 2
 filters = PackedStringArray("*.mp3", "*.wav")
 script = ExtResource("5_5kp84")
 
-[node name="InsertTextDialog" parent="." unique_id=1873839097 instance=ExtResource("9_q3dvi")]
+[node name="InsertTextDialog" parent="." unique_id=1094984974 instance=ExtResource("7_6my56")]
 visible = false
-always_on_top = true
-popup_window = true
 
 [node name="ConfirmationDialog" parent="." unique_id=771532876 instance=ExtResource("9_q3dvi")]
 visible = false
@@ -268,7 +267,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_u8ia0")
 tab_alignment = 1
-current_tab = 1
+current_tab = 2
 tab_focus_mode = 0
 script = ExtResource("4_ebnul")
 
@@ -470,6 +469,7 @@ texture = ExtResource("4_rjark")
 stretch_mode = 5
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("5_u8ia0")
@@ -627,6 +627,17 @@ theme_override_font_sizes/font_size = 10
 text = "XX:XX"
 horizontal_alignment = 2
 
+[node name="Separator" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/Downloaded/VBoxContainer/DownloadedSongList/Template" unique_id=1269706911]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)
+
 [node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=634236178]
 visible = false
 layout_mode = 2
@@ -716,7 +727,6 @@ offset_bottom = 0.0
 mouse_filter = 2
 
 [node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=312709688]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("34_ycudd")
@@ -746,24 +756,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="SongItem3" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=467667103 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem4" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=170459338 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem5" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1012562009 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem6" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1359222515 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem7" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=1807980789 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem8" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=55618719 instance=ExtResource("7_1iiig")]
-layout_mode = 2
-
-[node name="SongItem9" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/ScrollContainer/SongsDownload" unique_id=2066184654 instance=ExtResource("7_1iiig")]
 layout_mode = 2
 
 [node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=108100736 instance=ExtResource("32_27lq4")]
@@ -810,7 +802,14 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=239237941]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=968461730]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=1748360940]
+layout_mode = 2
+text = "Video ID: "
+
+[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=239237941]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -830,6 +829,17 @@ text = "DOWNLOADING"
 [node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=45841735]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Separator" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template" unique_id=2010849808]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)
 
 [node name="Collection" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1121885582]
 visible = false

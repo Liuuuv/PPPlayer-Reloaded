@@ -260,30 +260,31 @@ func build_youtube_url(id: String):
 
 
 func get_thumbnail(id: String) -> ImageTexture:
-		#request_thumbnail_later()
-		#return
-		
-		var thumbnail_path: String = Global.get_thumbnail_path(id)
-		if thumbnail_path == "":
-			return
-		
-		if not ResourceLoader.exists(thumbnail_path):
-			#print("song_item > load_thumbnail, no thumbnail path provided and this path doesn't work neither: ", full_path)
-			Global.logs_display.write("get_thumbnail, no thumbnail path provided and this path doesn't work neither: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
-			return
-		
-		#if error != OK:
-			##push_error("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [full_path, error])
-			#Global.logs_display.write("song_item > load_thumbnail, error when loading the thumbnail. Full path: %s, Error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
-			#return
-		
-		#var texture := ImageTexture.create_from_image(image)
-		var texture: Texture2D = ResourceLoader.load(thumbnail_path, "", ResourceLoader.CACHE_MODE_IGNORE)
-		
-		return texture
+	var thumbnail_path: String = Global.get_thumbnail_path(id)
+	if thumbnail_path == "":
+		return null
+	
+	if not FileAccess.file_exists(thumbnail_path):
+		Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
+		return null
+	
+	var image := Image.new()
+	image = image.load_from_file(thumbnail_path)
+	#var error := image.load(thumbnail_path)
+	#if error != OK:
+		#Global.logs_display.write("get_thumbnail, failed to load image: %s, error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
+		#return null
+	if image:
+		return ImageTexture.create_from_image(image)
+	else:
+		return null
 
 
 func get_cached_thumbnail(id: String) -> Texture2D:
+	#var thumbnail: Texture2D = get_thumbnail(id)
+	#return thumbnail
+	#print("get_cached_thumbnail for id %s" % id)
+	
 	# Vérifier si la texture est déjà en cache
 	if id in _thumbnail_cache:
 		var cached_texture: Texture2D = _thumbnail_cache[id]

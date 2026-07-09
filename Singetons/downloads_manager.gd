@@ -52,6 +52,33 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 		return infos
 
 
+func download_thumbnail_from_url(url: String, file_name: String) -> Dictionary:
+	if not YtDlp.is_setup():
+		await YtDlp.setup_completed
+	
+	var time = Time.get_ticks_msec()
+	
+	var download: YtDlp.Download = YtDlp.download(url)
+	download.set_destination(Global.get_downloads_path())
+	download.set_file_name(file_name)
+	
+	download.write_thumbnail()
+	download.no_download()
+	download.start()
+
+	var output: Array = await download.download_completed
+	Global.logs_display.write("Thumbnail download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
+	print("Thumbnail download complete")
+	
+	# if interrupted (error or hand interrupted)
+	if output.size() >= 1:
+		if output[0] == "interrupt":
+			Global.logs_display.write("Download was interrupted", LogsDisplay.MESSAGE.WARNING)
+			return {"interrupt": 0}
+	return {}
+	
+
+
 func get_video_infos_from_url(url: String) -> Dictionary:
 	if not YtDlp.is_setup():
 		await YtDlp.setup_completed

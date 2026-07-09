@@ -105,4 +105,4 @@ func _on_try_dl():
 
 func _on_queue_changed():
 	reload_queue_song_items()
-	Global.logs_display.write("Downloading queue changed " + str(downloading_queue))
+	Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))

@@ -179,7 +179,7 @@ func get_downloads_path() -> String:
 	return settings.get("downloads_path")
 
 func change_downloads_path(new_downloads_path: String) -> void:
-	print("chaning downloads path")
+	print("changing downloads path")
 	if not new_downloads_path.ends_with("/"):
 		new_downloads_path += "/"
 	settings.set("downloads_path", new_downloads_path)

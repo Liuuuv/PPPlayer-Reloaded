@@ -247,24 +247,30 @@ class Download extends RefCounted:
 
 				options_and_arguments.append_array(["--format", format])
 		
-		if not _no_download:
-			var file_path: String = (
-				"{destination}{file_name}.%(ext)s"
-				. format(
-					{
-						"destination": _destination,
-						"file_name": _file_name,
-					}
-				)
+		#if not _no_download:
+		var file_path: String = (
+			"{destination}{file_name}.%(ext)s"
+			. format(
+				{
+					"destination": _destination,
+					"file_name": _file_name,
+				}
 			)
+		)
 
-			options_and_arguments.append_array(["--no-continue", "-o", file_path])
+		options_and_arguments.append_array(["--no-continue", "-o", file_path])
+		
+		
+			
 		
 		if _gather_infos:
 			options_and_arguments.append_array(["--dump-json", "--no-simulate"])
 		
 		if _write_thumbnail:
 			options_and_arguments.append_array(["--write-thumbnail"])
+		
+		if _no_download:
+			options_and_arguments.append_array(["--skip-download"])
 		
 		#if _track_progression:
 			#options_and_arguments.append_array(["--progress"])
@@ -289,6 +295,7 @@ class Download extends RefCounted:
 			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s." % [_file_name, exit_code])
 			self._thread_stopped.call_deferred()
 			return
+		Global.logs_display.write("Exit code: %s" % exit_code)
 		
 		_output = output
 		Global.logs_display.write("Download: Thread finished")

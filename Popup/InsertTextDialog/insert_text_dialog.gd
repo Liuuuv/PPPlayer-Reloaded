@@ -19,24 +19,19 @@ func _ready() -> void:
 
 func ask_for_text(placeholder_text: String = ""):
 	inserted_text = ""
-	text_edit.text = ""
 	text_edit.placeholder_text = placeholder_text
 	show()
 	await closing_window
 	inserted_text = text_edit.text
-	print("inserted_text ",inserted_text)
 	return inserted_text
 
 func close_window() -> void:
 	closing_window.emit()
 	hide()
-	
+	text_edit.text = ""
 
 func _on_confirm():
-	print("_on_confirm")
 	close_window()
 
-func _on_close_request(): 
-	print("_on_close_request")
-	text_edit.text = ""
+func _on_close_request():
 	close_window()
