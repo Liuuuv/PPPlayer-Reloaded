@@ -154,17 +154,16 @@ func _get_full_path_from_id(id: String) -> String:
 
 
 func _on_play():
-	print("osdsdsdd")
 	unpause_song()
 
 func _on_pause():
 	pause_song()
 
 func _on_next_pressed() -> void:
-	pass
+	SongManager.play_next_song()
 
 func _on_previous_pressed() -> void:
-	pass
+	SongManager.play_previous_song()
 
 
 

@@ -1,7 +1,4 @@
 extends ButtonComponent
 
-
-
 func _pressed() -> void:
-	SongManager._on_next_pressed()
-	
+	OS.shell_open(OS.get_user_data_dir())

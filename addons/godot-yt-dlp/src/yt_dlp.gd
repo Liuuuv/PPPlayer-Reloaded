@@ -65,12 +65,20 @@ func setup() -> void:
 	_is_setup = true
 	setup_completed.emit()
 
+func _cleanup_ffmpeg_release_archive(ffmpeg_release_filepath: String) -> void:
+	if not FileAccess.file_exists(ffmpeg_release_filepath):
+		return
+
+	var remove_error := DirAccess.remove_absolute(ProjectSettings.globalize_path(ffmpeg_release_filepath))
+	if remove_error != OK and FileAccess.file_exists(ffmpeg_release_filepath):
+		push_warning("Couldn't remove temporary ffmpeg archive: %s" % error_string(remove_error))
 
 func _setup_ffmpeg() -> void:
+	const ffmpeg_release_filepath = "user://ffmpeg-release.zip"
 	if FileAccess.file_exists("user://ffmpeg.exe") and FileAccess.file_exists("user://ffprobe.exe"):
+		_cleanup_ffmpeg_release_archive(ffmpeg_release_filepath)
 		return
 	
-	const ffmpeg_release_filepath = "user://ffmpeg-release.zip";
 	_downloader.download(ffmpeg_sources["Windows"], ffmpeg_release_filepath)
 	await _downloader.download_completed
 	
@@ -78,6 +86,7 @@ func _setup_ffmpeg() -> void:
 	var error := zip_reader.open(ffmpeg_release_filepath)
 	if error != OK:
 		push_error(self, "Couldn't extract ffmpeg release: %s" % error_string(error))
+		_cleanup_ffmpeg_release_archive(ffmpeg_release_filepath)
 		return
 	
 	var filepaths := Array(zip_reader.get_files()).filter(
@@ -90,7 +99,8 @@ func _setup_ffmpeg() -> void:
 		file.store_buffer(zip_reader.read_file(f))
 		file.close()
 	
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(ffmpeg_release_filepath))
+	zip_reader.close()
+	_cleanup_ffmpeg_release_archive(ffmpeg_release_filepath)
 
 
 func _update_yt_dlp(filename: String) -> void:
@@ -122,7 +132,7 @@ class Download extends RefCounted:
 	var _file_name: String = "godot_yt_dlp_download_"
 	var _convert_to_audio: bool = false
 	var _video_format: Video = Video.WEBM
-	var _audio_format: Audio = Audio.MP3
+	var _audio_format: Audio = Audio.WAV
 	var _is_stopped: bool = false
 	var _gather_infos: bool = false
 	var _write_thumbnail: bool = false
@@ -224,7 +234,7 @@ class Download extends RefCounted:
 		if not _no_download:
 			match OS.get_name():
 				"Windows":
-					options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://")])
+					options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://ffmpeg.exe")])
 				"Linux", "macOS":
 					# Get the path of system ffmpeg 
 					var output := []
@@ -261,6 +271,7 @@ class Download extends RefCounted:
 		options_and_arguments.append_array(["--no-continue", "-o", file_path])
 		
 		
+		
 			
 		
 		if _gather_infos:
@@ -271,6 +282,8 @@ class Download extends RefCounted:
 		
 		if _no_download:
 			options_and_arguments.append_array(["--skip-download"])
+		else:
+			options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])
 		
 		#if _track_progression:
 			#options_and_arguments.append_array(["--progress"])

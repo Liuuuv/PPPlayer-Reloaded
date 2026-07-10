@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://b76u0h5xxnc8p"]
 
-[ext_resource type="Script" uid="uid://be1qoeke8wcth" path="res://Misc/song_item.gd" id="1_f8dde"]
+[ext_resource type="Script" uid="uid://be1qoeke8wcth" path="res://Misc/song_item_old.gd" id="1_f8dde"]
 [ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="2_0hldc"]
 
 [sub_resource type="Theme" id="Theme_f8dde"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0hldc"]
 
-[node name="SongItem" type="Panel"]
+[node name="SongItem" type="Panel" unique_id=140719188]
 clip_contents = true
 custom_minimum_size = Vector2(200, 50)
 anchors_preset = -1
@@ -20,7 +20,7 @@ grow_vertical = 2
 theme = SubResource("Theme_f8dde")
 script = ExtResource("1_f8dde")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=665273186]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -34,13 +34,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="Thumbnail" type="PanelContainer" parent="HBoxContainer"]
+[node name="Thumbnail" type="PanelContainer" parent="HBoxContainer" unique_id=2054584322]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0hldc")
 
-[node name="Thumbnail" type="TextureRect" parent="HBoxContainer/Thumbnail"]
+[node name="Thumbnail" type="TextureRect" parent="HBoxContainer/Thumbnail" unique_id=1924182263]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
@@ -49,11 +49,11 @@ texture = ExtResource("2_0hldc")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Infos" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Infos" type="VBoxContainer" parent="HBoxContainer" unique_id=1863179461]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SongName" type="Label" parent="HBoxContainer/Infos"]
+[node name="SongName" type="Label" parent="HBoxContainer/Infos" unique_id=1336883402]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -61,14 +61,14 @@ size_flags_vertical = 6
 text = "SONG ITEM"
 vertical_alignment = 1
 
-[node name="Artist" type="Label" parent="HBoxContainer/Infos"]
+[node name="Artist" type="Label" parent="HBoxContainer/Infos" unique_id=890633479]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="Duration" type="Label" parent="HBoxContainer"]
+[node name="Duration" type="Label" parent="HBoxContainer" unique_id=1035439920]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 10

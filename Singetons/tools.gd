@@ -4,7 +4,8 @@ extends Node
 var _thumbnail_cache: Dictionary = {}
 
 
-var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+#var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" ## eg Pe and pe are considered the same
+var alphabet: String = "abcdefghijklmnopqrstuvwxyz0123456789"
 var alphabet_length: int = alphabet.length()
 var alphabet_int_map: Dictionary = {} ## char: int
 var alphabet_base: int = alphabet_length - 1
@@ -265,7 +266,7 @@ func get_thumbnail(id: String) -> ImageTexture:
 		return null
 	
 	if not FileAccess.file_exists(thumbnail_path):
-		Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.ERROR)
+		#Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.INFO)
 		return null
 	
 	var image := Image.new()
@@ -343,3 +344,47 @@ func from_dict_data_to_array(dict: Dictionary, attibutes: Array) -> Array[Array]
 		array.append(sub_array)
 	
 	return array
+
+func clear_directory_contents(path: String, remove_dir: bool = false) -> Error:
+	var dir = DirAccess.open(path)
+	if dir == null:
+		return DirAccess.get_open_error()
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if file_name != "." and file_name != "..":
+			var full_item_path = path + "/" + file_name
+			if dir.current_is_dir():
+				var error = clear_directory_contents(full_item_path, remove_dir)
+				if error != OK:
+					return error
+				error = dir.remove(full_item_path)
+				if error != OK:
+					return error
+			else:
+				var error = dir.remove(full_item_path)
+				if error != OK:
+					return error
+		file_name = dir.get_next()
+	dir.list_dir_end()
+	
+	if remove_dir:
+		dir.remove(path)
+	return OK
+
+func delete_file(file_path: String) -> bool:
+	if FileAccess.file_exists(file_path):
+		var dir = DirAccess.open(file_path.get_base_dir())
+		if dir:
+			var error = dir.remove(file_path)
+			if error == OK:
+				Global.logs_display.write("Fichier supprimé avec succès", LogsDisplay.MESSAGE.INFO)
+				return true
+			else:
+				Global.logs_display.write("Erreur lors de la suppression: %d" % error, LogsDisplay.MESSAGE.ERROR)
+		else:
+			Global.logs_display.write("Impossible d'accéder au dossier", LogsDisplay.MESSAGE.ERROR)
+	else:
+		Global.logs_display.write("Le fichier n'existe pas", LogsDisplay.MESSAGE.ERROR)
+	return false

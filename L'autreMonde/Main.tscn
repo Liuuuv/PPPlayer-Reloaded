@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://faldp31vpik7"]
 
-[ext_resource type="Script" uid="uid://baar4xu1a60en" path="res://Main.cs" id="1_yd0n5"]
-[ext_resource type="PackedScene" uid="uid://bcf1vu31tluwa" path="res://L'autreMonde/VirtualScrollListcs.tscn" id="2_t3abi"]
+[ext_resource type="Script" uid="uid://baar4xu1a60en" path="res://L'autreMonde/Main.cs" id="1_yd0n5"]
+[ext_resource type="PackedScene" path="res://L'autreMonde/VirtualScrollListcs.tscn" id="2_t3abi"]
 [ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="3_mwujt"]
 
 [node name="Main" type="Control" unique_id=1907956902 node_paths=PackedStringArray("ScrollList", "ScrollGrid")]

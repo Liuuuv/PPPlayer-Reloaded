@@ -17,7 +17,14 @@ func start_song(full_path: String):
 	stream = Tools.get_song_stream(full_path)
 	stream_changed.emit()
 	
+	## Windows overlay
 	WindowsOverlay.ShowOverlay()
+	var id: String = full_path.get_file().get_basename()
+	var thumbnail_path: String = Global.get_thumbnail_path(id)
+	var song_info: Dictionary = Global.song_infos.get(id)
+	if song_info:
+		WindowsOverlay.SetMetadata(song_info.get('display_name', "no display_name provided"), song_info.get('artist', "no artist provided"), thumbnail_path)
+	
 	
 	#if not Global.song_streams.has(id):
 		#return
@@ -55,7 +62,6 @@ func _physics_process(delta: float) -> void:
 		Global.song_panel.progress_slider_bg.value = progress
 		if not Global.song_panel.progress_slider.is_dragging:
 			Global.song_panel.progress_slider.value = progress
-			
 		
 		# Format mm:ss
 		var current_min = int(current_time) / 60

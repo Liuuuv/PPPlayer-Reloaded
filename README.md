@@ -1,8 +1,8 @@
-# PP Player Reloaded (Godot 4.6 Mono)
+# PP Player Reloaded (Godot 4.6 Mono - Windows 10)
 ## What's PP Player?
-PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot
+PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot.
 
-(this software has not been release yet and is work in progress)
+
 
 ## Uses/inspiration of other projects (excluding addons):
 - Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
@@ -11,27 +11,33 @@ PP Player is and open-source local music player with online integrations (YouTub
 ## Addons:
 ### Addons used:
 - yt-dlp (https://github.com/yt-dlp/yt-dlp) (not directly used as it is not a godot addon)
-- godot-yt-dlp (https://github.com/Nolkaloid/godot-yt-dlp)
+- godot-yt-dlp (https://github.com/Nolkaloid/godot-yt-dlp) (v3.0.6)
 - GDContextMenu (https://github.com/Schimiongames/GDContextMenu)
 - Godot-GlobalInput-Addon (https://github.com/Darnoman/Godot-GlobalInput-Addon)
 - godot_tree_table (https://github.com/EinRainerZufall/godot_tree_table)
 
 ### Changes to Godot YT-DLP (https://github.com/Nolkaloid/godot-yt-dlp):
 - Added a pull from the GitHub (https://github.com/Nolkaloid/godot-yt-dlp/pull/13) that handles abandoning DL/search requests.
-- Added possibility of not downloading or only get infos (not parsed)
-- Added a stop if there is an error (error != 0) when executing the command
+- Added possibility of not downloading or only get infos (not parsed).
+- Added a stop if there is an error (```error != 0```) when executing the command.
+- Added additional arguments for preferring the best quality (```options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])```)
+- Changed the audio format to wav.
+
+You need to have deno (the .exe for Win10 users) at the same path as ffmpeg, ffmprobe, yt-flp (```user://```).
+Deno repository: https://github.com/denoland/deno
 
 WIP:
 - Progress Hook
 - Custom logger handler (half done, very laggy right now)
 
-The changed addon by itself does not work because I made it dependent of my project. I advise using the original addon for your own project: https://github.com/Nolkaloid/godot-yt-dlp
+The changed addon by itself does not work because I made it dependent of my project (because of logs, if you have a solution I'm down).
+I advise using the original addon for your own project: https://github.com/Nolkaloid/godot-yt-dlp
 
 ### Changes to Godot Global Input Addon:
-- Set the pressed property of the returning object of GetInputEventMouseButton to false (had an issue with mouse inputs)
+- Set the pressed property of the returning object of GetInputEventMouseButton to false (had an issue with mouse inputs).
 
 ### Changes to Godot Context Menu:
-- Modified the ContextMenu.cs to support subwindows
+- Modified the ContextMenu.cs to support subwindows;
 Added these lines in the function ```show_item``` before setting the position of the menu (for supporting not embedded subwindows):
 ```
 bool embededSubwindows = ProjectSettings.GetSetting("display/window/subwindows/embed_subwindows").AsBool();
@@ -46,7 +52,7 @@ if (!embededSubwindows)
 
 ### Changes to godot_tree_table:
 - Made so that "true" and "false" (bool or string) are displayed as green and red color respectively instead of just text.
-- Added (sloppy) support for bool values sorting (thanks to https://github.com/godotengine/godot/issues/49618#issuecomment-3368709438)
+- Added (sloppy) support for bool values sorting (thanks to https://github.com/godotengine/godot/issues/49618#issuecomment-3368709438).
 
 (
     https://github.com/godotengine/godot/issues/49618#issuecomment-3368709438 :
@@ -56,3 +62,7 @@ if (!embededSubwindows)
     To avoid this issue, ensure that the sort function returns false when the two compared elements are identical
     "
 )
+
+## Complementary informations
+- This software has not been release yet and is work in progress.
+- Works on Godot 4.6 Mono but apparently does not on Godot 4.7.

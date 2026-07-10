@@ -85,7 +85,7 @@ class SongItem:
 		pass
 	
 	func initialize():
-		Global.logs_display.write("initializing song item... ID: %s " % id)
+		#Global.logs_display.write("initializing song item... ID: %s " % id)
 		#tooltip_text = "ID: " + id
 		infos = Global.song_infos.get(id, {})
 		SongName = infos.get("display_name", "") + "          " + id
@@ -135,6 +135,8 @@ func initialize() -> void:
 	#init_download_path()
 	
 	#print("song_labels", song_streams)
+	
+	
 
 func initialize_settings() -> void:
 	print("initializing settings..")
@@ -196,6 +198,7 @@ func load_settings() -> void:
 		settings_changed.emit()
 
 func save_song_infos() -> void:
+	logs_display.write("Song infos saved.", LogsDisplay.MESSAGE.INFO)
 	Tools.write_json_file(song_infos, SONG_INFOS_PATH)
 
 func load_song_infos() -> void:

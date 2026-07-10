@@ -5,7 +5,7 @@ func _pressed() -> void:
 	var full_path: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME
 	if DirAccess.dir_exists_absolute(full_path):
 		
-		var error: Error = DirAccess.remove_absolute(full_path)
+		var error: Error = Tools.clear_directory_contents(full_path)
 		if error != OK:
 			Global.logs_display.write("Error when deleting cache: %s" % error, LogsDisplay.MESSAGE.ERROR)
 		else:

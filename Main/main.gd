@@ -26,7 +26,6 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("debug"):
 		print("debug")
-		WindowsOverlay.SetMetadata("Bonjour", "ARTISTE!!!")
 		#benchmark()
 		
 	#if Input.is_action_just_pressed("toggle_visibility"):

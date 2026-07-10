@@ -2,6 +2,9 @@ using Godot;
 using System;
 using Windows.Media;
 using Windows.Media.Playback;
+using Windows.Storage;
+
+// https://learn.microsoft.com/en-us/uwp/api/windows.media.systemmediatransportcontrolsdisplayupdater?view=winrt-28000
 
 public partial class WindowsOverlay : Node
 {
@@ -54,16 +57,46 @@ public partial class WindowsOverlay : Node
 
 	// 👉 API appelée depuis GDScript
 
-	public void SetMetadata(string title, string artist)
+	public void SetMetadata(string title, string artist, string webpPath = null)
 	{
 		var updater = smtc.DisplayUpdater;
-
+		
 		updater.Type = MediaPlaybackType.Music;
 		updater.MusicProperties.Title = title;
 		updater.MusicProperties.Artist = artist;
-		//updater.TrackNumber = 2;
-		GD.Print("aaa");
+		
+		// Thumbnail
+		
+		// Charge l'image WebP
+		var img = new Image();
 
+		var error = img.Load(webpPath);
+		if (error != Error.Ok)
+		{
+			GD.PrintErr($"Impossible de charger la miniature : {webpPath}");
+			return;
+		}
+
+		// Chemin cache unique (écrasé à chaque fois)
+		string cachePath = "user://smtc_thumbnail.jpg";
+
+		// Sauvegarde en JPG
+		error = img.SaveJpg(cachePath);
+		if (error != Error.Ok)
+		{
+			GD.PrintErr($"Impossible de sauvegarder la miniature : {cachePath}");
+			return;
+		}
+
+		// Convertit user:// en chemin Windows absolu
+		string globalPath = ProjectSettings.GlobalizePath(cachePath);
+		
+		
+		globalPath = globalPath.Replace('/', '\\');
+		StorageFile file = StorageFile.GetFileFromPathAsync(globalPath).AsTask().Result;
+		var thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromFile(file);
+		updater.Thumbnail = thumbnail;
+		
 		updater.Update();
 	}
 
@@ -88,5 +121,5 @@ public partial class WindowsOverlay : Node
 		smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
 	}
 
-	// (thumbnail plus bas 👇)
+	
 }

@@ -1,5 +1,6 @@
 extends Panel
 class_name SongItemOLD
+## NOT USED ANYMORE
 
 
 #@onready var color_rect: ColorRect = $ColorRect

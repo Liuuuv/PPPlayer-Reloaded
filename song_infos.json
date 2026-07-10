@@ -11,10 +11,10 @@
 	"0a": {
 		"artist": "NELKE Channel",
 		"artist_id": "UC51Ub6b_RjxnC7ePn9z0FTQ",
-		"display_name": "ロリポップサイダー (NELKE ver.)",
+		"display_name": "aaaaaaaaaaa",
 		"extension": "mp3",
 		"release_date": "20200630",
-		"thumbnail_path": "",
+		"thumbnail_path": "Edit",
 		"video_id": "zzhBz1vSXp4"
 	},
 	"0b": {
@@ -827,6 +827,15 @@
 		"thumbnail_path": "",
 		"video_id": "nusYeKN4ByE"
 	},
+	"He": {
+		"artist": "",
+		"artist_id": "",
+		"display_name": "",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "IqO8HFbfxVo"
+	},
 	"I": {
 		"artist": "POLKADOT STINGRAY",
 		"artist_id": "UCZ9DY_FlqUYh45R0uSmOIgA",
@@ -871,6 +880,15 @@
 		"release_date": "20150304",
 		"thumbnail_path": "",
 		"video_id": "lHabTfvMEIU"
+	},
+	"Ie": {
+		"artist": "",
+		"artist_id": "",
+		"display_name": "",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "B981hoigXLY"
 	},
 	"J": {
 		"artist": "椎名林檎",
@@ -962,6 +980,15 @@
 		"thumbnail_path": "",
 		"video_id": "qUD-gBP5RX8"
 	},
+	"Ke": {
+		"artist": "かまってチャンネル【公式】",
+		"artist_id": "UCjtNm_gZ8oVVwSpfBi-pGtw",
+		"display_name": "Delay",
+		"extension": "mp3",
+		"release_date": null,
+		"thumbnail_path": "",
+		"video_id": "B981hoigXLY"
+	},
 	"L": {
 		"artist": "櫻坂46 OFFICIAL YouTube CHANNEL",
 		"artist_id": "UCmr9bYmymcBmQ1p2tLBRvwg",
@@ -1052,6 +1079,15 @@
 		"thumbnail_path": "",
 		"video_id": "HSgpWI4s89U"
 	},
+	"Me": {
+		"artist": "9Lana",
+		"artist_id": "UCZvkU-ma74UOqHbD0vebUuw",
+		"display_name": "【MV】BLUE MOON / 9Lana",
+		"extension": "mp3",
+		"release_date": "20260619",
+		"thumbnail_path": "",
+		"video_id": "iGRxE549f7I"
+	},
 	"N": {
 		"artist": "SEB • MUSIC",
 		"artist_id": "UCgi_GF5uzt-Ex_qPcAE5MkA",
@@ -1096,6 +1132,15 @@
 		"release_date": "20160511",
 		"thumbnail_path": "",
 		"video_id": "R9i8nVS2NCA"
+	},
+	"Ne": {
+		"artist": "Keiji Inai - Topic",
+		"artist_id": "UCpf8XSePVcOoB8qoRRp-4UA",
+		"display_name": "Wave Song",
+		"extension": "mp3",
+		"release_date": "20251224",
+		"thumbnail_path": "",
+		"video_id": "0_fp2FSnQFg"
 	},
 	"O": {
 		"artist": "NELKE Channel",
@@ -1142,6 +1187,15 @@
 		"thumbnail_path": "",
 		"video_id": "C8-UNSa40kk"
 	},
+	"Oe": {
+		"artist": "‘Cosmic Princess Kaguya!’ OFFICIAL",
+		"artist_id": "UCNrdR2m8fxDBNbxJDBFPFNQ",
+		"display_name": "【Official MV】Ex-Otogibanashi (Anime ver.) – ryo (supercell) / 月見ヤチヨ(cv.早見沙織) from 超かぐや姫！",
+		"extension": "mp3",
+		"release_date": "",
+		"thumbnail_path": "",
+		"video_id": "qbT7bBYz5YA"
+	},
 	"P": {
 		"artist": "紫 今 - ムラサキ イマ",
 		"artist_id": "UCO_33qdYApF4dzGxGWv7gmg",
@@ -1186,6 +1240,15 @@
 		"release_date": "20161004",
 		"thumbnail_path": "",
 		"video_id": "woKb_TbTrEo"
+	},
+	"Pe": {
+		"artist": "imase",
+		"artist_id": "UC4Kape5ARQ-konOZSw2yawA",
+		"display_name": "【imase】NIGHT DANCER（MV）",
+		"extension": "mp3",
+		"release_date": "20220830",
+		"thumbnail_path": "",
+		"video_id": "kagoEGKHZvU"
 	},
 	"Q": {
 		"artist": "KAVE",

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://jgfisblgtvl4"]
 
-[ext_resource type="Script" uid="uid://ca7aus72bbqfb" path="res://Logs/logs_display.gd" id="1_yrq6w"]
+[ext_resource type="Script" uid="uid://ca7aus72bbqfb" path="res://Windows/LogsWindow/logs_display.gd" id="1_yrq6w"]
 [ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://Shaders/background.gdshader" id="2_6dheg"]
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="3_v58hp"]
-[ext_resource type="Script" uid="uid://c7dflqa2j664e" path="res://clear_logs_button.gd" id="4_v58hp"]
+[ext_resource type="Script" uid="uid://c7dflqa2j664e" path="res://Windows/LogsWindow/clear_logs_button.gd" id="4_v58hp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulfmk"]
 shader = ExtResource("2_6dheg")
@@ -68,12 +68,14 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+focus_mode = 2
 bbcode_enabled = true
 text = "blablablablabla
 blablablablablablablablablablablablablablablablablablablabla
 blablablablablablablablablablablablablablabla
 blablabla"
 scroll_following = true
+selection_enabled = true
 
 [node name="Padding2" type="Control" parent="VBoxContainer" unique_id=1474803584]
 custom_minimum_size = Vector2(0, 10)
