@@ -1,0 +1,12 @@
+{
+	"url": "https://www.uta-net.com/global/en/search/?target=song&kw={query}",
+	"root": "//table[@id='list-table']//tbody/tr",
+	"fields": {
+		"title": ".//td[1]//span/text()",
+		"url": ".//td[1]//a/@href",
+		"artist": ".//td[2]//a/text()",
+		"lyricist": ".//td[3]//a/text()",
+		"composer": ".//td[4]//a/text()",
+		"opening": ".//td[5]/text()"
+	}
+}

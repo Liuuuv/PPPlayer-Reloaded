@@ -46,7 +46,7 @@ func _initialize_context_menu():
 			context_menu.add_item("Play from here", _play_from_here, false, null)
 			context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-			context_menu.add_item("Remove [kinda WIP]", Callable(self, "_remove_selected"), false, null)
+			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
 	#context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
 	
 	context_menu.add_seperator()
@@ -63,6 +63,9 @@ func _set_header_text(text: String) -> void:
 		push_error("No header.")
 		return
 	context_menu._menu.set_item_text(0, text)
+
+func _set_item_text(index: int, text: String) -> void:
+	context_menu._menu.set_item_text(index, text)
 
 func _on_item_left_clicked(idx: int) -> void:
 	super._on_item_left_clicked(idx)

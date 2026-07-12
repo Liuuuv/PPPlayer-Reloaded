@@ -9,6 +9,7 @@ const SETTINGS_PATH: String = "res://settings.json"
 const SONG_INFOS_PATH: String = "res://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
 const LOGS_PATH: String = "res://logs.json"
+const LYRICS_PATH: String = "res://lyrics.json"
 const CACHE_DIR_NAME: String = "_cache" ## in downloads
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
@@ -41,7 +42,7 @@ enum SONG_IDS_LOCATIONS {
 var settings: Dictionary = DEFAULT_SETTINGS
 var song_infos: Dictionary = {} ## {id: {url, name, extension, release_date, artist, album}}
 var downloaded_songs: Dictionary = {}
-
+var lyrics: Dictionary = {} ## {id: lyrics}
 
 var main: Main
 
@@ -54,6 +55,8 @@ var logs_display: LogsDisplay
 var settings_window: SettingsWindow
 var summary_window: SummaryWindow
 var info_window: InfoWindow
+var list_window: ListWindow
+var edit_lyrics_window: EditLyricsWindow
 
 var current_playlist: CurrentPlaylist ## what's playing now
 var downloaded_tab: DownloadedTab ## all the downloaded songs
@@ -62,7 +65,7 @@ var downloads_tab: DownloadsTab ## currently downloading
 var music_player: MusicPlayer ## not meant to be accesed
 var song_panel: SongPanel
 
-var all_displayed_names: Dictionary = {}
+var all_displayed_names: Dictionary = {} ## {display_name: id}
 
 var song_streams: Dictionary = {} ## {id: SongItemOLD}
 
@@ -128,6 +131,7 @@ func initialize() -> void:
 	initialize_settings()
 	initialize_song_infos()
 	initialize_downloaded_songs()
+	initialize_lyrics()
 	print("settings ", settings)
 	#print("song_infos ", song_infos)
 	
@@ -157,6 +161,12 @@ func initialize_downloaded_songs() -> void:
 	load_downloaded_songs()
 	if downloaded_songs == {}:
 		save_downloaded_songs()
+
+func initialize_lyrics() -> void:
+	print("initializing lyrics")
+	load_lyrics()
+	if lyrics == {}:
+		save_lyrics()
 
 func init_song_items():
 	var dir = DirAccess.open(get_downloads_path())
@@ -213,6 +223,13 @@ func save_downloaded_songs() -> void:
 func load_downloaded_songs() -> void:
 	print("loading song infos..")
 	downloaded_songs = Tools.load_json_file(DOWNLOADED_SONGS_PATH)
+
+func save_lyrics() -> void:
+	Tools.write_json_file(lyrics, LYRICS_PATH)
+
+func load_lyrics() -> void:
+	print("loading lyrics")
+	lyrics = Tools.load_json_file(LYRICS_PATH)
 
 func downloaded_song_add(video_id: String):
 	downloaded_songs.set(video_id, 0)

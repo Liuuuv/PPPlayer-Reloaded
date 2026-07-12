@@ -2,6 +2,11 @@ extends ColorRect
 
 var tween_duration: float = 1.1
 
+func _ready() -> void:
+	disappear()
+	
+	
+
 func appear():
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT_IN)

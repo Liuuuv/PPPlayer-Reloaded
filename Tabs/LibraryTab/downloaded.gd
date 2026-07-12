@@ -72,7 +72,7 @@ func reload_song_list(id_to_display: Array = ["all"]) -> void:
 				if extension in ["mp3", "ogg", "wav"]:
 					var full_path = Global.get_downloads_path() + file_name
 					#print("reload_song_list > fullpath ", full_path)
-					Global.logs_display.write("reload_song_list > fullpath " + full_path)
+					#Global.logs_display.write("reload_song_list > fullpath " + full_path)
 					song_list.items.append(Global.create_song_item(id))
 					
 					# for search queries
@@ -120,7 +120,7 @@ func reload_song_listOLD() -> void: ## OLD, LAGGY
 				if extension in ["mp3", "ogg", "wav"]:
 					var full_path = Global.get_downloads_path() + file_name
 					#print("reload_song_list > fullpath ", full_path)
-					Global.logs_display.write("reload_song_list > fullpath " + full_path)
+					#Global.logs_display.write("reload_song_list > fullpath " + full_path)
 					song_item = Global.create_song_itemOLD(id)
 					song_listOLD.add_child(song_item)
 					#num += 1

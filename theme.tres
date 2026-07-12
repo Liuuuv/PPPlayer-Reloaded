@@ -1,4 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://bpi0gh7js67xt"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvktn"]
+
 [resource]
 Panel/styles/panel = null
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_wvktn")

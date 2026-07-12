@@ -1,5 +1,10 @@
 extends Node
 
+var regex_js_id = RegEx.new()
+
+func _ready() -> void:
+	regex_js_id.compile('id="([^"]+)"')
+
 # Méthode principale pour extraire les URLs YouTube d'une page HTML
 func extract_youtube_ids_from_html(html_content: String) -> PackedStringArray:
 	var youtube_ids := PackedStringArray()
@@ -61,39 +66,78 @@ func get_video_id(url: String) -> String:
 		return video_id
 	
 	return url
+	
+func extract_text_from_container(html: String, container_name: String="span") -> String:
+	## <div>This is a div element.</div> -> This is a div element.
+	var start: int= html.find(">") + 1
+	var end: int = html.rfind("</%s>" % container_name)
 
-# Fonction utilitaire pour télécharger une page et extraire les URLs
-func extract_urls_from_webpage(url: String) -> Array[String]:
-	var http_request = HTTPRequest.new()
-	var html_content := ""
-	
-	# Note: Dans la pratique, il faut ajouter HTTPRequest à la scène
-	# et gérer la requête de manière asynchrone
-	
-	# Simulation d'extraction
-	# En réalité, vous devriez :
-	# 1. Créer un HTTPRequest
-	# 2. Connecter le signal "request_completed"
-	# 3. Faire la requête
-	# 4. Dans le callback, appeler extract_youtube_urls_from_html
-	
-	return []
+	if start <= 0 or end == -1:
+		return ""
 
-# Exemple d'utilisation dans un script Godot
-#class_name WebScraper extends Node
+	return html.substr(start, end - start)
+
+func decode_js_id(html: String, element_id: String):
+	var regex = RegEx.new()
+	regex.compile("o\\('([^']+)'\\s*,\\s*'" + element_id + "'\\)")
+	var match_ = regex.search(html)
+	
+	if match_:
+		var encoded_text = match_.get_string(1)
+		print("Texte encodé trouvé pour l'ID ", element_id, " : ", encoded_text)
+		
+		# 2. Décoder
+		var decoded = _decode_obfuscated_text(encoded_text)
+		print("Texte décodé : ", decoded)
+		return decoded
+	
+	print("Aucun script trouvé pour l'ID : ", element_id)
+	return ""
+
+func _decode_obfuscated_text(encoded: String) -> String:
+	# Étape 1 : Base64 decode
+	var bytes = Marshalls.base64_to_raw(encoded)
+	if bytes.size() == 0:
+		return ""
+	
+	var text = bytes.get_string_from_utf8()
+	
+	# Étape 2 : URL decode si nécessaire
+	if "%" in text:
+		text = text.uri_decode()
+	
+	return text
+
+func find_valid_span_id(html: String) -> String:
+	for match_ in regex_js_id.search_all(html):
+		var id = match_.get_string(1)
+		if id != "":  # Ignorer les IDs vides
+			return id
+	
+	return ""  # Aucun ID valide trouvé
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #
-#func _ready():
-	## Exemple avec du contenu HTML
-	#var html_example = """
-	#<html>
-		#<body>
-			#<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Lien 1</a>
-			#<a href="https://youtu.be/dQw4w9WgXcQ">Lien 2</a>
-			#<div data-video-id="dQw4w9WgXcQ"></div>
-			#<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
-		#</body>
-	#</html>
-	#"""
-	#
-	#var urls = YouTubeURLExtractor.extract_youtube_urls_from_html(html_example)
-	#print("URLs trouvées: ", urls)

@@ -128,7 +128,7 @@ func clear_current_playlist(): ## clears the current_playlist
 	playing_song_index = 0
 	Global.music_player.clear_stream()
 
-func _on_stream_changed(): ## from the music player
+func _on_stream_changed(fullpath: String): ## from the music player
 	has_stream = Global.music_player.stream != null
 
 func _on_song_finished():

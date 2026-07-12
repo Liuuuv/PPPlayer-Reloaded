@@ -1,0 +1,1972 @@
+{
+	"0": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"0d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"1": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"1a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"1b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"1c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"1d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"2": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"2a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"2b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"2c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"2d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"3": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"3a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"3b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"3c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"3d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"4": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"4a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"4b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"4c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"4d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"5": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"5a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"5b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"5c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"5d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"6": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"6a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"6b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"6c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"6d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"7": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"7a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"7b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"7c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"7d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"8": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"8a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"8b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"8c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"8d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"a": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"aa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ab": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ac": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ad": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ae": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"b": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ba": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"bb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"bc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"bd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"be": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"c": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ca": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"cb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"cc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"cd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ce": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"d": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"da": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"db": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"dc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"dd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"de": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"e": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ea": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"eb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ec": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ed": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ee": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"f": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"fa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"fb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"fc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"fd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"fe": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"g": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ga": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"gb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"gc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"gd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ge": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"h": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ha": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"hb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"hc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"hd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"he": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"i": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ia": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ib": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ic": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"id": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ie": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"j": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ja": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"jb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"jc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"jd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"je": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"k": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ka": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"kb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"kc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"kd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ke": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"l": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"la": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"lb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"lc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ld": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"le": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"m": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ma": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"mb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"mc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"md": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"me": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"n": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"na": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"nb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"nc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"nd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ne": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"o": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"oa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ob": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"oc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"od": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"oe": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"p": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"pa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"pb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"pc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"pd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"q": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"qa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"qb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"qc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"qd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"qe": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"r": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ra": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"rb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"rc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"rd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"re": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"s": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"sa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"sb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"sc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"sd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"se": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"t": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ta": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"tb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"tc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"td": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"te": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"u": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ua": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ub": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"uc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ud": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ue": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"v": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"va": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"vb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"vc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"vd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ve": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"w": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"wa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"wb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"wc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"wd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"we": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"x": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"xa": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"xb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"xc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"xd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"xe": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"y": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ya": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"yb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"yc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"yd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ye": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"z": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"za": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": true
+	},
+	"zb": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"zc": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"zd": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": true,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	},
+	"ze": {
+		"has_artist": true,
+		"has_display_name": true,
+		"has_extension": true,
+		"has_release_date": false,
+		"has_song_info": true,
+		"has_thumbnail_path": false,
+		"has_video_id": true,
+		"is_duplicate_video_id": false
+	}
+}

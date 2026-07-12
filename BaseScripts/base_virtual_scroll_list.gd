@@ -9,8 +9,8 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 
 @export var template_viewport: SubViewport
 @export var grid_alignment: GridAlignment = GridAlignment.LEFT
-@export var default_scroll_tick_amount: float = 10.0
-@export var fast_tick_amount_multiplier: float = 2.0
+@export var default_scroll_tick_amount: float = 15.0
+@export var fast_tick_amount_multiplier: float = 2.5
 @export var row_width: int = -1
 @export var template_path: NodePath
 @export var _debug_draw: bool = false

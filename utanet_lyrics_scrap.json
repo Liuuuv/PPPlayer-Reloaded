@@ -1,0 +1,7 @@
+{
+	"url": "https://www.uta-net.com/global/en/lyric/{query}/",
+	"root": "//div[@id='kashi-area-roma']",
+	"fields": {
+		"lyrics": "."
+	}
+}

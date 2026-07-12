@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://duqfaxjv0xxax"]
+
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="1_o6msw"]
+[ext_resource type="Script" uid="uid://blyx8aop8lm7y" path="res://Windows/ListWindow/line.gd" id="2_tdfv3"]
+
+[node name="Line" type="PanelContainer" unique_id=1081585942]
+theme = ExtResource("1_o6msw")
+script = ExtResource("2_tdfv3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=396034180]
+layout_mode = 2
+theme = ExtResource("1_o6msw")
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=1451121164]
+unique_name_in_owner = true
+layout_mode = 2
+text = "hello there"
+
+[node name="ChooseButton" type="Button" parent="HBoxContainer" unique_id=976219978]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Choose"

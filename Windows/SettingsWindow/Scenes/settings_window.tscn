@@ -82,18 +82,37 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- recommandation (make it work at least)
+- youtube search (and yt music too), explain how to setup to run the python scripts
+- when a queue exists, when pressing next song, skip the queue
 - a way to stop the preview of a song
 - optimize logs
-- search by ID
 - display a song even if has no mp3 (same if has no song info)
 - finish right click on song
 - finish queue
-- add track number + thumbnail in windows overlay
+- add track number in windows overlay
 - make windows overlay deactivable
 - download progress hook
 - check \"#TODO\" in code
-- fix clear cache
-- fix infos in summary
 - update info from youtube (by right click on song item)
 - cacher/montrer la waveform
-- faire que thumbnail path est mis à jour quand on ouvre info, c'est un path automatique"
+- faire que thumbnail path est mis à jour quand on ouvre info, c'est un path automatique
+- blindtest"
+
+[node name="Other" type="Control" parent="TabContainer" unique_id=2133455322]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Other" unique_id=1821676019]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+text = "Known issues:
+- error sometimes (the first time) when right clicking a song
+- if the bigthumbnail contains a vertical image, it might clip off
+- when reloading in the search tab, a mouse movement is needed to show proper song informations"

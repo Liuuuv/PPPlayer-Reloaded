@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bmq62rp1ddfe6"]
+
+[ext_resource type="Script" uid="uid://b5wtexw35divc" path="res://Windows/ImportSubtitlesWindow/edit_lyrics_window.gd" id="1_jwrx3"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_etorb"]
+
+[node name="EditLyricsWindow" type="Window" unique_id=1919218813]
+oversampling_override = 1.0
+title = "Edit lyrics"
+initial_position = 4
+size = Vector2i(800, 500)
+script = ExtResource("1_jwrx3")
+
+[node name="MainPart" type="HBoxContainer" parent="." unique_id=1613544951]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPart" unique_id=953042435]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextEdit" type="TextEdit" parent="MainPart/ScrollContainer" unique_id=37075038]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPart" unique_id=1462853971]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaveButton" type="Button" parent="MainPart/VBoxContainer" unique_id=1765739896]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Save"
+
+[node name="Label" type="Label" parent="MainPart/VBoxContainer" unique_id=1491724303]
+layout_mode = 2
+text = "Import"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MainPart/VBoxContainer" unique_id=679228897]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Paste the link of your lyrics here"
+
+[node name="OptionButton" type="OptionButton" parent="MainPart/VBoxContainer" unique_id=2010998161]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="MainPart/VBoxContainer" unique_id=1700288413]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_etorb")
+text = "Confirm"
+
+[node name="NoID" type="Label" parent="." unique_id=1564723020]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "No song playing lol"
+horizontal_alignment = 1
+vertical_alignment = 1

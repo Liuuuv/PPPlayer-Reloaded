@@ -1,13 +1,13 @@
 extends AudioStreamPlayer2D
 class_name MusicPlayer
 
-signal stream_changed()
+signal stream_changed(full_path: String)
 signal playing_changed()
 
 @onready var progress_slider: HSlider = %ProgressSlider
 @onready var time_label: Label = %TimeLabel
 
-
+var current_stream_id: String = ""
 
 func _ready() -> void:
 	Global.music_player = self
@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func start_song(full_path: String):
 	stream = Tools.get_song_stream(full_path)
-	stream_changed.emit()
+	
 	
 	## Windows overlay
 	WindowsOverlay.ShowOverlay()
@@ -25,11 +25,13 @@ func start_song(full_path: String):
 	if song_info:
 		WindowsOverlay.SetMetadata(song_info.get('display_name', "no display_name provided"), song_info.get('artist', "no artist provided"), thumbnail_path)
 	
+	current_stream_id = id
 	
 	#if not Global.song_streams.has(id):
 		#return
 	#stream = Global.song_streams[id]
 	play(0.0)
+	stream_changed.emit(full_path)
 	playing_changed.emit()
 
 func pause_song() -> void:
@@ -49,7 +51,8 @@ func clear_stream():
 	stop()
 	playing_changed.emit()
 	stream = null
-	stream_changed.emit()
+	current_stream_id = ""
+	stream_changed.emit("")
 	WindowsOverlay.HideOverlay()
 
 func _physics_process(delta: float) -> void:

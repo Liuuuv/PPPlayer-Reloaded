@@ -2,7 +2,9 @@
 ## What's PP Player?
 PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot.
 
-
+## Shortcuts:
+### Search bar:
+- use 'id:' for id search only.
 
 ## Uses/inspiration of other projects (excluding addons):
 - Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
@@ -24,7 +26,6 @@ PP Player is and open-source local music player with online integrations (YouTub
 - Changed the audio format to wav.
 
 You need to have deno (the .exe for Win10 users) at the same path as ffmpeg, ffmprobe, yt-flp (```user://```).
-Deno repository: https://github.com/denoland/deno
 
 WIP:
 - Progress Hook
@@ -62,6 +63,7 @@ if (!embededSubwindows)
     To avoid this issue, ensure that the sort function returns false when the two compared elements are identical
     "
 )
+
 
 ## Complementary informations
 - This software has not been release yet and is work in progress.
