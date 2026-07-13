@@ -4,6 +4,7 @@ var http_request: HTTPRequest
 var current_callback: Callable
 var process_func: Callable = Callable()
 var current_scrap_json_path: String = ""
+var busy: bool = false
 
 var explicit_url: bool = false ## if the user gives the full url. If true, then the query is the full url
 
@@ -14,6 +15,9 @@ func _ready():
 	http_request.request_completed.connect(_on_request_completed)
 
 func get_html_from_url(search_url: String, callback: Callable) -> void:
+	if busy:
+		push_error("A request is already on going, I'm busy.")
+		return
 	current_callback = callback
 	
 	var headers = [
@@ -23,6 +27,7 @@ func get_html_from_url(search_url: String, callback: Callable) -> void:
 		#"User-Agent: python-requests/2.28.0"
 	#]
 	
+	busy = true
 	var error = http_request.request(search_url, headers)
 	if error != OK:
 		push_error("Erreur de requête: ", error)
@@ -103,7 +108,7 @@ func set_scrap_config(fullpath: String):
 	current_scrap_json_path = fullpath
 
 
-func scrap(query: String, callback: Callable):
+func scrap(query: String, callback: Callable): ## gets the html page by Godot, and then sends it to a python scrip via a temp file
 	var scrap_json = Tools.load_json_file(current_scrap_json_path)
 	var search_url: String = ""
 	if explicit_url:
@@ -119,34 +124,24 @@ func scrap(query: String, callback: Callable):
 	get_html_from_url(search_url, callback)
 
 func process_html(html: String) -> void:
-	var temp_path: String = _save_temp_html(html)
 	
-	var output := []
-
+	
 	var python = "python"
+	
 	var script = ProjectSettings.globalize_path("res://PythonFiles/generic_scrapper.py")
-
+	var temp_path: String = _save_temp_html(html)
 	var html_file = ProjectSettings.globalize_path(temp_path)
-
 	var config = current_scrap_json_path
-
-
-	var exit_code = OS.execute(
-		python,
+	
+	UsePython.execute_python_script(
 		[
 			script,
 			html_file,
 			config
 		],
-		output,
-		true
+		current_callback
 	)
-	print("ouioui output: ", output[0])
-
-	if exit_code == 0:
-		var data = JSON.parse_string(output[0])
-
-		current_callback.call(data)
+	
 ############ END anison ############
 
 func _save_temp_html(html: String) -> String: ## returns globalized path
@@ -185,6 +180,7 @@ func _reset():
 	current_callback = Callable()
 	process_func = Callable()
 	current_scrap_json_path = ""
+	busy = false
 
 func extract_song_data(html: String) -> Dictionary:
 	var data = {}

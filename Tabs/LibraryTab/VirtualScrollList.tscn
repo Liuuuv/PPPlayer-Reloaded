@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dj7jqql5touiq"]
 
-[ext_resource type="Script" uid="uid://c2nsbv7cxag72" path="res://Scripts/virtual_scroll_list.gd" id="1_c6ol7"]
+[ext_resource type="Script" uid="uid://c2nsbv7cxag72" path="res://Scripts/song_virtual_scroll_list.gd" id="1_c6ol7"]
 
 [node name="VirtualScrollList" type="Control" unique_id=1986626170 node_paths=PackedStringArray("template_viewport")]
 clip_contents = true

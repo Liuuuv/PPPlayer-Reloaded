@@ -10,6 +10,7 @@ const SONG_INFOS_PATH: String = "res://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
 const LOGS_PATH: String = "res://logs.json"
 const LYRICS_PATH: String = "res://lyrics.json"
+const SONG_PREFERENCES_PATH: String = "res://song_preferences.json"
 const CACHE_DIR_NAME: String = "_cache" ## in downloads
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
@@ -32,7 +33,7 @@ const DEFAULT_SONG_INFOS: Dictionary = {
 }
 
 
-enum SONG_IDS_LOCATIONS {
+enum SONG_ITEMS_LOCATIONS {
 	NONE,
 	CURRENT_PLAYLIST,
 	DOWNLOADED,
@@ -40,9 +41,10 @@ enum SONG_IDS_LOCATIONS {
 }
 
 var settings: Dictionary = DEFAULT_SETTINGS
-var song_infos: Dictionary = {} ## {id: {url, name, extension, release_date, artist, album}}
-var downloaded_songs: Dictionary = {}
+var song_infos: Dictionary = {} ## {id: {display_name, extension, release_date, artist, album}}
+var downloaded_songs: Dictionary = {} ## {id: 0} ## TODO useless bc song_infos exists
 var lyrics: Dictionary = {} ## {id: lyrics}
+var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool, favorite: bool}}
 
 var main: Main
 
@@ -80,7 +82,8 @@ class SongItem:
 			id = new_id
 			initialize.call_deferred()
 	var infos: Dictionary = {}
-	var location: SONG_IDS_LOCATIONS = SONG_IDS_LOCATIONS.NONE
+	var location: SONG_ITEMS_LOCATIONS = SONG_ITEMS_LOCATIONS.NONE
+	var scroll_list_belong: SongVirtualScrollList
 	var index: int = 0
 	
 	
@@ -93,6 +96,24 @@ class SongItem:
 		infos = Global.song_infos.get(id, {})
 		SongName = infos.get("display_name", "") + "          " + id
 		Artist = infos.get("artist", "")
+	
+	func is_selected() -> String:
+		if index in scroll_list_belong.multiselection:
+			return "■" # ▣
+		else:
+			if scroll_list_belong.multiselection.is_empty():
+				if scroll_list_belong.hovered_idx == index:
+					return "☐"
+				else:
+					return ""
+			else:
+				return "☐"
+	
+	func is_thumbnail_hovered() -> bool:
+		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
+			return true
+		else:
+			return false
 
 class DownloadSongItem:
 	var SongName: String = "SONG NAME"
@@ -117,8 +138,8 @@ class DownloadSongItem:
 		#infos = Global.song_infos.get(id, {})
 		#SongName = infos.get("display_name", "") + "          " + id
 	
-	func get_current_downloading_song():
-		return Global.downloads_tab.current_downloading_song
+	func is_current_downloading_song(video_id: String) -> String:
+		return "DOWNLOADING" if Global.downloads_tab.current_downloading_song == video_id else ""
 
 
 
@@ -132,6 +153,7 @@ func initialize() -> void:
 	initialize_song_infos()
 	initialize_downloaded_songs()
 	initialize_lyrics()
+	initialize_song_preferences()
 	print("settings ", settings)
 	#print("song_infos ", song_infos)
 	
@@ -167,6 +189,12 @@ func initialize_lyrics() -> void:
 	load_lyrics()
 	if lyrics == {}:
 		save_lyrics()
+
+func initialize_song_preferences() -> void:
+	print("initializing lyrics")
+	load_song_preferences()
+	if song_preferences == {}:
+		save_song_preferences()
 
 func init_song_items():
 	var dir = DirAccess.open(get_downloads_path())
@@ -230,6 +258,13 @@ func save_lyrics() -> void:
 func load_lyrics() -> void:
 	print("loading lyrics")
 	lyrics = Tools.load_json_file(LYRICS_PATH)
+
+func load_song_preferences() -> void:
+	print("loading song settings")
+	song_preferences = Tools.load_json_file(SONG_PREFERENCES_PATH)
+
+func save_song_preferences() -> void:
+	Tools.write_json_file(song_preferences, SONG_PREFERENCES_PATH)
 
 func downloaded_song_add(video_id: String):
 	downloaded_songs.set(video_id, 0)

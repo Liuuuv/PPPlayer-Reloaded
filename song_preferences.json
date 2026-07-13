@@ -1,0 +1,14 @@
+{
+	"1": {
+		"like": true,
+		"volume_offset": 20.0
+	},
+	"1a": {
+		"like": true,
+		"volume_offset": -7.0
+	},
+	"1b": {
+		"like": true,
+		"volume_offset": 20.0
+	}
+}

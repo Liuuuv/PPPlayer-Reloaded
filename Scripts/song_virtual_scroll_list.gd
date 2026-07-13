@@ -2,9 +2,25 @@ extends BaseVirtualScrollList
 class_name SongVirtualScrollList
 
 
-@export var location: Global.SONG_IDS_LOCATIONS
+@export var location: Global.SONG_ITEMS_LOCATIONS
 
 var context_menu: ContextMenu
+
+var is_hovering_selection_box: bool = false # if x mouse pos is sufficently high
+var multiselecting: bool = false:
+	set(on):
+		if multiselecting == on:
+			return
+		multiselecting = on
+		if not multiselecting:
+			multiselection = []
+var multiselection: Array = []
+
+var is_hovering_thumbnail: bool = false: # if x mouse pos is sufficently low
+	set(on):
+		if is_hovering_thumbnail == on:
+			return
+		is_hovering_thumbnail = on
 
 func _ready() -> void:
 	super._ready()
@@ -20,6 +36,8 @@ func clear_song_items() -> void:
 func add_song_item(id: String) -> Global.SongItem:
 	var song_item: Global.SongItem = Global.create_song_item(id)
 	song_item.location = location
+	song_item.scroll_list_belong = self
+	song_item.index = len(items)
 	items.append(song_item)
 	
 	queue_redraw()
@@ -35,14 +53,14 @@ func _initialize_context_menu():
 	#context_menu.add_placeholder_item("%s" % _get_selected_idx(), true, null)
 	context_menu.add_header_item("HEADER", null)
 	match location:
-		Global.SONG_IDS_LOCATIONS.DOWNLOADED:
+		Global.SONG_ITEMS_LOCATIONS.DOWNLOADED:
 			context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Add to current playlist", _add_selected_song_to_current_playlist, false, null)
 			context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
 			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
 			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
-		Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST:
+		Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 			context_menu.add_item("Play from here", _play_from_here, false, null)
 			context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
@@ -70,6 +88,16 @@ func _set_item_text(index: int, text: String) -> void:
 func _on_item_left_clicked(idx: int) -> void:
 	super._on_item_left_clicked(idx)
 	_set_header_text("Selected %s-th song" % idx)
+	if is_hovering_selection_box:
+		multiselecting = true
+		
+		if not idx in multiselection:
+			multiselection.append(idx)
+		else:
+			multiselection.erase(idx)
+	
+	if is_hovering_thumbnail:
+		_play_from_here()
 
 func _on_item_right_clicked(idx: int) -> void:
 	super._on_item_right_clicked(idx)
@@ -77,7 +105,14 @@ func _on_item_right_clicked(idx: int) -> void:
 
 func _on_context_menu_opened() -> void:
 	selected_idx = hovered_idx
-	_set_header_text("Selected %s-th song" % selected_idx)
+	if selected_idx != -1:
+		for idx in context_menu._menu.item_count:
+			context_menu._menu.set_item_disabled(context_menu._menu.get_item_id(idx), false)
+		_set_header_text("Selected %s-th song" % selected_idx)
+	else:
+		_set_header_text("No song hovered")
+		for idx in context_menu._menu.item_count:
+			context_menu._menu.set_item_disabled(context_menu._menu.get_item_id(idx), true)
 
 func _preview_selected_song() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)
@@ -106,7 +141,7 @@ func _add_selected_song_to_current_playlist() -> void:
 	#SongManager.play_last_song_from_current_playlist()
 
 func _play_from_here() -> void: ## should only be called for a current_playlist song
-	if location != Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST:
+	if location != Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 		push_error("trying to play from here not from the current playlist, skipping")
 		return
 	var song_item: Global.SongItem = items.get(selected_idx)

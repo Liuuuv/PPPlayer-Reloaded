@@ -271,9 +271,6 @@ class Download extends RefCounted:
 		options_and_arguments.append_array(["--no-continue", "-o", file_path])
 		
 		
-		
-			
-		
 		if _gather_infos:
 			options_and_arguments.append_array(["--dump-json", "--no-simulate"])
 		
@@ -282,8 +279,8 @@ class Download extends RefCounted:
 		
 		if _no_download:
 			options_and_arguments.append_array(["--skip-download"])
-		else:
-			options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])
+		#else:
+			#options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"]) # i think it's useless bc of
 		
 		#if _track_progression:
 			#options_and_arguments.append_array(["--progress"])
@@ -301,10 +298,13 @@ class Download extends RefCounted:
 		#print("YTDLP options_and_arguments: ", options_and_arguments)
 		Global.logs_display.write("Executable: " + executable)
 		Global.logs_display.write("YTDLP options and arguments: " + str(options_and_arguments))
-		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output)
+		var exit_code = OS.execute(executable, PackedStringArray(options_and_arguments), output, true)
 		
 		if exit_code != 0:
-			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s" % exit_code, LogsDisplay.MESSAGE.ERROR)
+			var output_message: String = ""
+			for part in output:
+				output_message += part
+			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s.\nOutput: %s" % [exit_code, output_message], LogsDisplay.MESSAGE.ERROR)
 			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s." % [_file_name, exit_code])
 			self._thread_stopped.call_deferred()
 			return

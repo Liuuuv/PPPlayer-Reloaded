@@ -20,6 +20,10 @@ config/features=PackedStringArray("4.6", "C#", "Mobile")
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://4yo58dy0gns"
+
 [autoload]
 
 Global="*res://Singetons/global.gd"
@@ -35,6 +39,7 @@ Config="*uid://54pmoutdoiwu"
 GlobalInput="uid://dtqvsd027rpqs"
 MusicRecommendation="*uid://d3ubf80vbov6l"
 Scrapper="*uid://yh3cefmuiggi"
+UsePython="*uid://dnro2lp8ux1i"
 
 [display]
 

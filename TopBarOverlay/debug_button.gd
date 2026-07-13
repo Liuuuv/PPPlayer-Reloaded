@@ -9,4 +9,4 @@ func _pressed() -> void:
 	
 	#Scrapper.search_utanet("Beautiful Soldier", Global.list_window.display_lines)
 	#Scrapper.utanet_lyrics("235048", print)
-	Scrapper.process_genius("Genius-romanizations-minami-kawaki-wo-ameku-romanized-lyrics", print)
+	#Scrapper.process_genius("Genius-romanizations-minami-kawaki-wo-ameku-romanized-lyrics", print)

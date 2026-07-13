@@ -23,7 +23,7 @@ var id: String = "":
 	set(new_id):
 		id = new_id
 		initialize.call_deferred()
-var location: Global.SONG_IDS_LOCATIONS = Global.SONG_IDS_LOCATIONS.NONE
+var location: Global.SONG_ITEMS_LOCATIONS = Global.SONG_ITEMS_LOCATIONS.NONE
 var index: int = 0
 
 var context_menu: ContextMenu
@@ -75,10 +75,10 @@ func _delete() -> void:
 	Global.delete_song(id)
 	
 	match location:
-		Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST:
+		Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 			#_on_clicked_in_current_playlist()
 			Global.current_playlist.reload_song_items()
-		Global.SONG_IDS_LOCATIONS.DOWNLOADS:
+		Global.SONG_ITEMS_LOCATIONS.DOWNLOADS:
 			Global.downloads_tab.reload_song_items()
 		_:
 			pass
@@ -147,7 +147,7 @@ func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			match location:
-				Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST:
+				Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 					#_on_clicked_in_current_playlist()
 					SongManager.play_from_index(index)
 				_:

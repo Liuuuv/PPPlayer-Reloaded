@@ -71,8 +71,11 @@ func reload_queue_song_itemsOLD() -> void:
 func _on_try_dl():
 	#print("_on_try_dl")
 	Global.logs_display.write("Trying to download next song..")
-	if not is_ready_to_dl or downloading_queue.size() == 0:
-		Global.logs_display.write("Not ready to DL or downloading queue is empty.", LogsDisplay.MESSAGE.WARNING)
+	if not is_ready_to_dl:
+		Global.logs_display.write("Not ready to DL.", LogsDisplay.MESSAGE.WARNING)
+		return
+	if downloading_queue.size() == 0:
+		Global.logs_display.write("No download left.", LogsDisplay.MESSAGE.INFO)
 		return
 	#print("is_ready_to_dl")
 	
@@ -96,9 +99,10 @@ func _on_try_dl():
 	if "interrupt" in infos:
 		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s" % [video_id, id], LogsDisplay.MESSAGE.ERROR)
 	else:
-		var extension: String = "mp3"
+		print("infos ", infos)
+		var extension: String = Config.default_audio_format_string
 		var thumbnail_path: String = ""
-		
+		#
 		Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
 	remove_from_queue(video_id)
 	is_ready_to_dl = true

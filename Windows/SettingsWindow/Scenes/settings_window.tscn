@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Windows/SettingsWindow/Scripts/do_checkup.gd" id="2_e3bw5"]
 [ext_resource type="Script" uid="uid://dm7cqtwn6us8q" path="res://Windows/SettingsWindow/Scripts/clear_cache.gd" id="2_kbi0k"]
 [ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Windows/SettingsWindow/Scripts/remove_duplicate.gd" id="3_y72ja"]
+[ext_resource type="Script" uid="uid://dotm7dksllgpe" path="res://Windows/SettingsWindow/Scripts/update_downloaded_songs_song_infos.gd" id="5_2oix8"]
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
 [ext_resource type="Script" uid="uid://bop3jkdcdd0uv" path="res://Windows/SettingsWindow/Scripts/open_user_button.gd" id="6_nnm61"]
 
@@ -48,11 +49,17 @@ focus_mode = 0
 text = "create summary"
 script = ExtResource("2_e3bw5")
 
-[node name="RescanDownloadedSong" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1518767812]
+[node name="UpdateDownloadedSongsFolder" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1518767812]
 layout_mode = 2
 focus_mode = 0
-text = "update downloaded song (rescan)"
+text = "update downloaded song from folder"
 script = ExtResource("1_noev4")
+
+[node name="UpdateDownloadedSongsSongInfos" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=848123551]
+layout_mode = 2
+focus_mode = 0
+text = "update downloaded song from song infos"
+script = ExtResource("5_2oix8")
 
 [node name="RemoveDuplicate" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=119951918]
 layout_mode = 2
@@ -82,6 +89,7 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- download errors: put ids into json
 - recommandation (make it work at least)
 - youtube search (and yt music too), explain how to setup to run the python scripts
 - when a queue exists, when pressing next song, skip the queue

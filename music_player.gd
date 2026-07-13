@@ -4,13 +4,18 @@ class_name MusicPlayer
 signal stream_changed(full_path: String)
 signal playing_changed()
 
-@onready var progress_slider: HSlider = %ProgressSlider
-@onready var time_label: Label = %TimeLabel
+var progress_slider: HSlider
+var time_label: Label
 
 var current_stream_id: String = ""
 
 func _ready() -> void:
 	Global.music_player = self
+	_initialize.call_deferred()
+
+func _initialize() -> void:
+	time_label = Global.song_panel.time_label
+	progress_slider = Global.song_panel.progress_slider
 
 
 func start_song(full_path: String):
@@ -72,3 +77,16 @@ func _physics_process(delta: float) -> void:
 		var total_min = int(total_time) / 60
 		var total_sec = int(total_time) % 60
 		time_label.text = "%02d:%02d / %02d:%02d" % [current_min, current_sec, total_min, total_sec]
+	
+	var volume_multiplier: float = 1.2
+	var main_volume_linear = (Global.song_panel.main_volume / 100.0) * volume_multiplier
+	var volume_offset_linear = (Global.song_panel.volume_offset / 100.0)
+	volume_linear = main_volume_linear * (1.0 + volume_offset_linear)
+
+
+
+
+
+
+
+#

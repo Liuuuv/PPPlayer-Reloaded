@@ -63,10 +63,10 @@ func _ready() -> void:
 	if template:
 		template.tree_exiting.connect(_on_template_exiting)
 	
+	
 	item_left_clicked.connect(_on_item_left_clicked)
 	item_right_clicked.connect(_on_item_right_clicked)
-	
-	
+
 
 func _on_template_exiting() -> void:
 	template = null
@@ -259,7 +259,7 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 		var label: Label = template_control
 		var text: String = ""
 		
-		if str(template_control.name)[0] == '-':
+		if str(template_control.name)[0] == '-': ## -prop: replaces with item's property "prop"
 			var property_name: String = template_control.name.substr(1)
 			var property_value = get_property(item, property_name)
 			# formatting
@@ -267,10 +267,20 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			
 			# replacing
 			text = str(property_value) if property_value != null else label.text
-		elif str(template_control.name)[0] == '+': ## TODO generalize this
-			var method_name: String = template_control.name.substr(1)
-			var value = item.call(method_name)
-			text = label.text if value == item.video_id else ""
+		elif str(template_control.name)[0] == '+': ## +part1-part2: write the result of the func item.part1 with arg item.part2
+			var parts: PackedStringArray = template_control.name.split("-", true, 1)
+			var method_name: String = parts[0].substr(1)
+			var arg_name: String
+			if len(parts) > 1:
+				arg_name = parts[1]
+			else:
+				arg_name = ""
+			var value: String
+			if arg_name != "":
+				value = item.call(method_name, item.get(arg_name))
+			else:
+				value = item.call(method_name)
+			text = value if value else ""
 		else:
 			text = label.text
 		
@@ -302,6 +312,20 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 					draw_texture_rect(thumbnail, item_box, false)
 				elif texture_rect.texture:
 					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+		elif str(template_control.name)[0] == '?':
+			var parts: PackedStringArray = template_control.name.split("-", true, 1)
+			var method_name: String = parts[0].substr(1)
+			var arg_name: String = parts[1] if len(parts) > 1 else ""
+			var boolean: bool
+			if arg_name != "":
+				boolean = item.call(method_name, item.get(arg_name))
+			else:
+				boolean = item.call(method_name)
+			if boolean:
+				var texture_rect: TextureRect = template_control
+				if texture_rect.texture:
+					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+			
 	
 	elif template_control is ColorRect:
 		if str(template_control.name)[0] == '-':

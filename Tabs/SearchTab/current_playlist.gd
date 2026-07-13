@@ -1,8 +1,14 @@
 extends SongVirtualScrollList
 class_name CurrentPlaylist
 
+@onready var is_selected_template: Label = %"+is_selected"
+@onready var thumbnail: TextureRect = %Thumbnail
+
+
+
 var content_ids: Array[String] = [] ## contains the ids of the songs
 var queue_ids: Array[String] = [] ## contains the ids of the queue
+
 
 func _ready() -> void:
 	super._ready()
@@ -23,6 +29,27 @@ func reload_song_items() -> void:
 	##print("current_playlist items ", items)
 	#if Input.is_action_just_pressed("debug"):
 		#_update_items_from_content_and_queue()
+
+func _gui_input(event: InputEvent) -> void:
+	super._gui_input(event)
+	if event is InputEventMouseMotion:
+		var mm: InputEventMouseMotion = event
+		var template_box: Rect2 = template.get_rect()
+		if mm.position.x >= template_box.size.x - is_selected_template.size.x:
+			is_hovering_selection_box = true
+		else:
+			is_hovering_selection_box = false
+		
+		#var thumbnail_rect: Rect2 = thumbnail.get_global_rect()
+		#is_hovering_thumbnail = thumbnail_rect.has_point(mm.position)
+		if thumbnail.position.x <= mm.global_position.x and mm.position.x <= thumbnail.global_position.x + thumbnail.size.x:
+			is_hovering_thumbnail = true
+		else:
+			is_hovering_thumbnail = false
+		if is_hovering_thumbnail and hovered_idx >= 0:
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		else:
+			mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 func _remove_selected() -> void:
 	if selected_idx <= SongManager.playing_song_index:
@@ -60,7 +87,9 @@ func _update_items_from_content_and_queue() -> void:
 
 func _add_selected_to_queue_end() -> void:
 	super._add_selected_to_queue_end()
-	
+
+func _on_item_left_clicked(idx: int) -> void:
+	super._on_item_left_clicked(idx)
 
 
 

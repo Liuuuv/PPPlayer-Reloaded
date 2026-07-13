@@ -23,7 +23,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 		download.gather_infos()
 	if write_thumbnail:
 		download.write_thumbnail()
-	download.convert_to_audio(YtDlp.Audio.MP3)
+	download.convert_to_audio(Config.audio_format)
 	download.start()
 
 	var output: Array = await download.download_completed
@@ -37,7 +37,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 			return {"interrupt": 0}
 	
 	# success
-	Global.downloads_folder_changed.emit()
+	Global.downloads_folder_changed.emit.call_deferred()
 	
 	if get_infos:
 		var infos: Dictionary

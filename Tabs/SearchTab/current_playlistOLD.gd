@@ -14,7 +14,7 @@ func reload_song_items() -> void:
 	
 	for index in range(content_ids.size()):
 		var song_item: SongItemOLD = Global.create_song_itemOLD(content_ids[index])
-		song_item.location = Global.SONG_IDS_LOCATIONS.CURRENT_PLAYLIST
+		song_item.location = Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST
 		song_item.index = index
 		add_child(song_item)
 
