@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://b5gndxt74s7x4"]
+
+[ext_resource type="Script" uid="uid://cdpcvr8wqoyja" path="res://Tabs/SearchTab/ContentTabs/SubtitlesTab/subtitles_tab.gd" id="1_8qjq7"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="2_de1qn"]
+
+[node name="LyricsTab" type="Control" unique_id=278143286]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8qjq7")
+metadata/_tab_index = 1
+metadata/_tab_name = "Lyrics"
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1285776587]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1324427355]
+layout_mode = 2
+theme = ExtResource("2_de1qn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=1270634726]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Subtitles" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1228827104]
+unique_name_in_owner = true
+layout_mode = 2
+text = "lyrics
+lyrics
+lyrics
+
+lyrics
+
+lyrics
+lyrics
+lyrics
+lyricslyricslyricslyrics
+lyrics
+
+lyrics
+lyrics
+
+
+lyrics
+lyrics
+lyrics
+"

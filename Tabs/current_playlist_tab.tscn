@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://b4moeqmhwxth"]
+
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="1_b2iuf"]
+[ext_resource type="Script" uid="uid://cbx6j1uenupxw" path="res://Tabs/SearchTab/current_playlist.gd" id="2_ttfw2"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="3_sij5o"]
+[ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="4_he1b8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+
+[node name="CurrentPlaylistTab" type="Control" unique_id=2097629533]
+layout_mode = 3
+anchors_preset = 0
+metadata/_tab_index = 0
+metadata/_tab_name = "Current Playlist"
+
+[node name="CurrentPlaylistContent" parent="." unique_id=1986626170 instance=ExtResource("1_b2iuf")]
+layout_mode = 1
+script = ExtResource("2_ttfw2")
+location = 1
+template_path = NodePath("PlaylistTemplate")
+
+[node name="PlaylistTemplate" type="Panel" parent="CurrentPlaylistContent" unique_id=1474186942]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CurrentPlaylistContent/PlaylistTemplate" unique_id=1423057335]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer" unique_id=1698449629]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="-IsInQueue" type="ColorRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Control" unique_id=126455651]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Thumbnail" type="PanelContainer" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer" unique_id=1591182732]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
+
+[node name="Thumbnail" type="TextureRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1516333965]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_sij5o")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="?is_thumbnail_hovered" type="TextureRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1117660625]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_he1b8")
+stretch_mode = 2
+
+[node name="Infos" type="VBoxContainer" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer" unique_id=772555931]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-SongName" type="Label" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Infos" unique_id=404236152]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG ITEM"
+vertical_alignment = 1
+
+[node name="-Artist" type="Label" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Infos" unique_id=395979150]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer" unique_id=1357233852]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
+
+[node name="+is_selected" type="Label" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer" unique_id=1005975594]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 30
+text = "☐"
+horizontal_alignment = 1
+
+[node name="Separator" type="ColorRect" parent="CurrentPlaylistContent/PlaylistTemplate" unique_id=873745519]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)
