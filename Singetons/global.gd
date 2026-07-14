@@ -67,6 +67,8 @@ var downloads_tab: DownloadsTab ## currently downloading
 var music_player: MusicPlayer ## not meant to be accesed
 var song_panel: SongPanel
 
+var artist_page: ArtistPage
+
 var all_displayed_names: Dictionary = {} ## {display_name: id}
 
 var song_streams: Dictionary = {} ## {id: SongItemOLD}

@@ -76,15 +76,18 @@ def main():
         result
     ))
 
-def test(): ## debug
+def test(given_config: str = ''): ## debug
+    if given_config == '':
+        config_file = "utanet_song_list.json"
+        
+        with open(config_file, "r", encoding="utf-8") as f:
+            config = json.load(f)
+    else:
+        config = json.loads(given_config)
+    
     html_file = "C://Users/olivi/AppData/Roaming/Godot/app_userdata/PPPlayer-(4.6)/temp_page.html"
-    config_file = "utanet_song_list.json"
     with open(html_file, "r", encoding="utf-8") as f:
         page = f.read()
-
-
-    with open(config_file, "r", encoding="utf-8") as f:
-        config = json.load(f)
 
 
     result = scrape(page, config)

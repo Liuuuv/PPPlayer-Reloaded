@@ -44,6 +44,9 @@ I advise using the original addon for your own project: https://github.com/Nolka
 
 ### Changes to Godot Global Input Addon:
 - Set the pressed property of the returning object of GetInputEventMouseButton to false (had an issue with mouse inputs).
+(```<ItemGroup>
+    <PackageReference Include="SharpHook" Version="6.1.2" />
+  </ItemGroup>``` in the ```.csproj``` in case you want to use it.)
 
 ### Changes to Godot Context Menu:
 - Modified the ContextMenu.cs to support subwindows;

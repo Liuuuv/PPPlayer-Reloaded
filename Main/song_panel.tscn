@@ -50,8 +50,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 137.0
 grow_horizontal = 2
-mouse_filter = 2
-alignment = 2
+mouse_filter = 0
 script = ExtResource("1_br0fo")
 
 [node name="SongLabel" type="RichTextLabel" parent="." unique_id=1251830294]

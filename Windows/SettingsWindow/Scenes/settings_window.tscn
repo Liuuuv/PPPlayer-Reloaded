@@ -89,6 +89,7 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- change artist field to artistS, because some songs have multiple artists
 - download errors: put ids into json
 - playlist (liked)
 - finish multiselection
