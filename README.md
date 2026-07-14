@@ -18,9 +18,10 @@ So I thought 'can I really complain?', so my goal is to recreate a music player 
 - You need to have Python installed in order to execute Python scripts (they are not compiled because of transparency).
 - You need to put deno.exe in the user folder (Settings > Open user folder) for yt-dlp to work properly.
 
-## Uses/inspiration of other projects (excluding addons):
-- Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
-- Nollie (https://github.com/Cranzor/nollie)
+## Uses/inspiration of other projects:
+- Godot (excluding addons):
+    - Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
+    - Nollie (https://github.com/Cranzor/nollie)
 
 ## Addons:
 ### Addons used:

@@ -6,7 +6,7 @@ from ytmusicapi import YTMusic
 def get_recommendations(video_id):
 	try:
 		ytmusic = YTMusic()
-		autoplay_playlist = ytmusic.get_watch_playlist(video_id)
+		autoplay_playlist = ytmusic.get_watch_playlist(video_id, None, 25, True)
 		
 		recommendations = []
 		for track in autoplay_playlist['tracks']:

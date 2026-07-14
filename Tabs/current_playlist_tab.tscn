@@ -9,7 +9,11 @@
 
 [node name="CurrentPlaylistTab" type="Control" unique_id=2097629533]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_tab_index = 0
 metadata/_tab_name = "Current Playlist"
 
@@ -68,7 +72,7 @@ size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("3_sij5o")
 expand_mode = 3
-stretch_mode = 5
+stretch_mode = 4
 
 [node name="?is_thumbnail_hovered" type="TextureRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1117660625]
 layout_mode = 2

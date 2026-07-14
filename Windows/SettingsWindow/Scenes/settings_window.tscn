@@ -90,20 +90,20 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
 - download errors: put ids into json
+- playlist (liked)
+- finish multiselection
 - recommandation (make it work at least)
 - youtube search (and yt music too), explain how to setup to run the python scripts
 - when a queue exists, when pressing next song, skip the queue
 - a way to stop the preview of a song
 - optimize logs
 - display a song even if has no mp3 (same if has no song info)
-- finish right click on song
 - finish queue
 - add track number in windows overlay
 - make windows overlay deactivable
 - download progress hook
 - check \"#TODO\" in code
 - update info from youtube (by right click on song item)
-- cacher/montrer la waveform
 - faire que thumbnail path est mis à jour quand on ouvre info, c'est un path automatique
 - blindtest"
 
