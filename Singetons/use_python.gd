@@ -4,6 +4,14 @@ func _ready() -> void:
 	pass
 
 func execute_python_script(args: Array, callback: Callable) -> void:
+	## UsePython.execute_python_script(
+	## 	[
+	## 		script,
+	## 		html_file,
+	## 		config
+	## 	],
+	## 	current_callback
+	## )
 	var output := []
 	var python = "python"
 

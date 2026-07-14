@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="21_qoe36"]
 [ext_resource type="Script" uid="uid://x8r21vq7ja58" path="res://Tabs/SearchTab/clear.gd" id="22_nh6ww"]
 [ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="25_vgxo8"]
-[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="27_ephol"]
 [ext_resource type="PackedScene" uid="uid://chgshiplgkeo0" path="res://Page/artist_page.tscn" id="28_ytmp3"]
 [ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="29_ucuw1"]
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
@@ -341,14 +340,14 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-texture = ExtResource("27_ephol")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="ArtistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1993962236 instance=ExtResource("28_ytmp3")]
+visible = false
 layout_mode = 1
 offset_top = 35.0
-offset_bottom = 178.0
+offset_bottom = 236.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
 visible = false
@@ -571,6 +570,7 @@ texture = ExtResource("41_730hx")
 layout_mode = 2
 
 [node name="BottomBar" type="HBoxContainer" parent="UILayer/UI/VBoxContainer" unique_id=652964921]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 

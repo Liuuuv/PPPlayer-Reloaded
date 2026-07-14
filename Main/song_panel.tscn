@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dq3ocgtdnehnk"]
 
 [ext_resource type="Script" uid="uid://b4my2vvfb820g" path="res://song_panel.gd" id="1_br0fo"]
+[ext_resource type="Shader" uid="uid://c1s0r8b7qiitt" path="res://Shaders/artist_page_bg.gdshader" id="1_qtj8f"]
+[ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="1_t13l1"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="2_j0ok6"]
 [ext_resource type="Script" uid="uid://j8ady7t5adjr" path="res://SongPanel/progress_slider_bg.gd" id="3_stjf3"]
 [ext_resource type="Script" uid="uid://qtim1nkj32c5" path="res://SongPanel/progress_slider.gd" id="4_odre4"]
@@ -21,6 +23,16 @@
 [ext_resource type="Texture2D" uid="uid://coh0kjgo3d7au" path="res://Sprites/Favorite.png" id="18_dtpy3"]
 [ext_resource type="Texture2D" uid="uid://6g2mccineqfd" path="res://Sprites/LikePressed.png" id="19_j0ok6"]
 [ext_resource type="Script" uid="uid://c1dl4f71l0xvu" path="res://BaseScripts/custom_toggle_button.gd" id="19_stjf3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_odre4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qtj8f"]
+shader = ExtResource("1_qtj8f")
+shader_parameter/blur_radius = 8
+shader_parameter/blur_strength = 4.34300020303262
+shader_parameter/fade_direction = 3
+shader_parameter/fade_cutoff = 0.22000001045
+shader_parameter/fade_intensity = 7.71500036320262
 
 [sub_resource type="ImageTexture" id="ImageTexture_lgqs7"]
 
@@ -45,47 +57,59 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbuj6"]
 
-[node name="SongPanel" type="VBoxContainer" unique_id=968184744]
+[node name="Control" type="PanelContainer" unique_id=753946091]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 137.0
+offset_bottom = 139.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_odre4")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=113807125]
+visible = false
+layout_mode = 2
+texture = ExtResource("1_t13l1")
+
+[node name="BlurBG" type="ColorRect" parent="." unique_id=123622933]
+material = SubResource("ShaderMaterial_qtj8f")
+layout_mode = 2
+color = Color(0.21, 0.13649999, 0.13649999, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=874406539]
+layout_mode = 2
+theme_override_constants/margin_top = 45
+theme_override_constants/margin_bottom = 15
+
+[node name="SongPanel" type="VBoxContainer" parent="MarginContainer" unique_id=968184744]
+layout_mode = 2
 mouse_filter = 0
 script = ExtResource("1_br0fo")
 
-[node name="SongLabel" type="RichTextLabel" parent="." unique_id=1251830294]
+[node name="SongLabel" type="RichTextLabel" parent="MarginContainer/SongPanel" unique_id=1251830294]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 bbcode_enabled = true
-text = "song label"
+text = "[i]No song playing[/i]"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="." unique_id=1377644983]
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/SongPanel" unique_id=1377644983]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="HBoxContainer3" unique_id=280271229]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ProgressSlider" type="Control" parent="HBoxContainer3" unique_id=1232021769]
+[node name="ProgressSlider" type="MarginContainer" parent="MarginContainer/SongPanel/HBoxContainer3" unique_id=1834240008]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
 
-[node name="ProgressSliderBG" type="HSlider" parent="HBoxContainer3/ProgressSlider" unique_id=1420958994]
+[node name="ProgressSliderBG" type="HSlider" parent="MarginContainer/SongPanel/HBoxContainer3/ProgressSlider" unique_id=1420958994]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("2_j0ok6")
 theme_override_icons/grabber = SubResource("ImageTexture_lgqs7")
@@ -98,60 +122,51 @@ scrollable = false
 script = ExtResource("3_stjf3")
 metadata/_custom_type_script = "uid://qtim1nkj32c5"
 
-[node name="ProgressSlider" type="HSlider" parent="HBoxContainer3/ProgressSlider" unique_id=1404465463]
+[node name="ProgressSlider" type="HSlider" parent="MarginContainer/SongPanel/HBoxContainer3/ProgressSlider" unique_id=1404465463]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 theme = ExtResource("2_j0ok6")
 theme_override_icons/grabber = SubResource("GradientTexture2D_hk3jj")
 theme_override_styles/slider = SubResource("StyleBoxEmpty_rbuj6")
 value = 25.0
 script = ExtResource("4_odre4")
 
-[node name="Control2" type="Control" parent="HBoxContainer3" unique_id=655503262]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="TimeLabel" type="Label" parent="." unique_id=1366724048]
+[node name="TimeLabel" type="Label" parent="MarginContainer/SongPanel" unique_id=1366724048]
 unique_name_in_owner = true
 layout_mode = 2
 text = "time label"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=139313914]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/SongPanel" unique_id=139313914]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=748925550]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/SongPanel/HBoxContainer" unique_id=748925550]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/HBoxContainer" unique_id=381888532]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer" unique_id=381888532]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer/HBoxContainer/VBoxContainer" unique_id=829178473]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer" unique_id=829178473]
 layout_mode = 2
 alignment_horizontal = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer" unique_id=593554848]
+[node name="Label" type="Label" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer" unique_id=593554848]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Volume offset"
 horizontal_alignment = 1
 
-[node name="ResetVolumeOffsetButton" type="Button" parent="HBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer" unique_id=1071129569]
+[node name="ResetVolumeOffsetButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer" unique_id=1071129569]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
@@ -160,38 +175,38 @@ flat = true
 alignment = 2
 expand_icon = true
 
-[node name="VolumeOffsetSlider" type="HSlider" parent="HBoxContainer/HBoxContainer/VBoxContainer" unique_id=1183905155]
+[node name="VolumeOffsetSlider" type="HSlider" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer/VBoxContainer" unique_id=1183905155]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = -100.0
 editable = false
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer" unique_id=37272668]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/SongPanel/HBoxContainer" unique_id=37272668]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="RadioButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=1629385899]
+[node name="RadioButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1629385899]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 disabled = true
 icon = ExtResource("5_qtj8f")
 
-[node name="RandomButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=626491127]
+[node name="RandomButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=626491127]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 disabled = true
 icon = ExtResource("6_t13l1")
 
-[node name="LoopButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=367341804]
+[node name="LoopButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=367341804]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 disabled = true
 icon = ExtResource("7_jgn13")
 
-[node name="PreviousButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=1343517176]
+[node name="PreviousButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1343517176]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -199,7 +214,7 @@ icon = ExtResource("8_hfpi6")
 flat = true
 script = ExtResource("9_7u82a")
 
-[node name="PlayButton" type="TextureButton" parent="HBoxContainer/HBoxContainer2" unique_id=1360724048]
+[node name="PlayButton" type="TextureButton" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1360724048]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -209,7 +224,7 @@ texture_pressed = ExtResource("11_0teht")
 stretch_mode = 3
 script = ExtResource("12_h8q5m")
 
-[node name="NextButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=1787797462]
+[node name="NextButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1787797462]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -218,7 +233,7 @@ flat = true
 script = ExtResource("14_1ism2")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="AddButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=1449869622]
+[node name="AddButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=1449869622]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -226,7 +241,7 @@ icon = ExtResource("15_2mqvn")
 flat = true
 script = ExtResource("16_p85rx")
 
-[node name="LikeButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=959954360]
+[node name="LikeButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=959954360]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
@@ -236,34 +251,30 @@ script = ExtResource("19_stjf3")
 pressed_icon = ExtResource("19_j0ok6")
 metadata/_custom_type_script = "uid://c1dl4f71l0xvu"
 
-[node name="FavoriteButton" type="Button" parent="HBoxContainer/HBoxContainer2" unique_id=245271071]
+[node name="FavoriteButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=245271071]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 disabled = true
 icon = ExtResource("18_dtpy3")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer" unique_id=1029572854]
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/SongPanel/HBoxContainer" unique_id=1029572854]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/HBoxContainer3" unique_id=1541510789]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer3" unique_id=1541510789]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=282064198]
+[node name="Label" type="Label" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=282064198]
 layout_mode = 2
 text = "Volume"
 horizontal_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=935777132]
+[node name="VolumeSlider" type="HSlider" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer3/VBoxContainer" unique_id=935777132]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1967495982]
-layout_mode = 2
-mouse_filter = 2

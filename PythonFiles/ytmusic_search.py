@@ -8,7 +8,6 @@ def yt_music_search(query):
         # Récupérer les résultats de recherche
         search_results_raw = ytmusic.search(query, filter="songs", limit=20)
         
-        ytmusic.add_playlist_items
         
         search_results = []
         for item in search_results_raw:

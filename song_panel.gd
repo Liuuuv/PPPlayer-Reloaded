@@ -24,6 +24,7 @@ func _ready() -> void:
 	
 	#$RichTextLabel.text = "[i]Untitled[/i]"
 	volume_slider.value = main_volume
+	time_label.text = ""
 	
 	reset_volume_offset_button.pressed.connect(_on_reset_volume_offset_button_pressed)
 	volume_slider.value_changed.connect(_on_volume_slider_value_changed)

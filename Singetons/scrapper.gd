@@ -14,7 +14,7 @@ func _ready():
 	add_child(http_request)
 	http_request.request_completed.connect(_on_request_completed)
 
-func get_html_from_url(search_url: String, callback: Callable) -> void:
+func download_url(search_url: String, callback: Callable) -> void:
 	if busy:
 		push_error("A request is already on going, I'm busy.")
 		return
@@ -35,59 +35,60 @@ func get_html_from_url(search_url: String, callback: Callable) -> void:
 		_reset()
 
 ############ BEGIN anison ############
-func search_anison(query: String, callback: Callable) -> void: ## unused bc of the python script
-	var encoded_query = query.uri_encode()
-	var search_url = "https://anison.online/en/song?search_text=" + encoded_query + "&section=0&category_id=0&tags=&bpm=0"
-	process_func = process_anison_html
-	get_html_from_url(search_url, callback)
+#func search_anison(query: String, callback: Callable) -> void: ## unused bc of the python script
+	#var encoded_query = query.uri_encode()
+	#var search_url = "https://anison.online/en/song?search_text=" + encoded_query + "&section=0&category_id=0&tags=&bpm=0"
+	#process_func = process_anison_html
+	#download_url(search_url, callback)
 
-func process_anison_html(html: String) -> void: ## unused bc of the python script
-	var results = []
-	
-	var container = find_all_elements_by_class(html, "song-box", "div")
-	#print("container ", container)
-	var found: bool = false
-	for song_box_html in container:
-		var result = {}
-		
-		# SONG NAME
-		var song_name_divs = find_all_elements_by_class(song_box_html, "song-name", "div")
-		for song_name_div in song_name_divs:
-			var song_name_spans: Array = find_all_elements_by_class(song_name_div, "select-none", "span")
-			for span_html: String in song_name_spans:
-				var potential_song_name: String = HtmlCleaner.extract_text_from_container(span_html, "span").strip_edges()
-				if potential_song_name != "" and potential_song_name != "　": ## japanese white space
-					result.set('song_name', potential_song_name)
-					found = true
-					break
-			if not found: ## if this name was not written yet
-				for span_html: String in song_name_spans:
-					var js_id: String = HtmlCleaner.find_valid_span_id(span_html)
-					if js_id != "":
-						var potential_song_name: String = HtmlCleaner.decode_js_id(html, js_id)
-						if potential_song_name != "":
-							result.set('song_name', potential_song_name)
-							found = true
-		
-		# ARTIST
-		var artist_name_as = find_all_elements_by_class(html, "block truncate", "a")
-		for artist_name_a in artist_name_as:
-			var artist: String = HtmlCleaner.extract_text_from_container(artist_name_a, "a").strip_edges()
-			if artist != "":
-				result.set('artist', artist)
-				break
-	
-	current_callback.call(results)
-	#print(Marshalls.base64_to_utf8("R0xBU1NZJTIwU0tZ"))
-	#text.uri_decode()
+#func process_anison_html(body: PackedByteArray) -> void: ## unused bc of the python script
+	#var html: String = body.get_string_from_utf8()
+	#var results = []
+	#
+	#var container = find_all_elements_by_class(html, "song-box", "div")
+	##print("container ", container)
+	#var found: bool = false
+	#for song_box_html in container:
+		#var result = {}
+		#
+		## SONG NAME
+		#var song_name_divs = find_all_elements_by_class(song_box_html, "song-name", "div")
+		#for song_name_div in song_name_divs:
+			#var song_name_spans: Array = find_all_elements_by_class(song_name_div, "select-none", "span")
+			#for span_html: String in song_name_spans:
+				#var potential_song_name: String = HtmlCleaner.extract_text_from_container(span_html, "span").strip_edges()
+				#if potential_song_name != "" and potential_song_name != "　": ## japanese white space
+					#result.set('song_name', potential_song_name)
+					#found = true
+					#break
+			#if not found: ## if this name was not written yet
+				#for span_html: String in song_name_spans:
+					#var js_id: String = HtmlCleaner.find_valid_span_id(span_html)
+					#if js_id != "":
+						#var potential_song_name: String = HtmlCleaner.decode_js_id(html, js_id)
+						#if potential_song_name != "":
+							#result.set('song_name', potential_song_name)
+							#found = true
+		#
+		## ARTIST
+		#var artist_name_as = find_all_elements_by_class(html, "block truncate", "a")
+		#for artist_name_a in artist_name_as:
+			#var artist: String = HtmlCleaner.extract_text_from_container(artist_name_a, "a").strip_edges()
+			#if artist != "":
+				#result.set('artist', artist)
+				#break
+	#
+	#current_callback.call(results)
+	##print(Marshalls.base64_to_utf8("R0xBU1NZJTIwU0tZ"))
+	##text.uri_decode()
 
 
 
 
-func search_utanet(query: String, callback: Callable, given_explicit_url: bool = false) -> void:
-	current_scrap_json_path = ProjectSettings.globalize_path("res://utanet_song_list.json")
-	explicit_url = given_explicit_url
-	scrap(query, callback)
+#func search_utanet(query: String, callback: Callable, given_explicit_url: bool = false) -> void:
+	#current_scrap_json_path = ProjectSettings.globalize_path("res://utanet_song_list.json")
+	#explicit_url = given_explicit_url
+	#scrap(query, callback)
 
 #func utanet_lyrics(query: String, callback: Callable, given_explicit_url: bool = false) -> void:
 	#current_scrap_json_path = ProjectSettings.globalize_path("res://utanet_lyrics_scrap.json")
@@ -121,12 +122,11 @@ func scrap(query: String, callback: Callable): ## gets the html page by Godot, a
 		)
 	print("search_url ", search_url)
 	process_func = process_html
-	get_html_from_url(search_url, callback)
+	download_url(search_url, callback)
 
-func process_html(html: String) -> void:
+func process_html(body: PackedByteArray) -> void:
+	var html: String = body.get_string_from_utf8()
 	
-	
-	var python = "python"
 	
 	var script = ProjectSettings.globalize_path("res://PythonFiles/generic_scrapper.py")
 	var temp_path: String = _save_temp_html(html)
@@ -141,8 +141,16 @@ func process_html(html: String) -> void:
 		],
 		current_callback
 	)
-	
-############ END anison ############
+
+func process_image(body: PackedByteArray) -> void:
+	var image: Image = Image.new()
+	var error = image.load_jpg_from_buffer(body)
+	if error != OK:
+		error = image.load_png_from_buffer(body)
+		current_callback.call(null)
+	current_callback.call(image)
+
+
 
 func _save_temp_html(html: String) -> String: ## returns globalized path
 	var temp_path = "user://temp_page.html"
@@ -164,10 +172,8 @@ func _on_request_completed(result, response_code, headers, body):
 		return
 	
 	
-	
 	if response_code == 200:
-		var html_content = body.get_string_from_utf8()
-		process_func.call(html_content)  # Retourner le HTML brut
+		process_func.call(body) ## !!!!! returns body !!!!!
 	else:
 		push_error("Erreur HTTP: ", response_code)
 		Global.logs_display.write("Erreur HTTP: " + response_code, LogsDisplay.MESSAGE.ERROR)
@@ -182,56 +188,57 @@ func _reset():
 	current_scrap_json_path = ""
 	busy = false
 
-func extract_song_data(html: String) -> Dictionary:
-	var data = {}
-	
-	# Extraire le titre
-	var title_regex = RegEx.new()
-	title_regex.compile('<h3[^>]*>(.*?)</h3>')
-	var title_match = title_regex.search(html)
-	if title_match:
-		data["title"] = strip_html_tags(title_match.get_string(1))
-	
-	# Extraire l'artiste
-	var artist_regex = RegEx.new()
-	artist_regex.compile('<p class="artist"[^>]*>(.*?)</p>')
-	var artist_match = artist_regex.search(html)
-	if artist_match:
-		data["artist"] = strip_html_tags(artist_match.get_string(1))
-	
-	# Extraire l'URL - CORRIGÉ: utiliser \\ pour échapper le point
-	var url_regex = RegEx.new()
-	url_regex.compile('<a href="(https://anison\\.online/en/song/[^"]+)"')
-	var url_match = url_regex.search(html)
-	if url_match:
-		data["url"] = url_match.get_string(1)
-	
-	return data
 
-func strip_html_tags(text: String) -> String:
-	var regex = RegEx.new()
-	regex.compile('<[^>]*>')
-	return regex.sub(text, "", true).strip_edges()
+#func extract_song_data(html: String) -> Dictionary:
+	#var data = {}
+	#
+	## Extraire le titre
+	#var title_regex = RegEx.new()
+	#title_regex.compile('<h3[^>]*>(.*?)</h3>')
+	#var title_match = title_regex.search(html)
+	#if title_match:
+		#data["title"] = strip_html_tags(title_match.get_string(1))
+	#
+	## Extraire l'artiste
+	#var artist_regex = RegEx.new()
+	#artist_regex.compile('<p class="artist"[^>]*>(.*?)</p>')
+	#var artist_match = artist_regex.search(html)
+	#if artist_match:
+		#data["artist"] = strip_html_tags(artist_match.get_string(1))
+	#
+	## Extraire l'URL - CORRIGÉ: utiliser \\ pour échapper le point
+	#var url_regex = RegEx.new()
+	#url_regex.compile('<a href="(https://anison\\.online/en/song/[^"]+)"')
+	#var url_match = url_regex.search(html)
+	#if url_match:
+		#data["url"] = url_match.get_string(1)
+	#
+	#return data
 
-func find_all_elements_by_class(html: String, name_class: String, tag: String = "") -> Array:
-	var results = []
-	var pattern = "<" + tag + '[^>]*class="[^"]*' + name_class + '[^"]*"[^>]*>(.*?)</' + tag + ">"
-		
-	var regex = RegEx.new()
-	if regex.compile(pattern) != OK:
-		return results
-	
-	for match_ in regex.search_all(html):
-		results.append(match_.get_string())
-	
-	return results
-
-func find_all_elements_by_ref(html: String, href_pattern: String, tag: String) -> Array:
-	var regex = RegEx.new()
-	regex.compile('<' + tag + '[^>]*href="' + href_pattern + '"[^>]*>([\\s\\S]*?)</' + tag + '>')
-	
-	var results = []
-	for match_ in regex.search_all(html):
-		results.append(match_.get_string())
-	
-	return results
+#func strip_html_tags(text: String) -> String:
+	#var regex = RegEx.new()
+	#regex.compile('<[^>]*>')
+	#return regex.sub(text, "", true).strip_edges()
+#
+#func find_all_elements_by_class(html: String, name_class: String, tag: String = "") -> Array:
+	#var results = []
+	#var pattern = "<" + tag + '[^>]*class="[^"]*' + name_class + '[^"]*"[^>]*>(.*?)</' + tag + ">"
+		#
+	#var regex = RegEx.new()
+	#if regex.compile(pattern) != OK:
+		#return results
+	#
+	#for match_ in regex.search_all(html):
+		#results.append(match_.get_string())
+	#
+	#return results
+#
+#func find_all_elements_by_ref(html: String, href_pattern: String, tag: String) -> Array:
+	#var regex = RegEx.new()
+	#regex.compile('<' + tag + '[^>]*href="' + href_pattern + '"[^>]*>([\\s\\S]*?)</' + tag + '>')
+	#
+	#var results = []
+	#for match_ in regex.search_all(html):
+		#results.append(match_.get_string())
+	#
+	#return results
