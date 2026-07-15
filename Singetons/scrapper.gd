@@ -10,6 +10,7 @@ var explicit_url: bool = false ## if the user gives the full url. If true, then 
 
 func _ready():
 	http_request = HTTPRequest.new()
+	http_request.use_threads = true
 	http_request.timeout = 10.0
 	add_child(http_request)
 	http_request.request_completed.connect(_on_request_completed)
@@ -31,7 +32,7 @@ func download_url(search_url: String, callback: Callable) -> void:
 	var error = http_request.request(search_url, headers)
 	if error != OK:
 		push_error("Erreur de requête: ", error)
-		callback.call([])
+		callback.callv([])
 		_reset()
 
 ############ BEGIN anison ############

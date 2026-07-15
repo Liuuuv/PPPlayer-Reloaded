@@ -8,11 +8,13 @@ import generic_scrapper as scrapper
 
 scrap_config: str = """
 {
-	"url": ""
-	"root": "//*[@id='lyrics-root']",
-	"fields": {
-		"result": "."
-	}
+    "url": "https://music.youtube.com/playlist?list=OLAK5uy_lDyN1VI3OoUae9vaMJQOO8ATQ2Z0xsV0Q",
+    "root": "//ytmusic-responsive-list-item-renderer",
+    "fields": {
+        "title": ".//yt-formatted-string[@class='title']/a/text()",
+        "link": ".//yt-formatted-string[@class='title']/a/@href",
+        "title_attribute": ".//yt-formatted-string[@class='title']/@title"
+    }
 }
 """
 

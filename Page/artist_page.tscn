@@ -6,21 +6,28 @@
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_7syba"]
 [ext_resource type="Script" uid="uid://q85pqprti5y3" path="res://Page/popular_titles.gd" id="3_eduj6"]
 [ext_resource type="Texture2D" uid="uid://c4ocsfn8yjx5k" path="res://Sprites/Random.png" id="3_pf8qt"]
+[ext_resource type="Shader" uid="uid://dinqhoijvd1gb" path="res://Shaders/vertical_fade.gdshader" id="3_tena2"]
 [ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="4_57epv"]
 [ext_resource type="Texture2D" uid="uid://cx32nx6p4w8u0" path="res://テトリス [L2TrIJsTKHk].webp" id="5_pf8qt"]
 [ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="5_yi2mi"]
+[ext_resource type="Shader" uid="uid://beirxyabxus3m" path="res://Page/loading_logo.gdshader" id="11_tena2"]
 
-[sub_resource type="Gradient" id="Gradient_yi2mi"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.43373495)
-colors = PackedColorArray(0.12156863, 0.12156863, 0.12156863, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_pf8qt"]
-gradient = SubResource("Gradient_yi2mi")
-fill_from = Vector2(0.5, 1)
-fill_to = Vector2(0.5, 0)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mvcfs"]
+shader = ExtResource("3_tena2")
+shader_parameter/color = Color(0.12156863, 0.12156863, 0.12156863, 1)
+shader_parameter/cutoff = 1.0
+shader_parameter/smoothness = 0.286000013585
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pf8qt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c83tn"]
+shader = ExtResource("11_tena2")
+shader_parameter/radius = 0.05
+shader_parameter/ring_radius = 0.35
+shader_parameter/speed = 1.0
+shader_parameter/count = 11
+shader_parameter/fade_power = 4.26400015504
+shader_parameter/circle_color = Color(1, 1, 1, 1)
 
 [node name="ArtistPage" type="Control" unique_id=1993962236]
 clip_contents = true
@@ -32,16 +39,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p6w5q")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1160410847]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 0, 0.3833332, 1)
-
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1116622496]
 unique_name_in_owner = true
 clip_contents = false
@@ -51,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 433
+scroll_vertical = 186
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=996589311]
 layout_mode = 2
@@ -68,16 +65,14 @@ texture = ExtResource("2_yi2mi")
 expand_mode = 5
 stretch_mode = 4
 
-[node name="ColorRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/ArtistCover" unique_id=314355994]
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/VBoxContainer/ArtistCover" unique_id=603643231]
+material = SubResource("ShaderMaterial_mvcfs")
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -220.5
 grow_horizontal = 2
-grow_vertical = 0
-texture = SubResource("GradientTexture2D_pf8qt")
+grow_vertical = 2
 
 [node name="Control" type="PanelContainer" parent="ScrollContainer/VBoxContainer" unique_id=2117484681]
 layout_mode = 2
@@ -134,7 +129,8 @@ theme = ExtResource("3_7syba")
 theme_override_colors/font_color = Color(0.71, 0.71, 0.71, 1)
 text = "999999k subscribers"
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1595763000]
+[node name="ChannelDescription" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1595763000]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -621,3 +617,52 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 text = "X"
+
+[node name="LoadingOverlay" type="Control" parent="." unique_id=1763640231]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingBG" type="ColorRect" parent="LoadingOverlay" unique_id=154097236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.58431375)
+
+[node name="LoadingLogo" type="ColorRect" parent="LoadingOverlay" unique_id=560153461]
+material = SubResource("ShaderMaterial_c83tn")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingInfo" type="Label" parent="LoadingOverlay" unique_id=926826573]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ayo"

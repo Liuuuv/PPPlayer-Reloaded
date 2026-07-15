@@ -24,7 +24,8 @@ def get_artist_infos(artist_id: str):
             "albums",
         ]
         for info_name in to_get:
-            artist_infos[info_name] = artist_infos_raw[info_name]
+            if info_name in artist_infos_raw:
+                artist_infos[info_name] = artist_infos_raw[info_name]
         
         
         # Imprimer le JSON pour Godot

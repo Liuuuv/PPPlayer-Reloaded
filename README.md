@@ -15,7 +15,7 @@ So I thought 'can I really complain?', so my goal is to recreate a music player 
 - use 'id:' for id search only.
 
 ## Dependencies
-- You need to have Python installed in order to execute Python scripts (they are not compiled because of transparency).
+- You need to have Python v3.10+ installed in order to execute Python scripts (they are not compiled because of transparency).
 - You need to put deno.exe in the user folder (Settings > Open user folder) for yt-dlp to work properly.
 
 ## Uses/inspiration of other projects:

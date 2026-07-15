@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dq3ocgtdnehnk"]
 
 [ext_resource type="Script" uid="uid://b4my2vvfb820g" path="res://song_panel.gd" id="1_br0fo"]
-[ext_resource type="Shader" uid="uid://c1s0r8b7qiitt" path="res://Shaders/artist_page_bg.gdshader" id="1_qtj8f"]
+[ext_resource type="Shader" uid="uid://c1s0r8b7qiitt" path="res://Shaders/gaussian_blur.gdshader" id="1_qtj8f"]
 [ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="1_t13l1"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="2_j0ok6"]
 [ext_resource type="Script" uid="uid://j8ady7t5adjr" path="res://SongPanel/progress_slider_bg.gd" id="3_stjf3"]
