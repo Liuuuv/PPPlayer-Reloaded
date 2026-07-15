@@ -1,4 +1,4 @@
-# PP Player Reloaded (Godot 4.6 Mono - Windows 10) (WIP)
+# PP Player Reloaded (Godot 4.7 Mono - Windows 10) (WIP)
 ## What's PP Player?
 PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot.
 
@@ -79,4 +79,4 @@ if (!embededSubwindows)
 
 ## Complementary informations
 - This software has not been release yet and is work in progress.
-- Works on Godot 4.6 Mono but apparently does not on Godot 4.7.
+- Works on Godot 4.7 Mono.
