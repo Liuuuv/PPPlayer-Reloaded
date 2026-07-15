@@ -24,15 +24,15 @@
 [ext_resource type="Texture2D" uid="uid://6g2mccineqfd" path="res://Sprites/LikePressed.png" id="19_j0ok6"]
 [ext_resource type="Script" uid="uid://c1dl4f71l0xvu" path="res://BaseScripts/custom_toggle_button.gd" id="19_stjf3"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_odre4"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yh4yq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qtj8f"]
 shader = ExtResource("1_qtj8f")
 shader_parameter/blur_radius = 8
-shader_parameter/blur_strength = 4.34300020303262
+shader_parameter/blur_strength = 2.4400001126401203
 shader_parameter/fade_direction = 3
-shader_parameter/fade_cutoff = 0.22000001045
-shader_parameter/fade_intensity = 7.71500036320262
+shader_parameter/fade_cutoff = 0.10000000475
+shader_parameter/fade_intensity = 1.9900000912651201
 
 [sub_resource type="ImageTexture" id="ImageTexture_lgqs7"]
 
@@ -57,26 +57,38 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbuj6"]
 
-[node name="Control" type="PanelContainer" unique_id=753946091]
+[node name="Control" type="PanelContainer" unique_id=848108265]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 195.0
+offset_bottom = 151.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_odre4")
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yh4yq")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=113807125]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_t13l1")
 
-[node name="BlurBG" type="ColorRect" parent="." unique_id=123622933]
-material = SubResource("ShaderMaterial_qtj8f")
+[node name="Control" type="Control" parent="." unique_id=948114777]
 layout_mode = 2
+
+[node name="BlurBG" type="ColorRect" parent="Control" unique_id=123622933]
+material = SubResource("ShaderMaterial_qtj8f")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -148.0
+offset_bottom = 151.0
+mouse_filter = 2
 color = Color(0.21, 0.13649999, 0.13649999, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=874406539]
 layout_mode = 2
-theme_override_constants/margin_top = 45
+mouse_filter = 2
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_bottom = 15
 
 [node name="SongPanel" type="VBoxContainer" parent="MarginContainer" unique_id=968184744]
@@ -88,6 +100,7 @@ script = ExtResource("1_br0fo")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 bbcode_enabled = true
 text = "[i]No song playing[/i]"
 fit_content = true
@@ -102,6 +115,7 @@ custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
@@ -189,6 +203,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 icon = ExtResource("5_qtj8f")
 
@@ -196,6 +211,7 @@ icon = ExtResource("5_qtj8f")
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 icon = ExtResource("6_t13l1")
 
@@ -203,6 +219,7 @@ icon = ExtResource("6_t13l1")
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 icon = ExtResource("7_jgn13")
 
@@ -210,6 +227,7 @@ icon = ExtResource("7_jgn13")
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 icon = ExtResource("8_hfpi6")
 flat = true
 script = ExtResource("9_7u82a")
@@ -218,6 +236,7 @@ script = ExtResource("9_7u82a")
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 toggle_mode = true
 texture_normal = ExtResource("10_ys352")
 texture_pressed = ExtResource("11_0teht")
@@ -228,6 +247,7 @@ script = ExtResource("12_h8q5m")
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 icon = ExtResource("13_iur6g")
 flat = true
 script = ExtResource("14_1ism2")
@@ -237,6 +257,7 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 icon = ExtResource("15_2mqvn")
 flat = true
 script = ExtResource("16_p85rx")
@@ -244,6 +265,7 @@ script = ExtResource("16_p85rx")
 [node name="LikeButton" type="Button" parent="MarginContainer/SongPanel/HBoxContainer/HBoxContainer2" unique_id=959954360]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 2
 disabled = true
 icon = ExtResource("17_04xfd")
 flat = true
@@ -255,6 +277,7 @@ metadata/_custom_type_script = "uid://c1dl4f71l0xvu"
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 icon = ExtResource("18_dtpy3")
 

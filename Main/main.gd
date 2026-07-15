@@ -6,6 +6,8 @@ class_name Main
 func _ready() -> void:
 	Global.main = self
 	
+	DisplayServer.window_set_min_size(Vector2i(200,200))
+	
 	
 	#benchmark.call_deferred()
 	#select_folder_dialog.dir_selected.connect(_on_select_folder_dialog_selected)

@@ -344,10 +344,8 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ArtistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1993962236 instance=ExtResource("28_ytmp3")]
-visible = false
 layout_mode = 1
-offset_top = 35.0
-offset_bottom = 236.0
+offset_bottom = 155.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
 visible = false
@@ -365,15 +363,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("30_ivlrh")
 
 [node name="Downloaded" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=288002480 instance=ExtResource("32_p2tm2")]
-visible = false
 layout_mode = 2
 
 [node name="Playlists" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=634236178]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 1
@@ -565,6 +563,9 @@ offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
 texture = ExtResource("41_730hx")
+
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer" unique_id=1455546585]
+layout_mode = 2
 
 [node name="SongPanel" parent="UILayer/UI/VBoxContainer" unique_id=968184744 instance=ExtResource("43_ruj5i")]
 layout_mode = 2
