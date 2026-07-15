@@ -48,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 186
+scroll_vertical = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=996589311]
 layout_mode = 2
@@ -114,7 +114,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_7syba")
 theme_override_colors/font_color = Color(0.71, 0.71, 0.71, 1)
-text = "je l'aime"
+text = "[me] montly listeners"
 
 [node name="Separator" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=2018273158]
 layout_mode = 2
@@ -153,18 +153,20 @@ layout_mode = 2
 icon = ExtResource("5_pf8qt")
 expand_icon = true
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=322999604]
+[node name="PopularTitlesLabel" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=322999604]
 layout_mode = 2
 text = "Popular Titles"
 
 [node name="PopularTitles" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1986626170 instance=ExtResource("2_vdkw5")]
-custom_minimum_size = Vector2(0, 50)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_eduj6")
+template_path = NodePath("Template")
 
-[node name="PlaylistTemplate" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles" unique_id=1187587422]
+[node name="Template" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles" unique_id=1187587422]
 editor_description = "Used as a template for the virtual scroll list."
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
@@ -172,7 +174,7 @@ anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate" unique_id=2058911585]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template" unique_id=2058911585]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -186,11 +188,11 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer" unique_id=1684920118]
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=1684920118]
 custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
 
-[node name="-IsInQueue" type="ColorRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer/Control" unique_id=1609559901]
+[node name="-IsInQueue" type="ColorRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Control" unique_id=1609559901]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -200,13 +202,13 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Thumbnail" type="PanelContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer" unique_id=1954709114]
+[node name="Thumbnail" type="PanelContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=1954709114]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pf8qt")
 
-[node name="Thumbnail" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=436080393]
+[node name="Thumbnail" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=436080393]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
@@ -215,38 +217,38 @@ texture = ExtResource("4_57epv")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="?is_thumbnail_hovered" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1819102998]
+[node name="?is_thumbnail_hovered" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=1819102998]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5_yi2mi")
 stretch_mode = 2
 
-[node name="Infos" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer" unique_id=1402920334]
+[node name="Infos" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=1402920334]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="-SongName" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer/Infos" unique_id=2097366604]
+[node name="-SongName" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Infos" unique_id=2097366604]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
-text = "SONG ITEM"
+text = "SONG NAME"
 vertical_alignment = 1
 
-[node name="-Artist" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer/Infos" unique_id=704573770]
+[node name="+get_artists" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Infos" unique_id=704573770]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="-DurationString" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer" unique_id=318971208]
+[node name="-DurationString" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=318971208]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 10
 text = "XX:XX"
 horizontal_alignment = 2
 
-[node name="+is_selected" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate/HBoxContainer" unique_id=287592279]
+[node name="+is_selected" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=287592279]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
@@ -255,7 +257,7 @@ theme_override_font_sizes/font_size = 30
 text = "☐"
 horizontal_alignment = 1
 
-[node name="Separator" type="ColorRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/PlaylistTemplate" unique_id=858338714]
+[node name="Separator" type="ColorRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template" unique_id=858338714]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -266,7 +268,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.41, 0.41, 0.41, 1)
 
-[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1767042642]
+[node name="AlbumsLabel" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1767042642]
 layout_mode = 2
 text = "Albums"
 
@@ -376,7 +378,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.41, 0.41, 0.41, 1)
 
-[node name="Albums2" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=919569767]
+[node name="SinglesLabel" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=919569767]
 layout_mode = 2
 text = "Singles & EPs"
 
@@ -486,7 +488,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.41, 0.41, 0.41, 1)
 
-[node name="Albums3" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1711769223]
+[node name="VideosLabel" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1711769223]
 layout_mode = 2
 text = "Videos"
 
@@ -620,6 +622,7 @@ text = "X"
 
 [node name="LoadingOverlay" type="Control" parent="." unique_id=1763640231]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

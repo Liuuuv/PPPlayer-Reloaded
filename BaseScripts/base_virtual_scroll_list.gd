@@ -53,7 +53,7 @@ func _ready() -> void:
 	
 	if not Engine.is_editor_hint():
 		if template == null:
-			push_error("Template not provided, skipping _ready().")
+			push_error("Template not provided, skipping _ready(). To provide one, drag and drop a template in the inspector")
 			return
 		
 		remove_child(template)
@@ -63,6 +63,8 @@ func _ready() -> void:
 	if template:
 		template.tree_exiting.connect(_on_template_exiting)
 	
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 	
 	item_left_clicked.connect(_on_item_left_clicked)
 	item_right_clicked.connect(_on_item_right_clicked)
@@ -363,4 +365,10 @@ func _on_item_left_clicked(idx: int) -> void:
 
 func _on_item_right_clicked(idx: int) -> void: # does not work as intended with context menus because the menu eats the input and no release is detected
 	#print("Index %s right clicked" % idx)
+	pass
+
+func _on_mouse_entered() -> void:
+	pass
+
+func _on_mouse_exited() -> void:
 	pass

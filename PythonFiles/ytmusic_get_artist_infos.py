@@ -20,13 +20,25 @@ def get_artist_infos(artist_id: str):
             "subscribers",
             "monthlyListeners",
             "thumbnails",
-            "songs",
+            # "songs",
             "albums",
         ]
         for info_name in to_get:
             if info_name in artist_infos_raw:
                 artist_infos[info_name] = artist_infos_raw[info_name]
         
+        ## songs
+        try:
+            audioPlaylistId = artist_infos_raw.get("songs").get("browseId")
+            artist_infos["songs"] = {
+                    'success': True,
+                    'result': ytmusic.get_playlist(audioPlaylistId)
+                }
+        except Exception as e:
+            artist_infos["songs"] = {
+                    'success': False,
+                    'error': str(e)
+                }
         
         # Imprimer le JSON pour Godot
         print(json.dumps({

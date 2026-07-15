@@ -11,7 +11,7 @@ def test():
         ytmusic = YTMusic(location="JP")
         
         # result = ytmusic.get_charts(country='JP')
-        # result = ytmusic.get_artist("UCgwteC3ja-6FkDDHiK8diQw") ## à exploiter
+        # result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A") ## à exploiter
         # result = ytmusic.get_artist_albums("VLOLAK5uy_lDyN1VI3OoUae9vaMJQOO8ATQ2Z0xsV0Q", ytmusic.get_artist("UC51Ub6b_RjxnC7ePn9z0FTQ").get("result")) ## does not work
         
         # useless
@@ -21,14 +21,19 @@ def test():
         # result = ytmusic.search("kawakiwoameku", filter="songs", limit=20)
         
         
-        result = ytmusic.get_artist("UC7fW7oNXyRDSxMOHVJE1jrA")
-        audioPlaylistId = result.get("songs").get("browseId")
-        audioPlaylistId = audioPlaylistId[2:]
-        print(audioPlaylistId)
-        browseId = ytmusic.get_album_browse_id(audioPlaylistId)
-        print(browseId)
-        result = ytmusic.get_album(browseId)
+        ## issue: only displays the first song :(
+        # result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A")
+        # audioPlaylistId = result.get("songs").get("browseId")
+        # audioPlaylistId = audioPlaylistId[2:]
+        # print(audioPlaylistId)
+        # browseId = ytmusic.get_album_browse_id(audioPlaylistId)
+        # print(browseId)
+        # result = ytmusic.get_album(browseId)
         
+        ## solution: treat it like a playlist :)
+        result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A")
+        audioPlaylistId = result.get("songs").get("browseId")
+        result = ytmusic.get_playlist(audioPlaylistId)
         
         
         

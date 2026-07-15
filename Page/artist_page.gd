@@ -18,13 +18,15 @@ signal info_displayed()
 @onready var artist_name: Label = %ArtistName
 @onready var monthly_listeners_count: Label = %MonthlyListenersCount
 @onready var channel_description: Label = %ChannelDescription
+@onready var popular_titles: ArtistPageContent = %PopularTitles
 
 
 var artist_cover_size: Vector2
 
 func _ready() -> void:
 	Global.artist_page = self
-	close()
+	#close()
+	open()
 	
 	clip_contents = true
 	
@@ -54,7 +56,7 @@ func gather_and_display_infos(channel_id: String):
 	)
 
 func display_infos(infos: Dictionary) -> void:
-	print('display infos ', infos)
+	#print('display infos ', infos)
 	
 	print(infos.get("songs", ""))
 	print(infos.get("albums", ""))
@@ -92,6 +94,7 @@ func display_infos(infos: Dictionary) -> void:
 			image.fill(Color.BLACK)
 			artist_cover.texture = ImageTexture.create_from_image(image)
 			
+	_display_popular_titles(infos.get("songs", {}))
 	
 	info_displayed.emit()
 
@@ -125,6 +128,24 @@ func open():
 
 func close():
 	hide()
+
+func _display_popular_titles(popular_titles_dict: Dictionary) -> void:
+	print("popular_titles_dict ", popular_titles_dict)
+	if popular_titles_dict.get("success") == false:
+		push_error("error %s" % popular_titles_dict.get("error"))
+		return
+	
+	var songs: Dictionary = popular_titles_dict.get("result")
+	for track in songs.get("tracks"):
+		var video_id: String = track.get("videoId")
+		if video_id == null:
+			push_error("video id is null :c")
+			continue
+		var result_song_item: Global.ResultSongItem = Global.create_result_song_item(video_id)
+		result_song_item.scroll_list_belong = popular_titles
+		result_song_item.SongName = track.get("title", "")
+		result_song_item.Artists = track.get("artists", []).map(func(item): return item["name"])
+		popular_titles._add_item(result_song_item)
 
 func _on_close_button_pressed() -> void:
 	close()

@@ -143,7 +143,51 @@ class DownloadSongItem:
 	func is_current_downloading_song(video_id: String) -> String:
 		return "DOWNLOADING" if Global.downloads_tab.current_downloading_song == video_id else ""
 
-
+class ResultSongItem:
+	var SongName: String = "SONG NAME"
+	var Artists: Array = ["ARTIST"]
+	var DurationString: String = "XX:XX"
+	var IsInQueue: bool = false
+	
+	var video_id: String = "":
+		set(new_id):
+			video_id = new_id
+			initialize.call_deferred()
+	var infos: Dictionary = {}
+	var scroll_list_belong: SongVirtualScrollList
+	var index: int = 0
+	
+	
+	func _init() -> void:
+		pass
+	
+	func initialize():
+		#Global.logs_display.write("initializing song item... ID: %s " % id)
+		#tooltip_text = "ID: " + id
+		pass
+	
+	
+	func is_selected() -> String:
+		if index in scroll_list_belong.multiselection:
+			return "■" # ▣
+		else:
+			if scroll_list_belong.multiselection.is_empty():
+				if scroll_list_belong.hovered_idx == index:
+					return "☐"
+				else:
+					return ""
+			else:
+				return "☐"
+	
+	func is_thumbnail_hovered() -> bool:
+		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
+			return true
+		else:
+			return false
+	
+	func get_artists() -> String:
+		return ",".join(Artists)
+	
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -299,6 +343,11 @@ func create_song_itemOLD(id: String) -> SongItemOLD:
 func create_song_item(id: String) -> SongItem:
 	var song_item = SongItem.new()
 	song_item.id = id
+	return song_item
+
+func create_result_song_item(video_id: String) -> ResultSongItem:
+	var song_item = ResultSongItem.new()
+	song_item.video_id = video_id
 	return song_item
 
 func create_download_itemOLD(id: String) -> DownloadItemOLD:

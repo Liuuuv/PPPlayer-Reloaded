@@ -1,6 +1,6 @@
 {
-    "root": "//div[@data-lyrics-container='true']",
-    "fields": {
-        "lyrics": "."
-    }
+	"root": "//div[@data-lyrics-container='true']",
+	"fields": {
+		"lyrics": "."
+	}
 }
