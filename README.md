@@ -3,12 +3,13 @@
 PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot.
 
 ## Why does it exists?
-- I listen to music all day, it's a way to show my love to the songs I love.
-- It turns out YouTube likes to pause my music when it feels like to and I hate this.
-- I am afraid some music I listen to get deleted someday, I'd like to 'pause time'.
+- I listen to music all day, it's a way to show my love to the songs I adore.
+- It turns out YouTube likes to pause my music when it feels like it and I hate this.
+- I am afraid some songs I listen to get deleted someday, I'd like to 'pause time'.
 - Some songs are not on YouTube Music, maybe because they are not tag as 'song'.
-- Youtube Musics lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single song.
-So I thought 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
+- Youtube Music lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single song.
+
+So I thought to myself 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
 
 ## Shortcuts:
 ### Search bar:
