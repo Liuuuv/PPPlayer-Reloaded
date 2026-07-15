@@ -186,7 +186,7 @@ class ResultSongItem:
 			return false
 	
 	func get_artists() -> String:
-		return ",".join(Artists)
+		return ", ".join(Artists)
 	
 
 func _ready() -> void:

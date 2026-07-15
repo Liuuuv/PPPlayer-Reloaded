@@ -58,9 +58,6 @@ func gather_and_display_infos(channel_id: String):
 func display_infos(infos: Dictionary) -> void:
 	#print('display infos ', infos)
 	
-	print(infos.get("songs", ""))
-	print(infos.get("albums", ""))
-	
 	artist_cover_size = artist_cover.size
 	scroll_container.scroll_vertical = artist_cover_size.y / 2
 	

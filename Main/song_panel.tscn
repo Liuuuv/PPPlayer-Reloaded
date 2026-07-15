@@ -60,7 +60,7 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Control" type="PanelContainer" unique_id=753946091]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 139.0
+offset_bottom = 195.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_odre4")
 

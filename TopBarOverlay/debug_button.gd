@@ -12,4 +12,6 @@ func _pressed() -> void:
 	#Scrapper.process_genius("Genius-romanizations-minami-kawaki-wo-ameku-romanized-lyrics", print)
 	#print(MusicRecommendation.get_recommendations("vvvvcpwFw5o"))
 	Global.artist_page.open()
-	Global.artist_page.gather_and_display_infos("UCgwteC3ja-6FkDDHiK8diQw")
+	#Global.artist_page.gather_and_display_infos("UCgwteC3ja-6FkDDHiK8diQw")
+	Global.artist_page.gather_and_display_infos("UCMluca6I7VG2G0lFAZnTThw")
+	

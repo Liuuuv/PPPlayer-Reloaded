@@ -22,6 +22,7 @@ var items: Array = []
 var scroll: float = 0.0
 var selected_idx: int = -1
 var hovered_idx: int = -1
+var can_scroll: bool = true
 
 
 var left_click_pressed: bool = false:
@@ -34,6 +35,7 @@ var left_click_pressed: bool = false:
 				item_left_clicked.emit(selected_idx)
 		else:
 			selected_idx = -1
+
 var right_click_pressed: bool = false:
 	set(on):
 		if on == right_click_pressed:
@@ -95,6 +97,7 @@ func _process(delta: float) -> void:
 		return
 	
 	# Handle scrolling with rubber band effect
+	
 	if scroll < 0:
 		scroll = lerpf(scroll, 0.0, delta * 10.0)
 		queue_redraw()
@@ -135,11 +138,13 @@ func _gui_input(event: InputEvent) -> void:
 			right_click_pressed = mb.pressed # order is important, need to be processed after changing selected_idx
 			queue_redraw()
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			scroll += scroll_tick_amount
-			queue_redraw()
+			if can_scroll:
+				scroll += scroll_tick_amount
+				queue_redraw()
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_UP:
-			scroll -= scroll_tick_amount
-			queue_redraw()
+			if can_scroll:
+				scroll -= scroll_tick_amount
+				queue_redraw()
 	
 	#elif event is InputEventMouseMotion and left_click_pressed:
 		#var mm: InputEventMouseMotion = event

@@ -388,3 +388,14 @@ func delete_file(file_path: String) -> bool:
 	else:
 		Global.logs_display.write("Le fichier n'existe pas", LogsDisplay.MESSAGE.ERROR)
 	return false
+
+func set_mouse_filter_stop_recursivly(node: Control):
+	node.mouse_filter = Control.MOUSE_FILTER_STOP
+	for child in node.get_children():
+		set_mouse_filter_stop_recursivly(child)
+
+
+
+
+
+#
