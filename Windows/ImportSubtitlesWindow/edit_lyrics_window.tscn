@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bmq62rp1ddfe6"]
 
 [ext_resource type="Script" uid="uid://b5wtexw35divc" path="res://Windows/ImportSubtitlesWindow/edit_lyrics_window.gd" id="1_jwrx3"]
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_etorb"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_etorb"]
 
 [node name="EditLyricsWindow" type="Window" unique_id=1919218813]
 oversampling_override = 1.0

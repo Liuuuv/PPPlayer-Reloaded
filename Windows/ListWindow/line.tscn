@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://duqfaxjv0xxax"]
 
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="1_o6msw"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="1_o6msw"]
 [ext_resource type="Script" uid="uid://blyx8aop8lm7y" path="res://Windows/ListWindow/line.gd" id="2_tdfv3"]
 
 [node name="Line" type="PanelContainer" unique_id=1081585942]

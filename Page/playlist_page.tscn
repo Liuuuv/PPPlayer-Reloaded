@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://bbrl048vwsc0d"]
+
+[ext_resource type="Script" uid="uid://cq1ve184su2ba" path="res://Page/playlist_page.gd" id="1_m8wwv"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="1_qtx1x"]
+[ext_resource type="Texture2D" uid="uid://b6fn355oc3fpa" path="res://Sprites/DefaultPlaylistCover.jpg" id="3_chh8a"]
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="3_qn15m"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="4_ji8vb"]
+[ext_resource type="Theme" uid="uid://ou2rnru8di2d" path="res://Themes/theme_highlight.tres" id="4_xksg7"]
+[ext_resource type="Theme" uid="uid://bsyug031inryx" path="res://Themes/theme_secondary.tres" id="5_hqtur"]
+[ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="5_qtx1x"]
+
+[sub_resource type="Theme" id="Theme_qtx1x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chh8a"]
+
+[node name="PlaylistPage" type="Control" unique_id=1046587413]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qtx1x")
+script = ExtResource("1_m8wwv")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1047343359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_qtx1x")
+color = Color(0.12156863, 0.12156863, 0.12156863, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=727671447]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=272107029]
+custom_minimum_size = Vector2(303.535, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer" unique_id=760442256]
+layout_mode = 2
+
+[node name="PlaylistThumbnail" type="TextureRect" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=2049459139]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+texture = ExtResource("3_chh8a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=1585956623]
+layout_mode = 2
+theme = ExtResource("4_xksg7")
+text = "title"
+horizontal_alignment = 1
+
+[node name="FullDuration" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=209690206]
+layout_mode = 2
+theme = ExtResource("5_hqtur")
+text = "full duration"
+horizontal_alignment = 1
+
+[node name="TrackCount" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=168951489]
+layout_mode = 2
+theme = ExtResource("5_hqtur")
+text = "XX tracks"
+horizontal_alignment = 1
+
+[node name="PlaylistContent" parent="HBoxContainer" unique_id=1986626170 instance=ExtResource("3_qn15m")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+template_path = NodePath("Template")
+
+[node name="Template" type="Panel" parent="HBoxContainer/PlaylistContent" unique_id=1979801702]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PlaylistContent/Template" unique_id=1123161970]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer" unique_id=1412603992]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="-IsInQueue" type="ColorRect" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer/Control" unique_id=1688614554]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Thumbnail" type="PanelContainer" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer" unique_id=1821853658]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_chh8a")
+
+[node name="Thumbnail" type="TextureRect" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer/Thumbnail" unique_id=862060997]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("4_ji8vb")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="?is_thumbnail_hovered" type="TextureRect" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer/Thumbnail" unique_id=496069002]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_qtx1x")
+stretch_mode = 2
+
+[node name="Infos" type="VBoxContainer" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer" unique_id=1389952283]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-SongName" type="Label" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer/Infos" unique_id=1298278005]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG NAME"
+vertical_alignment = 1
+
+[node name="+get_artists" type="Label" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer/Infos" unique_id=893157985]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer" unique_id=1483700017]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
+
+[node name="+is_selected" type="Label" parent="HBoxContainer/PlaylistContent/Template/HBoxContainer" unique_id=861720652]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 30
+text = "☐"
+horizontal_alignment = 1
+
+[node name="Separator" type="ColorRect" parent="HBoxContainer/PlaylistContent/Template" unique_id=1477179216]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)

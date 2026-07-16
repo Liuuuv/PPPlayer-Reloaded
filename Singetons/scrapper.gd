@@ -2,9 +2,11 @@ extends Node
 
 var http_request: HTTPRequest
 var current_callback: Callable
-var process_func: Callable = Callable()
+var current_process_func: Callable = Callable()
 var current_scrap_json_path: String = ""
+
 var busy: bool = false
+var pending_requests: Array = [] ## [{"search_url": String, "callback": Callable}]
 
 var explicit_url: bool = false ## if the user gives the full url. If true, then the query is the full url
 
@@ -15,12 +17,21 @@ func _ready():
 	add_child(http_request)
 	http_request.request_completed.connect(_on_request_completed)
 
-func download_url(search_url: String, callback: Callable) -> void:
+## Don't forget to set [member process_func] before calling this function.
+## Order: [method download_url] > [method process_func] > [method callback]
+func download_url(search_url: String, process_func: Callable, callback: Callable) -> void:
+	
+	
 	if busy:
-		push_error("A request is already on going, I'm busy.")
+		pending_requests.push_back({
+			"search_url": search_url,
+			"process_func": process_func,
+			"callback": callback
+		})
+		#push_error("A request is already on going, I'm busy.")
 		return
 	current_callback = callback
-	
+	current_process_func = process_func
 	var headers = [
 		"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 	]
@@ -122,8 +133,7 @@ func scrap(query: String, callback: Callable): ## gets the html page by Godot, a
 			encoded_query
 		)
 	print("search_url ", search_url)
-	process_func = process_html
-	download_url(search_url, callback)
+	download_url(search_url, process_html, callback)
 
 func process_html(body: PackedByteArray) -> void:
 	var html: String = body.get_string_from_utf8()
@@ -166,29 +176,42 @@ func _save_temp_html(html: String) -> String: ## returns globalized path
 
 func _on_request_completed(result, response_code, headers, body):
 	if not current_callback.is_valid() or current_callback.is_null():
+		_reset()
+		check_for_request_queue()
 		push_error("current_callback is not valid or is null")
 		return
-	if not process_func.is_valid() or process_func.is_null():
+	if not current_process_func.is_valid() or current_process_func.is_null():
+		_reset()
+		check_for_request_queue()
 		push_error("process_func is not valid or is null")
 		return
 	
 	
 	if response_code == 200:
-		process_func.call(body) ## !!!!! returns body !!!!!
+		current_process_func.call(body) ## !!!!! returns body !!!!!
 	else:
 		push_error("Erreur HTTP: ", response_code)
 		Global.logs_display.write("Erreur HTTP: " + response_code, LogsDisplay.MESSAGE.ERROR)
-		process_func.call("")
+		current_process_func.call("")
 	
-	var callback = current_callback
 	_reset()
+	check_for_request_queue()
+	
 
 func _reset():
 	current_callback = Callable()
-	process_func = Callable()
+	current_process_func = Callable()
 	current_scrap_json_path = ""
 	busy = false
-
+	
+func check_for_request_queue():
+	if not pending_requests.is_empty():
+		var request: Dictionary = pending_requests.pop_front()
+		download_url(
+			request.get("search_url", ""),
+			request.get("process_func", Callable()),
+			request.get("callback", Callable()),
+		)
 
 #func extract_song_data(html: String) -> Dictionary:
 	#var data = {}

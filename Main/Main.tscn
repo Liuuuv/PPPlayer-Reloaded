@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dasg84e7rck3y" path="res://Main/main.gd" id="1_0obc6"]
 [ext_resource type="Script" uid="uid://du2xvdp847nw7" path="res://music_player.gd" id="3_vwon7"]
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="4_730hx"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="4_730hx"]
 [ext_resource type="Script" uid="uid://cn440x8llh28j" path="res://Windows/select_folder_dialog.gd" id="5_ap2uv"]
 [ext_resource type="Script" uid="uid://b35e1v0dnw52n" path="res://Windows/select_song_dialog.gd" id="6_s6flo"]
 [ext_resource type="PackedScene" uid="uid://h5omux40mwov" path="res://Popup/InsertTextDialog/insert_text_dialog.tscn" id="7_y7gwn"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="21_qoe36"]
 [ext_resource type="Script" uid="uid://x8r21vq7ja58" path="res://Tabs/SearchTab/clear.gd" id="22_nh6ww"]
 [ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="25_vgxo8"]
+[ext_resource type="PackedScene" uid="uid://bbrl048vwsc0d" path="res://Page/playlist_page.tscn" id="28_yb73r"]
 [ext_resource type="PackedScene" uid="uid://chgshiplgkeo0" path="res://Page/artist_page.tscn" id="28_ytmp3"]
 [ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="29_ucuw1"]
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
@@ -135,6 +136,7 @@ script = ExtResource("6_s6flo")
 
 [node name="InsertTextDialog" parent="." unique_id=1094984974 instance=ExtResource("7_y7gwn")]
 visible = false
+always_on_top = true
 
 [node name="ConfirmationDialog" parent="." unique_id=771532876 instance=ExtResource("8_mql5u")]
 visible = false
@@ -155,6 +157,7 @@ always_on_top = true
 
 [node name="SummaryWindow" parent="." unique_id=1140663521 instance=ExtResource("11_enjti")]
 visible = false
+always_on_top = true
 
 [node name="InfoWindow" parent="." unique_id=1919218813 instance=ExtResource("12_gk02k")]
 visible = false
@@ -164,6 +167,7 @@ visible = false
 
 [node name="ImportSubtitlesWindow" parent="." unique_id=1625859206 instance=ExtResource("13_730hx")]
 visible = false
+always_on_top = true
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1406862746]
 
@@ -343,9 +347,20 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ArtistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1993962236 instance=ExtResource("28_ytmp3")]
+[node name="Pages" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1431809108]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ArtistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/Pages" unique_id=1993962236 instance=ExtResource("28_ytmp3")]
+layout_mode = 1
+
+[node name="PlaylistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/Pages" unique_id=1046587413 instance=ExtResource("28_yb73r")]
+layout_mode = 1
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
 visible = false
@@ -566,9 +581,11 @@ texture = ExtResource("41_730hx")
 
 [node name="Control" type="Control" parent="UILayer/UI/VBoxContainer" unique_id=1455546585]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="SongPanel" parent="UILayer/UI/VBoxContainer" unique_id=968184744 instance=ExtResource("43_ruj5i")]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="BottomBar" type="HBoxContainer" parent="UILayer/UI/VBoxContainer" unique_id=652964921]
 visible = false

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b4my2vvfb820g" path="res://song_panel.gd" id="1_br0fo"]
 [ext_resource type="Shader" uid="uid://c1s0r8b7qiitt" path="res://Shaders/gaussian_blur.gdshader" id="1_qtj8f"]
 [ext_resource type="Texture2D" uid="uid://bip84dtp04sms" path="res://icon.svg" id="1_t13l1"]
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="2_j0ok6"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="2_j0ok6"]
 [ext_resource type="Script" uid="uid://j8ady7t5adjr" path="res://SongPanel/progress_slider_bg.gd" id="3_stjf3"]
 [ext_resource type="Script" uid="uid://qtim1nkj32c5" path="res://SongPanel/progress_slider.gd" id="4_odre4"]
 [ext_resource type="Texture2D" uid="uid://dmk6ea13d4sel" path="res://Sprites/ResetSmall.png" id="5_j0ok6"]
@@ -32,7 +32,7 @@ shader_parameter/blur_radius = 8
 shader_parameter/blur_strength = 2.4400001126401203
 shader_parameter/fade_direction = 3
 shader_parameter/fade_cutoff = 0.10000000475
-shader_parameter/fade_intensity = 1.9900000912651201
+shader_parameter/fade_intensity = 1.99000009126512
 
 [sub_resource type="ImageTexture" id="ImageTexture_lgqs7"]
 
@@ -82,6 +82,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_top = -148.0
 offset_bottom = 151.0
+grow_horizontal = 2
 mouse_filter = 2
 color = Color(0.21, 0.13649999, 0.13649999, 1)
 

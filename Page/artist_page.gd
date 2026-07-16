@@ -1,14 +1,13 @@
-extends Control
+extends BasePage
 class_name ArtistPage
 
-signal info_requested()
-signal info_displayed()
+
 
 @onready var loading_overlay: Control = %LoadingOverlay
 @onready var loading_info: Label = %LoadingInfo
 
 
-@onready var default_position: Vector2 = position
+
 @onready var close_button: Button = %CloseButton
 
 @onready var scroll_container: ScrollContainer = %ScrollContainer
@@ -21,9 +20,12 @@ signal info_displayed()
 @onready var popular_titles: ArtistPageContent = %PopularTitles
 
 
+var current_display_id: String = ""
 var artist_cover_size: Vector2
 
 func _ready() -> void:
+	super._ready()
+	
 	Global.artist_page = self
 	#close()
 	open()
@@ -34,16 +36,20 @@ func _ready() -> void:
 	scroll_container.get_v_scroll_bar().scrolling.connect(_on_scroll_bar_scrolling)
 	info_requested.connect(_on_info_requested)
 	info_displayed.connect(_on_info_displayed)
+
+
+func gather_and_display_infos(channel_id: String) -> void:
+	if channel_id == "":
+		push_error("No channel ID founded")
+		return
+	current_display_id = channel_id
+	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
+	var cache_result: Resource = Tools.get_cached_results(cache_name)
+	if cache_result:
+		display_infos(cache_result)
+		return
 	
-
-func _data_callback(data: Dictionary):
-	if data.get("success"):
-		display_infos(data.get("infos", {}))
-	else:
-		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
-		push_error("error: %s" % data.get("error"), "")
-
-func gather_and_display_infos(channel_id: String):
+	
 	info_requested.emit()
 	loading_info.text = "Gathering infos"
 	var script = ProjectSettings.globalize_path("res://PythonFiles/ytmusic_get_artist_infos.py")
@@ -52,46 +58,115 @@ func gather_and_display_infos(channel_id: String):
 			script,
 			channel_id
 		],
-		_data_callback
+		func(data: Dictionary): _data_callback(data, channel_id)
 	)
 
-func display_infos(infos: Dictionary) -> void:
+
+## Displays and saves infos
+func _data_callback(data: Dictionary, channel_id: String):
+	if data.get("success"):
+		_save_infos_to_cache(data.get("infos", {}), channel_id)
+		await get_tree().process_frame
+		var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
+		var cache_result: ArtistCacheResource = Tools.get_cached_results(cache_name)
+		if cache_result:
+			display_infos(cache_result)
+		else:
+			display_infos(ArtistCacheResource.new())
+			push_error("No cache result to display :(")
+	else:
+		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
+		push_error("error: %s" % data.get("error"), "")
+
+
+
+func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
+	var cached_infos: ArtistCacheResource = ArtistCacheResource.new()
+	
+	cached_infos.name = infos.get("name", "")
+	cached_infos.subscribers = infos.get("subscribers", "")
+	cached_infos.monthlyListeners = infos.get("monthlyListeners", "")
+	cached_infos.description = infos.get("description", "") if infos.get("description", "") else ""
+	cached_infos.channel_id = channel_id
+	
+	
+	var thumbnails: Array = infos.get("thumbnails", [])
+	if thumbnails != []:
+		download_biggest_thumbnail(
+			thumbnails,
+			func(artist_thumbnail: Texture2D):
+				Tools._save_to_cache.call_deferred(artist_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % channel_id + ".res")
+				if self.get("current_display_id") == channel_id:
+					artist_cover.texture = artist_thumbnail
+		)
+	
+	
+	var songs: Dictionary = infos.get("songs", {})
+	if songs.get("success") == false:
+		push_error("error %s" % songs.get("error"))
+	else:
+		for track in songs.get("result", {}).get("tracks", []):
+			var song_id: String = track.get("videoId")
+			if not song_id:
+				push_error("A YouTube videoId is missing, skipping this song.")
+				continue
+			var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
+			
+			var song_cache_res: SongCacheResource = SongCacheResource.new()
+			song_cache_res.id = song_id
+			song_cache_res.title = track.get("title")
+			song_cache_res.artists = track.get("artists")
+			
+			var song_thumbnails: Array = track.get("thumbnails", [])
+			if song_thumbnails != []:
+				download_biggest_thumbnail(
+					song_thumbnails,
+					func(song_thumbnail: Texture2D):
+						Tools._save_to_cache.call_deferred(song_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % channel_id + ".res")
+				)
+	
+	
+	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
+	Tools._result_thumbnail_cache[cache_name] = cached_infos
+	
+	
+	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
+	var path_to_results_cach_dir: String = path_to_cach_dir + Global.RESULTS_CACHE_DIR_NAME + "/"
+	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
+	Tools._save_to_cache(cached_infos, full_path)
+
+func display_infos(infos: ArtistCacheResource) -> void:
 	#print('display infos ', infos)
 	
 	artist_cover_size = artist_cover.size
 	scroll_container.scroll_vertical = artist_cover_size.y / 2
 	
-	artist_name.text = infos.get("name", "")
+	artist_name.text = infos.get("name")
 	
-	var subscribers: String = infos.get("subscribers", "")
+	var subscribers: String = infos.get("subscribers")
 	if subscribers != "":
 		subscribers += " subscribers"
 	subscribers_count.text = subscribers
 	
-	var monthly_listeners: String = infos.get("monthlyListeners", "")
+	var monthly_listeners: String = infos.get("monthlyListeners")
 	if monthly_listeners != "":
 		monthly_listeners += " monthly listeners"
 	monthly_listeners_count.text = monthly_listeners
 	
-	channel_description.text = infos.get("description", "") if infos.get("description", "") else ""
+	channel_description.text = infos.get("description")
 	
-	## finds the biggest thumbnail
-	var thumbnails: Array = infos.get("thumbnails", [])
-	if thumbnails != []:
-		var max_url: String = get_biggest_thumbnail_url(thumbnails)
-		if max_url != "":
-			Scrapper.process_func = Scrapper.process_image
-			Scrapper.download_url(
-				max_url,
-				func(image:Image):
-					artist_cover.texture = ImageTexture.create_from_image(image)
-			)
-		else:
-			var image: Image = Image.new()
-			image.fill(Color.BLACK)
-			artist_cover.texture = ImageTexture.create_from_image(image)
-			
-	_display_popular_titles(infos.get("songs", {}))
+	
+	var artist_thumbnail: Texture2D = Tools.get_cached_results(Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % infos.channel_id)
+	if artist_thumbnail:
+		artist_cover.texture = artist_thumbnail
+	else:
+		var image: Image = Image.create(256, 256, false, Image.FORMAT_RGBA8)
+		image.fill(Color.BLACK)
+		artist_cover.texture = ImageTexture.create_from_image(image)
+	
+	var songs_cache_results: Array[String] = infos.songs
+	#_display_popular_titles(songs_cache_results)
+	
 	
 	info_displayed.emit()
 
@@ -105,46 +180,35 @@ func get_biggest_thumbnail_url(thumbnails: Array) -> String:
 			max_url = dict.get("url", "")
 	return max_url
 
-func open():
-	show()
-	#display_infos()
-	
-	
-	var screen_size: Vector2i = DisplayServer.screen_get_size(DisplayServer.SCREEN_OF_MAIN_WINDOW)
-	position.y = float(screen_size.y)
-	
-	
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "position:y", default_position.y, 0.2)
-	
-	
-	await tween.finished
-	#await get_tree().create_timer(1.0).timeout
-	#hide()
 
-func close():
-	hide()
+## (ASYNC) Sets the biggest thumbnail to [param target].
+## [br]
+## [param callback] is called with argument [param target].
+func download_biggest_thumbnail(thumbnails: Array, callback: Callable = Callable()) -> void:
+	var max_url: String = get_biggest_thumbnail_url(thumbnails)
+	if max_url != "":
+		Scrapper.download_url(
+			max_url,
+			Scrapper.process_image,
+			func(image:Image):
+				callback.call(ImageTexture.create_from_image(image))
+		)
 
-func _display_popular_titles(popular_titles_dict: Dictionary) -> void:
-	print("popular_titles_dict ", popular_titles_dict)
-	if popular_titles_dict.get("success") == false:
-		push_error("error %s" % popular_titles_dict.get("error"))
-		return
+
+func _display_popular_titles(songs: Array[String]) -> void:
 	
-	var songs: Dictionary = popular_titles_dict.get("result")
-	for track in songs.get("tracks"):
-		var video_id: String = track.get("videoId")
-		if video_id == null:
-			push_error("video id is null :c")
-			continue
-		var result_song_item: Global.ResultSongItem = Global.create_result_song_item(video_id)
+	for song_id in songs:
+		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
+		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)
+		
+		var result_song_item: Global.ResultSongItem = Global.create_result_song_item(song_id)
 		result_song_item.scroll_list_belong = popular_titles
-		result_song_item.SongName = track.get("title", "")
-		result_song_item.Artists = track.get("artists", []).map(func(item): return item["name"])
+		result_song_item.SongName = song_result_res.title
+		result_song_item.Artists = song_result_res.artists.map(func(item): return item["name"])
 		popular_titles._add_item(result_song_item)
 
 func _on_close_button_pressed() -> void:
+	current_display_id = ""
 	close()
 
 func _on_scroll_bar_scrolling() -> void:

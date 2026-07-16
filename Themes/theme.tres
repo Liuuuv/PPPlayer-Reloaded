@@ -3,5 +3,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvktn"]
 
 [resource]
+Label/font_sizes/font_size = 16
 Panel/styles/panel = null
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_wvktn")

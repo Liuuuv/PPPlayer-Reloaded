@@ -11,7 +11,15 @@ const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
 const LOGS_PATH: String = "res://logs.json"
 const LYRICS_PATH: String = "res://lyrics.json"
 const SONG_PREFERENCES_PATH: String = "res://song_preferences.json"
-const CACHE_DIR_NAME: String = "_cache" ## in downloads
+
+## CACHE
+const CACHE_DIR_NAME: String = "_cache" ## in downloads/
+const RESULTS_CACHE_DIR_NAME: String = "_results_cache" ## in downloads/CACHE_DIR_NAME
+const RESULTS_CACHE_SONG_TEMPLATE: String = "song__%s"
+const RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE: String = "song_thumbnail__%s"
+const RESULTS_CACHE_ARTIST_TEMPLATE: String = "artist__%s"
+const RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE: String = "artist_thumbnail__%s"
+
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
 const download_item_scene = preload("res://Misc/download_item.tscn")
@@ -68,6 +76,7 @@ var music_player: MusicPlayer ## not meant to be accesed
 var song_panel: SongPanel
 
 var artist_page: ArtistPage
+var playlist_page: PlaylistPage
 
 var all_displayed_names: Dictionary = {} ## {display_name: id}
 

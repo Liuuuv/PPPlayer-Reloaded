@@ -3,7 +3,6 @@
 - Added
 "options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])"
 
-- Changed _audio_format to WAV
 
 ---------------------------------------
 !!!! You need to add deno.exe at the same path as ffmpeg, ffmprobe, yt-flp (user://) !!!!

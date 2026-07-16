@@ -2,7 +2,7 @@ extends Node
 
 # Ajoutez cette variable en haut de votre script (au niveau de la classe)
 var _thumbnail_cache: Dictionary = {}
-
+var _result_thumbnail_cache: Dictionary = {} ## {filename: content}
 
 #var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" ## eg Pe and pe are considered the same
 var alphabet: String = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -280,58 +280,98 @@ func get_thumbnail(id: String) -> ImageTexture:
 	else:
 		return null
 
+func get_cache_path() -> String:
+	return Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
+	
+func get_results_cache_path() -> String:
+	return get_cache_path() + Global.RESULTS_CACHE_DIR_NAME + "/"
 
 func get_cached_thumbnail(id: String) -> Texture2D:
 	#var thumbnail: Texture2D = get_thumbnail(id)
 	#return thumbnail
 	#print("get_cached_thumbnail for id %s" % id)
 	
-	# Vérifier si la texture est déjà en cache
+	# check if already in memory cache
 	if id in _thumbnail_cache:
 		var cached_texture: Texture2D = _thumbnail_cache[id]
 		# Vérifier que la texture n'est pas null et est valide
 		if cached_texture != null and cached_texture.get_width() > 0:
 			return cached_texture
 	
-	# Créer le dossier cache s'il n'existe pas
+	# check if cache folder exists
 	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
 	if not DirAccess.dir_exists_absolute(path_to_cach_dir):
 		var dir = DirAccess.open(Global.get_downloads_path())
 		if dir:
 			var error = dir.make_dir(Global.CACHE_DIR_NAME)
 			if error != OK:
-				push_warning("Impossible de créer le dossier cache: %s" % error)
+				push_warning("Unable to create cache folder: %s" % error)
 	
-	# Chemin du fichier cache
+	# loads the .res file if it exists
 	var full_path: String = path_to_cach_dir + id + ".res"
-	
-	# Essayer de charger depuis le cache sur disque
 	if ResourceLoader.exists(full_path):
 		var texture: Texture2D = ResourceLoader.load(full_path)
 		if texture != null:
 			_thumbnail_cache[id] = texture
 			return texture
 	
-	# Si pas en cache, générer la thumbnail via get_thumbnail()
+	# .res does not exists and the id is not in the memory cache, so create the .res and save into the memory cache
 	var thumbnail: Texture2D = get_thumbnail(id)
-	
 	if thumbnail != null:
-		# Mettre en cache mémoire
 		_thumbnail_cache[id] = thumbnail
-		
-		# Sauvegarder sur disque (asynchrone pour éviter les blocages)
-		_save_to_cache.call_deferred(id, thumbnail, full_path)
+		_save_to_cache.call_deferred(thumbnail, full_path)
 	
 	return thumbnail
 
-func _save_to_cache(id: String, texture: Texture2D, cache_path: String) -> void:
-	# Sauvegarder la texture en tant que ressource
-	var error = ResourceSaver.save(texture, cache_path)
+func get_cached_results(cache_name: String) -> Resource: ## eg: returns a dict for artists' page, a Texture2D for video thumbnails
+	
+	# already in memory cache?
+	if cache_name in _result_thumbnail_cache:
+		var cached_content: Variant = _result_thumbnail_cache[cache_name]
+		# Vérifier que la texture n'est pas null et est valide
+		if cached_content is Texture2D:
+			if cached_content != null and cached_content.get_width() > 0:
+				return cached_content
+		else:
+			if cached_content:
+				return cached_content
+	
+	# check if cache folder exists
+	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
+	if not DirAccess.dir_exists_absolute(path_to_cach_dir):
+		var dir = DirAccess.open(Global.get_downloads_path())
+		if dir:
+			var error = dir.make_dir(Global.CACHE_DIR_NAME)
+			if error != OK:
+				push_warning("Unable to create cache folder: %s" % error)
+	
+	# check if results cache folder exists
+	var path_to_results_cach_dir: String = path_to_cach_dir + Global.RESULTS_CACHE_DIR_NAME + "/"
+	if not DirAccess.dir_exists_absolute(path_to_results_cach_dir):
+		var dir = DirAccess.open(path_to_cach_dir)
+		if dir:
+			var error = dir.make_dir(Global.RESULTS_CACHE_DIR_NAME)
+			if error != OK:
+				push_warning("Unable to create results cache folder: %s" % error)
+	
+	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
+	
+	# loads the .res file if it exists
+	if ResourceLoader.exists(full_path):
+		var cached_content: Resource = ResourceLoader.load(full_path)
+		if cached_content != null:
+			_result_thumbnail_cache[cache_name] = cached_content
+			return cached_content
+	
+	return null
+
+func _save_to_cache(content: Resource, cache_path: String) -> void:
+	var error = ResourceSaver.save(content, cache_path)
 	if error != OK:
 		print("Erreur lors de la sauvegarde du cache: ", error)
 
 func from_dict_data_to_array(dict: Dictionary, attibutes: Array) -> Array[Array]:
-	# {id: {name: value}} -> [id, value]
+	# {id: {name: value}} -> [[id, value]]
 	var array: Array[Array] = []
 	var sub_array: Array = []
 	for key in dict:
@@ -389,7 +429,7 @@ func delete_file(file_path: String) -> bool:
 		Global.logs_display.write("Le fichier n'existe pas", LogsDisplay.MESSAGE.ERROR)
 	return false
 
-func set_mouse_filter_stop_recursivly(node: Control):
+func set_mouse_filter_stop_recursivly(node: Control): ## useless bc it exists in the inspector lol
 	node.mouse_filter = Control.MOUSE_FILTER_STOP
 	for child in node.get_children():
 		set_mouse_filter_stop_recursivly(child)

@@ -7,6 +7,14 @@ signal item_right_clicked(idx: int)
 
 enum GridAlignment {LEFT, RIGHT, CENTER}
 
+@onready var initial_custom_minimum_size: Vector2 = custom_minimum_size
+
+@export_group("Can Grab Scroll Focus")
+@export var can_grab_scroll_focus: bool = false
+@export var stretch_focus_duration: float = 0.1
+@export var popular_titles_expand_margin: float = 330.0
+
+@export_group("General")
 @export var template_viewport: SubViewport
 @export var grid_alignment: GridAlignment = GridAlignment.LEFT
 @export var default_scroll_tick_amount: float = 15.0
@@ -14,6 +22,8 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 @export var row_width: int = -1
 @export var template_path: NodePath
 @export var _debug_draw: bool = false
+
+
 
 var scroll_tick_amount: float = default_scroll_tick_amount
 var template: Control
@@ -51,6 +61,7 @@ var right_click_pressed: bool = false:
 
 
 func _ready() -> void:
+	_initialize.call_deferred()
 	template = get_node_or_null(template_path)
 	
 	if not Engine.is_editor_hint():
@@ -71,6 +82,8 @@ func _ready() -> void:
 	item_left_clicked.connect(_on_item_left_clicked)
 	item_right_clicked.connect(_on_item_right_clicked)
 
+func _initialize() -> void:
+	pass
 
 func _on_template_exiting() -> void:
 	template = null
@@ -366,7 +379,9 @@ func get_property(obj: Variant, property_name: String) -> Variant:
 	return null
 
 func _on_item_left_clicked(idx: int) -> void:
-	pass
+	if can_grab_scroll_focus:
+		mouse_force_pass_scroll_events = false
+		can_scroll = true
 
 func _on_item_right_clicked(idx: int) -> void: # does not work as intended with context menus because the menu eats the input and no release is detected
 	#print("Index %s right clicked" % idx)
@@ -376,4 +391,20 @@ func _on_mouse_entered() -> void:
 	pass
 
 func _on_mouse_exited() -> void:
-	pass
+	if can_grab_scroll_focus:
+		if not Rect2(Vector2(), size).has_point(get_local_mouse_position()):
+			_release_focus()
+
+func _release_focus():
+	mouse_force_pass_scroll_events = true
+	can_scroll = false
+	
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "custom_minimum_size", initial_custom_minimum_size, stretch_focus_duration)
+
+
+
+
+
+#

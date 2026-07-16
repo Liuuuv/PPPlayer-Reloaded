@@ -64,6 +64,7 @@ folder_colors={
 "res://Tabs/": "yellow",
 "res://Tabs/LibraryTab/": "orange",
 "res://Tabs/LibraryTab/DownloadedTab/": "red",
+"res://Themes/": "pink",
 "res://Windows/": "green"
 }
 

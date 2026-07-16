@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://4y0rjv6e4q3y" path="res://Page/artist_page.gd" id="1_p6w5q"]
 [ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="2_vdkw5"]
 [ext_resource type="Texture2D" path="res://temp/ee.res" id="2_yi2mi"]
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="3_7syba"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_7syba"]
 [ext_resource type="Script" uid="uid://q85pqprti5y3" path="res://Page/popular_titles.gd" id="3_eduj6"]
 [ext_resource type="Texture2D" uid="uid://c4ocsfn8yjx5k" path="res://Sprites/Random.png" id="3_pf8qt"]
 [ext_resource type="Shader" uid="uid://dinqhoijvd1gb" path="res://Shaders/vertical_fade.gdshader" id="3_tena2"]
@@ -103,7 +103,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_7syba")
 theme_override_font_sizes/font_size = 28
-text = "Minami la goat"
+text = "Minami the goat"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1204759954]
 layout_mode = 2
@@ -163,8 +163,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_eduj6")
-stretch_focus_duration = 0.1
-popular_titles_expand_margin = 330.0
+can_grab_scroll_focus = true
+popular_titles_expand_margin = 380.0
 template_path = NodePath("Template")
 
 [node name="Template" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles" unique_id=1187587422]

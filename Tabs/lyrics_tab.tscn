@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b5gndxt74s7x4"]
 
 [ext_resource type="Script" uid="uid://cdpcvr8wqoyja" path="res://Tabs/SearchTab/ContentTabs/SubtitlesTab/subtitles_tab.gd" id="1_8qjq7"]
-[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://theme.tres" id="2_de1qn"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="2_de1qn"]
 
 [node name="LyricsTab" type="Control" unique_id=278143286]
 layout_mode = 3
