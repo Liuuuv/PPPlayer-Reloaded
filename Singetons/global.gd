@@ -19,6 +19,13 @@ const RESULTS_CACHE_SONG_TEMPLATE: String = "song__%s"
 const RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE: String = "song_thumbnail__%s"
 const RESULTS_CACHE_ARTIST_TEMPLATE: String = "artist__%s"
 const RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE: String = "artist_thumbnail__%s"
+#enum CACHE_TEMPLATES {
+	#NONE,
+	#RESULTS_CACHE_SONG_TEMPLATE,
+	#RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE,
+	#RESULTS_CACHE_ARTIST_TEMPLATE,
+	#RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE,
+#}
 
 const default_downloads_path: String = "res://downloads/"
 const song_item_scene = preload("res://Misc/song_item.tscn")
@@ -153,14 +160,13 @@ class DownloadSongItem:
 		return "DOWNLOADING" if Global.downloads_tab.current_downloading_song == video_id else ""
 
 class ResultSongItem:
-	var SongName: String = "SONG NAME"
-	var Artists: Array = ["ARTIST"]
-	var DurationString: String = "XX:XX"
-	var IsInQueue: bool = false
+	var title: String = "SONG NAME"
+	var artists: Array = ["ARTIST"]
+	var duration_string: String = "XX:XX"
 	
-	var video_id: String = "":
+	var id: String = "":
 		set(new_id):
-			video_id = new_id
+			id = new_id
 			initialize.call_deferred()
 	var infos: Dictionary = {}
 	var scroll_list_belong: SongVirtualScrollList
@@ -176,17 +182,6 @@ class ResultSongItem:
 		pass
 	
 	
-	func is_selected() -> String:
-		if index in scroll_list_belong.multiselection:
-			return "■" # ▣
-		else:
-			if scroll_list_belong.multiselection.is_empty():
-				if scroll_list_belong.hovered_idx == index:
-					return "☐"
-				else:
-					return ""
-			else:
-				return "☐"
 	
 	func is_thumbnail_hovered() -> bool:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
@@ -195,7 +190,10 @@ class ResultSongItem:
 			return false
 	
 	func get_artists() -> String:
-		return ", ".join(Artists)
+		return ", ".join(artists)
+	
+	func get_thumbnail() -> Texture2D:
+		return Tools.get_cached_results(Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % id)
 	
 
 func _ready() -> void:
@@ -356,7 +354,7 @@ func create_song_item(id: String) -> SongItem:
 
 func create_result_song_item(video_id: String) -> ResultSongItem:
 	var song_item = ResultSongItem.new()
-	song_item.video_id = video_id
+	song_item.id = video_id
 	return song_item
 
 func create_download_itemOLD(id: String) -> DownloadItemOLD:

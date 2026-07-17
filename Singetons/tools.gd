@@ -2,7 +2,7 @@ extends Node
 
 # Ajoutez cette variable en haut de votre script (au niveau de la classe)
 var _thumbnail_cache: Dictionary = {}
-var _result_thumbnail_cache: Dictionary = {} ## {filename: content}
+var _result_thumbnail_cache: Dictionary = {} ## {template: content}
 
 #var alphabet: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" ## eg Pe and pe are considered the same
 var alphabet: String = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -318,12 +318,20 @@ func get_cached_thumbnail(id: String) -> Texture2D:
 	# .res does not exists and the id is not in the memory cache, so create the .res and save into the memory cache
 	var thumbnail: Texture2D = get_thumbnail(id)
 	if thumbnail != null:
-		_thumbnail_cache[id] = thumbnail
+		if Config.enable_memory_cache_for_local:
+			_thumbnail_cache[id] = thumbnail
 		_save_to_cache.call_deferred(thumbnail, full_path)
 	
 	return thumbnail
 
-func get_cached_results(cache_name: String) -> Resource: ## eg: returns a dict for artists' page, a Texture2D for video thumbnails
+## eg: returns a dict for artists' page, a Texture2D for video thumbnails
+## [br]
+## [param cache_name] should not end with '.res'.
+func get_cached_results(cache_name: String) -> Resource:
+	if cache_name.ends_with(".res"):
+		push_error("cache_name must not finish with '.res'.")
+		cache_name = cache_name.get_basename()
+	
 	
 	# already in memory cache?
 	if cache_name in _result_thumbnail_cache:
@@ -356,12 +364,24 @@ func get_cached_results(cache_name: String) -> Resource: ## eg: returns a dict f
 	
 	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
 	
+	
+	
+	var can_check_memory_cache: bool = Config.enable_memory_cache_for_results
+	#if "/%s/" % Global.RESULTS_CACHE_DIR_NAME in cache_name:
+		#can_check_memory_cache = Config.enable_memory_cache_for_results
+	#elif cache_name.get_base_dir() == Global.get_downloads_path() + Global.CACHE_DIR_NAME:
+		#can_check_memory_cache = Config.enable_memory_cache_for_local
+	
+	
+	
 	# loads the .res file if it exists
 	if ResourceLoader.exists(full_path):
 		var cached_content: Resource = ResourceLoader.load(full_path)
 		if cached_content != null:
-			_result_thumbnail_cache[cache_name] = cached_content
+			if can_check_memory_cache:
+				_result_thumbnail_cache[cache_name] = cached_content
 			return cached_content
+			sauvegarde en image
 	
 	return null
 

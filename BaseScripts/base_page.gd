@@ -4,10 +4,18 @@ class_name BasePage
 signal info_requested()
 signal info_displayed()
 
+#@export var cache_template: Global.CACHE_TEMPLATES
+
+@onready var close_button: Button = get_node_or_null("CloseButton")
+
 @onready var default_position: Vector2 = position
 
+var current_display_id: String = ""
+
 func _ready() -> void:
-	pass
+	if close_button:
+		close_button.pressed.connect(_on_close_button_pressed)
+	#print(Global.get(Global.CACHE_TEMPLATES.keys()[cache_template]))
 
 func open():
 	show()
@@ -28,5 +36,22 @@ func open():
 
 func close():
 	hide()
+
+
+func _on_close_button_pressed() -> void:
+	current_display_id = ""
+	close()
+
+
+
+
+
+
+
+
+
+
+
+
 
 #

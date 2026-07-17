@@ -8,10 +8,8 @@ class_name ArtistPage
 
 
 
-@onready var close_button: Button = %CloseButton
 
 @onready var scroll_container: ScrollContainer = %ScrollContainer
-
 @onready var artist_cover: TextureRect = %ArtistCover
 @onready var subscribers_count: Label = %SubscribersCount
 @onready var artist_name: Label = %ArtistName
@@ -20,7 +18,7 @@ class_name ArtistPage
 @onready var popular_titles: ArtistPageContent = %PopularTitles
 
 
-var current_display_id: String = ""
+
 var artist_cover_size: Vector2
 
 func _ready() -> void:
@@ -32,7 +30,7 @@ func _ready() -> void:
 	
 	clip_contents = true
 	
-	close_button.pressed.connect(_on_close_button_pressed)
+	
 	scroll_container.get_v_scroll_bar().scrolling.connect(_on_scroll_bar_scrolling)
 	info_requested.connect(_on_info_requested)
 	info_displayed.connect(_on_info_displayed)
@@ -49,7 +47,7 @@ func gather_and_display_infos(channel_id: String) -> void:
 		display_infos(cache_result)
 		return
 	
-	
+	## if no cache
 	info_requested.emit()
 	loading_info.text = "Gathering infos"
 	var script = ProjectSettings.globalize_path("res://PythonFiles/ytmusic_get_artist_infos.py")
@@ -72,8 +70,7 @@ func _data_callback(data: Dictionary, channel_id: String):
 		if cache_result:
 			display_infos(cache_result)
 		else:
-			display_infos(ArtistCacheResource.new())
-			push_error("No cache result to display :(")
+			push_error("no cache result to display")
 	else:
 		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
 		push_error("error: %s" % data.get("error"), "")
@@ -116,20 +113,23 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 			song_cache_res.id = song_id
 			song_cache_res.title = track.get("title")
 			song_cache_res.artists = track.get("artists")
+			Tools._save_to_cache(song_cache_res, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_TEMPLATE % song_id + ".res")
 			
 			var song_thumbnails: Array = track.get("thumbnails", [])
 			if song_thumbnails != []:
 				download_biggest_thumbnail(
 					song_thumbnails,
 					func(song_thumbnail: Texture2D):
-						Tools._save_to_cache.call_deferred(song_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % channel_id + ".res")
+						Tools._save_to_cache.call_deferred(song_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % song_id + ".res")
 				)
+			
+			cached_infos.songs.append(song_id)
 	
-	
+	## save to memory cache
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
 	Tools._result_thumbnail_cache[cache_name] = cached_infos
 	
-	
+	## save to cache
 	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
 	var path_to_results_cach_dir: String = path_to_cach_dir + Global.RESULTS_CACHE_DIR_NAME + "/"
 	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
@@ -139,7 +139,7 @@ func display_infos(infos: ArtistCacheResource) -> void:
 	#print('display infos ', infos)
 	
 	artist_cover_size = artist_cover.size
-	scroll_container.scroll_vertical = artist_cover_size.y / 2
+	scroll_container.scroll_vertical = 3.0 * artist_cover_size.y / 4.0
 	
 	artist_name.text = infos.get("name")
 	
@@ -165,7 +165,7 @@ func display_infos(infos: ArtistCacheResource) -> void:
 		artist_cover.texture = ImageTexture.create_from_image(image)
 	
 	var songs_cache_results: Array[String] = infos.songs
-	#_display_popular_titles(songs_cache_results)
+	_display_popular_titles(songs_cache_results)
 	
 	
 	info_displayed.emit()
@@ -200,16 +200,16 @@ func _display_popular_titles(songs: Array[String]) -> void:
 	for song_id in songs:
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
 		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)
-		
-		var result_song_item: Global.ResultSongItem = Global.create_result_song_item(song_id)
-		result_song_item.scroll_list_belong = popular_titles
-		result_song_item.SongName = song_result_res.title
-		result_song_item.Artists = song_result_res.artists.map(func(item): return item["name"])
-		popular_titles._add_item(result_song_item)
+		if song_result_res:
+			var result_song_item: Global.ResultSongItem = Global.create_result_song_item(song_id)
+			result_song_item.scroll_list_belong = popular_titles
+			result_song_item.title = song_result_res.title
+			result_song_item.artists = song_result_res.artists.map(func(item): return item["name"])
+			popular_titles._add_item(result_song_item)
+		else:
+			push_error("No cache for YouTube ID: %s" % song_id)
 
-func _on_close_button_pressed() -> void:
-	current_display_id = ""
-	close()
+
 
 func _on_scroll_bar_scrolling() -> void:
 	

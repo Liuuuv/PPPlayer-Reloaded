@@ -345,6 +345,21 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 				var texture_rect: TextureRect = template_control
 				if texture_rect.texture:
 					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+		elif str(template_control.name)[0] == '+':
+			var parts: PackedStringArray = template_control.name.split("-", true, 1)
+			var method_name: String = parts[0].substr(1)
+			var arg_name: String = parts[1] if len(parts) > 1 else ""
+			var tex: Texture2D
+			if arg_name != "":
+				tex = item.call(method_name, item.get(arg_name))
+			else:
+				tex = item.call(method_name)
+			
+			var texture_rect: TextureRect = template_control
+			if tex:
+				draw_texture_rect(tex, item_box, false)
+			elif texture_rect.texture:
+					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
 			
 	
 	elif template_control is ColorRect:

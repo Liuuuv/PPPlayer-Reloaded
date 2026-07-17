@@ -209,7 +209,7 @@ size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pf8qt")
 
-[node name="Thumbnail" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=436080393]
+[node name="+get_thumbnail" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=436080393]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
@@ -229,7 +229,7 @@ stretch_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="-SongName" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Infos" unique_id=2097366604]
+[node name="-title" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Infos" unique_id=2097366604]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -248,15 +248,6 @@ size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 10
 text = "XX:XX"
 horizontal_alignment = 2
-
-[node name="+is_selected" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer" unique_id=287592279]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 30
-text = "☐"
-horizontal_alignment = 1
 
 [node name="Separator" type="ColorRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template" unique_id=858338714]
 layout_mode = 1
