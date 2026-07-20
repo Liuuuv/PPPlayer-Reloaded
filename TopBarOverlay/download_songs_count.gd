@@ -9,7 +9,7 @@ func _ready() -> void:
 	Global.downloads_folder_changed.connect(_on_downloads_folder_changed)
 #
 func update_count():
-	num_downloaded_songs = Global.downloaded_songs.size()
+	num_downloaded_songs = Global.song_infos.size()
 	#text = "[wave amp=100 freq=3] %s [/wave]" % str(num_downloaded_songs)
 	text = str(num_downloaded_songs)
 

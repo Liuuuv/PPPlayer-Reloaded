@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Windows/SettingsWindow/Scripts/do_checkup.gd" id="2_e3bw5"]
 [ext_resource type="Script" uid="uid://dm7cqtwn6us8q" path="res://Windows/SettingsWindow/Scripts/clear_cache.gd" id="2_kbi0k"]
+[ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="3_4qfth"]
 [ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Windows/SettingsWindow/Scripts/remove_duplicate.gd" id="3_y72ja"]
 [ext_resource type="Script" uid="uid://dotm7dksllgpe" path="res://Windows/SettingsWindow/Scripts/update_downloaded_songs_song_infos.gd" id="5_2oix8"]
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
@@ -37,11 +38,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ClearCache" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=100665118]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=912974446]
 layout_mode = 2
+
+[node name="ClearCache" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=100665118]
+layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-text = "Clear cache"
+text = "Clear file cache"
 script = ExtResource("2_kbi0k")
+
+[node name="ClearMemoryCache" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=546088184]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Clear file + memory cache"
+script = ExtResource("3_4qfth")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="DoCheckup" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=2113952229]
 layout_mode = 2

@@ -22,6 +22,7 @@ def get_artist_infos(artist_id: str):
             "thumbnails",
             # "songs",
             "albums",
+            "channelId",
         ]
         for info_name in to_get:
             if info_name in artist_infos_raw:
@@ -30,10 +31,16 @@ def get_artist_infos(artist_id: str):
         ## songs
         try:
             audioPlaylistId = artist_infos_raw.get("songs").get("browseId")
-            artist_infos["songs"] = {
-                    'success': True,
-                    'result': ytmusic.get_playlist(audioPlaylistId)
+            if audioPlaylistId is None:
+                artist_infos["songs"] = {
+                    'success': False,
+                    'error': "Top songs' browse ID not found"
                 }
+            else:
+                artist_infos["songs"] = {
+                        'success': True,
+                        'result': ytmusic.get_playlist(audioPlaylistId)
+                    }
         except Exception as e:
             artist_infos["songs"] = {
                     'success': False,

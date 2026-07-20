@@ -15,7 +15,7 @@ def yt_music_search(query):
             track_info = {
                 'videoId': item.get('videoId', ''),
                 'title': item.get('title', ''),
-                'artists': [artist.get('name', '') for artist in item.get('artists', [])],
+                'artists': item.get('artists', ''),
                 'album': item.get('album', {}).get('name', '') if item.get('album') else '',
                 'duration': item.get('duration', ''),
                 'thumbnails': item.get('thumbnails', [])
@@ -26,8 +26,7 @@ def yt_music_search(query):
         print(json.dumps({
             'success': True,
             'query': query,
-            'count': len(search_results),
-            'recommendations': search_results
+            'result': search_results
         }))
         
     except Exception as e:

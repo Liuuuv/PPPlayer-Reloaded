@@ -14,12 +14,10 @@ func _ready() -> void:
 
 
 func ask_for_folder(base_global_path: String = ""):
-	print("asking for a folder...")
 	selected_dir_path = ""
 	current_dir = base_global_path
 	show()
 	await closing_window
-	print("selected_dir_path %s" % selected_dir_path)
 	return selected_dir_path
 
 func close_window() -> void:

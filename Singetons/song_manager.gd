@@ -10,7 +10,7 @@ var has_stream: bool = false:
 		if has_stream != on:
 			has_stream = on
 			has_stream_changed.emit()
-var playing_song_index: int = 0
+var playing_song_index: int = -1
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -127,17 +127,15 @@ func clear_current_playlist(): ## clears the current_playlist
 	playing_song_index = 0
 	Global.music_player.clear_stream()
 
-func update_downloaded_songs_from_song_infos():
-	print("Scanning downloaded songs (from song_infos.json)...")
-	var downloaded_songs: Dictionary = {}
-	for id in Global.song_infos:
-		var song_info: Dictionary = Global.song_infos.get(id, {})
-		if song_info.has("video_id"):
-			downloaded_songs.set(song_info.get("video_id"), 0)
-	#print("Stored downloaded_songs (%s entries): " % Global.downloaded_songs.size(), Global.downloaded_songs)
-	#print("Scanned downloaded_songs (%s entries): " % downloaded_songs.size(), downloaded_songs)
-	Global.downloaded_songs = downloaded_songs
-	Global.save_downloaded_songs()
+#func update_downloaded_songs_from_song_infos():
+	#print("Scanning downloaded songs (from song_infos.json)...")
+	#var downloaded_songs: Dictionary = {}
+	#for id in Global.song_infos:
+		#var song_info: Dictionary = Global.song_infos.get(id, {})
+		#if song_info.has("video_id"):
+			#downloaded_songs.set(song_info.get("video_id"), 0)
+	#Global.downloaded_songs = downloaded_songs
+	#Global.save_downloaded_songs()
 
 func _on_stream_changed(fullpath: String): ## from the music player
 	has_stream = Global.music_player.stream != null
@@ -178,7 +176,7 @@ func _on_previous_pressed() -> void:
 
 func _on_downloads_folder_changed() -> void:
 	Global.logs_display.write("Downloads folder changed.")
-	update_downloaded_songs_from_song_infos()
+	#update_downloaded_songs_from_song_infos()
 
 
 

@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://bbrl048vwsc0d" path="res://Page/playlist_page.tscn" id="28_yb73r"]
 [ext_resource type="PackedScene" uid="uid://chgshiplgkeo0" path="res://Page/artist_page.tscn" id="28_ytmp3"]
 [ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="29_ucuw1"]
+[ext_resource type="PackedScene" uid="uid://c6i411f13i6su" path="res://Page/search_results_page.tscn" id="29_yb73r"]
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
 [ext_resource type="PackedScene" uid="uid://plb4bhbcq0lb" path="res://Tabs/DownloadedTab/downloaded.tscn" id="32_p2tm2"]
 [ext_resource type="PackedScene" uid="uid://ycahaxmeicmd" path="res://Misc/work_in_progress.tscn" id="38_trcvk"]
@@ -230,11 +231,12 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tab_focus_mode = 0
 script = ExtResource("16_wxqep")
 
 [node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=2111112156]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("17_fqgfq")
@@ -250,8 +252,9 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SearchBar" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer" unique_id=1828313418]
+unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "Search (wip)"
+placeholder_text = "Search"
 clear_button_enabled = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer" unique_id=1964252526]
@@ -355,15 +358,22 @@ anchor_bottom = 1.0
 offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ArtistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/Pages" unique_id=1993962236 instance=ExtResource("28_ytmp3")]
+visible = false
 layout_mode = 1
 
 [node name="PlaylistPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/Pages" unique_id=1046587413 instance=ExtResource("28_yb73r")]
+visible = false
 layout_mode = 1
 
-[node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
+[node name="SearchResultsPage" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/Pages" unique_id=198421278 instance=ExtResource("29_yb73r")]
 visible = false
+layout_mode = 1
+offset_top = 32.0
+
+[node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")
@@ -484,6 +494,7 @@ metadata/_tab_index = 2
 [node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=108100736 instance=ExtResource("25_vgxo8")]
 unique_name_in_owner = true
 layout_mode = 1
+location = 3
 template_path = NodePath("Template")
 
 [node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload" unique_id=1606439624]
@@ -545,7 +556,7 @@ theme_override_font_sizes/font_size = 8
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="+get_current_downloading_song" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=606000019]
+[node name="?is_currently_downloading" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=606000019]
 layout_mode = 2
 text = "DOWNLOADING"
 
@@ -578,10 +589,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
 texture = ExtResource("41_730hx")
-
-[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer" unique_id=1455546585]
-layout_mode = 2
-mouse_filter = 2
 
 [node name="SongPanel" parent="UILayer/UI/VBoxContainer" unique_id=968184744 instance=ExtResource("43_ruj5i")]
 layout_mode = 2

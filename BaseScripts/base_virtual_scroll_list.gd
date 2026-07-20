@@ -34,6 +34,7 @@ var selected_idx: int = -1
 var hovered_idx: int = -1
 var can_scroll: bool = true
 
+@export var shader_bg: ColorRect
 
 var left_click_pressed: bool = false:
 	set(on):
@@ -75,6 +76,9 @@ func _ready() -> void:
 	
 	if template:
 		template.tree_exiting.connect(_on_template_exiting)
+	
+	if shader_bg:
+		shader_bg.hide()
 	
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
@@ -129,7 +133,6 @@ func _input(event):
 		scroll_tick_amount = default_scroll_tick_amount * fast_tick_amount_multiplier
 	elif event.is_action_released("ctrl"):
 		scroll_tick_amount = default_scroll_tick_amount
-		
 
 func _gui_input(event: InputEvent) -> void:
 	if not template or items.is_empty():
@@ -272,6 +275,9 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 	var item_box: Rect2 = template_control.get_global_rect()
 	item_box.position += box.position
 	
+	
+	
+	
 	if template_control == template:
 		draw_rect(item_box, Color(0.0, 0.003, 0.08, 0.2), true)
 	
@@ -301,8 +307,20 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			else:
 				value = item.call(method_name)
 			text = value if value else ""
+		elif str(template_control.name)[0] == '?':
+			var parts: PackedStringArray = template_control.name.split("-", true, 1)
+			var method_name: String = parts[0].substr(1)
+			var arg_name: String = parts[1] if len(parts) > 1 else ""
+			var boolean: bool
+			if arg_name != "":
+				boolean = item.call(method_name, item.get(arg_name))
+			else:
+				boolean = item.call(method_name)
+			if boolean:
+				text = label.text if boolean else ""
 		else:
 			text = label.text
+		
 		
 		var font_size: int = label.get_theme_font_size("font_size")
 		if font_size == 0:
@@ -326,12 +344,13 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 		if str(template_control.name) == "Thumbnail":
 			if item is Global.SongItem:
 				var texture_rect: TextureRect = template_control
-				#var thumbnail: Texture2D = item.get_thumbnail()
 				var thumbnail: Texture2D = Tools.get_cached_thumbnail(item.id)
-				if thumbnail:
-					draw_texture_rect(thumbnail, item_box, false)
-				elif texture_rect.texture:
-					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+				
+				var texture_to_draw: Texture2D = thumbnail if thumbnail else texture_rect.texture
+				if texture_to_draw:
+					# Calculer le rect qui conserve le ratio
+					var fitted_rect = _get_fitted_rect(texture_to_draw, item_box)
+					draw_texture_rect(texture_to_draw, fitted_rect, false)		
 		elif str(template_control.name)[0] == '?':
 			var parts: PackedStringArray = template_control.name.split("-", true, 1)
 			var method_name: String = parts[0].substr(1)
@@ -357,9 +376,10 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			
 			var texture_rect: TextureRect = template_control
 			if tex:
-				draw_texture_rect(tex, item_box, false)
-			elif texture_rect.texture:
-					draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
+				var fitted_rect = _get_fitted_rect(tex, item_box)
+				draw_texture_rect(tex, fitted_rect, false)
+			#elif texture_rect.texture:
+					#draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
 			
 	
 	elif template_control is ColorRect:
@@ -369,6 +389,10 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			if property_value is bool and property_value:
 				var color_rect: ColorRect = template_control
 				draw_rect(item_box, color_rect.color, true)
+		elif str(template_control.name) == "ShaderBGRef":
+			if shader_bg:
+				if item is Global.SongItem and item.is_playing():
+					shader_bg.position = item_box.position + template_control.position
 		else:
 			var color_rect: ColorRect = template_control
 			draw_rect(item_box, color_rect.color, true)
@@ -379,6 +403,30 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 	for child in template_control.get_children():
 		if child is Control:
 			draw_item(child, box, item)
+
+func _get_fitted_rect(texture: Texture2D, target_rect: Rect2) -> Rect2:
+	var texture_size = texture.get_size()
+	if texture_size.x == 0 or texture_size.y == 0:
+		return target_rect
+	
+	var target_aspect = target_rect.size.x / target_rect.size.y
+	var texture_aspect = texture_size.x / texture_size.y
+	
+	var draw_size: Vector2
+	
+	if texture_aspect > target_aspect:
+		# L'image est plus large → adapter à la largeur
+		draw_size.x = target_rect.size.x
+		draw_size.y = target_rect.size.x / texture_aspect
+	else:
+		# L'image est plus haute → adapter à la hauteur
+		draw_size.y = target_rect.size.y
+		draw_size.x = target_rect.size.y * texture_aspect
+	
+	# Centrer dans le target_rect
+	var draw_pos = target_rect.position + (target_rect.size - draw_size) / 2.0
+	
+	return Rect2(draw_pos, draw_size)
 
 func get_property(obj: Variant, property_name: String) -> Variant:
 	if obj is Dictionary:

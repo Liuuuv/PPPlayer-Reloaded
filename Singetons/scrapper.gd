@@ -158,7 +158,9 @@ func process_image(body: PackedByteArray) -> void:
 	var error = image.load_jpg_from_buffer(body)
 	if error != OK:
 		error = image.load_png_from_buffer(body)
-		current_callback.call(null)
+		if error != OK:
+			current_callback.call(null)
+			return
 	current_callback.call(image)
 
 

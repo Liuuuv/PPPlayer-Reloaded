@@ -2,9 +2,18 @@ extends BaseVirtualScrollList
 class_name SongVirtualScrollList
 
 
-@export var location: Global.SONG_ITEMS_LOCATIONS
+@export var location: Global.SONG_ITEMS_LOCATIONS ## None is ok, it's planned to be removed
+@export var artists_label: Label
+
+
+@export var thumbnail: TextureRect ## Used for knowing when the thumbnail if hovered
 
 var context_menu: ContextMenu
+
+var left_click_context_menu: ContextMenu
+var _context_menu_id_mapping = {} ## because it was not possible to pass a lambda function as an arg (because it was freed to soon because of the GC)
+
+
 
 var is_hovering_selection_box: bool = false # if x mouse pos is sufficently high
 var multiselecting: bool = false:
@@ -16,15 +25,21 @@ var multiselecting: bool = false:
 			multiselection = []
 var multiselection: Array = []
 
-var is_hovering_thumbnail: bool = false: # if x mouse pos is sufficently low
+var hovering_variables = [
+	"is_hovering_thumbnail",
+	"is_hovering_artists_label",
+]
+var is_hovering_thumbnail: bool = false:
 	set(on):
 		if is_hovering_thumbnail == on:
 			return
 		is_hovering_thumbnail = on
+var is_hovering_artists_label: bool = false
 
 func _ready() -> void:
 	super._ready()
 	_initialize_context_menu()
+	
 
 #func _physics_process(delta: float) -> void:
 	#print("selected_idx ", selected_idx)
@@ -65,6 +80,13 @@ func _initialize_context_menu():
 			context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
 			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
+		Global.SONG_ITEMS_LOCATIONS.RESULTS:
+			context_menu.add_item("Download", _download_song, false, null)
+			
+	
+	
+	
+	
 	#context_menu.add_checkbox_item("Enable third Button", Callable(self, "_enableThirdButton"), false, false, null)
 	
 	context_menu.add_seperator()
@@ -72,6 +94,107 @@ func _initialize_context_menu():
 	subMenu.add_item("Run the Submenu Test", Callable(self, "_runTest"), false, null)
 	
 	context_menu.connect_to(self)
+	
+	if artists_label:
+		_initialize_left_click_context_menu()
+
+func _initialize_left_click_context_menu():
+	left_click_context_menu = ContextMenu.new()
+	
+	left_click_context_menu.MenuOpened.connect(_on_left_click_context_menu_opened)
+	left_click_context_menu._menu.id_pressed.connect(_on_left_click_context_id_pressed)
+	
+	
+	left_click_context_menu.attach_to(self)
+	left_click_context_menu.set_minimum_size(Vector2i(400, 0))
+	#context_menu.add_placeholder_item("%s" % _get_selected_idx(), true, null)
+	left_click_context_menu.add_header_item("HEADER", null)
+	
+	left_click_context_menu.add_seperator()
+	
+	left_click_context_menu.leftClick = true
+	left_click_context_menu.set_condition(_can_show_left_click_context_menu) ## must not be a lambda function for example because it is freed before it is used.
+	left_click_context_menu.connect_to(self)
+
+func _can_show_left_click_context_menu():
+	return is_hovering_artists_label
+
+func _on_left_click_context_menu_opened() -> void:
+	if hovered_idx < 0:
+		return
+	#_set_header_text("Explore")
+	left_click_context_menu.clear_items()
+	_context_menu_id_mapping = {}
+	left_click_context_menu.add_header_item("Go to", null)
+	var base_song_item: Global.BaseSongItem = items.get(hovered_idx)
+	## TODO change "get_artists" to "get_artist_names"
+	for artist: Dictionary in base_song_item.artists:
+		_context_menu_id_mapping.set(left_click_context_menu._nextId, artist.get("id", ""))
+		left_click_context_menu.add_item(artist.get("name"), Callable(), false, null)
+
+func _on_left_click_context_id_pressed(id: int):
+	Global.artist_page.gather_and_display_infos(_context_menu_id_mapping.get(id, ""))
+
+
+
+func _gui_input(event: InputEvent) -> void:
+	super._gui_input(event)
+	if event is InputEventMouseMotion:
+		var mm: InputEventMouseMotion = event
+		if artists_label:
+			
+			if _is_hovering_node(mm.position, artists_label) and hovered_idx >= 0:
+				is_hovering_artists_label = true
+				#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			else:
+				is_hovering_artists_label = false
+				#mouse_default_cursor_shape = Control.CURSOR_ARROW
+		
+		if thumbnail:
+			if _is_hovering_node(mm.position, thumbnail) and hovered_idx >= 0:
+				is_hovering_thumbnail = true
+			else:
+				is_hovering_thumbnail = false
+			#if is_hovering_thumbnail and hovered_idx >= 0:
+				#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			#else:
+				#mouse_default_cursor_shape = Control.CURSOR_ARROW
+		
+		mouse_default_cursor_shape = Control.CURSOR_ARROW
+		for hovering_variable in hovering_variables:
+			if get(hovering_variable):
+				mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+				break
+		
+
+## check if [param pos] (local) is in [param node]'s rect, independently of the scroll.
+func _is_hovering_node(pos: Vector2, node: Control) -> bool:
+	pos += Vector2(-get_grid_margin(), scroll)
+	
+	#pos.x -= global_position.x + node.global_position.x
+	
+	
+	var item_size: Vector2 = get_item_size()
+	if item_size.x <= 0 or item_size.y <= 0:
+		return -1
+	
+	var cols: int = get_column_count()
+	var width: float = item_size.x * cols
+	var height: float = get_end_position()
+	
+	# Check if position is within bounds
+	if not Rect2(Vector2.ZERO, Vector2(width, height)).has_point(pos):
+		return -1
+	
+	
+	var pos_in_item: Vector2 = Vector2(
+		fposmod(pos.x, item_size.x),
+		fposmod(pos.y, item_size.y)
+	)
+	var node_rect: Rect2 = node.get_rect()
+	node_rect.position.x = node.global_position.x - global_position.x ## idk why artists_label.global_position - global_position does not work lol
+	return node_rect.has_point(pos_in_item)
+	
 
 func _get_selected_idx() -> int:
 	return selected_idx
@@ -81,6 +204,8 @@ func _set_header_text(text: String) -> void:
 		push_error("No header.")
 		return
 	context_menu._menu.set_item_text(0, text)
+	context_menu._menu.set_item_disabled(0, true)
+	
 
 func _set_item_text(index: int, text: String) -> void:
 	context_menu._menu.set_item_text(index, text)
@@ -98,6 +223,20 @@ func _on_item_left_clicked(idx: int) -> void:
 	
 	if is_hovering_thumbnail:
 		_play_from_here()
+	
+	
+	if Input.is_action_pressed("ctrl"):
+		var base_song_item: Global.BaseSongItem = items.get(idx)
+		var video_id: String
+		if base_song_item is Global.SongItem:
+			var song_info: Dictionary = Global.song_infos.get(base_song_item.id, {})
+			video_id = song_info.get("video_id", "")
+		elif base_song_item is Global.ResultSongItem:
+			video_id = base_song_item.id
+		if video_id:
+			OS.shell_open(Tools.build_youtube_url(video_id))
+
+	
 
 func _on_item_right_clicked(idx: int) -> void:
 	super._on_item_right_clicked(idx)
@@ -162,8 +301,7 @@ func _redownload_thumbnail() -> void:
 		if not items.has(selected_idx):
 			Global.logs_display.write("_redownload_thumbnail, \"items\" does not contain selected ID: %s" % selected_idx, LogsDisplay.MESSAGE.ERROR)
 		return
-	var song_info: Dictionary = song_item.infos
-	var video_id: String = song_info.get("video_id", "")
+	var video_id: String = song_item.youtube_id
 	if video_id == "":
 		Global.logs_display.write("No \"video_id\" for ID %s, skipping thumbnail downloading." % song_item.id, LogsDisplay.MESSAGE.INFO)
 		return
@@ -173,12 +311,18 @@ func _redownload_thumbnail() -> void:
 func _delete() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)
 	var song_id: String = song_item.id
-	var display_name: String = song_item.SongName
+	var display_name: String = song_item.title
 	
 	var confirm: bool = await Global.confirmation_dialog.ask_for_confirmation(
 		"Are ya sure to delete? (ID: %s)" % song_id,
 		"Are you sure you want to permenantly delete %s?" % [display_name]
 	)
+	if not Global.can_delete_song(song_id):
+		Global.confirmation_dialog.ask_for_confirmation(
+			"I refuse.",
+			"You can't delete this song, maybe it is currently playing?"
+		)
+		return
 	if confirm:
 		
 		var file_paths = []
@@ -203,6 +347,26 @@ func _delete() -> void:
 		
 		for path in file_paths:
 			Tools.delete_file(path)
+		
+		Global.delete_song_informations(song_id)
+		items.remove_at(selected_idx)
+
+
+func _download_song():
+	var song_item: Global.ResultSongItem = items.get(selected_idx)
+	if song_item.id != "":
+		Global.downloads_tab.add_id_to_queue(song_item.id)
+
+
+
+
+
+
+
+
+
+
+
 
 
 #

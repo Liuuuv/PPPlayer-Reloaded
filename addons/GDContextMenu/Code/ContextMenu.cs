@@ -17,6 +17,10 @@ public partial class ContextMenu : Control
 	
 	private bool has_header = false;
 	
+	private Callable condition;
+	private bool _has_condition = false;
+	private bool leftClick = false;
+	
 	[Signal]
 	public delegate void MenuOpenedEventHandler();
 
@@ -28,14 +32,19 @@ public partial class ContextMenu : Control
 		_menu.Connect("id_pressed", Callable.From((int id) => _on_item_pressed(id)));
 	}
 	
-
 	#region "Public Functions"
 	public void attach_to(Node parent)
 	{
 		parent.AddChild(_menu, true);
 	}
-
-	public void add_item(string label, Callable callback, bool disabled = false, Texture2D icon = null)
+	
+	public void clear_items()
+	{
+		_menu.Clear(true);
+		_nextId = 0;
+	}
+	
+	public void add_item(string label, Godot.Callable callback, bool disabled = false, Texture2D icon = null)
 	{
 		_menu.AddItem(label, _nextId);
 		_menu.SetItemDisabled(_nextId, disabled);
@@ -46,7 +55,7 @@ public partial class ContextMenu : Control
 		}
 
 		_actions[_nextId] = callback;
-
+		
 		_nextId++;
 	}
 
@@ -99,16 +108,28 @@ public partial class ContextMenu : Control
 		_menu.AddSeparator();
 	}
 
+	// bonjour
 	public void connect_to(Control node)
 	{
 		node.GuiInput += (InputEvent @event) =>
 		{
-			if (@event is InputEventMouseButton mb && mb.ButtonIndex == MouseButton.Right && mb.Pressed)
+			MouseButton button_pressed = leftClick ? MouseButton.Left : MouseButton.Right;
+			if (@event is InputEventMouseButton mb && mb.ButtonIndex == button_pressed && mb.Pressed)
 			{
+				if (_has_condition && !(bool)condition.Call())
+				{
+					return;
+				}
 				show_item(node);
 				EmitSignal(SignalName.MenuOpened);
 			}
 		};
+	}
+	
+	public void set_condition(Callable new_condition)
+	{
+		condition = new_condition;
+		_has_condition = true;
 	}
 
 	public void set_minimum_size(Vector2I size)
@@ -240,6 +261,7 @@ public partial class ContextMenu : Control
 		else if (_actions.TryGetValue(id, out var callback) && callback != null)
 		{
 			callback?.CallDeferred();
+			//Call("callback");
 		}
 	}
 	#endregion

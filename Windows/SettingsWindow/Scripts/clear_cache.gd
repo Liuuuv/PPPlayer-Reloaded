@@ -6,6 +6,8 @@ func _pressed() -> void:
 	if DirAccess.dir_exists_absolute(full_path):
 		
 		var error: Error = Tools.clear_directory_contents(full_path)
+		#Tools._result_thumbnail_cache = {}
+		#Tools._thumbnail_cache = {}
 		if error != OK:
 			Global.logs_display.write("Error when deleting cache: %s" % error, LogsDisplay.MESSAGE.ERROR)
 		else:

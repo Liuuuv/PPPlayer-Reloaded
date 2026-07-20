@@ -3,8 +3,6 @@ class_name ArtistPage
 
 
 
-@onready var loading_overlay: Control = %LoadingOverlay
-@onready var loading_info: Label = %LoadingInfo
 
 
 
@@ -25,8 +23,8 @@ func _ready() -> void:
 	super._ready()
 	
 	Global.artist_page = self
-	#close()
-	open()
+	close()
+	#open()
 	
 	clip_contents = true
 	
@@ -40,11 +38,13 @@ func gather_and_display_infos(channel_id: String) -> void:
 	if channel_id == "":
 		push_error("No channel ID founded")
 		return
+	Global.logs_display.write("gathering and displaying infos for channel ID: %s" % channel_id)
+	open()
 	current_display_id = channel_id
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
 	var cache_result: Resource = Tools.get_cached_results(cache_name)
 	if cache_result:
-		display_infos(cache_result)
+		_display_infos(cache_result)
 		return
 	
 	## if no cache
@@ -64,11 +64,11 @@ func gather_and_display_infos(channel_id: String) -> void:
 func _data_callback(data: Dictionary, channel_id: String):
 	if data.get("success"):
 		_save_infos_to_cache(data.get("infos", {}), channel_id)
-		await get_tree().process_frame
+		await get_tree().process_frame ## some are call deferred
 		var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
 		var cache_result: ArtistCacheResource = Tools.get_cached_results(cache_name)
 		if cache_result:
-			display_infos(cache_result)
+			_display_infos(cache_result)
 		else:
 			push_error("no cache result to display")
 	else:
@@ -80,16 +80,16 @@ func _data_callback(data: Dictionary, channel_id: String):
 func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 	var cached_infos: ArtistCacheResource = ArtistCacheResource.new()
 	
-	cached_infos.name = infos.get("name", "")
-	cached_infos.subscribers = infos.get("subscribers", "")
-	cached_infos.monthlyListeners = infos.get("monthlyListeners", "")
+	cached_infos.name = infos.get("name", "") if infos.get("name", "") else ""
+	cached_infos.subscribers = infos.get("subscribers", "") if infos.get("subscribers", "") else ""
+	cached_infos.monthlyListeners = infos.get("monthlyListeners", "") if infos.get("monthlyListeners", "") else ""
 	cached_infos.description = infos.get("description", "") if infos.get("description", "") else ""
 	cached_infos.channel_id = channel_id
 	
 	
 	var thumbnails: Array = infos.get("thumbnails", [])
 	if thumbnails != []:
-		download_biggest_thumbnail(
+		Tools.download_biggest_thumbnail(
 			thumbnails,
 			func(artist_thumbnail: Texture2D):
 				Tools._save_to_cache.call_deferred(artist_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % channel_id + ".res")
@@ -101,28 +101,12 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 	var songs: Dictionary = infos.get("songs", {})
 	if songs.get("success") == false:
 		push_error("error %s" % songs.get("error"))
+		if infos.get("channelId", channel_id) != channel_id:
+			gather_and_display_infos(infos.get("channelId", ""))
+			return
 	else:
 		for track in songs.get("result", {}).get("tracks", []):
-			var song_id: String = track.get("videoId")
-			if not song_id:
-				push_error("A YouTube videoId is missing, skipping this song.")
-				continue
-			var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
-			
-			var song_cache_res: SongCacheResource = SongCacheResource.new()
-			song_cache_res.id = song_id
-			song_cache_res.title = track.get("title")
-			song_cache_res.artists = track.get("artists")
-			Tools._save_to_cache(song_cache_res, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_TEMPLATE % song_id + ".res")
-			
-			var song_thumbnails: Array = track.get("thumbnails", [])
-			if song_thumbnails != []:
-				download_biggest_thumbnail(
-					song_thumbnails,
-					func(song_thumbnail: Texture2D):
-						Tools._save_to_cache.call_deferred(song_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % song_id + ".res")
-				)
-			
+			var song_id: String = Tools.save_youtube_video_infos_to_cache(track)
 			cached_infos.songs.append(song_id)
 	
 	## save to memory cache
@@ -135,7 +119,7 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
 	Tools._save_to_cache(cached_infos, full_path)
 
-func display_infos(infos: ArtistCacheResource) -> void:
+func _display_infos(infos: ArtistCacheResource) -> void:
 	#print('display infos ', infos)
 	
 	artist_cover_size = artist_cover.size
@@ -181,22 +165,11 @@ func get_biggest_thumbnail_url(thumbnails: Array) -> String:
 	return max_url
 
 
-## (ASYNC) Sets the biggest thumbnail to [param target].
-## [br]
-## [param callback] is called with argument [param target].
-func download_biggest_thumbnail(thumbnails: Array, callback: Callable = Callable()) -> void:
-	var max_url: String = get_biggest_thumbnail_url(thumbnails)
-	if max_url != "":
-		Scrapper.download_url(
-			max_url,
-			Scrapper.process_image,
-			func(image:Image):
-				callback.call(ImageTexture.create_from_image(image))
-		)
+
 
 
 func _display_popular_titles(songs: Array[String]) -> void:
-	
+	popular_titles.clear_song_items()
 	for song_id in songs:
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
 		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)
@@ -204,7 +177,7 @@ func _display_popular_titles(songs: Array[String]) -> void:
 			var result_song_item: Global.ResultSongItem = Global.create_result_song_item(song_id)
 			result_song_item.scroll_list_belong = popular_titles
 			result_song_item.title = song_result_res.title
-			result_song_item.artists = song_result_res.artists.map(func(item): return item["name"])
+			result_song_item.artists = song_result_res.artists
 			popular_titles._add_item(result_song_item)
 		else:
 			push_error("No cache for YouTube ID: %s" % song_id)
@@ -223,5 +196,10 @@ func _on_info_requested() -> void:
 
 func _on_info_displayed() -> void:
 	loading_overlay.hide()
+
+func _on_reload_button_pressed() -> void:
+	gather_and_display_infos(current_display_id)
+
+
 
 #

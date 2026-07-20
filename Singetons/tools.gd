@@ -287,9 +287,6 @@ func get_results_cache_path() -> String:
 	return get_cache_path() + Global.RESULTS_CACHE_DIR_NAME + "/"
 
 func get_cached_thumbnail(id: String) -> Texture2D:
-	#var thumbnail: Texture2D = get_thumbnail(id)
-	#return thumbnail
-	#print("get_cached_thumbnail for id %s" % id)
 	
 	# check if already in memory cache
 	if id in _thumbnail_cache:
@@ -318,15 +315,14 @@ func get_cached_thumbnail(id: String) -> Texture2D:
 	# .res does not exists and the id is not in the memory cache, so create the .res and save into the memory cache
 	var thumbnail: Texture2D = get_thumbnail(id)
 	if thumbnail != null:
-		if Config.enable_memory_cache_for_local:
-			_thumbnail_cache[id] = thumbnail
+		_thumbnail_cache[id] = thumbnail
 		_save_to_cache.call_deferred(thumbnail, full_path)
 	
 	return thumbnail
 
-## eg: returns a dict for artists' page, a Texture2D for video thumbnails
+## Eg: returns the associated resource
 ## [br]
-## [param cache_name] should not end with '.res'.
+## [param cache_name] should NOT end with '.res'.
 func get_cached_results(cache_name: String) -> Resource:
 	if cache_name.ends_with(".res"):
 		push_error("cache_name must not finish with '.res'.")
@@ -365,30 +361,85 @@ func get_cached_results(cache_name: String) -> Resource:
 	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
 	
 	
-	
-	var can_check_memory_cache: bool = Config.enable_memory_cache_for_results
-	#if "/%s/" % Global.RESULTS_CACHE_DIR_NAME in cache_name:
-		#can_check_memory_cache = Config.enable_memory_cache_for_results
-	#elif cache_name.get_base_dir() == Global.get_downloads_path() + Global.CACHE_DIR_NAME:
-		#can_check_memory_cache = Config.enable_memory_cache_for_local
-	
-	
-	
 	# loads the .res file if it exists
 	if ResourceLoader.exists(full_path):
 		var cached_content: Resource = ResourceLoader.load(full_path)
 		if cached_content != null:
-			if can_check_memory_cache:
-				_result_thumbnail_cache[cache_name] = cached_content
+			_result_thumbnail_cache[cache_name] = cached_content
 			return cached_content
-			sauvegarde en image
 	
 	return null
 
-func _save_to_cache(content: Resource, cache_path: String) -> void:
-	var error = ResourceSaver.save(content, cache_path)
+## Eg:
+## [br]
+## {
+## "category": "Songs", 
+## "resultType": "song", 
+## "title": "\u30ab\u30ef\u30ad\u30f2\u30a2\u30e1\u30af - Kawakiwoameku", 
+## "album": {"name": "Kawakiwoameku", "id": "MPREb_r28EAcrLnXE"}, 
+## "inLibrary": false, 
+## "pinnedToListenAgain": false,
+##  "videoId": "gxp3R7l1iSk", 
+## "videoType": "MUSIC_VIDEO_TYPE_ATV", 
+## "duration": "4:12", 
+## "year": null, 
+## "artists": 
+## [{"name": "minami", "id": "UCEsOqBVe_DNEUAer9TYk6bw"}], 
+## "duration_seconds": 252, 
+## "views": "327M", 
+## "isExplicit": false, 
+## "thumbnails": [{"url": "https://yt3.googleusercontent.com/Gx74Mec9Pf3tVrtSI0siKdF6964s4Q1JEjsBLkcFaALQug_mc6Y96-scL17Sev66rBe43nH0pnRgjV_v=w60-h60-l90-rj", "width": 60, "height": 60}, {"url": "https://yt3.googleusercontent.com/Gx74Mec9Pf3tVrtSI0siKdF6964s4Q1JEjsBLkcFaALQug_mc6Y96-scL17Sev66rBe43nH0pnRgjV_v=w120-h120-l90-rj", "width": 120, "height": 120}]
+## }
+func save_youtube_video_infos_to_cache(track_infos: Dictionary) -> String:
+	var song_id: String = track_infos.get("videoId")
+	if not song_id:
+		push_error("A YouTube videoId is missing, skipping this song.")
+		return ""
+	var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
+	
+	var song_cache_res: SongCacheResource = SongCacheResource.new()
+	song_cache_res.id = song_id
+	song_cache_res.title = track_infos.get("title")
+	song_cache_res.artists = track_infos.get("artists")
+	Tools._save_to_cache(song_cache_res, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_TEMPLATE % song_id + ".res")
+	
+	var song_thumbnails: Array = track_infos.get("thumbnails", [])
+	if song_thumbnails != []:
+		download_biggest_thumbnail(
+			song_thumbnails,
+			func(song_thumbnail: Texture2D):
+				Tools._save_to_cache.call_deferred(song_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % song_id + ".res")
+		)
+	return song_id
+
+func _save_to_cache(content: Resource, fullpath: String) -> void:
+	var error: Error = ResourceSaver.save(content, fullpath)
 	if error != OK:
 		print("Erreur lors de la sauvegarde du cache: ", error)
+
+
+## (ASYNC) Sets the biggest thumbnail to [param target].
+## [br]
+## [param callback] is called with argument [param target].
+func download_biggest_thumbnail(thumbnails: Array, callback: Callable = Callable()) -> void:
+	var max_url: String = get_biggest_thumbnail_url(thumbnails)
+	if max_url != "":
+		Scrapper.download_url(
+			max_url,
+			Scrapper.process_image,
+			func(image:Image):
+				callback.call(ImageTexture.create_from_image(image))
+		)
+
+func get_biggest_thumbnail_url(thumbnails: Array) -> String:
+	var max_width: float = 0.0
+	var max_url: String = "" ## url for the biggest thumbnail
+	for dict: Dictionary in thumbnails:
+		var dict_width: float = dict.get("width", 0.0)
+		if dict_width > max_width:
+			max_width = dict_width
+			max_url = dict.get("url", "")
+	return max_url
 
 func from_dict_data_to_array(dict: Dictionary, attibutes: Array) -> Array[Array]:
 	# {id: {name: value}} -> [[id, value]]
@@ -442,17 +493,15 @@ func delete_file(file_path: String) -> bool:
 				Global.logs_display.write("Fichier supprimé avec succès", LogsDisplay.MESSAGE.INFO)
 				return true
 			else:
-				Global.logs_display.write("Erreur lors de la suppression: %d" % error, LogsDisplay.MESSAGE.ERROR)
+				Global.logs_display.write("Erreur lors de la suppression de %s: %d" % [file_path, error], LogsDisplay.MESSAGE.ERROR)
 		else:
-			Global.logs_display.write("Impossible d'accéder au dossier", LogsDisplay.MESSAGE.ERROR)
+			Global.logs_display.write("Impossible d'accéder au dossier %s" % file_path, LogsDisplay.MESSAGE.ERROR)
 	else:
-		Global.logs_display.write("Le fichier n'existe pas", LogsDisplay.MESSAGE.ERROR)
+		Global.logs_display.write("Le fichier n'existe pas (%s)" % file_path, LogsDisplay.MESSAGE.ERROR)
 	return false
 
-func set_mouse_filter_stop_recursivly(node: Control): ## useless bc it exists in the inspector lol
-	node.mouse_filter = Control.MOUSE_FILTER_STOP
-	for child in node.get_children():
-		set_mouse_filter_stop_recursivly(child)
+func is_mouse_in_box(node: Control):
+	return Rect2(Vector2(), node.size).has_point(node.get_local_mouse_position())
 
 
 

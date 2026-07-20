@@ -4,7 +4,7 @@
 
 [node name="InfoWindow" type="Window" unique_id=1919218813]
 oversampling_override = 1.0
-title = "Song informations"
+title = "Song informations for ID %s"
 initial_position = 4
 size = Vector2i(800, 500)
 script = ExtResource("1_3nq6m")

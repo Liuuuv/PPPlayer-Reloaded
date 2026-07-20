@@ -1,0 +1,231 @@
+[gd_scene format=3 uid="uid://c6i411f13i6su"]
+
+[ext_resource type="Script" uid="uid://d0k6ww3itkaex" path="res://Page/search_results_page.gd" id="1_fp7w4"]
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="2_ygqqk"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_iav6i"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="3_k2hrg"]
+[ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="4_iav6i"]
+[ext_resource type="Shader" uid="uid://beirxyabxus3m" path="res://Page/loading_logo.gdshader" id="5_k2hrg"]
+[ext_resource type="Theme" uid="uid://bsyug031inryx" path="res://Themes/theme_secondary.tres" id="6_tstn2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tstn2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iav6i"]
+shader = ExtResource("5_k2hrg")
+shader_parameter/radius = 0.05
+shader_parameter/ring_radius = 0.35
+shader_parameter/speed = 1.0
+shader_parameter/count = 11
+shader_parameter/fade_power = 4.26400015504
+shader_parameter/circle_color = Color(1, 1, 1, 1)
+
+[node name="SearchResultsPage" type="Control" unique_id=198421278]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fp7w4")
+metadata/_custom_type_script = "uid://c5ynx21xtsxba"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=470234499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.12156863, 0.12156863, 0.12156863, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1175920875]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1458849517]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=47655210]
+unique_name_in_owner = true
+layout_mode = 2
+text = "X"
+
+[node name="NumResultsQuery" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1779073691]
+unique_name_in_owner = true
+layout_mode = 2
+text = "%s results displayed for query '%s'."
+
+[node name="IsLoadedFromCache" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1446949547]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Loaded from cache."
+
+[node name="SearchResults" parent="VBoxContainer" unique_id=1986626170 node_paths=PackedStringArray("artists_label", "thumbnail") instance=ExtResource("2_ygqqk")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_iav6i")
+location = 4
+artists_label = NodePath("Template/HBoxContainer/Infos/+get_artists")
+thumbnail = NodePath("Template/HBoxContainer/Thumbnail/+get_thumbnail")
+template_path = NodePath("Template")
+
+[node name="Template" type="Panel" parent="VBoxContainer/SearchResults" unique_id=681160708]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme = ExtResource("3_iav6i")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/SearchResults/Template" unique_id=1488089570]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="VBoxContainer/SearchResults/Template/HBoxContainer" unique_id=1909214853]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="-IsInQueue" type="ColorRect" parent="VBoxContainer/SearchResults/Template/HBoxContainer/Control" unique_id=1333527426]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Thumbnail" type="PanelContainer" parent="VBoxContainer/SearchResults/Template/HBoxContainer" unique_id=847197322]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tstn2")
+
+[node name="+get_thumbnail" type="TextureRect" parent="VBoxContainer/SearchResults/Template/HBoxContainer/Thumbnail" unique_id=169749637]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("3_k2hrg")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="+when_thumbnail_hovered" type="TextureRect" parent="VBoxContainer/SearchResults/Template/HBoxContainer/Thumbnail" unique_id=1428581391]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_iav6i")
+stretch_mode = 2
+
+[node name="Infos" type="VBoxContainer" parent="VBoxContainer/SearchResults/Template/HBoxContainer" unique_id=2009157091]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-title" type="Label" parent="VBoxContainer/SearchResults/Template/HBoxContainer/Infos" unique_id=627923470]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG NAME"
+vertical_alignment = 1
+
+[node name="+get_artists" type="Label" parent="VBoxContainer/SearchResults/Template/HBoxContainer/Infos" unique_id=1413400449]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="?is_downloaded" type="Label" parent="VBoxContainer/SearchResults/Template/HBoxContainer" unique_id=148292697]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 6
+theme = ExtResource("6_tstn2")
+theme_override_font_sizes/font_size = 13
+text = "Downloaded"
+vertical_alignment = 1
+
+[node name="-DurationString" type="Label" parent="VBoxContainer/SearchResults/Template/HBoxContainer" unique_id=1595610786]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
+
+[node name="Separator" type="ColorRect" parent="VBoxContainer/SearchResults/Template" unique_id=22669068]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)
+
+[node name="LoadingOverlay" type="Control" parent="." unique_id=201955479]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingBG" type="ColorRect" parent="LoadingOverlay" unique_id=1089548223]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.58431375)
+
+[node name="LoadingLogo" type="ColorRect" parent="LoadingOverlay" unique_id=587460038]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_iav6i")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingInfo" type="Label" parent="LoadingOverlay" unique_id=81885742]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ayo"

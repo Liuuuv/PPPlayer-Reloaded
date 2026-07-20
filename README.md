@@ -12,8 +12,12 @@ PP Player is and open-source local music player with online integrations (YouTub
 So I thought to myself 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
 
 ## Shortcuts:
+### General:
+- Ctrl + LMB on a song to open its browser YouTube page.
+
 ### Search bar:
-- use 'id:' for id search only.
+- Use 'id:' for id search only.
+
 
 ## Dependencies
 - You need to have Python v3.10+ installed in order to execute Python scripts (they are not compiled because of transparency).

@@ -6,7 +6,6 @@ class_name ArtistPageContent
 
 func _ready() -> void:
 	super._ready()
-	#Tools.set_mouse_filter_stop_recursivly(template)
 
 
 func _initialize() -> void:
@@ -14,7 +13,6 @@ func _initialize() -> void:
 	if can_grab_scroll_focus:
 		Global.song_panel.mouse_entered.connect(_on_song_panel_mouse_entered)
 
-	
 
 func _on_item_left_clicked(idx: int) -> void:
 	super._on_item_left_clicked(idx)

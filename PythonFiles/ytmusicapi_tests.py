@@ -22,7 +22,7 @@ def test():
         
         
         ## issue: only displays the first song :(
-        result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A")
+        # result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A")
         # audioPlaylistId = result.get("songs").get("browseId")
         # audioPlaylistId = audioPlaylistId[2:]
         # print(audioPlaylistId)
@@ -31,17 +31,18 @@ def test():
         # result = ytmusic.get_album(browseId)
         
         ## solution: treat it like a playlist :)
-        # result = ytmusic.get_artist("UCOeG6YTLjO7JApWPl_q0D-A")
+        result = ytmusic.get_artist("UCt8MwZ--umWKmmsDSB714ww")
         # audioPlaylistId = result.get("songs").get("browseId")
         # result = ytmusic.get_playlist(audioPlaylistId)
         
+        # result = ytmusic.get_user("UCQ1U65-CQdIoZ2_NA4Z4F7A") ## does not work bc the path wasnt found
         
         
         to_print = json.dumps({
             'success': True,
             'result': result
         })
-        print(to_print)
+        # print(to_print)
         pyperclip.copy(to_print)
         
         

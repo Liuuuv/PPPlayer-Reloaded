@@ -82,7 +82,7 @@ func _on_try_dl():
 	is_ready_to_dl = false
 	var video_id: String = downloading_queue[0]
 	Global.logs_display.write("Downloading a new content, video ID: %s" % video_id)
-	if Global.downloaded_songs.has(video_id):
+	if Global.song_infos.has(video_id):
 		Global.logs_display.write("This video has already been downloaded, removing it from the queue: video ID: %s" % video_id)
 		remove_from_queue(video_id)
 		is_ready_to_dl = true
@@ -96,14 +96,16 @@ func _on_try_dl():
 	current_downloading_song = video_id
 	var infos: Dictionary = await DownloadsManager.download_video_from_url(url, id, true, true)
 	current_downloading_song = ""
-	if "interrupt" in infos:
+	if "interrupt" in infos: ## TODO put errored song elsewhere to dl them later
 		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s" % [video_id, id], LogsDisplay.MESSAGE.ERROR)
 	else:
-		print("infos ", infos)
 		var extension: String = Config.default_audio_format_string
 		var thumbnail_path: String = ""
 		#
 		Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
+		Global.downloaded_tab.reload_song_list()
+		Global.downloaded_song_add(video_id)
+		Global.save_downloaded_songs()
 	remove_from_queue(video_id)
 	is_ready_to_dl = true
 	try_dl.emit()

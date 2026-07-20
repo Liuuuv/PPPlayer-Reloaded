@@ -85,7 +85,6 @@ grow_vertical = 2
 size_flags_vertical = 3
 
 [node name="Thumbnail" type="PanelContainer" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=1794516155]
-custom_minimum_size = Vector2(75, 40)
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2

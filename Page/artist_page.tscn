@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="4_57epv"]
 [ext_resource type="Texture2D" uid="uid://cx32nx6p4w8u0" path="res://テトリス [L2TrIJsTKHk].webp" id="5_pf8qt"]
 [ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="5_yi2mi"]
+[ext_resource type="Texture2D" uid="uid://dcus78ow2x0e0" path="res://Sprites/Cross.png" id="11_c83tn"]
 [ext_resource type="Shader" uid="uid://beirxyabxus3m" path="res://Page/loading_logo.gdshader" id="11_tena2"]
+[ext_resource type="Texture2D" uid="uid://b81hfk3hr60pq" path="res://Sprites/ReloadSmall.png" id="12_o5rpc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mvcfs"]
 shader = ExtResource("3_tena2")
@@ -57,6 +59,7 @@ theme_override_constants/separation = 0
 
 [node name="ArtistCover" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=575127243]
 unique_name_in_owner = true
+texture_filter = 2
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_vertical = 3
@@ -128,14 +131,20 @@ theme = ExtResource("3_7syba")
 theme_override_colors/font_color = Color(0.71, 0.71, 0.71, 1)
 text = "999999k subscribers"
 
-[node name="ChannelDescription" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1595763000]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1125422046]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+
+[node name="ChannelDescription" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer" unique_id=1595763000]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "channel description"
 horizontal_alignment = 2
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1342621983]
 layout_mode = 2
@@ -156,13 +165,15 @@ expand_icon = true
 layout_mode = 2
 text = "Popular Titles"
 
-[node name="PopularTitles" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1986626170 instance=ExtResource("2_vdkw5")]
+[node name="PopularTitles" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1986626170 node_paths=PackedStringArray("artists_label") instance=ExtResource("2_vdkw5")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_eduj6")
+location = 4
+artists_label = NodePath("Template/HBoxContainer/Infos/+get_artists")
 can_grab_scroll_focus = true
 popular_titles_expand_margin = 380.0
 template_path = NodePath("Template")
@@ -218,7 +229,7 @@ texture = ExtResource("4_57epv")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="?is_thumbnail_hovered" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=1819102998]
+[node name="+when_thumbnail_hovered" type="TextureRect" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles/Template/HBoxContainer/Thumbnail" unique_id=1819102998]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -265,10 +276,12 @@ layout_mode = 2
 text = "Albums"
 
 [node name="Albums" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1360005434 instance=ExtResource("2_vdkw5")]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+template_path = NodePath("PlaylistTemplate")
 
 [node name="PlaylistTemplate" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/Albums" unique_id=1282761535]
 editor_description = "Used as a template for the virtual scroll list."
@@ -375,10 +388,12 @@ layout_mode = 2
 text = "Singles & EPs"
 
 [node name="Singles" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=680962922 instance=ExtResource("2_vdkw5")]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+template_path = NodePath("PlaylistTemplate")
 
 [node name="PlaylistTemplate" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/Singles" unique_id=720017057]
 editor_description = "Used as a template for the virtual scroll list."
@@ -485,10 +500,12 @@ layout_mode = 2
 text = "Videos"
 
 [node name="Videos" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1894167450 instance=ExtResource("2_vdkw5")]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+template_path = NodePath("PlaylistTemplate")
 
 [node name="PlaylistTemplate" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/Videos" unique_id=1639691734]
 editor_description = "Used as a template for the virtual scroll list."
@@ -605,12 +622,25 @@ ZZ
 Z
 Z"
 
-[node name="CloseButton" type="Button" parent="." unique_id=327181120]
-unique_name_in_owner = true
+[node name="Overlay" type="HBoxContainer" parent="." unique_id=1123330546]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-text = "X"
+
+[node name="CloseButton" type="Button" parent="Overlay" unique_id=327181120]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("11_c83tn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ReloadButton" type="Button" parent="Overlay" unique_id=809372268]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("12_o5rpc")
+expand_icon = true
 
 [node name="LoadingOverlay" type="Control" parent="." unique_id=1763640231]
 unique_name_in_owner = true
@@ -632,6 +662,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.58431375)
 
 [node name="LoadingLogo" type="ColorRect" parent="LoadingOverlay" unique_id=560153461]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_c83tn")
 layout_mode = 1
 anchors_preset = 8

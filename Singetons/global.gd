@@ -8,6 +8,7 @@ signal song_infos_changed()
 const SETTINGS_PATH: String = "res://settings.json"
 const SONG_INFOS_PATH: String = "res://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
+const PYTHON_SCRIPTS_PATH: String = "res://PythonFiles/"
 const LOGS_PATH: String = "res://logs.json"
 const LYRICS_PATH: String = "res://lyrics.json"
 const SONG_PREFERENCES_PATH: String = "res://song_preferences.json"
@@ -19,6 +20,7 @@ const RESULTS_CACHE_SONG_TEMPLATE: String = "song__%s"
 const RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE: String = "song_thumbnail__%s"
 const RESULTS_CACHE_ARTIST_TEMPLATE: String = "artist__%s"
 const RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE: String = "artist_thumbnail__%s"
+const RESULTS_CACHE_SEARCH_RESULT_TEMPLATE: String = "search__%s" ## % query
 #enum CACHE_TEMPLATES {
 	#NONE,
 	#RESULTS_CACHE_SONG_TEMPLATE,
@@ -53,11 +55,12 @@ enum SONG_ITEMS_LOCATIONS {
 	CURRENT_PLAYLIST,
 	DOWNLOADED,
 	DOWNLOADS,
+	RESULTS,
 }
 
 var settings: Dictionary = DEFAULT_SETTINGS
 var song_infos: Dictionary = {} ## {id: {display_name, extension, release_date, artist, album}}
-var downloaded_songs: Dictionary = {} ## {id: 0} ## TODO useless bc song_infos exists
+var downloaded_songs: Dictionary = {} ## {id: 0} [br] Stores the [b] YOUTUBE IDS [b].
 var lyrics: Dictionary = {} ## {id: lyrics}
 var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool, favorite: bool}}
 
@@ -84,36 +87,58 @@ var song_panel: SongPanel
 
 var artist_page: ArtistPage
 var playlist_page: PlaylistPage
+var search_results_page: SearchResultsPage
 
-var all_displayed_names: Dictionary = {} ## {display_name: id}
+var search_tab: SearchTab
+
+var main_tab_container: MainTabContainer
+
+var all_displayed_names: Dictionary = {} ## {id: display_name}
 
 var song_streams: Dictionary = {} ## {id: SongItemOLD}
 
-class SongItem:
-	var SongName: String = "SONG NAME"
-	var Artist: String = "ARTIST"
-	var DurationString: String = "XX:XX"
-	var IsInQueue: bool = false
-	
+var active_page: BasePage
+
+class BaseSongItem:
 	var id: String = "":
-		set(new_id):
-			id = new_id
-			initialize.call_deferred()
-	var infos: Dictionary = {}
+		set = _id_setter
+	var title: String = "SONG NAME"
+	var artists: Array = [{"name": "ARTIST", "id": ""}]
+	var duration_string: String = "XX:XX"
+	
 	var location: SONG_ITEMS_LOCATIONS = SONG_ITEMS_LOCATIONS.NONE
 	var scroll_list_belong: SongVirtualScrollList
 	var index: int = 0
 	
+	func initialize(id_: String, title_: String, artists_: Array, duration_string_: String, scroll_list_belong_: SongVirtualScrollList, index_: int):
+		id = id_
+		title = title_
+		artists = artists_
+		duration_string = duration_string_
+		scroll_list_belong = scroll_list_belong_
+		index = index_
+	
+	func _id_setter(new_id: String):
+		id = new_id
+	
+	func get_artists() -> String:
+		return ", ".join(artists.map(func(a): return a["name"]))
+
+class SongItem extends BaseSongItem:
+	var IsInQueue: bool = false
+	
+	var youtube_id: String = ""
 	
 	func _init() -> void:
 		pass
 	
-	func initialize():
-		#Global.logs_display.write("initializing song item... ID: %s " % id)
-		#tooltip_text = "ID: " + id
-		infos = Global.song_infos.get(id, {})
-		SongName = infos.get("display_name", "") + "          " + id
-		Artist = infos.get("artist", "")
+	func _id_setter(new_id: String):
+		super._id_setter(new_id)
+		var song_info: Dictionary = Global.song_infos.get(id, {})
+		youtube_id = song_info.get("video_id", "")
+		title = song_info.get("display_name", "")
+		artists = [{"name": song_info.get("artist", ""), "id": song_info.get("artist_id", "")}] ## TODO CHANGE THIS SHI
+		#duration_string = song_info.get("display_name", "")
 	
 	func is_selected() -> String:
 		if index in scroll_list_belong.multiselection:
@@ -132,6 +157,9 @@ class SongItem:
 			return true
 		else:
 			return false
+	
+	func is_playing() -> bool:
+		return location == Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST and SongManager.playing_song_index == index
 
 class DownloadSongItem:
 	var SongName: String = "SONG NAME"
@@ -156,44 +184,32 @@ class DownloadSongItem:
 		#infos = Global.song_infos.get(id, {})
 		#SongName = infos.get("display_name", "") + "          " + id
 	
-	func is_current_downloading_song(video_id: String) -> String:
-		return "DOWNLOADING" if Global.downloads_tab.current_downloading_song == video_id else ""
+	func is_currently_downloading() -> bool:
+		return Global.downloads_tab.current_downloading_song == video_id
 
-class ResultSongItem:
-	var title: String = "SONG NAME"
-	var artists: Array = ["ARTIST"]
-	var duration_string: String = "XX:XX"
-	
-	var id: String = "":
-		set(new_id):
-			id = new_id
-			initialize.call_deferred()
+class ResultSongItem extends BaseSongItem:
 	var infos: Dictionary = {}
-	var scroll_list_belong: SongVirtualScrollList
-	var index: int = 0
-	
 	
 	func _init() -> void:
-		pass
+		location = SONG_ITEMS_LOCATIONS.RESULTS
 	
-	func initialize():
-		#Global.logs_display.write("initializing song item... ID: %s " % id)
-		#tooltip_text = "ID: " + id
-		pass
-	
-	
-	
-	func is_thumbnail_hovered() -> bool:
+	func when_thumbnail_hovered() -> Texture2D:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
-			return true
+			if is_downloaded():
+				return preload("uid://dhv41h24nlxce")
+			else:
+				return preload("uid://d3uf60lqrs7yd")
 		else:
-			return false
+			return null
 	
 	func get_artists() -> String:
-		return ", ".join(artists)
+		return ", ".join(artists.map(func(a): return a["name"]))
 	
 	func get_thumbnail() -> Texture2D:
 		return Tools.get_cached_results(Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % id)
+	
+	func is_downloaded() -> bool:
+		return Global.downloaded_songs.has(id)
 	
 
 func _ready() -> void:
@@ -402,42 +418,23 @@ func get_thumbnail_path(id: String):
 		logs_display.write("get_thumbnail_path, Can't find the song info for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
 		return ""
 
+func can_delete_song(id: String) -> bool:
+	if Global.current_playlist.content_ids.has(id):
+		if Global.music_player.current_stream_id == id:
+			return false
+	return true
 
-func delete_song(id: String):
-	logs_display.write("Deleting song from ID %s" % id, LogsDisplay.MESSAGE.DEBUG)
-	var song_info: Dictionary = song_infos.get(id)
-	var error: Error
-	if song_info:
-		var extension: String = song_info.get("extension", "")
-		if extension:
-			var full_path: String = get_downloads_path() + id + "." + extension
-			error = DirAccess.remove_absolute(full_path)
-			if error != OK:
-				push_error("delete_song, can't delete the song %s" % full_path)
-				logs_display.write("delete_song, Can't delete the file. can't remove the file %s" % full_path, LogsDisplay.MESSAGE.ERROR)
-			
-			if not downloaded_songs.erase(song_info.get("video_id")):
-				logs_display.write("delete_song, the video_id was not available for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
-			save_downloaded_songs()
-			
-			var thumbnail_path: String = get_thumbnail_path(id)
-			if thumbnail_path != "":
-				error = DirAccess.remove_absolute(thumbnail_path)
-				if error != OK:
-					push_error("delete_song, Can't delete the thumbnail %s" % thumbnail_path)
-					logs_display.write("delete_song, Can't delete the thumbnail %s" % full_path, LogsDisplay.MESSAGE.ERROR)
-			
-			song_infos.erase(id)
-			save_song_infos()
-			
-			if current_playlist.content_ids.has(id):
-				current_playlist.content_ids.erase(id)
-			
-		else:
-			logs_display.write("delete_song, Can't delete the song. no extension found in song_infos for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
-			return
-	else:
-		logs_display.write("delete_song, Can't delete the song. Can't find the song info for the ID: %s" % id, LogsDisplay.MESSAGE.ERROR)
-		return
+func delete_song_informations(id: String):
+	logs_display.write("Deleting song informations from ID %s" % id, LogsDisplay.MESSAGE.DEBUG)
+	Global.song_infos.erase(id)
+	Global.save_song_infos()
+	Global.song_preferences.erase(id)
+	Global.save_song_preferences()
+	Global.lyrics.erase(id)
+	Global.save_lyrics()
+	Global.downloaded_songs.erase(id)
+	Global.save_downloaded_songs()
+	if Global.current_playlist.content_ids.has(id):
+		Global.current_playlist.content_ids.erase(id)
 	
-	logs_display.write("Successfully deleted the song for the ID: %s" % id, LogsDisplay.MESSAGE.INFO)
+	logs_display.write("Successfully deleted the song informations for the ID: %s" % id, LogsDisplay.MESSAGE.INFO)
