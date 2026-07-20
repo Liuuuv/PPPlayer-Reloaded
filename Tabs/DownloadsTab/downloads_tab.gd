@@ -13,8 +13,8 @@ var is_ready_to_dl: bool = false:
 		is_ready_to_dl = on
 		#if on:
 			#ready_to_dl.emit()
-var downloading_queue: Array[String] = []
-var current_downloading_song: String = ""
+var downloading_queue: Array[String] = [] ## video_id s of the downloading queue. Has [member current_downloading_song].
+var current_downloading_song: String = "" ## video_id of the currently downloading song.
 
 
 func _ready() -> void:
@@ -28,6 +28,9 @@ func _ready() -> void:
 	queue_changed.connect(_on_queue_changed)
 
 func add_id_to_queue(video_id: String):
+	if video_id == "":
+		Global.logs_display.write("YouTube ID is empty, I can't download the song.", LogsDisplay.MESSAGE.ERROR)
+		return
 	#print("adding ", id, "to queue")
 	Global.logs_display.write("Adding an ID to the download queue: %s" % video_id, LogsDisplay.MESSAGE.DEBUG)
 	downloading_queue.push_front(video_id)
@@ -104,7 +107,7 @@ func _on_try_dl():
 		#
 		Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
 		Global.downloaded_tab.reload_song_list()
-		Global.downloaded_song_add(video_id)
+		Global.downloaded_song_add(video_id, id)
 		Global.save_downloaded_songs()
 	remove_from_queue(video_id)
 	is_ready_to_dl = true

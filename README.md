@@ -3,11 +3,11 @@
 PP Player is and open-source local music player with online integrations (YouTube downloads and informations) made with Godot.
 
 ## Why does it exists?
-- I listen to music all day, it's a way to show my love to the songs I adore.
+- I listen to music all day, it's a way for me to show my love to the songs I adore.
 - It turns out YouTube likes to pause my music when it feels like it and I hate this.
 - I am afraid some songs I listen to get deleted someday, I'd like to 'pause time'.
-- Some songs are not on YouTube Music, maybe because they are not tag as 'song'.
-- Youtube Music lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single song.
+- Some songs are not on YouTube Music, maybe because they do not have the 'song' tag.
+- Youtube Music lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single track.
 
 So I thought to myself 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
 
@@ -24,12 +24,17 @@ So I thought to myself 'can I really complain?', so my goal is to recreate a mus
 - You need to put deno.exe in the user folder (Settings > Open user folder) for yt-dlp to work properly.
 
 ## Uses/inspiration of other projects:
+The project relies on the Python library ytmusicapi (https://github.com/sigma67/ytmusicapi) to perform the following actions:
+- Search in YouTube Music.
+- Gather artists' informations.
+
 - Godot (excluding addons):
     - Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
     - Nollie (https://github.com/Cranzor/nollie)
 
+
 ## Addons:
-### Addons used:
+### Addons used (a majority if not all are modified):
 - yt-dlp (https://github.com/yt-dlp/yt-dlp) (not directly used as it is not a godot addon)
 - godot-yt-dlp (https://github.com/Nolkaloid/godot-yt-dlp) (v3.0.6)
 - GDContextMenu (https://github.com/Schimiongames/GDContextMenu)

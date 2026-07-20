@@ -23,6 +23,8 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 @export var template_path: NodePath
 @export var _debug_draw: bool = false
 
+@export var is_nested: bool = false
+
 
 
 var scroll_tick_amount: float = default_scroll_tick_amount
@@ -121,8 +123,11 @@ func _process(delta: float) -> void:
 	else:
 		var end_position: float = get_end_position()
 		if end_position > size.y:
-			if scroll + size.y > end_position:
-				scroll = lerpf(scroll, end_position - size.y, delta * 10.0)
+			if scroll + size.y - template.size.y > end_position:
+				if is_nested:
+					scroll = lerpf(scroll, end_position - size.y + get_parent().size.y, delta * 10.0)
+				else:
+					scroll = lerpf(scroll, end_position - size.y + template.size.y, delta * 10.0)
 				queue_redraw()
 		elif scroll > 0:
 			scroll = lerpf(scroll, 0.0, delta * 10.0)
@@ -187,6 +192,12 @@ func get_column_count() -> int:
 		return 1
 	return floori(size.x / item_size.x)
 
+func get_row_count() -> int:
+	var item_size: Vector2 = get_item_size()
+	if item_size.y <= 0:
+		return 1
+	return floori(size.y / item_size.y)
+
 func get_index_at_position(pos: Vector2) -> int:
 	pos += Vector2(-get_grid_margin(), scroll)
 	
@@ -247,7 +258,7 @@ func _draw() -> void:
 		return
 	var y_padding: float = 0.0
 	var start_index: int = max(0, floori(scroll / (template_box.size.y + y_padding)) * cols)
-	var end_index: int = min(items.size(), start_index + (ceili(size.y / (template_box.size.y + y_padding)) * cols))
+	var end_index: int = min(items.size(), start_index + ( ceili(size.y / (template_box.size.y + y_padding) ) * cols) + 1)
 	
 	if start_index > end_index:
 		return
@@ -257,7 +268,8 @@ func _draw() -> void:
 	
 	for i in range(start_index, end_index):
 		var col: int = i % cols
-		var row: int = i / cols
+		var row: int = floori(i / cols)
+		
 		
 		var item_bbox: Rect2 = template_box
 		var new_pos: Vector2 = item_bbox.position
@@ -380,7 +392,10 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 				draw_texture_rect(tex, fitted_rect, false)
 			#elif texture_rect.texture:
 					#draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
-			
+		else:
+			var texture_rect: TextureRect = template_control
+			if texture_rect.texture:
+				draw_texture_rect(texture_rect.texture, item_box, false, texture_rect.modulate)
 	
 	elif template_control is ColorRect:
 		if str(template_control.name)[0] == '-':

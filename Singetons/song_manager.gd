@@ -109,12 +109,12 @@ func add_to_queue_end(id: String):
 	Global.current_playlist.queue_ids.append(id)
 	Global.current_playlist.reload_song_items()
 
-func play_last_song_from_current_playlist() -> void: ## plays the last song in the current_playlist
+func play_last_song_from_current_playlist() -> void: ## Plays the last song in the [member Global.current_playlist]
 	if Global.current_playlist.content_ids.is_empty():
 		push_error("Current playlist empty!")
 		return
 	
-	var id: String = Global.current_playlist.content_ids.get(-1)
+	var id: String = Global.current_playlist.content_ids[-1]
 	play_from_id(id)
 
 func play_from_id(id: String) -> void:

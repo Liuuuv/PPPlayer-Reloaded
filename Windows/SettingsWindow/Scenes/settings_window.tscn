@@ -24,9 +24,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="General" type="Control" parent="TabContainer" unique_id=279442251]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -103,12 +104,10 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
-- change artist field to artistS, because some songs have multiple artists
 - download errors: put ids into json
 - playlist (liked)
 - finish multiselection
 - recommandation (make it work at least)
-- youtube search (and yt music too), explain how to setup to run the python scripts
 - when a queue exists, when pressing next song, skip the queue
 - a way to stop the preview of a song
 - optimize logs
@@ -123,7 +122,6 @@ text = "TODO:
 - blindtest"
 
 [node name="Other" type="Control" parent="TabContainer" unique_id=2133455322]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

@@ -221,12 +221,22 @@ func _on_item_left_clicked(idx: int) -> void:
 		else:
 			multiselection.erase(idx)
 	
+	var base_song_item: Global.BaseSongItem = items.get(idx)
 	if is_hovering_thumbnail:
-		_play_from_here()
-	
+		if base_song_item is Global.SongItem:
+			_play_from_here()
+		elif base_song_item is Global.ResultSongItem:
+			if base_song_item.is_downloaded():
+				var local_id: String = Global.downloaded_songs.get(base_song_item.id, "")
+				if local_id:
+					SongManager.add_to_current_playlist(local_id)
+					SongManager.play_last_song_from_current_playlist()
+			elif base_song_item.is_downloading() or Global.downloads_tab.downloading_queue.has(base_song_item.id):
+				pass
+			else: ## not downloaded nor downloading
+				Global.downloads_tab.add_id_to_queue(base_song_item.id)
 	
 	if Input.is_action_pressed("ctrl"):
-		var base_song_item: Global.BaseSongItem = items.get(idx)
 		var video_id: String
 		if base_song_item is Global.SongItem:
 			var song_info: Dictionary = Global.song_infos.get(base_song_item.id, {})

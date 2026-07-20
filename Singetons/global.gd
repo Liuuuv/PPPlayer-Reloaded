@@ -11,6 +11,7 @@ const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
 const PYTHON_SCRIPTS_PATH: String = "res://PythonFiles/"
 const LOGS_PATH: String = "res://logs.json"
 const LYRICS_PATH: String = "res://lyrics.json"
+const PLAYLISTS_PATH: String = "res://playlists.json"
 const SONG_PREFERENCES_PATH: String = "res://song_preferences.json"
 
 ## CACHE
@@ -64,6 +65,19 @@ var downloaded_songs: Dictionary = {} ## {id: 0} [br] Stores the [b] YOUTUBE IDS
 var lyrics: Dictionary = {} ## {id: lyrics}
 var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool, favorite: bool}}
 
+## [codeblock]
+## {
+## 		playlist_name: String: {
+## 			"content": {
+## 				"index": int,
+## 				"youtube_id": String 	(## 'local_XXXX' for local song. In this case 'youtube_id' refers to a local_id, not sharable)
+## 			},
+## 		"thumbnail": String,
+## 		"description": String,
+## }
+## [/codeblock]
+var playlists: Dictionary = {}
+
 var main: Main
 
 var select_folder_dialog: SelectFolderDialog
@@ -78,11 +92,11 @@ var info_window: InfoWindow
 var list_window: ListWindow
 var edit_lyrics_window: EditLyricsWindow
 
-var current_playlist: CurrentPlaylist ## what's playing now
-var downloaded_tab: DownloadedTab ## all the downloaded songs
-var downloads_tab: DownloadsTab ## currently downloading
-#var songs_download: SongsDownload ## currently downloading
-var music_player: MusicPlayer ## not meant to be accesed
+var current_playlist: CurrentPlaylist ## what's playing now.
+var downloaded_tab: DownloadedTab ## all the downloaded songs.
+var downloads_tab: DownloadsTab ## currently downloading.
+var playlists_tab: PlaylistsTab ## Where all the local playlists are shown.
+var music_player: MusicPlayer ## not meant to be accesed.
 var song_panel: SongPanel
 
 var artist_page: ArtistPage
@@ -145,12 +159,15 @@ class SongItem extends BaseSongItem:
 			return "■" # ▣
 		else:
 			if scroll_list_belong.multiselection.is_empty():
-				if scroll_list_belong.hovered_idx == index:
+				if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_selection_box:
 					return "☐"
 				else:
 					return ""
 			else:
-				return "☐"
+				if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_selection_box:
+					return "▣"
+				else:
+					return "☐"
 	
 	func is_thumbnail_hovered() -> bool:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
@@ -196,9 +213,11 @@ class ResultSongItem extends BaseSongItem:
 	func when_thumbnail_hovered() -> Texture2D:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
 			if is_downloaded():
-				return preload("uid://dhv41h24nlxce")
+				return preload("uid://dhv41h24nlxce") ## play icon
+			elif Global.downloads_tab.current_downloading_song == id or Global.downloads_tab.downloading_queue.has(id):
+				return preload("uid://uqagxicvduqv") ## loading icon
 			else:
-				return preload("uid://d3uf60lqrs7yd")
+				return preload("uid://d3uf60lqrs7yd") ## download icon
 		else:
 			return null
 	
@@ -209,8 +228,20 @@ class ResultSongItem extends BaseSongItem:
 		return Tools.get_cached_results(Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % id)
 	
 	func is_downloaded() -> bool:
-		return Global.downloaded_songs.has(id)
+		return Global.downloaded_songs.has(id) ## id is youtube_id here
 	
+	func is_downloading() -> bool:
+		return Global.downloads_tab.current_downloading_song == id
+
+class PlaylistItem:
+	var playlist_name: String = "ayo this is my name"
+	var description: String = "a desc? who writes those"
+	var num_titles: int = 0
+	var duration_string: String = "infinite"
+	
+	
+	func _init() -> void:
+		pass
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -223,6 +254,7 @@ func initialize() -> void:
 	initialize_downloaded_songs()
 	initialize_lyrics()
 	initialize_song_preferences()
+	initialize_playlists()
 	print("settings ", settings)
 	#print("song_infos ", song_infos)
 	
@@ -260,26 +292,32 @@ func initialize_lyrics() -> void:
 		save_lyrics()
 
 func initialize_song_preferences() -> void:
-	print("initializing lyrics")
+	print("initializing song preferences")
 	load_song_preferences()
 	if song_preferences == {}:
 		save_song_preferences()
 
-func init_song_items():
-	var dir = DirAccess.open(get_downloads_path())
-	var id: int = 1
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if not dir.current_is_dir():
-				var extension = file_name.get_extension()
-				if extension in ["mp3", "ogg", "wav"]:
-					var full_path = get_downloads_path() + file_name
-					print("fullpath ", full_path)
-					song_streams[id] = Tools.get_song_stream(full_path)
-					id += 1
-			file_name = dir.get_next()
+func initialize_playlists() -> void:
+	print("initializing playlists")
+	load_playlists()
+	if playlists == {}:
+		save_playlists()
+
+#func init_song_items():
+	#var dir = DirAccess.open(get_downloads_path())
+	#var id: int = 1
+	#if dir:
+		#dir.list_dir_begin()
+		#var file_name = dir.get_next()
+		#while file_name != "":
+			#if not dir.current_is_dir():
+				#var extension = file_name.get_extension()
+				#if extension in ["mp3", "ogg", "wav"]:
+					#var full_path = get_downloads_path() + file_name
+					#print("fullpath ", full_path)
+					#song_streams[id] = Tools.get_song_stream(full_path)
+					#id += 1
+			#file_name = dir.get_next()
 
 func init_download_path():
 	pass
@@ -335,8 +373,15 @@ func load_song_preferences() -> void:
 func save_song_preferences() -> void:
 	Tools.write_json_file(song_preferences, SONG_PREFERENCES_PATH)
 
-func downloaded_song_add(video_id: String):
-	downloaded_songs.set(video_id, 0)
+func load_playlists() -> void:
+	print("loading playlists")
+	playlists = Tools.load_json_file(PLAYLISTS_PATH)
+
+func save_playlists() -> void:
+	Tools.write_json_file(playlists, PLAYLISTS_PATH)
+
+func downloaded_song_add(youtube_id: String, id: String =""): ## [param id] represent the local ID.
+	downloaded_songs.set(youtube_id, id)
 
 func downloaded_song_remove(video_id: String):
 	downloaded_songs.erase(video_id)
@@ -432,7 +477,7 @@ func delete_song_informations(id: String):
 	Global.save_song_preferences()
 	Global.lyrics.erase(id)
 	Global.save_lyrics()
-	Global.downloaded_songs.erase(id)
+	Global.downloaded_song_remove(id)
 	Global.save_downloaded_songs()
 	if Global.current_playlist.content_ids.has(id):
 		Global.current_playlist.content_ids.erase(id)

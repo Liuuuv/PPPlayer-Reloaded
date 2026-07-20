@@ -5,28 +5,21 @@
 [ext_resource type="Script" uid="uid://cbx6j1uenupxw" path="res://Tabs/SearchTab/current_playlist.gd" id="2_ttfw2"]
 [ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="3_sij5o"]
 [ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="4_he1b8"]
-[ext_resource type="Shader" uid="uid://0aovud3r8gw0" path="res://Shaders/waveform.gdshader" id="4_sij5o"]
+[ext_resource type="Shader" uid="uid://7cr13mj6m7bf" path="res://Shaders/playing_song_bg.gdshader" id="4_sij5o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sij5o"]
 shader = ExtResource("4_sij5o")
-shader_parameter/lines = 81
-shader_parameter/amplitude = 1.0
-shader_parameter/frequency = 0.1
-shader_parameter/intensity = 1.0
-shader_parameter/line_sharpness = 0.5
-shader_parameter/line_size = 0.8
-shader_parameter/fade = 0.1
-shader_parameter/rest_size = -0.5269999300324999
-shader_parameter/edge = 0.5
-shader_parameter/speed = 0.5
-shader_parameter/color = Vector4(0.125, 0.305, 0.5, 1)
-shader_parameter/dot_matrix = true
-shader_parameter/dot_matriz_size = 80
-shader_parameter/speech_sim = true
-shader_parameter/speech_intensity = 0.0
-shader_parameter/progress = 1.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+shader_parameter/wind_dir_angle = 1.065
+shader_parameter/wind_speed = -21.97
+shader_parameter/use_wind_gusts = true
+shader_parameter/patch_width_px = 133.94
+shader_parameter/patch_height_px = 5.905
+shader_parameter/pixel_size_px = 1.0
+shader_parameter/rotation_degrees = 15.0
+shader_parameter/threshold = 0.6
+shader_parameter/opacity = 0.055
 
 [node name="CurrentPlaylistTab" type="Control" unique_id=2097629533]
 layout_mode = 3
@@ -48,18 +41,6 @@ artists_label = NodePath("PlaylistTemplate/HBoxContainer/Infos/+get_artists")
 thumbnail = NodePath("PlaylistTemplate/HBoxContainer/Thumbnail/Thumbnail")
 template_path = NodePath("PlaylistTemplate")
 shader_bg = NodePath("ShaderBG")
-
-[node name="ShaderBG" type="ColorRect" parent="CurrentPlaylistContent" unique_id=1241175401]
-material = SubResource("ShaderMaterial_sij5o")
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_bottom = 50.0
-grow_horizontal = 2
-offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(0.285, 0)
-offset_transform_scale = Vector2(0.2, 1)
-mouse_filter = 2
 
 [node name="PlaylistTemplate" type="Panel" parent="CurrentPlaylistContent" unique_id=1474186942]
 editor_description = "Used as a template for the virtual scroll list."
@@ -170,3 +151,12 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.41, 0.41, 0.41, 1)
+
+[node name="ShaderBG" type="ColorRect" parent="CurrentPlaylistContent" unique_id=1241175401]
+material = SubResource("ShaderMaterial_sij5o")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+mouse_filter = 2
