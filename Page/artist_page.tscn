@@ -646,6 +646,7 @@ expand_icon = true
 
 [node name="LoadingOverlay" type="Control" parent="." unique_id=1763640231]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

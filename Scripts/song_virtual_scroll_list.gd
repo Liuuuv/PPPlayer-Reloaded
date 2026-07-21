@@ -47,9 +47,7 @@ func _ready() -> void:
 #func _physics_process(delta: float) -> void:
 	#print("selected_idx ", selected_idx)
 
-func clear_song_items() -> void:
-	items.clear()
-	queue_redraw()
+
 
 func add_song_item(id: String) -> Global.SongItem:
 	var song_item: Global.SongItem = Global.create_song_item(id)
@@ -283,7 +281,11 @@ func _on_context_menu_opened() -> void:
 	sub_menu.add_item("Other", func(): print("uwu"), false, null)
 
 func _on_playlists_sub_menu_id_pressed(id: int):
-	print(_sub_menu_id_mapping.get(id, ""))
+	if hovered_idx < 0:
+		push_error("hovered_idx < 0")
+		return
+	var song_item: Global.SongItem = items.get(hovered_idx)
+	Global.playlists_tab.add_song_to_playlist(song_item.id, _sub_menu_id_mapping.get(id, ""))
 
 func _preview_selected_song() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)

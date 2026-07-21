@@ -19,10 +19,10 @@ func _initialize() -> void:
 	super._initialize()
 	Global.music_player.stream_changed.connect(_on_stream_changed)
 
-func clear_song_items() -> void:
+func clear_items() -> void:
 	content_ids.clear()
 	queue_ids.clear()
-	super.clear_song_items()
+	super.clear_items()
 
 func reload_song_items() -> void:
 	_update_items_from_content_and_queue()

@@ -5,14 +5,15 @@ signal settings_changed()
 signal song_infos_changed()
 
 
-const SETTINGS_PATH: String = "res://settings.json"
-const SONG_INFOS_PATH: String = "res://song_infos.json"
-const DOWNLOADED_SONGS_PATH: String = "res://downloaded_songs.json"
+const SETTINGS_PATH: String = "user://settings.json"
+const SONG_INFOS_PATH: String = "user://song_infos.json"
+const DOWNLOADED_SONGS_PATH: String = "user://downloaded_songs.json"
 const PYTHON_SCRIPTS_PATH: String = "res://PythonFiles/"
-const LOGS_PATH: String = "res://logs.json"
-const LYRICS_PATH: String = "res://lyrics.json"
-const PLAYLISTS_PATH: String = "res://playlists.json"
-const SONG_PREFERENCES_PATH: String = "res://song_preferences.json"
+const LOGS_PATH: String = "user://logs.json"
+const LYRICS_PATH: String = "user://lyrics.json"
+const PLAYLISTS_PATH: String = "user://playlists.json"
+const DOWNLOADS_TRACKING_PATH: String = "user://download_tracking.json"
+const SONG_PREFERENCES_PATH: String = "user://song_preferences.json"
 
 ## CACHE
 const CACHE_DIR_NAME: String = "_cache" ## in downloads/
@@ -60,24 +61,42 @@ enum SONG_ITEMS_LOCATIONS {
 }
 
 var settings: Dictionary = DEFAULT_SETTINGS
+
+## [codeblock]
+## local_id: {
+##		"artist": String,
+##		"artist_id": String,
+##		"display_name": String,
+##		"extension": String,
+##		"release_date": String,
+##		"thumbnail_path": String,
+##		"video_id": String
+##	}
+## [/codeblock]
 var song_infos: Dictionary = {} ## {id: {display_name, extension, release_date, artist, album}}
-var downloaded_songs: Dictionary = {} ## {id: 0} [br] Stores the [b] YOUTUBE IDS [b].
+var downloaded_songs: Dictionary = {} ## {id: local_id} [br] Stores the [b] YOUTUBE IDS [b].
 var lyrics: Dictionary = {} ## {id: lyrics}
 var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool, favorite: bool}}
-
 ## [codeblock]
 ## {
 ## 		playlist_name: String: {
-## 			"content": {
-## 				"index": int,
-## 				"youtube_ids": String 	(## 'local_XXXX' for local song. In this case 'youtube_id' refers to a local_id, not sharable)
-## 			},
-## 		"thumbnail": String,
-## 		"description": String,
-## 		"duration_string": String,
+## 			"content": [
+## 				String 	(## 'local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
+## 			],
+## 			"thumbnail": String,
+## 			"description": String,
+## 			"duration_string": String,
+## 		}
 ## }
 ## [/codeblock]
 var playlists: Dictionary = {}
+## [codeblock]
+## {
+## 		"interrupted": [],
+## 		"current_queue": [],
+## }
+## [/codeblock]
+var downloads_tracking: Dictionary = {}
 
 var main: Main
 
@@ -261,11 +280,11 @@ func initialize() -> void:
 	initialize_lyrics()
 	initialize_song_preferences()
 	initialize_playlists()
+	initialize_downloads_tracking()
 	print("settings ", settings)
 	#print("song_infos ", song_infos)
 	
 	#init_song_items()
-	#init_download_path()
 	
 	#print("song_labels", song_streams)
 	
@@ -310,6 +329,14 @@ func initialize_playlists() -> void:
 		playlists.set("Liked songs", {})
 		save_playlists()
 
+func initialize_downloads_tracking() -> void:
+	print("initializing playlists")
+	load_downloads_tracking()
+	if downloads_tracking == {}:
+		downloads_tracking.set("interrupt", [])
+		downloads_tracking.set("current_queue", [])
+		save_downloads_tracking()
+
 #func init_song_items():
 	#var dir = DirAccess.open(get_downloads_path())
 	#var id: int = 1
@@ -325,9 +352,6 @@ func initialize_playlists() -> void:
 					#song_streams[id] = Tools.get_song_stream(full_path)
 					#id += 1
 			#file_name = dir.get_next()
-
-func init_download_path():
-	pass
 
 func get_downloads_path() -> String:
 	return settings.get("downloads_path")
@@ -387,8 +411,16 @@ func load_playlists() -> void:
 func save_playlists() -> void:
 	Tools.write_json_file(playlists, PLAYLISTS_PATH)
 
-func downloaded_song_add(youtube_id: String, id: String =""): ## [param id] represent the local ID.
-	downloaded_songs.set(youtube_id, id)
+func load_downloads_tracking() -> void:
+	print("loading downloads_tracking")
+	downloads_tracking = Tools.load_json_file(DOWNLOADS_TRACKING_PATH)
+
+func save_downloads_tracking() -> void:
+	Tools.write_json_file(downloads_tracking, DOWNLOADS_TRACKING_PATH)
+
+
+func downloaded_song_add(youtube_id: String, local_id: String =""): ## [param local_id] represent the local ID.
+	downloaded_songs.set(youtube_id, local_id)
 
 func downloaded_song_remove(video_id: String):
 	downloaded_songs.erase(video_id)
@@ -399,7 +431,7 @@ func change_settings(setting_name: String, value: Variant) -> void:
 	logs_display.write("Settings changed. Setting name: %s, Value: %s" % [setting_name, value])
 	save_settings()
 
-func change_song_info(id: String, info_name: String, value: Variant) -> void:
+func change_song_info(id: String, info_name: String, value: Variant, save: bool = true) -> void:
 	if not song_infos.has(id):
 		song_infos.set(id, {})
 		
@@ -407,7 +439,9 @@ func change_song_info(id: String, info_name: String, value: Variant) -> void:
 	song_infos.get(id).set(info_name, value)
 	logs_display.write("Song infos changed. ID: %s, Info Name: %s, Value: %s" % [id, info_name, value])
 	#print("song infos changed ", change_settings)
-	save_song_infos()
+	
+	if save:
+		save_song_infos()
 
 
 func create_song_itemOLD(id: String) -> SongItemOLD:
@@ -447,19 +481,19 @@ func generate_new_id() -> String:
 
 func create_song_infos(id: String, infos: Dictionary, extension: String, video_id: String = "", thumbnail_path: String = ""):
 	
-	Global.change_song_info(id, "display_name", infos.get("title", ""))
-	Global.change_song_info(id, "extension", extension)
-	Global.change_song_info(id, "video_id", video_id)
-	Global.change_song_info(id, "thumbnail_path", thumbnail_path)
-	Global.change_song_info(id, "release_date", infos.get("release_date", ""))
-	Global.change_song_info(id, "artist", infos.get("channel", ""))
-	Global.change_song_info(id, "artist_id", infos.get("channel_id", ""))
+	Global.change_song_info(id, "display_name", infos.get("title", ""), false)
+	Global.change_song_info(id, "extension", extension, false)
+	Global.change_song_info(id, "video_id", video_id, false)
+	Global.change_song_info(id, "release_date", infos.get("release_date", ""), false)
+	Global.change_song_info(id, "artist", infos.get("channel", ""), false)
+	Global.change_song_info(id, "artist_id", infos.get("channel_id", ""), false)
 	#Global.change_song_info(id, "album", album)
+	save_song_infos()
 
 func get_thumbnail_path(id: String):
 	var song_info: Dictionary = song_infos.get(id)
 	if song_info:
-		var thumbnail_path: String = song_info.get("thumbnail_path")
+		var thumbnail_path: String = song_info.get("thumbnail_path", "")
 		if thumbnail_path == "":
 			#Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided. Trying using: %s" % id + ".webp", LogsDisplay.MESSAGE.WARNING)
 			thumbnail_path = id + ".webp"

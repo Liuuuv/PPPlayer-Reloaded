@@ -19,8 +19,8 @@ func _ready() -> void:
 func ask_for_confirmation(custom_title: String = "Please confirm", extra_infos: String = ""):
 	ok = false
 	title = custom_title
-	#extra_infos_label.text = extra_infos ## may be used for fancy texts but does not wrap properly
-	dialog_text = extra_infos
+	extra_infos_label.text = extra_infos ## may be used for fancy texts but does not wrap properly
+	#dialog_text = extra_infos
 	show()
 	await closing_window
 	return ok

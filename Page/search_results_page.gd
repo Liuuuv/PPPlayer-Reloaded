@@ -25,7 +25,7 @@ func display_search_results(youtube_ids: Array[String], query: String) -> void:
 	hide_loading_overlay()
 	num_results_query.text = num_results_query_template % [len(youtube_ids), query]
 	
-	search_results.clear_song_items()
+	search_results.clear_items()
 	for youtube_id in youtube_ids:
 
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % youtube_id

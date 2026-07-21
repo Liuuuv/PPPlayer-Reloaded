@@ -24,9 +24,13 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 @export var _debug_draw: bool = false
 
 @export_range(0.0, 1.0 ,0.01) var below_margin_factor: float = 0.0
+@export var text_alignement: TEXT_ALIGNEMENTS = TEXT_ALIGNEMENTS.LEFT
 
-
-
+enum TEXT_ALIGNEMENTS {
+	LEFT,
+	CENTER,
+	RIGHT,
+}
 var scroll_tick_amount: float = default_scroll_tick_amount
 var template: Control
 
@@ -99,6 +103,10 @@ func _on_template_exiting() -> void:
 
 func _add_item(item: Variant, redraw: bool = true) -> void:
 	items.append(item)
+	queue_redraw()
+
+func clear_items() -> void:
+	items.clear()
 	queue_redraw()
 
 func _process(delta: float) -> void:
@@ -349,7 +357,7 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			label.get_theme_font("font"),
 			item_box.position + Vector2(0, font_size),
 			text,
-			HORIZONTAL_ALIGNMENT_LEFT,
+			HORIZONTAL_ALIGNMENT_LEFT if text_alignement == TEXT_ALIGNEMENTS.LEFT else HORIZONTAL_ALIGNMENT_CENTER,
 			item_box.size.x,
 			font_size,
 			modulate,

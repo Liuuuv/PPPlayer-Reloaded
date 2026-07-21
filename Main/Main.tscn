@@ -33,9 +33,9 @@
 [ext_resource type="PackedScene" uid="uid://c6i411f13i6su" path="res://Page/search_results_page.tscn" id="29_yb73r"]
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
 [ext_resource type="PackedScene" uid="uid://plb4bhbcq0lb" path="res://Tabs/DownloadedTab/downloaded.tscn" id="32_p2tm2"]
-[ext_resource type="Script" uid="uid://ci0358onxsrm1" path="res://Tabs/PlaylistsTab/playlists_tab.gd" id="33_p2tm2"]
-[ext_resource type="Script" uid="uid://63oxeirm5y5n" path="res://Tabs/PlaylistsTab/playlists_list.gd" id="34_hvsi2"]
-[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="35_hvsi2"]
+[ext_resource type="PackedScene" uid="uid://4gbx2vty1e3" path="res://Tabs/PlaylistsTab/playlists_tab.tscn" id="33_v4k1o"]
+[ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="35_hvsi2"]
+[ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="36_1ajtf"]
 [ext_resource type="PackedScene" uid="uid://ycahaxmeicmd" path="res://Misc/work_in_progress.tscn" id="38_trcvk"]
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://Tabs/DownloadsTab/downloads_tab.gd" id="39_0k8rs"]
 [ext_resource type="Texture2D" uid="uid://0aqj4x1mmq0s" path="res://Sprites/WorkInProgress.png" id="41_730hx"]
@@ -234,7 +234,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 1
+current_tab = 2
 tab_focus_mode = 0
 script = ExtResource("16_wxqep")
 
@@ -377,6 +377,7 @@ layout_mode = 1
 offset_top = 32.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")
@@ -396,207 +397,54 @@ tab_focus_mode = 0
 script = ExtResource("30_ivlrh")
 
 [node name="Downloaded" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=288002480 instance=ExtResource("32_p2tm2")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="PlaylistsTab" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=634236178]
+[node name="PlaylistsTab" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=1318413032 instance=ExtResource("33_v4k1o")]
+layout_mode = 2
+
+[node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=312709688]
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("33_p2tm2")
-metadata/_tab_index = 1
+script = ExtResource("39_0k8rs")
+metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab" unique_id=297000195]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=1096130606]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer" unique_id=1933398021]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/HBoxContainer" unique_id=1072692061]
-layout_mode = 2
-text = "BUTTONS"
-
-[node name="Label2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/HBoxContainer" unique_id=1164832566]
-layout_mode = 2
-text = "BUTTONS"
-
-[node name="LineEdit" type="LineEdit" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer" unique_id=1201810509]
-layout_mode = 2
-mouse_filter = 2
-text = "seach bar"
-
-[node name="Nest" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer" unique_id=2107422754]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="PlaylistsList" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest" unique_id=2018727238 node_paths=PackedStringArray("template_viewport")]
-unique_name_in_owner = true
-clip_contents = true
-layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.4200001
-offset_bottom = 0.019958496
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-script = ExtResource("34_hvsi2")
-template_viewport = NodePath("SubViewport")
-grid_alignment = 2
-row_width = 159
-template_path = NodePath("Template")
-below_margin_factor = 0.05
-metadata/_custom_type_script = "uid://co2277w5u6scg"
-
-[node name="SubViewport" type="SubViewport" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList" unique_id=939770574]
-own_world_3d = true
-handle_input_locally = false
-gui_disable_input = true
-gui_embed_subwindows = true
-render_target_update_mode = 0
-
-[node name="Template" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList" unique_id=102570662]
-editor_description = "Used as a template for the virtual scroll list."
-layout_mode = 1
-offset_right = 115.0
-offset_bottom = 182.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template" unique_id=1564184641]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer" unique_id=1046472759]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="GridContainer" type="GridContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer" unique_id=1091491588]
-custom_minimum_size = Vector2(75, 75)
-layout_mode = 2
-size_flags_vertical = 3
-columns = 2
-
-[node name="Thumbnail5" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=1555076073]
+[node name="PlayPauseButton" type="TextureButton" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer" unique_id=326542575]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("35_hvsi2")
+texture_pressed = ExtResource("36_1ajtf")
+stretch_mode = 3
+
+[node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer" unique_id=108100736 instance=ExtResource("25_vgxo8")]
+unique_name_in_owner = true
+layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("35_hvsi2")
-expand_mode = 4
-stretch_mode = 6
-
-[node name="Thumbnail6" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=1094308652]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("35_hvsi2")
-expand_mode = 4
-stretch_mode = 6
-
-[node name="Thumbnail7" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=1938385590]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("35_hvsi2")
-expand_mode = 4
-stretch_mode = 6
-
-[node name="Thumbnail8" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=788015513]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("35_hvsi2")
-expand_mode = 4
-stretch_mode = 6
-
-[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer" unique_id=1655811569]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-
-[node name="-playlist_name" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=374741579]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "PLAYLIST ITEM"
-vertical_alignment = 1
-
-[node name="-description" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=832031640]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.64, 0.64, 0.64, 1)
-theme_override_font_sizes/font_size = 12
-text = "DESCRIPTION"
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=159504862]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="-num_titles" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=2109451968]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 10
-text = "9999 titles"
-horizontal_alignment = 1
-
-[node name="Separator" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=276339834]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 10
-text = "-"
-horizontal_alignment = 1
-
-[node name="-duration_string" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=1006493292]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 10
-text = "DURATION"
-horizontal_alignment = 1
-
-[node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=312709688]
-visible = false
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("39_0k8rs")
-metadata/_tab_index = 2
-
-[node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads" unique_id=108100736 instance=ExtResource("25_vgxo8")]
-unique_name_in_owner = true
-layout_mode = 1
 location = 3
 template_path = NodePath("Template")
 
-[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload" unique_id=1606439624]
+[node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload" unique_id=1606439624]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template" unique_id=620587830]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template" unique_id=620587830]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -610,13 +458,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=84546871]
+[node name="Thumbnail" type="PanelContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer" unique_id=84546871]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
 
-[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Thumbnail" unique_id=2052990202]
+[node name="Thumbnail" type="TextureRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer/Thumbnail" unique_id=2052990202]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -624,39 +472,39 @@ texture = SubResource("CompressedTexture2D_silr4")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=1973343711]
+[node name="Infos" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer" unique_id=1973343711]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=968461730]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer/Infos" unique_id=968461730]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=1748360940]
+[node name="Label" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=1748360940]
 layout_mode = 2
 text = "Video ID: "
 
-[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=239237941]
+[node name="-video_id" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer/Infos/HBoxContainer" unique_id=239237941]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "VIDEO ID"
 vertical_alignment = 1
 
-[node name="-video_id2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer/Infos" unique_id=1290787650]
+[node name="-video_id2" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer/Infos" unique_id=1290787650]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "ARTIST"
 vertical_alignment = 1
 
-[node name="?is_currently_downloading" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=606000019]
+[node name="?is_currently_downloading" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer" unique_id=606000019]
 layout_mode = 2
 text = "DOWNLOADING"
 
-[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template/HBoxContainer" unique_id=45841735]
+[node name="Control" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template/HBoxContainer" unique_id=45841735]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Separator" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/SongsDownload/Template" unique_id=2010849808]
+[node name="Separator" type="ColorRect" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload/Template" unique_id=2010849808]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

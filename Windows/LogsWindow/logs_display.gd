@@ -4,6 +4,8 @@ class_name LogsDisplay
 @onready var logs: RichTextLabel = %Logs
 @onready var clear_logs_button: ButtonComponent = %ClearLogsButton
 
+const MAX_VISIBLE_LINES := 500
+
 
 enum MESSAGE {
 	DEBUG,
@@ -20,6 +22,8 @@ var must_be_saved: bool = false:
 			if must_be_saved:
 				save.call_deferred()
 var num_errors: int = 0
+var log_lines: Array[String] = []
+var minimum_level := MESSAGE.DEBUG ## to not display some logs
 
 func _ready() -> void:
 	Global.logs_display = self
@@ -56,6 +60,8 @@ func close():
 func write(message, type: MESSAGE = MESSAGE.DEBUG):
 	if Config.disable_logs:
 		return
+	if type < minimum_level:
+		return
 	_write.call_deferred(message, type)
 	#_write(message, type) # write the same frame for the benchmark
 	
@@ -63,6 +69,10 @@ func write(message, type: MESSAGE = MESSAGE.DEBUG):
 func save() -> void:
 	Tools.save_string(logs.text, Global.LOGS_PATH)
 	must_be_saved = false
+	if num_errors > 0:
+		title = "Logs (%s errors)" % num_errors
+	else:
+		title = "Logs"
 	update_num_errors()
 
 func update_num_errors():
@@ -76,10 +86,7 @@ func update_num_errors():
 		for result in results:
 			count += 1
 		num_errors = count
-	if num_errors > 0:
-		title = "Logs (%s errors)" % num_errors
-	else:
-		title = "Logs"
+	
 
 func _write(message, type: MESSAGE = MESSAGE.DEBUG):
 	var type_message: String = ""
@@ -92,9 +99,15 @@ func _write(message, type: MESSAGE = MESSAGE.DEBUG):
 			type_message = "[color=yellow][WARNING][/color] "
 		MESSAGE.ERROR:
 			type_message = "[color=red][ERROR][/color] "
+			num_errors += 1
 	logs.text += type_message + message + "\n "
-	#Tools.save_string(logs.text, Global.LOGS_PATH)
 	must_be_saved = true
+	
+	#log_lines.append(type_message + message)
+	#if log_lines.size() > MAX_VISIBLE_LINES:
+		#log_lines.pop_front()
+	#logs.text = "\n".join(log_lines)
+	#must_be_saved = true
 
 func _on_close_requested():
 	close()
@@ -102,6 +115,7 @@ func _on_close_requested():
 func _on_clear_logs():
 	var confirm: bool =  await Global.confirmation_dialog.ask_for_confirmation("Confirm", "Are you sure to delete the logs?")
 	if confirm:
+		num_errors = 0
 		if Config.disable_logs:
 			logs.text = "---------- LOGS DISABLED [CLEARED] ----------"
 		else:
@@ -116,6 +130,7 @@ func _on_clear_logs():
 				"" if time_dict.get("dst") else "no"
 			]
 			Tools.save_string(logs.text, Global.LOGS_PATH)
+		
 
 func _exit_tree() -> void:
 	var time_dict: Dictionary = Time.get_datetime_dict_from_system()

@@ -174,7 +174,7 @@ func get_biggest_thumbnail_url(thumbnails: Array) -> String:
 
 
 func _display_popular_titles(songs: Array[String]) -> void:
-	popular_titles.clear_song_items()
+	popular_titles.clear_items()
 	for song_id in songs:
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
 		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)

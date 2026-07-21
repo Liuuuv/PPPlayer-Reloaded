@@ -1,0 +1,190 @@
+[gd_scene format=3 uid="uid://4gbx2vty1e3"]
+
+[ext_resource type="Script" uid="uid://ci0358onxsrm1" path="res://Tabs/PlaylistsTab/playlists_tab.gd" id="1_1isje"]
+[ext_resource type="Script" uid="uid://63oxeirm5y5n" path="res://Tabs/PlaylistsTab/playlists_list.gd" id="2_aflyw"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="3_n5xxd"]
+
+[node name="PlaylistsTab" type="Control" unique_id=1318413032]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_1isje")
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=126956509]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1698377289]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=44483140]
+layout_mode = 2
+text = "BUTTONS"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=862340964]
+layout_mode = 2
+text = "BUTTONS"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=1153996678]
+layout_mode = 2
+mouse_filter = 2
+text = "seach bar"
+
+[node name="Nest" type="Control" parent="VBoxContainer" unique_id=173598723]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlaylistsList" type="Control" parent="VBoxContainer/Nest" unique_id=2124885052 node_paths=PackedStringArray("template_viewport")]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.4200001
+offset_bottom = 0.019958496
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("2_aflyw")
+template_viewport = NodePath("SubViewport")
+grid_alignment = 2
+row_width = 159
+template_path = NodePath("Template")
+below_margin_factor = 0.05
+text_alignement = 1
+metadata/_custom_type_script = "uid://co2277w5u6scg"
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Nest/PlaylistsList" unique_id=382058963]
+own_world_3d = true
+handle_input_locally = false
+gui_disable_input = true
+gui_embed_subwindows = true
+render_target_update_mode = 0
+
+[node name="Template" type="PanelContainer" parent="VBoxContainer/Nest/PlaylistsList" unique_id=905747815]
+editor_description = "Used as a template for the virtual scroll list."
+layout_mode = 1
+offset_right = 115.0
+offset_bottom = 182.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Nest/PlaylistsList/Template" unique_id=1723647316]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer" unique_id=223169062]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer" unique_id=338479649]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="Thumbnail5" type="TextureRect" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=850291297]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("3_n5xxd")
+expand_mode = 4
+stretch_mode = 6
+
+[node name="Thumbnail6" type="TextureRect" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=13190273]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("3_n5xxd")
+expand_mode = 4
+stretch_mode = 6
+
+[node name="Thumbnail7" type="TextureRect" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=468537033]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("3_n5xxd")
+expand_mode = 4
+stretch_mode = 6
+
+[node name="Thumbnail8" type="TextureRect" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/MarginContainer/GridContainer" unique_id=516751414]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("3_n5xxd")
+expand_mode = 4
+stretch_mode = 6
+
+[node name="Infos" type="VBoxContainer" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer" unique_id=1596585452]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="-playlist_name" type="Label" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=525188660]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "PLAYLIST ITEM"
+vertical_alignment = 1
+
+[node name="-description" type="Label" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=1629909436]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.64, 0.64, 0.64, 1)
+theme_override_font_sizes/font_size = 12
+text = "DESCRIPTION"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=1558402938]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="-num_titles" type="Label" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=1446152905]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "9999 titles"
+horizontal_alignment = 1
+
+[node name="Separator" type="Label" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=1781725921]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "-"
+horizontal_alignment = 1
+
+[node name="-duration_string" type="Label" parent="VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos/HBoxContainer" unique_id=760026390]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "DURATION"
+horizontal_alignment = 1

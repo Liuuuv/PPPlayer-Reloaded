@@ -7,6 +7,7 @@ signal queue_changed()
 signal try_dl()
 
 @onready var songs_downloads: Control = %SongsDownload
+@onready var play_pause_button: TextureButton = %PlayPauseButton
 
 var is_ready_to_dl: bool = false:
 	set(on):
@@ -15,7 +16,7 @@ var is_ready_to_dl: bool = false:
 			#ready_to_dl.emit()
 var downloading_queue: Array[String] = [] ## video_id s of the downloading queue. Has [member current_downloading_song].
 var current_downloading_song: String = "" ## video_id of the currently downloading song.
-
+var paused: bool = false
 
 func _ready() -> void:
 	Global.downloads_tab = self
@@ -23,6 +24,7 @@ func _ready() -> void:
 	
 	reload_queue_song_items()
 	
+	play_pause_button.toggled.connect(_on_play_pause_button_toggled)
 	#ready_to_dl.connect(_on_ready_to_dl)
 	try_dl.connect(_on_try_dl)
 	queue_changed.connect(_on_queue_changed)
@@ -35,7 +37,7 @@ func add_id_to_queue(video_id: String):
 	Global.logs_display.write("Adding an ID to the download queue: %s" % video_id, LogsDisplay.MESSAGE.DEBUG)
 	downloading_queue.push_front(video_id)
 	try_dl.emit()
-	queue_changed.emit()
+	queue_changed.emit.call_deferred()
 
 func add_multiple_ids_to_queue(ids: PackedStringArray):
 	Global.logs_display.write("Adding multiple IDs to the download queue: %s" % ids, LogsDisplay.MESSAGE.DEBUG)
@@ -50,6 +52,11 @@ func remove_from_queue(id: String):
 		downloading_queue.erase(id)
 		queue_changed.emit()
 
+func popback_queue() -> String:
+	var new_id: String = downloading_queue.pop_front()
+	queue_changed.emit()
+	return new_id
+
 func reload_queue_song_items() -> void:
 	#reload_queue_song_itemsOLD()
 	#return
@@ -57,6 +64,10 @@ func reload_queue_song_items() -> void:
 	songs_downloads.items.clear()
 	
 	Global.logs_display.write("Reloading download items...", LogsDisplay.MESSAGE.DEBUG)
+	
+	if current_downloading_song != "":
+		songs_downloads.items.append(Global.create_download_item(current_downloading_song))
+	
 	for index in range(downloading_queue.size()):
 		songs_downloads.items.append(Global.create_download_item(downloading_queue[index]))
 	
@@ -73,7 +84,7 @@ func reload_queue_song_itemsOLD() -> void:
 
 func _on_try_dl():
 	#print("_on_try_dl")
-	Global.logs_display.write("Trying to download next song..")
+	Global.logs_display.write("Trying to download the next song..")
 	if not is_ready_to_dl:
 		Global.logs_display.write("Not ready to DL.", LogsDisplay.MESSAGE.WARNING)
 		return
@@ -83,11 +94,10 @@ func _on_try_dl():
 	#print("is_ready_to_dl")
 	
 	is_ready_to_dl = false
-	var video_id: String = downloading_queue[0]
+	var video_id: String = popback_queue()
 	Global.logs_display.write("Downloading a new content, video ID: %s" % video_id)
-	if Global.song_infos.has(video_id):
+	if Global.downloaded_songs.has(video_id):
 		Global.logs_display.write("This video has already been downloaded, removing it from the queue: video ID: %s" % video_id)
-		remove_from_queue(video_id)
 		is_ready_to_dl = true
 		try_dl.emit()
 		return
@@ -97,9 +107,15 @@ func _on_try_dl():
 	var url: String = Tools.build_youtube_url(video_id)
 	Global.logs_display.write("Starting the download, video ID %s" % video_id)
 	current_downloading_song = video_id
+	reload_queue_song_items()
 	var infos: Dictionary = await DownloadsManager.download_video_from_url(url, id, true, true)
 	current_downloading_song = ""
+	reload_queue_song_items()
 	if "interrupt" in infos: ## TODO put errored song elsewhere to dl them later
+		var downloads_tracking_interrupt = Global.downloads_tracking.get("interrupt", [])
+		downloads_tracking_interrupt.append(video_id)
+		Global.downloads_tracking.set("interrupt", downloads_tracking_interrupt)
+		Global.save_downloads_tracking()
 		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s" % [video_id, id], LogsDisplay.MESSAGE.ERROR)
 	else:
 		var extension: String = Config.default_audio_format_string
@@ -109,10 +125,32 @@ func _on_try_dl():
 		Global.downloaded_tab.reload_song_list()
 		Global.downloaded_song_add(video_id, id)
 		Global.save_downloaded_songs()
-	remove_from_queue(video_id)
-	is_ready_to_dl = true
+	
+	if not paused:
+		is_ready_to_dl = true
 	try_dl.emit()
 
 func _on_queue_changed():
+	Global.downloads_tracking.set("current_queue", downloading_queue)
 	reload_queue_song_items()
 	Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))
+	
+	#if downloading_queue.is_empty():
+		#var global_interrupt_queue: Array = Global.downloads_tracking.get("interrupt", [])
+		#if not global_interrupt_queue.is_empty():
+			#downloading_queue = global_interrupt_queue
+	#Global.save_downloads_tracking()
+
+func _on_play_pause_button_toggled(toggled_on: bool):
+	paused = not toggled_on
+	
+	if paused:
+		is_ready_to_dl = false
+	else:
+		if current_downloading_song == "":
+			is_ready_to_dl = true
+		try_dl.emit()
+
+
+
+#

@@ -123,7 +123,7 @@ func play_from_id(id: String) -> void:
 		start_song(full_path)
 
 func clear_current_playlist(): ## clears the current_playlist
-	Global.current_playlist.clear_song_items()
+	Global.current_playlist.clear_items()
 	playing_song_index = 0
 	Global.music_player.clear_stream()
 
