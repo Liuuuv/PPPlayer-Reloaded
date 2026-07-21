@@ -13,6 +13,9 @@ var context_menu: ContextMenu
 var left_click_context_menu: ContextMenu
 var _context_menu_id_mapping = {} ## because it was not possible to pass a lambda function as an arg (because it was freed to soon because of the GC)
 
+var sub_menu : ContextMenu
+var sub_menu_id: int = -1 ## for dynamically changing the submenu
+var _sub_menu_id_mapping = {}
 
 
 var is_hovering_selection_box: bool = false # if x mouse pos is sufficently high
@@ -69,15 +72,22 @@ func _initialize_context_menu():
 	context_menu.add_header_item("HEADER", null)
 	match location:
 		Global.SONG_ITEMS_LOCATIONS.DOWNLOADED:
-			context_menu.add_item("Preview", _preview_selected_song, false, null)
+			#context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Add to current playlist", _add_selected_song_to_current_playlist, false, null)
 			context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
 			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
+			
+			sub_menu_id = context_menu._nextId
+			sub_menu = context_menu.add_submenu("Add to...")
+			sub_menu._menu.id_pressed.connect(_on_playlists_sub_menu_id_pressed)
+			
+			context_menu.add_seperator()
+			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
+			
 		Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 			context_menu.add_item("Play from here", _play_from_here, false, null)
-			context_menu.add_item("Preview", _preview_selected_song, false, null)
+			#context_menu.add_item("Preview", _preview_selected_song, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
 			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
 		Global.SONG_ITEMS_LOCATIONS.RESULTS:
@@ -204,7 +214,7 @@ func _set_header_text(text: String) -> void:
 		push_error("No header.")
 		return
 	context_menu._menu.set_item_text(0, text)
-	context_menu._menu.set_item_disabled(0, true)
+	#context_menu._menu.set_item_disabled(0, true)
 	
 
 func _set_item_text(index: int, text: String) -> void:
@@ -250,18 +260,30 @@ func _on_item_left_clicked(idx: int) -> void:
 
 func _on_item_right_clicked(idx: int) -> void:
 	super._on_item_right_clicked(idx)
-	_set_header_text("Selected %s-th song" % idx)
+	#_set_header_text("Selected %s-th song" % idx)
 
 func _on_context_menu_opened() -> void:
 	selected_idx = hovered_idx
 	if selected_idx != -1:
 		for idx in context_menu._menu.item_count:
+			if idx == 0 and context_menu.has_header: continue
 			context_menu._menu.set_item_disabled(context_menu._menu.get_item_id(idx), false)
-		_set_header_text("Selected %s-th song" % selected_idx)
+		_set_header_text("Selected %s-th song." % selected_idx)
 	else:
-		_set_header_text("No song hovered")
+		_set_header_text("No song hovered.")
 		for idx in context_menu._menu.item_count:
 			context_menu._menu.set_item_disabled(context_menu._menu.get_item_id(idx), true)
+	
+	sub_menu.clear_items()
+	## TODO last 5 interacted playlist
+	for playlist_name: String in Global.playlists:
+		_sub_menu_id_mapping.set(sub_menu._nextId, playlist_name)
+		sub_menu.add_item(playlist_name, Callable(), false, null)
+
+	sub_menu.add_item("Other", func(): print("uwu"), false, null)
+
+func _on_playlists_sub_menu_id_pressed(id: int):
+	print(_sub_menu_id_mapping.get(id, ""))
 
 func _preview_selected_song() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)

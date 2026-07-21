@@ -70,10 +70,11 @@ var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool,
 ## 		playlist_name: String: {
 ## 			"content": {
 ## 				"index": int,
-## 				"youtube_id": String 	(## 'local_XXXX' for local song. In this case 'youtube_id' refers to a local_id, not sharable)
+## 				"youtube_ids": String 	(## 'local_XXXX' for local song. In this case 'youtube_id' refers to a local_id, not sharable)
 ## 			},
 ## 		"thumbnail": String,
 ## 		"description": String,
+## 		"duration_string": String,
 ## }
 ## [/codeblock]
 var playlists: Dictionary = {}
@@ -239,9 +240,14 @@ class PlaylistItem:
 	var num_titles: int = 0
 	var duration_string: String = "infinite"
 	
-	
 	func _init() -> void:
 		pass
+	
+	func initialize(playlist_name_: String, description_: String, num_titles_: int, duration_string_: String):
+		playlist_name = playlist_name_
+		description = description_
+		num_titles = num_titles_
+		description = duration_string_
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -301,6 +307,7 @@ func initialize_playlists() -> void:
 	print("initializing playlists")
 	load_playlists()
 	if playlists == {}:
+		playlists.set("Liked songs", {})
 		save_playlists()
 
 #func init_song_items():

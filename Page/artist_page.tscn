@@ -631,6 +631,7 @@ offset_bottom = 40.0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("11_c83tn")
 icon_alignment = 1
 expand_icon = true
@@ -639,18 +640,19 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 icon = ExtResource("12_o5rpc")
 expand_icon = true
 
 [node name="LoadingOverlay" type="Control" parent="." unique_id=1763640231]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="LoadingBG" type="ColorRect" parent="LoadingOverlay" unique_id=154097236]
 layout_mode = 1
@@ -659,6 +661,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.58431375)
 
 [node name="LoadingLogo" type="ColorRect" parent="LoadingOverlay" unique_id=560153461]
@@ -676,6 +679,7 @@ offset_right = 256.0
 offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="LoadingInfo" type="Label" parent="LoadingOverlay" unique_id=926826573]
 unique_name_in_owner = true

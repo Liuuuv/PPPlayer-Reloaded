@@ -23,7 +23,7 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 @export var template_path: NodePath
 @export var _debug_draw: bool = false
 
-@export var is_nested: bool = false
+@export_range(0.0, 1.0 ,0.01) var below_margin_factor: float = 0.0
 
 
 
@@ -116,22 +116,22 @@ func _process(delta: float) -> void:
 		return
 	
 	# Handle scrolling with rubber band effect
-	
 	if scroll < 0:
 		scroll = lerpf(scroll, 0.0, delta * 10.0)
 		queue_redraw()
 	else:
 		var end_position: float = get_end_position()
-		if end_position > size.y:
-			if scroll + size.y - template.size.y > end_position:
-				if is_nested:
-					scroll = lerpf(scroll, end_position - size.y + get_parent().size.y, delta * 10.0)
-				else:
-					scroll = lerpf(scroll, end_position - size.y + template.size.y, delta * 10.0)
-				queue_redraw()
-		elif scroll > 0:
-			scroll = lerpf(scroll, 0.0, delta * 10.0)
+		#end_position += size.y * below_margin_factor
+		
+		var max_scroll: float = end_position - size.y + template.size.y
+		
+		if max_scroll < 0:
+			max_scroll = 0
+		
+		if scroll > max_scroll:
+			scroll = lerpf(scroll, max_scroll, delta * 10.0)
 			queue_redraw()
+		
 
 func _input(event):
 	if event.is_action_pressed("ctrl"):
@@ -230,7 +230,10 @@ func get_end_position() -> float:
 	if cols <= 0:
 		return 0.0
 	
-	return (items.size() * template.size.y) / cols
+	#return (items.size() * template.size.y) / cols
+	#return ((items.size() * template.size.y) / cols) + size.y * below_margin_factor
+	var rows := ceili(float(items.size()) / cols)
+	return rows * template.size.y + size.y * below_margin_factor
 
 func get_grid_margin() -> float:
 	if grid_alignment == GridAlignment.LEFT:

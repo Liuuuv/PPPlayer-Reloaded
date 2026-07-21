@@ -34,7 +34,7 @@
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
 [ext_resource type="PackedScene" uid="uid://plb4bhbcq0lb" path="res://Tabs/DownloadedTab/downloaded.tscn" id="32_p2tm2"]
 [ext_resource type="Script" uid="uid://ci0358onxsrm1" path="res://Tabs/PlaylistsTab/playlists_tab.gd" id="33_p2tm2"]
-[ext_resource type="Script" uid="uid://co2277w5u6scg" path="res://BaseScripts/base_virtual_scroll_list.gd" id="34_hvsi2"]
+[ext_resource type="Script" uid="uid://63oxeirm5y5n" path="res://Tabs/PlaylistsTab/playlists_list.gd" id="34_hvsi2"]
 [ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="35_hvsi2"]
 [ext_resource type="PackedScene" uid="uid://ycahaxmeicmd" path="res://Misc/work_in_progress.tscn" id="38_trcvk"]
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://Tabs/DownloadsTab/downloads_tab.gd" id="39_0k8rs"]
@@ -58,11 +58,11 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r2je0"]
 shader = ExtResource("14_qlsir")
-shader_parameter/stripes = 35.43
-shader_parameter/stripe_thickness = 1.25
+shader_parameter/stripes = 13.345
+shader_parameter/stripe_thickness = 1.33
 shader_parameter/speed = 0.1
-shader_parameter/stripe_color = Color(0.12352612, 0.15899113, 0.22483963, 1)
-shader_parameter/background_color = Color(0.15640001, 0.22141333, 0.23, 1)
+shader_parameter/stripe_color = Color(0.11439999, 0.15135999, 0.22, 1)
+shader_parameter/background_color = Color(0.123900004, 0.182735, 0.21, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aaaui"]
 shader = ExtResource("15_rwf7d")
@@ -439,10 +439,9 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 155.0
+anchor_bottom = 1.4200001
+offset_bottom = 0.019958496
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -451,8 +450,7 @@ template_viewport = NodePath("SubViewport")
 grid_alignment = 2
 row_width = 159
 template_path = NodePath("Template")
-_debug_draw = true
-is_nested = true
+below_margin_factor = 0.05
 metadata/_custom_type_script = "uid://co2277w5u6scg"
 
 [node name="SubViewport" type="SubViewport" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList" unique_id=939770574]
@@ -471,6 +469,7 @@ offset_bottom = 182.0
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template" unique_id=1564184641]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer" unique_id=1046472759]
 layout_mode = 2
@@ -531,7 +530,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 
-[node name="-title" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=374741579]
+[node name="-playlist_name" type="Label" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer/PlaylistsTab/VBoxContainer/Nest/PlaylistsList/Template/VBoxContainer/Infos" unique_id=374741579]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4

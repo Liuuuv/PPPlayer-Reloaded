@@ -40,6 +40,7 @@ func gather_and_display_infos(channel_id: String) -> void:
 		return
 	Global.logs_display.write("gathering and displaying infos for channel ID: %s" % channel_id)
 	open()
+	show_loading_overlay()
 	current_display_id = channel_id
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
 	var cache_result: Resource = Tools.get_cached_results(cache_name)
@@ -70,10 +71,14 @@ func _data_callback(data: Dictionary, channel_id: String):
 		if cache_result:
 			_display_infos(cache_result)
 		else:
+			loading_info.text = "No cache result to display"
+			loading_logo.hide()
 			push_error("no cache result to display")
 	else:
 		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
-		push_error("error: %s" % data.get("error"), "")
+		loading_info.text = "Error: %s" % data.get("error", "")
+		loading_logo.hide()
+		push_error("error: %s" % data.get("error", ""))
 
 
 
