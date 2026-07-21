@@ -7,7 +7,7 @@ func _on_item_left_clicked(idx: int) -> void:
 		return
 	var playlist_item: Global.PlaylistItem = items.get(idx)
 	if playlist_item:
-		Global.playlist_page.display_local_playlist(playlist_item.playlist_name)
+		Global.playlists_tab.display_playlist(playlist_item.playlist_name)
 
 
 

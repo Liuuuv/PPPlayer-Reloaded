@@ -27,7 +27,7 @@ func _on_item_left_clicked(idx: int) -> void:
 	tween.tween_property(Global.artist_page.scroll_container, "scroll_vertical", target_scroll, stretch_focus_duration)
 	
 	
-	var extra_size: float = Global.song_panel.global_position.y - popular_titles_expand_margin
+	var extra_size: float = Global.song_panel.global_position.y - stretch_focus_expand_margin
 	tween.tween_property(self, "custom_minimum_size", initial_custom_minimum_size + Vector2(0, 1.0) * extra_size, stretch_focus_duration)
 
 

@@ -5,15 +5,15 @@ class_name SongVirtualScrollList
 @export var location: Global.SONG_ITEMS_LOCATIONS ## None is ok, it's planned to be removed
 @export var artists_label: Label
 
-
 @export var thumbnail: TextureRect ## Used for knowing when the thumbnail if hovered
+@export var is_selected_template: Label ## Used for multiselections.
 
 var context_menu: ContextMenu
 
 var left_click_context_menu: ContextMenu
 var _context_menu_id_mapping = {} ## because it was not possible to pass a lambda function as an arg (because it was freed to soon because of the GC)
 
-var sub_menu : ContextMenu
+var playlist_sub_menu : ContextMenu
 var sub_menu_id: int = -1 ## for dynamically changing the submenu
 var _sub_menu_id_mapping = {}
 
@@ -47,16 +47,17 @@ func _ready() -> void:
 #func _physics_process(delta: float) -> void:
 	#print("selected_idx ", selected_idx)
 
-
+func _add_item(item: Variant, redraw: bool = true) -> void:
+	super._add_item(item, redraw)
+	if item is Global.BaseSongItem and not item.scroll_list_belong:
+		item.scroll_list_belong = self
 
 func add_song_item(id: String) -> Global.SongItem:
 	var song_item: Global.SongItem = Global.create_song_item(id)
 	song_item.location = location
 	song_item.scroll_list_belong = self
 	song_item.index = len(items)
-	items.append(song_item)
-	
-	queue_redraw()
+	_add_item(song_item)
 	return song_item
 
 func _initialize_context_menu():
@@ -77,8 +78,8 @@ func _initialize_context_menu():
 			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
 			
 			sub_menu_id = context_menu._nextId
-			sub_menu = context_menu.add_submenu("Add to...")
-			sub_menu._menu.id_pressed.connect(_on_playlists_sub_menu_id_pressed)
+			playlist_sub_menu = context_menu.add_submenu("Add to...")
+			playlist_sub_menu._menu.id_pressed.connect(_on_playlists_sub_menu_id_pressed)
 			
 			context_menu.add_seperator()
 			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
@@ -127,6 +128,7 @@ func _initialize_left_click_context_menu():
 func _can_show_left_click_context_menu():
 	return is_hovering_artists_label
 
+## for artists
 func _on_left_click_context_menu_opened() -> void:
 	if hovered_idx < 0:
 		return
@@ -167,6 +169,13 @@ func _gui_input(event: InputEvent) -> void:
 				#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 			#else:
 				#mouse_default_cursor_shape = Control.CURSOR_ARROW
+		
+		if is_selected_template:
+			var template_box: Rect2 = template.get_rect()
+			if mm.position.x >= template_box.size.x - is_selected_template.size.x:
+				is_hovering_selection_box = true
+			else:
+				is_hovering_selection_box = false
 		
 		mouse_default_cursor_shape = Control.CURSOR_ARROW
 		for hovering_variable in hovering_variables:
@@ -272,13 +281,14 @@ func _on_context_menu_opened() -> void:
 		for idx in context_menu._menu.item_count:
 			context_menu._menu.set_item_disabled(context_menu._menu.get_item_id(idx), true)
 	
-	sub_menu.clear_items()
-	## TODO last 5 interacted playlist
-	for playlist_name: String in Global.playlists:
-		_sub_menu_id_mapping.set(sub_menu._nextId, playlist_name)
-		sub_menu.add_item(playlist_name, Callable(), false, null)
+	if playlist_sub_menu:
+		playlist_sub_menu.clear_items()
+		## TODO last 5 interacted playlist
+		for playlist_name: String in Global.playlists.get("playlists", {}):
+			_sub_menu_id_mapping.set(playlist_sub_menu._nextId, playlist_name)
+			playlist_sub_menu.add_item(playlist_name, Callable(), false, null)
 
-	sub_menu.add_item("Other", func(): print("uwu"), false, null)
+		playlist_sub_menu.add_item("Other", func(): print("uwu"), false, null)
 
 func _on_playlists_sub_menu_id_pressed(id: int):
 	if hovered_idx < 0:

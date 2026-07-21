@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://b5gndxt74s7x4" path="res://Tabs/lyrics_tab.tscn" id="20_ytmp3"]
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="21_qoe36"]
 [ext_resource type="Script" uid="uid://x8r21vq7ja58" path="res://Tabs/SearchTab/clear.gd" id="22_nh6ww"]
-[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="25_vgxo8"]
 [ext_resource type="PackedScene" uid="uid://bbrl048vwsc0d" path="res://Page/playlist_page.tscn" id="28_yb73r"]
 [ext_resource type="PackedScene" uid="uid://chgshiplgkeo0" path="res://Page/artist_page.tscn" id="28_ytmp3"]
 [ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="29_ucuw1"]
@@ -36,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://4gbx2vty1e3" path="res://Tabs/PlaylistsTab/playlists_tab.tscn" id="33_v4k1o"]
 [ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="35_hvsi2"]
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="36_1ajtf"]
+[ext_resource type="Script" uid="uid://co2277w5u6scg" path="res://BaseScripts/base_virtual_scroll_list.gd" id="37_hvsi2"]
 [ext_resource type="PackedScene" uid="uid://ycahaxmeicmd" path="res://Misc/work_in_progress.tscn" id="38_trcvk"]
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://Tabs/DownloadsTab/downloads_tab.gd" id="39_0k8rs"]
 [ext_resource type="Texture2D" uid="uid://0aqj4x1mmq0s" path="res://Sprites/WorkInProgress.png" id="41_730hx"]
@@ -234,7 +234,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 2
+current_tab = 1
 tab_focus_mode = 0
 script = ExtResource("16_wxqep")
 
@@ -377,7 +377,6 @@ layout_mode = 1
 offset_top = 32.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")
@@ -392,19 +391,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("30_ivlrh")
 
 [node name="Downloaded" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=288002480 instance=ExtResource("32_p2tm2")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="PlaylistsTab" parent="UILayer/UI/VBoxContainer/MainTabContainer/Library/LibraryTabContainer" unique_id=1318413032 instance=ExtResource("33_v4k1o")]
+visible = false
 layout_mode = 2
 
 [node name="Downloads" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=312709688]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("39_0k8rs")
@@ -430,12 +430,14 @@ texture_normal = ExtResource("35_hvsi2")
 texture_pressed = ExtResource("36_1ajtf")
 stretch_mode = 3
 
-[node name="SongsDownload" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer" unique_id=108100736 instance=ExtResource("25_vgxo8")]
+[node name="SongsDownload" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer" unique_id=1431238756 node_paths=PackedStringArray("template_viewport")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-location = 3
+script = ExtResource("37_hvsi2")
+template_viewport = NodePath("SubViewport")
 template_path = NodePath("Template")
+metadata/_custom_type_script = "uid://co2277w5u6scg"
 
 [node name="Template" type="Panel" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload" unique_id=1606439624]
 custom_minimum_size = Vector2(200, 50)
@@ -514,6 +516,13 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.41, 0.41, 0.41, 1)
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/UI/VBoxContainer/MainTabContainer/Downloads/VBoxContainer/SongsDownload" unique_id=1060645118]
+own_world_3d = true
+handle_input_locally = false
+gui_disable_input = true
+gui_embed_subwindows = true
+render_target_update_mode = 0
 
 [node name="Collection" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1121885582]
 visible = false

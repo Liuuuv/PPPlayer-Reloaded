@@ -9,10 +9,10 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 
 @onready var initial_custom_minimum_size: Vector2 = custom_minimum_size
 
-@export_group("Can Grab Scroll Focus")
+@export_group("Scroll Focus")
 @export var can_grab_scroll_focus: bool = false
 @export var stretch_focus_duration: float = 0.1
-@export var popular_titles_expand_margin: float = 330.0
+@export var stretch_focus_expand_margin: float = 330.0
 
 @export_group("General")
 @export var template_viewport: SubViewport
@@ -25,6 +25,7 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 
 @export_range(0.0, 1.0 ,0.01) var below_margin_factor: float = 0.0
 @export var text_alignement: TEXT_ALIGNEMENTS = TEXT_ALIGNEMENTS.LEFT
+@export var shader_bg: ColorRect
 
 enum TEXT_ALIGNEMENTS {
 	LEFT,
@@ -40,7 +41,7 @@ var selected_idx: int = -1
 var hovered_idx: int = -1
 var can_scroll: bool = true
 
-@export var shader_bg: ColorRect
+
 
 var left_click_pressed: bool = false:
 	set(on):
@@ -89,6 +90,8 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	
+	visibility_changed.connect(_on_visibility_changed)
+	
 	item_left_clicked.connect(_on_item_left_clicked)
 	item_right_clicked.connect(_on_item_right_clicked)
 
@@ -103,7 +106,8 @@ func _on_template_exiting() -> void:
 
 func _add_item(item: Variant, redraw: bool = true) -> void:
 	items.append(item)
-	queue_redraw()
+	if redraw:
+		queue_redraw()
 
 func clear_items() -> void:
 	items.clear()
@@ -392,10 +396,11 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			var method_name: String = parts[0].substr(1)
 			var arg_name: String = parts[1] if len(parts) > 1 else ""
 			var tex: Texture2D
-			if arg_name != "":
-				tex = item.call(method_name, item.get(arg_name))
-			else:
-				tex = item.call(method_name)
+			if item.has_method(method_name):
+				if arg_name != "":
+					tex = item.call(method_name, item.get(arg_name))
+				else:
+					tex = item.call(method_name)
 			
 			var texture_rect: TextureRect = template_control
 			if tex:
@@ -484,7 +489,7 @@ func _on_mouse_exited() -> void:
 		if not Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			_release_focus()
 
-func _release_focus():
+func _release_focus(): ## for scroll focus
 	mouse_force_pass_scroll_events = true
 	can_scroll = false
 	
@@ -492,7 +497,10 @@ func _release_focus():
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "custom_minimum_size", initial_custom_minimum_size, stretch_focus_duration)
 
-
+func _on_visibility_changed():
+	if not is_visible_in_tree():
+		left_click_pressed = false
+		right_click_pressed = false
 
 
 

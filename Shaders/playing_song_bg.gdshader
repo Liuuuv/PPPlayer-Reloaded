@@ -1,4 +1,6 @@
 shader_type canvas_item;
+// from https://godotshaders.com/shader/animated-grassy-wind-or-cloud-shadow-pixel-patches-overlay/
+// by thatisuday
 
 uniform float wind_dir_angle = 0.0;       // wind direction in degrees clockwise from +x
 uniform float wind_speed = 100.0;         // speed of patch movement in pixels per second

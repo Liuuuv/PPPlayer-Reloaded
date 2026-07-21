@@ -134,6 +134,7 @@ text = "999999k subscribers"
 [node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1125422046]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="ChannelDescription" type="Label" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer" unique_id=1595763000]
 unique_name_in_owner = true
@@ -175,7 +176,6 @@ script = ExtResource("3_eduj6")
 location = 4
 artists_label = NodePath("Template/HBoxContainer/Infos/+get_artists")
 can_grab_scroll_focus = true
-popular_titles_expand_margin = 380.0
 template_path = NodePath("Template")
 
 [node name="Template" type="Panel" parent="ScrollContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/PopularTitles" unique_id=1187587422]

@@ -1,7 +1,6 @@
 extends SongVirtualScrollList
 class_name CurrentPlaylist
 
-@onready var is_selected_template: Label = %"+is_selected"
 
 
 

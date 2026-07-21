@@ -32,13 +32,14 @@ mouse_filter = 2
 metadata/_tab_index = 0
 metadata/_tab_name = "Current Playlist"
 
-[node name="CurrentPlaylistContent" parent="." unique_id=1986626170 node_paths=PackedStringArray("artists_label", "thumbnail", "shader_bg") instance=ExtResource("1_b2iuf")]
+[node name="CurrentPlaylistContent" parent="." unique_id=1986626170 node_paths=PackedStringArray("artists_label", "thumbnail", "is_selected_template", "shader_bg") instance=ExtResource("1_b2iuf")]
 layout_mode = 1
 theme = ExtResource("2_sij5o")
 script = ExtResource("2_ttfw2")
 location = 1
 artists_label = NodePath("PlaylistTemplate/HBoxContainer/Infos/+get_artists")
 thumbnail = NodePath("PlaylistTemplate/HBoxContainer/Thumbnail/Thumbnail")
+is_selected_template = NodePath("PlaylistTemplate/HBoxContainer/+is_selected")
 template_path = NodePath("PlaylistTemplate")
 shader_bg = NodePath("ShaderBG")
 
@@ -101,7 +102,7 @@ texture = ExtResource("3_sij5o")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="?is_thumbnail_hovered" type="TextureRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1117660625]
+[node name="+when_thumbnail_hovered" type="TextureRect" parent="CurrentPlaylistContent/PlaylistTemplate/HBoxContainer/Thumbnail" unique_id=1117660625]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

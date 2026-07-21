@@ -41,7 +41,7 @@ func reload_song_list(id_to_display: Array = ["all"]) -> void:
 	# if a filter is applied
 	if id_to_display != ["all"]:
 		for id in id_to_display:
-			song_list.items.append(Global.create_song_item(id))
+			song_list._add_item(Global.create_song_item(id), false)
 		song_list.queue_redraw()
 		return
 	
@@ -82,7 +82,7 @@ func reload_song_list(id_to_display: Array = ["all"]) -> void:
 	# from song_infos
 	var all_displayed_names: Dictionary = {}
 	for id in Global.song_infos:
-		song_list.items.append(Global.create_song_item(id))
+		song_list._add_item(Global.create_song_item(id), false)
 		all_displayed_names.set(
 			id,
 			Global.song_infos.get(id).get("display_name", "")

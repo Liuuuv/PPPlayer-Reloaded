@@ -79,14 +79,19 @@ var lyrics: Dictionary = {} ## {id: lyrics}
 var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool, favorite: bool}}
 ## [codeblock]
 ## {
-## 		playlist_name: String: {
-## 			"content": [
-## 				String 	(## 'local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
-## 			],
-## 			"thumbnail": String,
-## 			"description": String,
-## 			"duration_string": String,
+## 		"playlists": {
+## 			playlist_name: String: {
+## 				"content": [
+## 					String 	(## 'local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
+## 				],
+## 				"thumbnail": String,
+## 				"description": String,
+## 				"duration_string": String,
+## 			}
 ## 		}
+## 		"order": [
+## 			String
+## 		]
 ## }
 ## [/codeblock]
 var playlists: Dictionary = {}
@@ -166,6 +171,7 @@ class SongItem extends BaseSongItem:
 	func _init() -> void:
 		pass
 	
+	
 	func _id_setter(new_id: String):
 		super._id_setter(new_id)
 		var song_info: Dictionary = Global.song_infos.get(id, {})
@@ -189,11 +195,17 @@ class SongItem extends BaseSongItem:
 				else:
 					return "☐"
 	
-	func is_thumbnail_hovered() -> bool:
+	#func is_thumbnail_hovered() -> bool:
+		#if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
+			#return true
+		#else:
+			#return false
+	
+	func when_thumbnail_hovered() -> Texture2D:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
-			return true
+			return preload("uid://dhv41h24nlxce") ## play icon
 		else:
-			return false
+			return null
 	
 	func is_playing() -> bool:
 		return location == Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST and SongManager.playing_song_index == index
@@ -326,7 +338,14 @@ func initialize_playlists() -> void:
 	print("initializing playlists")
 	load_playlists()
 	if playlists == {}:
-		playlists.set("Liked songs", {})
+		playlists = {
+			"playlists": {
+				"Liked songs": {}
+			},
+			"order": [
+				"Liked songs"
+			],
+		}
 		save_playlists()
 
 func initialize_downloads_tracking() -> void:
