@@ -60,7 +60,7 @@ func _on_search_bar_text_submitted(new_text: String):
 		is_loaded_from_cache.hide()
 	
 	var python_scripts_path: String = Global.PYTHON_SCRIPTS_PATH
-	var search_script_path: String = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH + "ytmusic_search.py")
+	var search_script_path = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH.path_join("ytmusic_search.py"))
 	UsePython.execute_python_script(
 		[
 			search_script_path,

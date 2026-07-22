@@ -13,5 +13,5 @@ func _pressed() -> void:
 	#print(MusicRecommendation.get_recommendations("vvvvcpwFw5o"))
 	
 	#Global.artist_page.gather_and_display_infos("UCgwteC3ja-6FkDDHiK8diQw")
-	Global.artist_page.gather_and_display_infos("UCMluca6I7VG2G0lFAZnTThw")
+	#Global.artist_page.gather_and_display_infos("UCMluca6I7VG2G0lFAZnTThw")
 	

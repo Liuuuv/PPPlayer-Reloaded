@@ -138,8 +138,7 @@ func scrap(query: String, callback: Callable): ## gets the html page by Godot, a
 func process_html(body: PackedByteArray) -> void:
 	var html: String = body.get_string_from_utf8()
 	
-	
-	var script = ProjectSettings.globalize_path("res://PythonFiles/generic_scrapper.py")
+	var script = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH.path_join("generic_scrapper.py"))
 	var temp_path: String = _save_temp_html(html)
 	var html_file = ProjectSettings.globalize_path(temp_path)
 	var config = current_scrap_json_path

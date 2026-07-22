@@ -52,7 +52,7 @@ func gather_and_display_infos(channel_id: String) -> void:
 	## if no cache
 	info_requested.emit()
 	loading_info.text = "Gathering infos"
-	var script = ProjectSettings.globalize_path("res://PythonFiles/ytmusic_get_artist_infos.py")
+	var script = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH.path_join("ytmusic_get_artist_infos.py"))
 	UsePython.execute_python_script(
 		[
 			script,

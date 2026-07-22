@@ -8,7 +8,7 @@ signal song_infos_changed()
 const SETTINGS_PATH: String = "user://settings.json"
 const SONG_INFOS_PATH: String = "user://song_infos.json"
 const DOWNLOADED_SONGS_PATH: String = "user://downloaded_songs.json"
-const PYTHON_SCRIPTS_PATH: String = "res://PythonFiles/"
+var PYTHON_SCRIPTS_PATH = OS.get_user_data_dir().path_join("PythonFiles") + "/"
 const LOGS_PATH: String = "user://logs.json"
 const LYRICS_PATH: String = "user://lyrics.json"
 const PLAYLISTS_PATH: String = "user://playlists.json"

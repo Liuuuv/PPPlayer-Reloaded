@@ -18,6 +18,9 @@ So I thought to myself 'can I really complain?', so my goal is to recreate a mus
 ### Search bar:
 - Use 'id:' for id search only.
 
+## How to install
+- Download the [PythonFiles](https://github.com/Liuuuv/PPPlayer-Reloaded/tree/main/PythonFiles) folder and put it in the `user://` directory.
+The `user://` directory can be acced by going to `Settings > open user://` in the app. Alternatively you can go to `C:\Users\YOURNAME\AppData\Roaming\Godot\app_userdata\PPPlayer-(4.7)`.
 
 ## Dependencies
 - You need to have Python v3.10+ installed in order to execute Python scripts (they are not compiled because of transparency).

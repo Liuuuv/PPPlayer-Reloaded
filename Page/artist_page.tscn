@@ -697,3 +697,4 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "ayo"
+horizontal_alignment = 1

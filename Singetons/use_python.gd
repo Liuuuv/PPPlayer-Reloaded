@@ -1,5 +1,7 @@
 extends Node
 
+var log_func: Callable
+
 #func execute_python_script(args: Array, callback: Callable) -> void:
 	### UsePython.execute_python_script(
 	### 	[
@@ -36,6 +38,11 @@ var pending_requests: Array = []  # [{args: Array, callback: Callable}]
 
 func _ready() -> void:
 	mutex = Mutex.new()
+	
+	_initialize.call_deferred()
+
+func _initialize() -> void:
+	log_func = Global.logs_display.write
 
 ## [param callback] MUST be Dictionary -> X
 func execute_python_script(args: Array, callback: Callable) -> void:
@@ -51,6 +58,16 @@ func execute_python_script(args: Array, callback: Callable) -> void:
 	_start_execution(args, callback)
 
 func _start_execution(args: Array, callback: Callable) -> void:
+	log_func.call("Starting the Python execution for args %s with callback %s" % [args, callback])
+	
+	if not args[0] is String:
+		log_func.call("First argument is not a String.")
+		push_error("First argument is not a String.")
+		return
+	if not args[0].is_absolute_path():
+		log_func.call("First argument is not an absolute path.")
+		push_error("First argument is not an absolute path.")
+		return
 	busy = true
 	thread = Thread.new()
 	thread.start(_execute_python_thread.bind(args, callback))
@@ -58,6 +75,7 @@ func _start_execution(args: Array, callback: Callable) -> void:
 func _execute_python_thread(args: Array, callback: Callable) -> void:
 	var output: Array = []
 	var python = "python"
+	
 	
 	var exit_code = OS.execute(python, args, output, true)
 	
@@ -81,7 +99,7 @@ func _on_thread_completed(callback: Callable) -> void:
 		if data == null:
 			callback.call({
 				"success": false,
-				"error": "Failed to parse JSON output: " + output[0].substr(0, 100)
+				"error": "Failed to parse JSON output: " + output[0]
 			})
 		elif not data is Dictionary:
 			# Si c'est un autre type, l'emballer dans un Dictionary
@@ -92,17 +110,21 @@ func _on_thread_completed(callback: Callable) -> void:
 		else:
 			callback.call(data)
 	else:
+		var error_msg: String = "Exit code: %s, output size: %s." % [exit_code, output.size()]
+		match exit_code:
+			2: error_msg += "\nExit code 2 can signify that the Python file was not found. You should have put the Python scripts in the user folder."
 		callback.call({
 			"success": false,
-			"error": "Exit code: %s, output size: %s" % [exit_code, output.size()]
+			"error": error_msg
 		})
 	
 	
 	var thread_to_wait = thread
-	thread = null
-	
 	if thread_to_wait and thread_to_wait.is_alive():
 		thread_to_wait.wait_to_finish()
+	thread = null
+	
+	
 	
 	# Passe à la requête suivante
 	busy = false
