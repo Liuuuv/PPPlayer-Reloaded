@@ -38,4 +38,12 @@ func _process(delta: float) -> void:
 			#Window.MODE_MINIMIZED: window.mode = Window.MODE_MAXIMIZED
 			#Window.MODE_MAXIMIZED: window.mode = Window.MODE_MINIMIZED
 		
-		
+
+
+
+
+
+
+
+
+#

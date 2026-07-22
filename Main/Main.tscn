@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://oddlhjdod34d" path="res://Tabs/LibraryTab/library.gd" id="29_ucuw1"]
 [ext_resource type="PackedScene" uid="uid://c6i411f13i6su" path="res://Page/search_results_page.tscn" id="29_yb73r"]
 [ext_resource type="Script" uid="uid://qa7iukwooswc" path="res://Tabs/LibraryTab/library_tab_container.gd" id="30_ivlrh"]
+[ext_resource type="Script" uid="uid://gjlxnwc6rmax" path="res://Tabs/SearchTab/audio_spectrum.gd" id="31_gmaup"]
 [ext_resource type="PackedScene" uid="uid://plb4bhbcq0lb" path="res://Tabs/DownloadedTab/downloaded.tscn" id="32_p2tm2"]
 [ext_resource type="PackedScene" uid="uid://4gbx2vty1e3" path="res://Tabs/PlaylistsTab/playlists_tab.tscn" id="33_v4k1o"]
 [ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="35_hvsi2"]
@@ -382,8 +383,14 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-expand_mode = 1
+expand_mode = 5
 stretch_mode = 5
+
+[node name="Node2D" type="Node2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart" unique_id=1071830942]
+script = ExtResource("31_gmaup")
+width = 575.67
+height = 56.0
+low_color = Color(0.4333334, 0, 1, 1)
 
 [node name="Pages" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1431809108]
 layout_mode = 1

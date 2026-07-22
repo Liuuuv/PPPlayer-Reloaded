@@ -507,4 +507,61 @@ func is_mouse_in_box(node: Control):
 
 
 
+##### TESTING
+func get_dominant_colors(image: Image, color_count: int = 3) -> Array[Color]:
+	var colors: Array[Color] = []
+	var width = image.get_width()
+	var height = image.get_height()
+	
+	# Échantillonner des pixels (pour performance)
+	var samples: Array[Color] = []
+	var step = max(1, int(sqrt(width * height) / 100))  # ~100 échantillons
+	
+	for y in range(0, height, step):
+		for x in range(0, width, step):
+			samples.append(image.get_pixel(x, y))
+	
+	if samples.is_empty():
+		return [Color.BLACK]
+	
+	# Initialiser avec des couleurs aléatoires de l'échantillon
+	var centroids: Array[Color] = []
+	for i in range(color_count):
+		centroids.append(samples[randi() % samples.size()])
+	
+	# K-means itératif (5 itérations suffisent généralement)
+	for iteration in range(5):
+		var clusters: Array[Array] = []
+		for i in range(color_count):
+			clusters.append([])
+		
+		# Assigner chaque échantillon au centroïde le plus proche
+		for sample in samples:
+			var min_dist = INF
+			var best_cluster = 0
+			for c in range(color_count):
+				var dist = _color_distance(sample, centroids[c])
+				if dist < min_dist:
+					min_dist = dist
+					best_cluster = c
+			clusters[best_cluster].append(sample)
+		
+		# Mettre à jour les centroïdes
+		for c in range(color_count):
+			if clusters[c].size() > 0:
+				var avg = Color(0, 0, 0, 1)
+				for color in clusters[c]:
+					avg += color
+				centroids[c] = avg / clusters[c].size()
+	
+	return centroids
+
+
+func _color_distance(a: Color, b: Color) -> float:
+	# Distance euclidienne dans l'espace RGB
+	return sqrt(pow(a.r - b.r, 2) + pow(a.g - b.g, 2) + pow(a.b - b.b, 2))
+
+
+
+
 #
