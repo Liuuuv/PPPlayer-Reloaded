@@ -71,15 +71,7 @@ func _initialize_context_menu():
 	context_menu.add_header_item("HEADER", null)
 	match location:
 		Global.SONG_ITEMS_LOCATIONS.DOWNLOADED:
-			#context_menu.add_item("Preview", _preview_selected_song, false, null)
-			context_menu.add_item("Add to current playlist", _add_selected_song_to_current_playlist, false, null)
-			context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
-			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
-			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
-			
-			sub_menu_id = context_menu._nextId
-			playlist_sub_menu = context_menu.add_submenu("Add to...")
-			playlist_sub_menu._menu.id_pressed.connect(_on_playlists_sub_menu_id_pressed)
+			_initialize_context_menu_downloaded()
 			
 			context_menu.add_seperator()
 			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
@@ -91,6 +83,11 @@ func _initialize_context_menu():
 			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
 		Global.SONG_ITEMS_LOCATIONS.RESULTS:
 			context_menu.add_item("Download", _download_song, false, null)
+		Global.SONG_ITEMS_LOCATIONS.LOCAL_PLAYLIST:
+			_initialize_context_menu_downloaded()
+			context_menu.add_item("Remove from playlist", _remove_from_playlist, false, null)
+			context_menu.add_seperator()
+			context_menu.add_item("Delete", Callable(self, "_delete"), false, null)
 			
 	
 	
@@ -106,6 +103,17 @@ func _initialize_context_menu():
 	
 	if artists_label:
 		_initialize_left_click_context_menu()
+
+func _initialize_context_menu_downloaded() -> void:
+	#context_menu.add_item("Preview", _preview_selected_song, false, null)
+	context_menu.add_item("Add to current playlist", _add_selected_song_to_current_playlist, false, null)
+	context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
+	context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
+	context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
+	
+	sub_menu_id = context_menu._nextId
+	playlist_sub_menu = context_menu.add_submenu("Add to...")
+	playlist_sub_menu._menu.id_pressed.connect(_on_playlists_sub_menu_id_pressed)
 
 func _initialize_left_click_context_menu():
 	left_click_context_menu = ContextMenu.new()
@@ -395,12 +403,17 @@ func _delete() -> void:
 		Global.delete_song_informations(song_id)
 		items.remove_at(selected_idx)
 
-
 func _download_song():
 	var song_item: Global.ResultSongItem = items.get(selected_idx)
 	if song_item.id != "":
 		Global.downloads_tab.add_id_to_queue(song_item.id)
 
+func _remove_from_playlist() -> void:
+	if selected_idx < 0:
+		return
+	Global.playlists_tab.remove_from_displayed_playlist(selected_idx)
+	Global.playlists_tab.reload_playlist_content()
+	#var playlist_content: Dictionary = playlists_infos.get()
 
 
 

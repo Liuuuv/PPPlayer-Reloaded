@@ -58,6 +58,7 @@ enum SONG_ITEMS_LOCATIONS {
 	DOWNLOADED,
 	DOWNLOADS,
 	RESULTS,
+	LOCAL_PLAYLIST,
 }
 
 var settings: Dictionary = DEFAULT_SETTINGS
@@ -82,7 +83,7 @@ var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool,
 ## 		"playlists": {
 ## 			playlist_name: String: {
 ## 				"content": [
-## 					String 	(## 'local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
+## 					String 	## ('local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
 ## 				],
 ## 				"thumbnail": String,
 ## 				"description": String,

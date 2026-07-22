@@ -71,9 +71,9 @@ func _data_callback(data: Dictionary, channel_id: String):
 		if cache_result:
 			_display_infos(cache_result)
 		else:
-			loading_info.text = "No cache result to display"
+			loading_info.text = "No cache result to display."
 			loading_logo.hide()
-			push_error("no cache result to display")
+			#push_error("no cache result to display")
 	else:
 		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
 		loading_info.text = "Error: %s" % data.get("error", "")

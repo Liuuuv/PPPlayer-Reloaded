@@ -70,6 +70,7 @@ func _on_reload_button_pressed() -> void:
 func show_loading_overlay() -> void:
 	loading_overlay.show()
 	loading_logo.show()
+	loading_info.text = ""
 
 func hide_loading_overlay() -> void:
 	loading_overlay.hide()

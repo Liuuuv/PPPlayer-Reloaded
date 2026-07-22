@@ -14,7 +14,7 @@ func _ready() -> void:
 	#open()
 	#playlist_content.clear_items()
 	#
-	#var content: Array = Global.playlists.get("playlists", {}).get(playlist_name, "").get("content", [])
+	#var content: Array = Global.playlists.get("playlists", {}).get(playlist_name, {}).get("content", [])
 	#
 	#var song_item: Global.SongItem
 	#var id: String

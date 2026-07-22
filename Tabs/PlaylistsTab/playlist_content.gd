@@ -3,15 +3,18 @@ class_name PlaylistContentTab
 
 @onready var playlist_content: SongVirtualScrollList = %PlaylistContent
 @onready var back_button: ButtonComponent = %BackButton
+@onready var reload_button: ButtonComponent = %ReloadButton
 
+var current_displayed_playlist_name: String = ""
 
 func _ready() -> void:
 	pass
 
 func display_playlist(playlist_name: String) -> void:
+	current_displayed_playlist_name = playlist_name
 	playlist_content.clear_items()
 	
-	var content: Array = Global.playlists.get("playlists", {}).get(playlist_name, "").get("content", [])
+	var content: Array = Global.playlists.get("playlists", {}).get(playlist_name, {}).get("content", [])
 	
 	var song_item: Global.SongItem
 	var id: String
@@ -26,9 +29,11 @@ func display_playlist(playlist_name: String) -> void:
 				song_item = Global.create_song_item(local_id)
 				playlist_content._add_item(song_item)
 
+func reset():
+	current_displayed_playlist_name = ""
 
-
-
+func reload_playlist_content() -> void:
+	display_playlist(current_displayed_playlist_name)
 
 
 

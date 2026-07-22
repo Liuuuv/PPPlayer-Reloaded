@@ -472,6 +472,25 @@ func get_property(obj: Variant, property_name: String) -> Variant:
 	
 	return null
 
+func get_index_scroll(index: int) -> float: ## return the scroll to exactly the index. TODO make it works with columns.
+	return template.size.y * index
+
+func scroll_to_index(index: int) -> void:
+	var target_scroll: float = get_index_scroll(index)
+	
+	var tween: Tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_method(
+		func _on_scroll_update(value: float) -> void:
+			scroll = value
+			# Votre code à exécuter à chaque frame
+			queue_redraw(),  # Fonction appelée à chaque frame
+		scroll,  # Valeur de départ
+		target_scroll,  # Valeur d'arrivée
+		1.0  # Durée
+	)
+
 func _on_item_left_clicked(idx: int) -> void:
 	if can_grab_scroll_focus:
 		mouse_force_pass_scroll_events = false

@@ -11,6 +11,7 @@ func _ready() -> void:
 	tab_container.current_tab = 0
 	
 	playlist_content_tab.back_button.pressed.connect(_on_playlist_content_tab_back_button_pressed)
+	playlist_content_tab.reload_button.pressed.connect(_on_playlist_content_tab_reload_button_pressed)
 	
 	_initialize.call_deferred()
 
@@ -24,7 +25,7 @@ func display_playlist(playlist_name: String) -> void:
 	tab_container.current_tab = 1
 	playlist_content_tab.display_playlist(playlist_name)
 
-func add_song_to_playlist(local_id: String, playlist_name: String) -> void:
+func add_song_to_playlist(local_id: String, playlist_name: String, reload: bool = true) -> void:
 	if not playlist_name in Global.playlists.get("playlists", {}):
 		push_error("No playlist named %s" % playlist_name)
 		return
@@ -41,11 +42,33 @@ func add_song_to_playlist(local_id: String, playlist_name: String) -> void:
 		
 	playlist_infos.set("content", current_content)
 	Global.save_playlists()
+	if reload:
+		reload_playlists()
+		reload_playlist_content()
 
+
+func remove_from_displayed_playlist(index: int) -> void:
+	remove_from_playlist(playlist_content_tab.current_displayed_playlist_name, index)
+
+func remove_from_playlist(playlist_name: String, index: int, reload: bool = true) -> void:
+	var playlist_info: Dictionary = Global.playlists.get("playlists", {}).get(playlist_name, {})
+	var content: Array = playlist_info.get("content", [])
+	content.remove_at(index)
+	Global.save_playlists()
+	if reload:
+		reload_playlists()
+		reload_playlist_content()
+
+func reload_playlist_content() -> void:
+	playlist_content_tab.reload_playlist_content()
 
 func _on_playlist_content_tab_back_button_pressed() -> void:
 	tab_container.current_tab = 0
+	playlist_content_tab.reset()
+	reload_playlists()
 
+func _on_playlist_content_tab_reload_button_pressed() -> void:
+	reload_playlist_content()
 
 
 
