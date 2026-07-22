@@ -37,6 +37,7 @@ var pending_requests: Array = []  # [{args: Array, callback: Callable}]
 func _ready() -> void:
 	mutex = Mutex.new()
 
+## [param callback] MUST be Dictionary -> X
 func execute_python_script(args: Array, callback: Callable) -> void:
 	if busy:
 		# Ajoute à la file d'attente
@@ -76,8 +77,25 @@ func _on_thread_completed(callback: Callable) -> void:
 	if exit_code == 0 and output.size() > 0:
 		var data = JSON.parse_string(output[0])
 		callback.call(data)
+		# Vérifier que data n'est PAS null
+		if data == null:
+			callback.call({
+				"success": false,
+				"error": "Failed to parse JSON output: " + output[0].substr(0, 100)
+			})
+		elif not data is Dictionary:
+			# Si c'est un autre type, l'emballer dans un Dictionary
+			callback.call({
+				"success": true,
+				"data": data
+			})
+		else:
+			callback.call(data)
 	else:
-		callback.call(null)
+		callback.call({
+			"success": false,
+			"error": "Exit code: %s, output size: %s" % [exit_code, output.size()]
+		})
 	
 	
 	var thread_to_wait = thread

@@ -36,15 +36,16 @@ func _ready() -> void:
 
 func gather_and_display_infos(channel_id: String) -> void:
 	if channel_id == "":
-		push_error("No channel ID founded")
+		push_error("No channel ID provided")
 		return
-	Global.logs_display.write("gathering and displaying infos for channel ID: %s" % channel_id)
+	Global.logs_display.write("Gathering and displaying infos for channel ID: %s" % channel_id, LogsDisplay.MESSAGE.INFO)
 	open()
 	show_loading_overlay()
 	current_display_id = channel_id
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
 	var cache_result: Resource = Tools.get_cached_results(cache_name)
 	if cache_result:
+		Global.logs_display.write("Artist's infos found in cache for channel ID: %s" % channel_id, LogsDisplay.MESSAGE.DEBUG)
 		_display_infos(cache_result)
 		return
 	
@@ -64,6 +65,9 @@ func gather_and_display_infos(channel_id: String) -> void:
 ## Displays and saves infos
 func _data_callback(data: Dictionary, channel_id: String):
 	if data.get("success"):
+		loading_info.text = "Sucess"
+		Global.logs_display.write("Successfully gathered artist informations for channel ID %s" % channel_id, LogsDisplay.MESSAGE.DEBUG)
+		
 		_save_infos_to_cache(data.get("infos", {}), channel_id)
 		await get_tree().process_frame ## some are call deferred
 		var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
@@ -75,7 +79,7 @@ func _data_callback(data: Dictionary, channel_id: String):
 			loading_logo.hide()
 			#push_error("no cache result to display")
 	else:
-		Global.logs_display.write("error: %s" % data.get("error"), LogsDisplay.MESSAGE.ERROR)
+		Global.logs_display.write("error: %s" % data.get("error", ""), LogsDisplay.MESSAGE.ERROR)
 		loading_info.text = "Error: %s" % data.get("error", "")
 		loading_logo.hide()
 		push_error("error: %s" % data.get("error", ""))

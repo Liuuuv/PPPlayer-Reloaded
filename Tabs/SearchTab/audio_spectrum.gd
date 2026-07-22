@@ -37,6 +37,7 @@ var gradient := Gradient.new()
 
 func _ready():
 	
+	
 	spectrum = AudioServer.get_bus_effect_instance(0,0)
 	
 	if spectrum == null:

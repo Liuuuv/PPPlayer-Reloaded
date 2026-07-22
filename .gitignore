@@ -10,3 +10,8 @@ downloaded_songs.json
 /.history
 logs.json
 /temp
+
+
+/PythonFiles/__pycache__
+/PythonFiles/test
+/build

@@ -386,8 +386,9 @@ mouse_filter = 2
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Node2D" type="Node2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart" unique_id=1071830942]
+[node name="AudioSpectrum" type="Node2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart" unique_id=1071830942]
 script = ExtResource("31_gmaup")
+vu_count = 128
 width = 575.67
 height = 56.0
 low_color = Color(0.4333334, 0, 1, 1)
