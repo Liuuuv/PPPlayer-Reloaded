@@ -64,13 +64,18 @@ func change_song_progression(progression: float): ## 0-100
 		var target_time: float = Global.music_player.stream.get_length() * progression / 100
 		Global.music_player.seek(target_time)
 
-func play_from_index(index: int) -> void:
+func play_from_index(index: int, change_index: bool = false) -> void:
 	if index < 0 or index >= Global.current_playlist.content_ids.size():
 		push_error("index out of range of current playlist size")
 		return
-		
+	
+	if change_index:
+		playing_song_index = index
+	
 	var id: String = Global.current_playlist.content_ids[index]
 	play_from_id(id)
+	
+	
 	
 	#var song_info = Global.song_infos.get(id)
 	#if song_info:
@@ -117,10 +122,15 @@ func play_last_song_from_current_playlist() -> void: ## Plays the last song in t
 	var id: String = Global.current_playlist.content_ids[-1]
 	play_from_id(id)
 
-func play_from_id(id: String) -> void:
+func play_from_id(id: String, new_index: int = -1) -> void:
+	if new_index > 0:
+		playing_song_index = new_index
+	
 	var full_path: String = _get_full_path_from_id(id)
 	if full_path:
 		start_song(full_path)
+	
+	
 
 func clear_current_playlist(): ## clears the current_playlist
 	Global.current_playlist.clear_items()

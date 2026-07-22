@@ -4,11 +4,21 @@
 [ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Windows/SettingsWindow/Scripts/do_checkup.gd" id="2_e3bw5"]
 [ext_resource type="Script" uid="uid://dm7cqtwn6us8q" path="res://Windows/SettingsWindow/Scripts/clear_cache.gd" id="2_kbi0k"]
+[ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://Shaders/background.gdshader" id="2_nrwrv"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="3_4qfth"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_k720b"]
 [ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Windows/SettingsWindow/Scripts/remove_duplicate.gd" id="3_y72ja"]
 [ext_resource type="Script" uid="uid://dotm7dksllgpe" path="res://Windows/SettingsWindow/Scripts/update_downloaded_songs_song_infos.gd" id="5_2oix8"]
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
 [ext_resource type="Script" uid="uid://bop3jkdcdd0uv" path="res://Windows/SettingsWindow/Scripts/open_user_button.gd" id="6_nnm61"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shqcg"]
+shader = ExtResource("2_nrwrv")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 0.5
+shader_parameter/speed = 0.1
+shader_parameter/stripe_color = Color(0.082239985, 0.073599994, 0.16, 1)
+shader_parameter/background_color = Color(0.11372549, 0.10980392, 0.20784314, 1)
 
 [node name="SettingsWindow" type="Window" unique_id=1774285694]
 oversampling_override = 1.0
@@ -17,16 +27,28 @@ position = Vector2i(0, 36)
 size = Vector2i(670, 480)
 script = ExtResource("1_gxk38")
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=1057855492]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=321408159]
+material = SubResource("ShaderMaterial_shqcg")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1057855492]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_k720b")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 
 [node name="General" type="Control" parent="TabContainer" unique_id=279442251]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -99,41 +121,80 @@ custom_minimum_size = Vector2(0, 7.71)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/General/VBoxContainer" unique_id=977629457]
+[node name="TODO" type="RichTextLabel" parent="TabContainer/General/VBoxContainer" unique_id=977629457]
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- selection box visible quand on sort la souris par la droite (current playlist par exemple)
+- dynamic sizing of audio spectrum
+- ctrl click on artist opens page
 - fix laggy logs
 - finish playlists
-- download errors: put ids into json
+- download errors: make ui to manage them
 - finish multiselection
 - recommandation (make it work at least)
 - when a queue exists, when pressing next song, skip the queue
-- a way to stop the preview of a song
-- optimize logs
+- when hovering songitem, if the title is too long, make it scroll
+- downloaded reload empeche la recherche
+- logs doivent follow que si on n'a pas scroll tout en bas
+- changer le level des logs a afficher dynamiquement
+- audio sprectrum parameters
 - display a song even if has no mp3 (same if has no song info)
 - finish queue
+- miniatures jpg ne sont pas affichées
+- multiselection selectionne toutes les musiques de meme id, probleme
 - add track number in windows overlay
 - make windows overlay deactivable
 - download progress hook
 - check \"#TODO\" in code
 - update info from youtube (by right click on song item)
 - fade in out
-- audio visualizer
 - blindtest"
 
-[node name="Other" type="Control" parent="TabContainer" unique_id=2133455322]
+[node name="Shortcuts" type="Control" parent="TabContainer" unique_id=374568893]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Other" unique_id=1821676019]
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Shortcuts" unique_id=693708475]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[u]Local search bars[/u]:
+- \"id:QUERY\" performs a search based on local IDs.
+
+[u]Songs[/u]:
+- Ctrl + LMB to open its YouTube page on your default browser."
+
+[node name="Other" type="Control" parent="TabContainer" unique_id=2133455322]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Other" unique_id=149487666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VersionLabel" type="Label" parent="TabContainer/Other/VBoxContainer" unique_id=604882136]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Version X.X"
+
+[node name="YTDLPVersionLabel" type="Label" parent="TabContainer/Other/VBoxContainer" unique_id=1800883818]
+unique_name_in_owner = true
+layout_mode = 2
+text = "yt-dlp version: %s"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Other/VBoxContainer" unique_id=1821676019]
+layout_mode = 2
 size_flags_vertical = 3
 text = "Known issues:
 - error sometimes (the first time) when right clicking a song

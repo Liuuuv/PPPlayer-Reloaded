@@ -8,7 +8,7 @@ func _ready() -> void:
 func _on_pressed() -> void:
 	pass
 
-func _on_stream_changed(fullpath: String):
+func _on_stream_changed(_fullpath: String):
 	if button_pressed:
 		Global.current_playlist.scroll_to_index(SongManager.playing_song_index)
 

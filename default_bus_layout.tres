@@ -5,7 +5,6 @@ resource_name = "SpectrumAnalyzer"
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_j3pel"]
 resource_name = "Amplify"
-volume_db = 8.0
 
 [resource]
 bus/0/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_j3pel")

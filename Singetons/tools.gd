@@ -57,7 +57,8 @@ func save_string(string: String, full_file_path: String) -> void:
 		
 		file.store_string(json_text)
 		file.close()
-		file.close()
+	else:
+		push_error("Can't open file %s" % full_file_path)
 
 
 func load_string(full_file_path: String) -> String:

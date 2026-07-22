@@ -1,5 +1,6 @@
 extends Node
 
+signal got_current_version
 signal setup_completed
 signal _update_completed
 
@@ -16,10 +17,26 @@ const ffmpeg_sources: Dictionary = {
 	"Windows": "https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip"
 }
 
+var current_version: String = "":
+	set(new_ver):
+		current_version = new_ver
+		got_current_version.emit()
 var _downloader: Downloader
 var _thread: Thread = Thread.new()
 var _is_setup: bool = false
 
+
+func _ready() -> void:
+	setup_completed.connect(_on_setup_completed)
+
+func _on_setup_completed() -> void:
+	var executable: String = (
+			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
+		)
+	var output: Array = []
+	var exit_code = OS.execute(executable, PackedStringArray(["--version"]), output, true)
+	if output[0] is String:
+		current_version = output[0]
 
 func is_setup() -> bool:
 	return _is_setup
@@ -304,7 +321,7 @@ class Download extends RefCounted:
 			var output_message: String = ""
 			for part in output:
 				output_message += part
-			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s.\nOutput: %s" % [exit_code, output_message], LogsDisplay.MESSAGE.ERROR)
+			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s.\nOutput: %s" % [exit_code, output_message.substr(0, 180)], LogsDisplay.MESSAGE.ERROR)
 			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s." % [_file_name, exit_code])
 			self._thread_stopped.call_deferred()
 			return

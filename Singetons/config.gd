@@ -1,5 +1,7 @@
 extends Node
 
+const APP_VERSION: String = "0.1"
+
 var disable_logs: bool = false
 #var disable_logs: bool = true
 

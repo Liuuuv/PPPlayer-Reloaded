@@ -19,7 +19,7 @@ extends Node2D
 @export var peak_fall_speed := 0.45
 
 @export_group("Bass")
-@export var bass_boost := 1.4
+@export var bass_boost: float = 1.3
 
 @export_group("Colors")
 @export var low_color := Color.GREEN
@@ -72,7 +72,6 @@ func _process(delta):
 		return
 	
 	for i in range(vu_count):
-		
 		var mag = spectrum.get_magnitude_for_frequency_range(
 			frequencies[i],
 			frequencies[i + 1]
@@ -95,7 +94,6 @@ func _process(delta):
 		energy = pow(energy,0.70)
 		
 		# attack - release
-	
 		if energy > bars[i]:
 			bars[i] = lerp(
 				bars[i],
@@ -108,11 +106,9 @@ func _process(delta):
 				energy,
 				release_speed * delta
 			)
-	
+		
 		
 		# Peak
-		
-	
 		if bars[i] > peaks[i]:
 			peaks[i] = bars[i]
 		else:
@@ -159,7 +155,7 @@ func _draw():
 			color = mid_color.lerp(high_color, (t - 0.5) * 2.0)
 		
 		
-		color.a = lerp(0.35,1.0,bars[i])
+		color.a = lerp(0.1,1.0,bars[i])
 		
 		draw_rect(rect,color)
 		
@@ -191,7 +187,7 @@ func _draw():
 			2.0
 		)
 
-func _on_stream_changed(fullpath: String):
+func _on_stream_changed(_fullpath: String):
 	await get_tree().process_frame
 	if big_thumbnail.texture:
 		var colors: Array = Tools.get_dominant_colors(big_thumbnail.texture.get_image(), 3)

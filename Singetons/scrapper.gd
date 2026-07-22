@@ -173,7 +173,7 @@ func _save_temp_html(html: String) -> String: ## returns globalized path
 	print('file stored')
 	
 	return ProjectSettings.globalize_path(temp_path)
-	
+
 
 func _on_request_completed(result, response_code, headers, body):
 	if not current_callback.is_valid() or current_callback.is_null():

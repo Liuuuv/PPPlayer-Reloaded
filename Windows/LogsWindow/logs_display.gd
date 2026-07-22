@@ -14,13 +14,23 @@ enum MESSAGE {
 	ERROR,
 }
 
+var save_timer = Timer.new()
 var is_open: bool = false
 var must_be_saved: bool = false:
 	set(on):
-		if on != must_be_saved:
-			must_be_saved = on
-			if must_be_saved:
-				save.call_deferred()
+		must_be_saved = on
+		save_timer.start()
+		#if on != must_be_saved:
+			#must_be_saved = on
+			#if must_be_saved:
+				#save.call_deferred()
+var unsaved_lines: int = 0:
+	set(new_num):
+		unsaved_lines = new_num
+		if unsaved_lines >= 15:
+			save.call_deferred()
+			save_timer.stop()
+			
 var num_errors: int = 0
 var log_lines: Array[String] = []
 var minimum_level := MESSAGE.DEBUG ## to not display some logs
@@ -29,12 +39,20 @@ func _ready() -> void:
 	Global.logs_display = self
 	
 	
+	save_timer.wait_time = 2.0
+	save_timer.autostart = false
+	save_timer.one_shot = true
+	save_timer.timeout.connect(_on_save_timer_timeout)
+	add_child(save_timer)
+	
+	
 	if Config.disable_logs:
-		logs.text = "---------- LOGS DISABLED ----------"
+		#logs.text = "---------- LOGS DISABLED ----------"
+		pass
 	else:
 		logs.text = Tools.load_string(Global.LOGS_PATH)
 		var time_dict: Dictionary = Time.get_datetime_dict_from_system()
-		logs.text += "\n [color=purple][START SESSION][/color] %s/%s/%s, %s:%s:%s %s DST \n" % [
+		logs.text += "\n[color=purple][START SESSION][/color] %s/%s/%s, %s:%s:%s %s DST \n" % [
 			time_dict.get("year", ""),
 			time_dict.get("month", ""),
 			time_dict.get("day", ""),
@@ -43,7 +61,8 @@ func _ready() -> void:
 			time_dict.get("second", ""),
 			"" if time_dict.get("dst") else "no"
 		]
-		Tools.save_string(logs.text, Global.LOGS_PATH)
+		#Tools.save_string(logs.text, Global.LOGS_PATH)
+		save()
 	
 	clear_logs_button.clear_logs.connect(_on_clear_logs)
 	close_requested.connect(_on_close_requested)
@@ -67,13 +86,13 @@ func write(message, type: MESSAGE = MESSAGE.DEBUG):
 	
 
 func save() -> void:
-	Tools.save_string(logs.text, Global.LOGS_PATH)
+	log_save_string(logs.get_parsed_text(), Global.LOGS_PATH)
 	must_be_saved = false
 	if num_errors > 0:
 		title = "Logs (%s errors)" % num_errors
 	else:
 		title = "Logs"
-	update_num_errors()
+	#update_num_errors()
 
 func update_num_errors():
 	var count: int = 0
@@ -100,7 +119,9 @@ func _write(message, type: MESSAGE = MESSAGE.DEBUG):
 		MESSAGE.ERROR:
 			type_message = "[color=red][ERROR][/color] "
 			num_errors += 1
-	logs.text += type_message + message + "\n "
+	#logs.text += type_message + message + "\n "
+	logs.append_text(type_message + message + "\n")
+	
 	must_be_saved = true
 	
 	#log_lines.append(type_message + message)
@@ -129,7 +150,8 @@ func _on_clear_logs():
 				time_dict.get("second", ""),
 				"" if time_dict.get("dst") else "no"
 			]
-			Tools.save_string(logs.text, Global.LOGS_PATH)
+			#Tools.save_string(logs.text, Global.LOGS_PATH)
+			save()
 		
 
 func _exit_tree() -> void:
@@ -143,4 +165,18 @@ func _exit_tree() -> void:
 		time_dict.get("second", ""),
 		"" if time_dict.get("dst") else "no"
 	]
-	Tools.save_string(logs.text, Global.LOGS_PATH)
+	#Tools.save_string(logs.text, Global.LOGS_PATH)
+	save()
+
+
+func log_save_string(string: String, full_file_path: String) -> void:
+	var file = FileAccess.open(full_file_path, FileAccess.ModeFlags.WRITE_READ)
+	
+	if file:
+		file.store_string(string)
+		file.close()
+	else:
+		push_error("Can't open file %s" % full_file_path)
+
+func _on_save_timer_timeout() -> void:
+	save()

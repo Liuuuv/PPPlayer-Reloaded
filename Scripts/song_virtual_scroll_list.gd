@@ -336,8 +336,7 @@ func _play_from_here() -> void: ## should only be called for a current_playlist 
 		push_error("trying to play from here not from the current playlist, skipping")
 		return
 	var song_item: Global.SongItem = items.get(selected_idx)
-	SongManager.playing_song_index = selected_idx
-	SongManager.play_from_id(song_item.id)
+	SongManager.play_from_id(song_item.id, selected_idx)
 
 func _remove_selected() -> void:
 	items.remove_at(selected_idx)

@@ -49,7 +49,7 @@ func _edit_lyrics() -> void:
 func _on_context_menu_opened() -> void:
 	pass
 
-func _on_stream_changed(fullpath: String) -> void:
+func _on_stream_changed(_fullpath: String) -> void:
 	update_display(Global.music_player.current_stream_id)
 
 func _on_edit_lyrics_window_closing(song_id: String):

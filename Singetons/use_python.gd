@@ -120,11 +120,10 @@ func _on_thread_completed(callback: Callable) -> void:
 	
 	
 	var thread_to_wait = thread
-	if thread_to_wait and thread_to_wait.is_alive():
-		thread_to_wait.wait_to_finish()
 	thread = null
 	
-	
+	if thread_to_wait and thread_to_wait.is_alive():
+		thread_to_wait.wait_to_finish()
 	
 	# Passe à la requête suivante
 	busy = false

@@ -8,12 +8,13 @@ PP Player is and open-source local music player with online integrations (YouTub
 - I am afraid some songs I listen to get deleted someday, I'd like to 'pause time'.
 - Some songs are not on YouTube Music, maybe because they do not have the 'song' tag.
 - Youtube Music lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single track.
+- Of course playing two versions of the same song in a row `:')`.
 
 So I thought to myself 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
 
 ## Shortcuts:
 ### General:
-- Ctrl + LMB on a song to open its browser YouTube page.
+- Ctrl + LMB on a song to open its page on your default browser.
 
 ### Search bar:
 - Use 'id:' for id search only.

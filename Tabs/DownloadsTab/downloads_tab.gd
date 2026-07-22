@@ -6,8 +6,9 @@ signal queue_changed()
 #signal ready_to_dl()
 signal try_dl()
 
-@onready var songs_downloads: Control = %SongsDownload
-@onready var play_pause_button: TextureButton = %PlayPauseButton
+@onready var songs_download: BaseVirtualScrollList = %SongsDownload
+@onready var clear_button: ButtonComponent = %ClearButton
+@onready var is_running_button: TextureButton = %IsRunningButton
 
 var is_ready_to_dl: bool = false:
 	set(on):
@@ -23,11 +24,22 @@ func _ready() -> void:
 	is_ready_to_dl = true
 	
 	reload_queue_song_items()
+	_initialize.call_deferred()
 	
-	play_pause_button.toggled.connect(_on_play_pause_button_toggled)
+	
+	is_running_button.toggled.connect(_on_is_running_button_toggled)
+	clear_button.pressed.connect(_on_clear_button_pressed)
 	#ready_to_dl.connect(_on_ready_to_dl)
 	try_dl.connect(_on_try_dl)
 	queue_changed.connect(_on_queue_changed)
+
+func _initialize() -> void:
+	var stored_queue: Array[String]
+	stored_queue.assign(Global.downloads_tracking.get("current_queue", []))
+	if stored_queue:
+		downloading_queue = stored_queue
+		reload_queue_song_items()
+		is_running_button.button_pressed = false
 
 func add_id_to_queue(video_id: String):
 	if video_id == "":
@@ -61,17 +73,17 @@ func reload_queue_song_items() -> void:
 	#reload_queue_song_itemsOLD()
 	#return
 	
-	songs_downloads.items.clear()
+	songs_download.items.clear()
 	
 	Global.logs_display.write("Reloading download items...", LogsDisplay.MESSAGE.DEBUG)
 	
 	if current_downloading_song != "":
-		songs_downloads.items.append(Global.create_download_item(current_downloading_song))
+		songs_download.items.append(Global.create_download_item(current_downloading_song))
 	
 	for index in range(downloading_queue.size()):
-		songs_downloads.items.append(Global.create_download_item(downloading_queue[index]))
+		songs_download.items.append(Global.create_download_item(downloading_queue[index]))
 	
-	songs_downloads.queue_redraw()
+	songs_download.queue_redraw()
 
 func reload_queue_song_itemsOLD() -> void:
 	Global.logs_display.write("Reloading download items...", LogsDisplay.MESSAGE.DEBUG)
@@ -82,9 +94,14 @@ func reload_queue_song_itemsOLD() -> void:
 		var download_item: DownloadItemOLD = Global.create_download_itemOLD(downloading_queue[index])
 		add_child(download_item)
 
+func clear_queue() -> void:
+	downloading_queue = []
+	queue_changed.emit()
+
 func _on_try_dl():
 	#print("_on_try_dl")
 	Global.logs_display.write("Trying to download the next song..")
+	await get_tree().create_timer(0.1).timeout
 	if not is_ready_to_dl:
 		Global.logs_display.write("Not ready to DL.", LogsDisplay.MESSAGE.WARNING)
 		return
@@ -120,7 +137,7 @@ func _on_try_dl():
 	else:
 		var extension: String = Config.default_audio_format_string
 		var thumbnail_path: String = ""
-		#
+		
 		Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
 		Global.downloaded_tab.reload_song_list()
 		Global.downloaded_song_add(video_id, id)
@@ -131,9 +148,9 @@ func _on_try_dl():
 	try_dl.emit()
 
 func _on_queue_changed():
-	Global.downloads_tracking.set("current_queue", downloading_queue)
+	#Global.downloads_tracking.set("current_queue", downloading_queue)
+	#Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))
 	reload_queue_song_items()
-	Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))
 	
 	#if downloading_queue.is_empty():
 		#var global_interrupt_queue: Array = Global.downloads_tracking.get("interrupt", [])
@@ -141,7 +158,7 @@ func _on_queue_changed():
 			#downloading_queue = global_interrupt_queue
 	#Global.save_downloads_tracking()
 
-func _on_play_pause_button_toggled(toggled_on: bool):
+func _on_is_running_button_toggled(toggled_on: bool):
 	paused = not toggled_on
 	
 	if paused:
@@ -150,6 +167,14 @@ func _on_play_pause_button_toggled(toggled_on: bool):
 		if current_downloading_song == "":
 			is_ready_to_dl = true
 		try_dl.emit()
+
+func _on_clear_button_pressed() -> void:
+	clear_queue()
+	var stored_queue: Array = Global.downloads_tracking.get("current_queue", [])
+	stored_queue = []
+	Global.save_downloads_tracking()
+
+
 
 
 

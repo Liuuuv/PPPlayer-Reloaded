@@ -100,7 +100,7 @@ func _on_shuffle_button_pressed() -> void:
 	shuffle_playlist.shuffle()
 	Global.current_playlist.content_ids = shuffle_playlist
 	Global.current_playlist.reload_song_items()
-	SongManager.play_from_index(0)
+	SongManager.play_from_index(0, true)
 
 
 

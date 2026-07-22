@@ -18,7 +18,7 @@ config/name="PPPlayer-(4.7)"
 run/main_scene="uid://ck2xb0mwofdp1"
 config/features=PackedStringArray("4.7", "C#", "Mobile")
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="uid://bxdelljv7kbwc"
 
 [audio]
 
@@ -91,7 +91,6 @@ toggle_visibility={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/transparent_background=true
