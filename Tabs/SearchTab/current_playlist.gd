@@ -5,12 +5,14 @@ class_name CurrentPlaylist
 
 
 
-var content_ids: Array[String] = [] ## contains the ids of the songs
-var queue_ids: Array[String] = [] ## contains the ids of the queue
+var content_ids: Array[String] = [] ## Contains the local ids of the songs. See also [member queue_ids].
+var queue_ids: Array[String] = [] ## Contains the local ids of the queue. See also [member content_ids].
 
 func _ready() -> void:
 	super._ready()
 	Global.current_playlist = self
+	
+	SongManager.song_deleted.connect(_on_song_deleted)
 	
 	reload_song_items()
 
@@ -26,8 +28,8 @@ func clear_items() -> void:
 func reload_song_items() -> void:
 	_update_items_from_content_and_queue()
 	queue_redraw()
-	
-	
+
+
 #func _physics_process(delta: float) -> void:
 	##print("current_playlist items ", items)
 	#if Input.is_action_just_pressed("debug"):
@@ -94,5 +96,12 @@ func _on_stream_changed(filepath: String):
 			shader_bg.hide()
 		else:
 			shader_bg.show()
+
+
+func _on_song_deleted(local_id: String) -> void:
+	content_ids = content_ids.filter(func(id): return id != local_id)
+	queue_ids = queue_ids.filter(func(id): return id != local_id)
+	reload_song_items()
+
 
 #

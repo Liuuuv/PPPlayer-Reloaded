@@ -174,7 +174,7 @@ visible = false
 [node name="ListWindow" parent="." unique_id=1870507532 instance=ExtResource("12_bdfmq")]
 visible = false
 
-[node name="ImportSubtitlesWindow" parent="." unique_id=1625859206 instance=ExtResource("13_730hx")]
+[node name="EditLyricsWindow" parent="." unique_id=1625859206 instance=ExtResource("13_730hx")]
 visible = false
 always_on_top = true
 
@@ -240,11 +240,12 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tab_focus_mode = 0
 script = ExtResource("16_wxqep")
 
 [node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=2111112156]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("17_fqgfq")
@@ -286,15 +287,15 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme = ExtResource("4_730hx")
-current_tab = 0
+current_tab = 1
 tab_0/title = "Current Playlist"
 tab_1/title = "Lyrics"
 
 [node name="CurrentPlaylistTab" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/LeftPart/ContentTabs" unique_id=2097629533 instance=ExtResource("19_ewqk5")]
+visible = false
 layout_mode = 2
 
 [node name="LyricsTab" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/LeftPart/ContentTabs" unique_id=278143286 instance=ExtResource("20_ytmp3")]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/LeftPart" unique_id=1945480464]
@@ -380,12 +381,16 @@ expand_mode = 5
 stretch_mode = 5
 
 [node name="AudioSpectrum" type="Node2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart" unique_id=1071830942]
+position = Vector2(70, 37)
 script = ExtResource("31_gmaup")
 vu_count = 64
 width = 575.67
 height = 56.0
 bass_boost = 1.0
 low_color = Color(0.4333334, 0, 1, 1)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart/AudioSpectrum" unique_id=2090390931]
+editor_description = "Stops the _process and thus the drawing and the calculations of the audio spectrum"
 
 [node name="Pages" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1431809108]
 layout_mode = 1
@@ -411,7 +416,6 @@ layout_mode = 1
 offset_top = 32.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")

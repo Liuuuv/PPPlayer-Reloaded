@@ -32,9 +32,9 @@ The project relies on the Python library ytmusicapi (https://github.com/sigma67/
 - Search in YouTube Music.
 - Gather artists' informations.
 
-- Godot (excluding addons):
-    - Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
-    - Nollie (https://github.com/Cranzor/nollie)
+### Godot (excluding addons):
+- Godot Virtual Scrolling (https://github.com/Ryhon0/GodotVirtualScrolling)
+- Nollie (https://github.com/Cranzor/nollie)
 
 
 ## Addons:

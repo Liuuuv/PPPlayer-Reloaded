@@ -25,15 +25,21 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 		download.write_thumbnail()
 	download.convert_to_audio(Config.audio_format)
 	download.start()
-
-	var output: Array = await download.download_completed
-	Global.logs_display.write("Download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
-	print("Download complete")
+	
+	Global.logs_display.write("Starting the download", LogsDisplay.MESSAGE.INFO)
+	var output: Array = await Tools.await_or_timeout(download.download_completed, 15.0, [])
+	Global.logs_display.write("Download finished in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
+	print("Download finished")
+	
+	if output == []:
+		Global.logs_display.write("Download was interrupted because of a timeout.", LogsDisplay.MESSAGE.WARNING)
+		print("Download stopped because of a timeout")
+		return {"interrupt": "timeout"}
 	
 	# if interrupted (error or hand interrupted)
 	if output.size() >= 1:
 		if output[0] == "interrupt":
-			Global.logs_display.write("Download was interrupted", LogsDisplay.MESSAGE.WARNING)
+			Global.logs_display.write("Download was interrupted.", LogsDisplay.MESSAGE.WARNING)
 			return {"interrupt": 0}
 	
 	# success
@@ -50,6 +56,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 		Global.logs_display.write("Download infos complete")
 		#Tools.write_json_file(infos, "res://test.json")
 		return infos
+	return {"interrupt": 0}
 
 
 func download_thumbnail_from_url(url: String, file_name: String) -> Dictionary:

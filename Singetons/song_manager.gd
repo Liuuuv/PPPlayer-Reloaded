@@ -3,6 +3,7 @@ extends Node
 signal song_paused()
 signal song_unpaused()
 signal has_stream_changed()
+signal song_deleted(local_id: String)
 
 var is_song_paused: bool = true
 var has_stream: bool = false:

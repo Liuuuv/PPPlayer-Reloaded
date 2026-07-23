@@ -94,7 +94,7 @@ func _on_thread_completed(callback: Callable) -> void:
 	
 	if exit_code == 0 and output.size() > 0:
 		var data = JSON.parse_string(output[0])
-		callback.call(data)
+		
 		# Vérifier que data n'est PAS null
 		if data == null:
 			callback.call({
@@ -105,7 +105,7 @@ func _on_thread_completed(callback: Callable) -> void:
 			# Si c'est un autre type, l'emballer dans un Dictionary
 			callback.call({
 				"success": true,
-				"data": data
+				"result": data
 			})
 		else:
 			callback.call(data)

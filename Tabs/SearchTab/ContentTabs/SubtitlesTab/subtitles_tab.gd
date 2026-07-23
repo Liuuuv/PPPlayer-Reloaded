@@ -1,12 +1,15 @@
 extends Control
 
 @onready var subtitles: Label = %Subtitles
+@onready var no_stream_overlay: Control = %NoStreamOverlay
 
 var context_menu: ContextMenu
 
 
 func _ready() -> void:
 	subtitles.text = ""
+	no_stream_overlay.show()
+	
 	_initialize_context_menu()
 	
 	_initialize.call_deferred()
@@ -49,8 +52,12 @@ func _edit_lyrics() -> void:
 func _on_context_menu_opened() -> void:
 	pass
 
-func _on_stream_changed(_fullpath: String) -> void:
+func _on_stream_changed(fullpath: String) -> void:
 	update_display(Global.music_player.current_stream_id)
+	if fullpath:
+		no_stream_overlay.hide()
+	else:
+		no_stream_overlay.show()
 
 func _on_edit_lyrics_window_closing(song_id: String):
 	update_display(song_id)

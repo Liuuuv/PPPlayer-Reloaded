@@ -55,3 +55,40 @@ lyrics
 lyrics
 lyrics
 "
+
+[node name="NoStreamOverlay" type="Control" parent="." unique_id=628418843]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NoStream" type="ColorRect" parent="NoStreamOverlay" unique_id=1946643134]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.58431375)
+
+[node name="NoStreamInfo" type="Label" parent="NoStreamOverlay" unique_id=1302687439]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "No music playing"
+horizontal_alignment = 1

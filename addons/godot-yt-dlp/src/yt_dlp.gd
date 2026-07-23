@@ -239,7 +239,8 @@ class Download extends RefCounted:
 
 	func _execute_on_thread() -> void:
 		if _progress_func:
-			_execute_on_thread_process()
+			#_execute_on_thread_process()
+			push_error("Progress func not supported.")
 			return
 		var executable: String = (
 			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
@@ -332,95 +333,94 @@ class Download extends RefCounted:
 		
 		self._thread_finished.call_deferred()
 	
-	
-	## need to be rewritten, does no support _write_thumbnail, does not work as intended (no real time progression)
-	func _execute_on_thread_process() -> void:
-		var executable: String = (
-			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
-		)
+	#
+	### need to be rewritten, does no support _write_thumbnail, does not work as intended (no real time progression)
+	#func _execute_on_thread_process() -> void:
+		#var executable: String = (
+			#OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
+		#)
+#
+		#var options_and_arguments: Array = []
+		#
+		### ffmpeg
+		#if not _no_download:
+			#match OS.get_name():
+				#"Windows":
+					#options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://")])
+				#"Linux", "macOS":
+					## Get the path of system ffmpeg 
+					#var output := []
+					#OS.execute("which", ["ffmpeg"], output)
+					#var ffmpeg_path = output[0].get_base_dir()
+					#
+					#options_and_arguments.append_array(["--ffmpeg-location", ffmpeg_path])
+		#if not _no_download:
+			#if _convert_to_audio:
+				#var format: String = (Audio.keys()[_audio_format] as String).to_lower()
+				#options_and_arguments.append_array(["-x", "--audio-format", format])
+			#else:
+				#var format: String
+#
+				#match _video_format:
+					#Video.WEBM:
+						#format = "bestvideo[ext=webm]+bestaudio"
+					#Video.MP4:
+						#format = "bestvideo[ext=mp4]+m4a"
+#
+				#options_and_arguments.append_array(["--format", format])
+		#
+		#if not _no_download:
+			#var file_path: String = (
+				#"{destination}{file_name}.%(ext)s"
+				#. format(
+					#{
+						#"destination": _destination,
+						#"file_name": _file_name,
+					#}
+				#)
+			#)
+#
+			#options_and_arguments.append_array(["--no-continue", "-o", file_path])
+		#
+		#if _gather_infos:
+			#options_and_arguments.append_array(["--dump-json"])
+		#
+		##if _track_progression:
+			##options_and_arguments.append_array(["--progress"])
+		#
+		#options_and_arguments.append(_url)
+		#
+		## Check if the download request was stopped at some point between starting the download, and calling FFMPEG
+		#if(_is_stopped):
+			#self._thread_stopped.call_deferred()
+			#return
+#
+		#var output: Array = []
+		#
+		#print("executable: ", executable)
+		#print("YTDLP options_and_arguments: ", options_and_arguments)
+		#var info = OS.execute_with_pipe(executable, PackedStringArray(options_and_arguments))
+		#
+		#var process_io = info["stdio"]
+		#var process_err = info["stderr"]
+		#var process_id = info["pid"]
+		#print("[START SERVER] Server Process created! ID: "+str(process_id))
+		#
+		## https://www.reddit.com/r/godot/comments/1i8n0z4/any_way_to_get_live_output_from_osexecute_or/
+		#if(process_io.get_error() != OK):
+			#push_error("[START SERVER] An error occurred trying to start the dowload. Error ", process_io.get_error())
+			#self._thread_stopped.call_deferred()
+			#return
+		#
+		#while process_io.is_open() and process_io.get_error() == OK:
+			#print("process_io is open")
+			#var mid_output: String = process_io.get_line()
+			##print()
+			#_progress_func.call(mid_output)
+			#OS.delay_msec(100)
+		#
+		#self._thread_finished.call_deferred()
 
-		var options_and_arguments: Array = []
-		
-		## ffmpeg
-		if not _no_download:
-			match OS.get_name():
-				"Windows":
-					options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://")])
-				"Linux", "macOS":
-					# Get the path of system ffmpeg 
-					var output := []
-					OS.execute("which", ["ffmpeg"], output)
-					var ffmpeg_path = output[0].get_base_dir()
-					
-					options_and_arguments.append_array(["--ffmpeg-location", ffmpeg_path])
-		if not _no_download:
-			if _convert_to_audio:
-				var format: String = (Audio.keys()[_audio_format] as String).to_lower()
-				options_and_arguments.append_array(["-x", "--audio-format", format])
-			else:
-				var format: String
-
-				match _video_format:
-					Video.WEBM:
-						format = "bestvideo[ext=webm]+bestaudio"
-					Video.MP4:
-						format = "bestvideo[ext=mp4]+m4a"
-
-				options_and_arguments.append_array(["--format", format])
-		
-		if not _no_download:
-			var file_path: String = (
-				"{destination}{file_name}.%(ext)s"
-				. format(
-					{
-						"destination": _destination,
-						"file_name": _file_name,
-					}
-				)
-			)
-
-			options_and_arguments.append_array(["--no-continue", "-o", file_path])
-		
-		if _gather_infos:
-			options_and_arguments.append_array(["--dump-json"])
-		
-		#if _track_progression:
-			#options_and_arguments.append_array(["--progress"])
-		
-		options_and_arguments.append(_url)
-		
-		# Check if the download request was stopped at some point between starting the download, and calling FFMPEG
-		if(_is_stopped):
-			self._thread_stopped.call_deferred()
-			return
-
-		var output: Array = []
-		
-		print("executable: ", executable)
-		print("YTDLP options_and_arguments: ", options_and_arguments)
-		var info = OS.execute_with_pipe(executable, PackedStringArray(options_and_arguments))
-		
-		var process_io = info["stdio"]
-		var process_err = info["stderr"]
-		var process_id = info["pid"]
-		print("[START SERVER] Server Process created! ID: "+str(process_id))
-		
-		# https://www.reddit.com/r/godot/comments/1i8n0z4/any_way_to_get_live_output_from_osexecute_or/
-		if(process_io.get_error() != OK):
-			push_error("[START SERVER] An error occurred trying to start the dowload. Error ", process_io.get_error())
-			self._thread_stopped.call_deferred()
-			return
-		
-		while process_io.is_open() and process_io.get_error() == OK:
-			print("process_io is open")
-			var mid_output: String = process_io.get_line()
-			#print()
-			_progress_func.call(mid_output)
-			OS.delay_msec(100)
-		
-		self._thread_finished.call_deferred()
-
-	
 
 	func _thread_finished():
 		_status = Status.COMPLETED

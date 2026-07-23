@@ -75,7 +75,7 @@ func load_string(full_file_path: String) -> String:
 	if error == OK:
 		return json.data
 	else:
-		print("JSON Parse Error: ", json.get_error_message())
+		print("JSON Parse Error: for file %s" %  full_file_path, json.get_error_message())
 		return ""
 
 
@@ -563,6 +563,34 @@ func _color_distance(a: Color, b: Color) -> float:
 	return sqrt(pow(a.r - b.r, 2) + pow(a.g - b.g, 2) + pow(a.b - b.b, 2))
 
 
+class SignalRelay:
+	extends RefCounted
 
+	signal finished(value)
+
+## [param signal1] must return something. [br]
+## [br]
+## Returns the value of signal1 or null depending on which one finishes first.
+func await_or_timeout(signal1: Signal, timeout := 15.0, timeout_output = null):
+	var relay := SignalRelay.new()
+	var done := false
+
+	var timer := get_tree().create_timer(timeout)
+
+	signal1.connect(func(value = timeout_output):
+		if done:
+			return
+		done = true
+		relay.finished.emit(value)
+	, CONNECT_ONE_SHOT)
+
+	timer.timeout.connect(func():
+		if done:
+			return
+		done = true
+		relay.finished.emit(timeout_output)
+	, CONNECT_ONE_SHOT)
+
+	return await relay.finished
 
 #

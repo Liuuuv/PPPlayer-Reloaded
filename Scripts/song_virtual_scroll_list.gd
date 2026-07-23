@@ -400,7 +400,9 @@ func _delete() -> void:
 			Tools.delete_file(path)
 		
 		Global.delete_song_informations(song_id)
-		items.remove_at(selected_idx)
+		#items.remove_at(selected_idx)
+		SongManager.song_deleted.emit(song_id)
+		
 
 func _download_song():
 	var song_item: Global.ResultSongItem = items.get(selected_idx)

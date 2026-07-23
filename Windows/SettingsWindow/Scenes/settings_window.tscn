@@ -200,4 +200,7 @@ text = "Known issues:
 - error sometimes (the first time) when right clicking a song
 - if the bigthumbnail contains a vertical image, it might clip off
 - when reloading in the search tab, a mouse movement is needed to show proper song informations
-- Errors when displaying podcast channels for example."
+- Errors when displaying podcast channels for example.
+
+
+HTTP 403 forbidden"

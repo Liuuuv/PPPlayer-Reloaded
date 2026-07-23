@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b5wtexw35divc" path="res://Windows/ImportSubtitlesWindow/edit_lyrics_window.gd" id="1_jwrx3"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_etorb"]
+[ext_resource type="Theme" uid="uid://bkvj1j0jts4t0" path="res://Themes/default_godot_theme.tres" id="3_lgn7o"]
+[ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="4_emqy7"]
 
 [node name="EditLyricsWindow" type="Window" unique_id=1919218813]
 oversampling_override = 1.0
@@ -19,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("3_etorb")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainPart" unique_id=953042435]
 layout_mode = 2
@@ -39,6 +42,7 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_default_cursor_shape = 2
 text = "Save"
 
 [node name="Label" type="Label" parent="MainPart/VBoxContainer" unique_id=1491724303]
@@ -54,12 +58,26 @@ placeholder_text = "Paste the link of your lyrics here"
 [node name="OptionButton" type="OptionButton" parent="MainPart/VBoxContainer" unique_id=2010998161]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_lgn7o")
 
-[node name="ConfirmButton" type="Button" parent="MainPart/VBoxContainer" unique_id=1700288413]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPart/VBoxContainer" unique_id=1405944900]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="MainPart/VBoxContainer/HBoxContainer" unique_id=1700288413]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme = ExtResource("3_etorb")
 text = "Confirm"
+
+[node name="OpenWebsiteButton" type="Button" parent="MainPart/VBoxContainer/HBoxContainer" unique_id=1430910866]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Open website"
+script = ExtResource("4_emqy7")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="NoID" type="Label" parent="." unique_id=1564723020]
 unique_name_in_owner = true

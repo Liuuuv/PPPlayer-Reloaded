@@ -11,8 +11,17 @@ signal closing(song_id: String)
 @onready var text_edit: TextEdit = %TextEdit
 @onready var save_button: Button = %SaveButton
 @onready var option_button: OptionButton = %OptionButton
+@onready var open_website_button: ButtonComponent = %OpenWebsiteButton
 
-var saved: bool = true
+var saved: bool = true:
+	set(on):
+		if saved == on:
+			return
+		saved = on
+		if saved:
+			save_button.text = "Saved"
+		else:
+			save_button.text = "Save"
 var song_id: String = ""
 
 ## can be changed by user (todo: put this in a json)
@@ -20,14 +29,17 @@ var lyrics_websites: Dictionary = {
 	"Genius (genius.com)": {
 		'icon': preload("res://Sprites/Logos/GeniusLogo.png"),
 		'config': ProjectSettings.globalize_path("res://genius_scrap_config.json"),
+		'link': "https://genius.com"
 	},
-	"UtaNet": {
+	"UtaNet (uta-net.com)": {
 		'icon': null,
 		'config': ProjectSettings.globalize_path("res://utanet_lyrics_scrap.json"),
+		'link': "https://www.uta-net.com/global/en/"
 	}
 }
 
 var idx_to_config: Dictionary = {}
+var idx_to_url: Dictionary = {}
 
 func _ready() -> void:
 	super._ready()
@@ -37,8 +49,10 @@ func _ready() -> void:
 	for website_name in lyrics_websites.keys():
 		option_button.add_icon_item(lyrics_websites.get(website_name).get('icon'), website_name)
 		idx_to_config.set(idx, lyrics_websites.get(website_name).get('config', ""))
+		idx_to_url.set(idx, lyrics_websites.get(website_name).get('link', ""))
 		idx +=1
 	
+	open_website_button.pressed.connect(_on_open_website_button_pressed)
 	confirm_button.pressed.connect(_on_confirm_button_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
 	text_edit.text_changed.connect(_on_lyrics_changed)
@@ -56,13 +70,19 @@ func display_lyrics(id: String) -> void:
 	
 	open()
 
-func _process_genius_result(result: Array):
-	text_edit.text = ""
-	for dict in result:
-		text_edit.text += dict.get("lyrics")
-	saved = false
+func _process_genius_result(data: Dictionary):
+	if data.get("success"):
+		var result: Array = data.get("result", [])
+		text_edit.text = ""
+		for dict in result:
+			text_edit.text += dict.get("lyrics")
+		saved = false
+	else:
+		push_error("Error: %s" % data.get("error", ""))
+	confirm_button.disabled = false
 
 func _on_confirm_button_pressed() -> void:
+	confirm_button.disabled = true
 	if line_edit.text != "":
 		var html_config_path: String = idx_to_config.get(option_button.selected)
 		if html_config_path == "":
@@ -91,6 +111,14 @@ func _on_close_requested():
 
 func _on_lyrics_changed():
 	saved = false
+
+func _on_open_website_button_pressed() -> void:
+	var website_url: String = idx_to_url.get(option_button.selected)
+	if website_url:
+		OS.shell_open(website_url)
+	else:
+		push_error("No URL available for the selected website.")
+		Global.logs_display.write("No URL available for the selected website.", LogsDisplay.MESSAGE.ERROR)
 
 
 

@@ -17,7 +17,7 @@ func _ready():
 	add_child(http_request)
 	http_request.request_completed.connect(_on_request_completed)
 
-## Don't forget to set [member process_func] before calling this function.
+
 ## Order: [method download_url] > [method process_func] > [method callback]
 func download_url(search_url: String, process_func: Callable, callback: Callable) -> void:
 	
@@ -112,7 +112,7 @@ func download_url(search_url: String, process_func: Callable, callback: Callable
 	#explicit_url = given_explicit_url
 	#scrap(query, callback)
 
-
+## Don't forget to call [method set_scrap_config] [b]BEFORE[/b] calling this function.
 func process_generic(query: String, callback: Callable, given_explicit_url: bool = false) -> void:
 	explicit_url = given_explicit_url
 	scrap(query, callback)
@@ -121,7 +121,7 @@ func set_scrap_config(fullpath: String):
 	current_scrap_json_path = fullpath
 
 
-func scrap(query: String, callback: Callable): ## gets the html page by Godot, and then sends it to a python scrip via a temp file
+func scrap(query: String, callback: Callable): ## retrieves the html page by Godot, and then sends it to a python scrip via a temp file
 	var scrap_json = Tools.load_json_file(current_scrap_json_path)
 	var search_url: String = ""
 	if explicit_url:

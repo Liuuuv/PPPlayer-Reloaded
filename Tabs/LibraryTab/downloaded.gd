@@ -18,7 +18,7 @@ signal song_item_clicked(id: String)
 func _ready() -> void:
 	Global.downloaded_tab = self
 	
-	
+	SongManager.song_deleted.connect(_on_song_deleted)
 	initialize.call_deferred()
 	
 	shuffle_button.pressed.connect(_on_shuffle_button_pressed)
@@ -102,6 +102,7 @@ func _on_shuffle_button_pressed() -> void:
 	Global.current_playlist.reload_song_items()
 	SongManager.play_from_index(0, true)
 
-
+func _on_song_deleted(local_id: String) -> void:
+	reload_song_list()
 
 #

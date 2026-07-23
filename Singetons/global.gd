@@ -164,7 +164,7 @@ class BaseSongItem:
 	func get_artists() -> String:
 		return ", ".join(artists.map(func(a): return a["name"]))
 
-class SongItem extends BaseSongItem:
+class SongItem extends BaseSongItem: ## Local song items, used to display local songs.
 	var IsInQueue: bool = false
 	
 	var youtube_id: String = ""

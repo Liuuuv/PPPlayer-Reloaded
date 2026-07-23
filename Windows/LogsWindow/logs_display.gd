@@ -50,7 +50,7 @@ func _ready() -> void:
 		#logs.text = "---------- LOGS DISABLED ----------"
 		pass
 	else:
-		logs.text = Tools.load_string(Global.LOGS_PATH)
+		logs.text = _log_load_string(Global.LOGS_PATH)
 		var time_dict: Dictionary = Time.get_datetime_dict_from_system()
 		logs.text += "\n[color=purple][START SESSION][/color] %s/%s/%s, %s:%s:%s %s DST \n" % [
 			time_dict.get("year", ""),
@@ -76,7 +76,7 @@ func close():
 	is_open = false
 	hide()
 
-func write(message, type: MESSAGE = MESSAGE.DEBUG):
+func write(message: String, type: MESSAGE = MESSAGE.DEBUG):
 	if Config.disable_logs:
 		return
 	if type < minimum_level:
@@ -86,7 +86,7 @@ func write(message, type: MESSAGE = MESSAGE.DEBUG):
 	
 
 func save() -> void:
-	log_save_string(logs.get_parsed_text(), Global.LOGS_PATH)
+	_log_save_string(logs.get_parsed_text(), Global.LOGS_PATH)
 	must_be_saved = false
 	if num_errors > 0:
 		title = "Logs (%s errors)" % num_errors
@@ -107,7 +107,7 @@ func update_num_errors():
 		num_errors = count
 	
 
-func _write(message, type: MESSAGE = MESSAGE.DEBUG):
+func _write(message: String, type: MESSAGE = MESSAGE.DEBUG):
 	var type_message: String = ""
 	match type:
 		MESSAGE.DEBUG:
@@ -169,7 +169,7 @@ func _exit_tree() -> void:
 	save()
 
 
-func log_save_string(string: String, full_file_path: String) -> void:
+func _log_save_string(string: String, full_file_path: String) -> void:
 	var file = FileAccess.open(full_file_path, FileAccess.ModeFlags.WRITE_READ)
 	
 	if file:
@@ -177,6 +177,16 @@ func log_save_string(string: String, full_file_path: String) -> void:
 		file.close()
 	else:
 		push_error("Can't open file %s" % full_file_path)
+
+func _log_load_string(full_file_path: String) -> String:
+	var file = FileAccess.open(full_file_path, FileAccess.READ)
+	
+	if file == null:
+		return ""
+	
+	var content = file.get_as_text()
+	file.close()
+	return content
 
 func _on_save_timer_timeout() -> void:
 	save()

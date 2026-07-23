@@ -26,4 +26,7 @@ try:
     
 except Exception as e:
     print(f"Erreur lors de la recherche: {e}")
-    
+
+
+
+# a

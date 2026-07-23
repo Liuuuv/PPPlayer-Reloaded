@@ -60,7 +60,11 @@ func display_info(id: String):
 			var text_edit: TextEdit = child.get_node("TextEdit")
 			text_edit.text = str(song_info.get(child.name, ""))
 	else:
-		push_error("No song_info for id %s" % id)
+		push_error("No song_info for ID: %s" % id)
+		for child: Control in lines_container.get_children():
+			var text_edit: TextEdit = child.get_node("TextEdit")
+			text_edit.text = "No song_info for this ID."
+			
 	
 	open()
 
