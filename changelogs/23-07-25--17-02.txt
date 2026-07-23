@@ -1,0 +1,19 @@
+General
+- Infos window does not display the last informations if the selected song has no informations locally available.
+- Fixed an issue where deleting a song did not refresh the downloaded song list in the library.
+- Default texture scaling filter is now linear (was nearest).
+
+Current playlist:
+- Fixed an issue where deleting a song that is in the current playlist causes desync.
+
+Downloads:
+- Added a 15s timeout when downloading a song to avoid crashes.
+- Songs are now removed from the download queue when their download is over (was when processed).
+
+Search tab:
+- The audio spectrum stops its calculations/drawings when not visible.
+
+Edit lyrics tab:
+- The confirm button is now disabled when scrapping lyrics.
+- Fixed an issue where lyrics scrappers were not working because of type error (genius.com, uta-net.com).
+- Added a button to open the selected website on the default browser.

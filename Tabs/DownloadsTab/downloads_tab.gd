@@ -1,6 +1,8 @@
 extends Control
 class_name DownloadsTab
 
+var min_wait_time: float = 15.0
+var max_wait_time: float = 25.0
 
 signal queue_changed()
 #signal ready_to_dl()
@@ -122,12 +124,12 @@ func _on_try_dl():
 		return
 		
 	
-	var id: String = Global.generate_new_id()
+	var local_id: String = Global.generate_new_id()
 	var url: String = Tools.build_youtube_url(video_id)
 	Global.logs_display.write("Starting the download, video ID %s" % video_id)
 	current_downloading_song = video_id
 	#reload_queue_song_items()
-	var infos: Dictionary = await DownloadsManager.download_video_from_url(url, id, true, true)
+	var infos: Dictionary = await DownloadsManager.download_video_from_url(url, local_id, true, true)
 	#current_downloading_song = ""
 	#reload_queue_song_items()
 	
@@ -136,15 +138,22 @@ func _on_try_dl():
 		downloads_tracking_interrupt.append(video_id)
 		Global.downloads_tracking.set("interrupt", downloads_tracking_interrupt)
 		Global.save_downloads_tracking()
-		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s, reason: %s" % [video_id, id, infos.get("interrupt", "")], LogsDisplay.MESSAGE.ERROR)
+		## sometimes it had already downloaded the thumbnail
+		Tools.delete_thumbnail(local_id)
+		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s, reason: %s" % [video_id, local_id, infos.get("interrupt", "")], LogsDisplay.MESSAGE.ERROR)
 	else: ## success
 		var extension: String = Config.default_audio_format_string
 		var thumbnail_path: String = ""
 		
-		Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
+		Global.create_song_infos(local_id, infos, extension, video_id, thumbnail_path)
 		Global.downloaded_tab.reload_song_list()
-		Global.downloaded_song_add(video_id, id)
+		Global.downloaded_song_add(video_id, local_id)
 		Global.save_downloaded_songs()
+	
+	var wait_time: float = randf_range(min_wait_time, max_wait_time)
+	print("Waiting %.2fs..." % wait_time)
+	await get_tree().create_timer(wait_time).timeout
+	print("Finished waiting...")
 	
 	remove_from_queue(video_id)
 	current_downloading_song = ""

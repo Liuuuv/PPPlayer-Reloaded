@@ -485,21 +485,35 @@ func clear_directory_contents(path: String, remove_dir: bool = false) -> Error:
 		dir.remove(path)
 	return OK
 
-func delete_file(file_path: String) -> bool:
+func delete_file(file_path: String, raise_error_if_doesnt_exists: bool = false) -> bool:
 	if FileAccess.file_exists(file_path):
 		var dir = DirAccess.open(file_path.get_base_dir())
 		if dir:
 			var error = dir.remove(file_path)
 			if error == OK:
-				Global.logs_display.write("Fichier supprimé avec succès", LogsDisplay.MESSAGE.INFO)
+				Global.logs_display.write("File successfully deleted.", LogsDisplay.MESSAGE.INFO)
 				return true
 			else:
-				Global.logs_display.write("Erreur lors de la suppression de %s: %d" % [file_path, error], LogsDisplay.MESSAGE.ERROR)
+				Global.logs_display.write("Error when deleting %s: %d" % [file_path, error], LogsDisplay.MESSAGE.ERROR)
 		else:
-			Global.logs_display.write("Impossible d'accéder au dossier %s" % file_path, LogsDisplay.MESSAGE.ERROR)
+			Global.logs_display.write("Can't access the file %s" % file_path, LogsDisplay.MESSAGE.ERROR)
 	else:
-		Global.logs_display.write("Le fichier n'existe pas (%s)" % file_path, LogsDisplay.MESSAGE.ERROR)
+		if raise_error_if_doesnt_exists:
+			Global.logs_display.write("The file does not exists (%s)." % file_path, LogsDisplay.MESSAGE.ERROR)
+		Global.logs_display.write("The file does not exists (%s)." % file_path, LogsDisplay.MESSAGE.DEBUG)
 	return false
+
+static func delete_thumbnail(local_id: String):
+	var file_paths = []
+	var file_path: String = ""
+	
+	file_path = Global.get_downloads_path() + local_id + ".webp"
+	file_paths.append(file_path)
+	file_path = Global.get_downloads_path() + local_id + ".jpg"
+	file_paths.append(file_path)
+	
+	for path in file_paths:
+		Tools.delete_file(path, false)
 
 func is_mouse_in_box(node: Control):
 	return Rect2(Vector2(), node.size).has_point(node.get_local_mouse_position())

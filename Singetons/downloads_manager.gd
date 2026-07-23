@@ -1,6 +1,6 @@
 extends Node
 
-
+var timeout_duration: float = 15.0
 
 func _ready() -> void:
 	YtDlp.setup()
@@ -12,6 +12,7 @@ func _ready() -> void:
 ## TODO ERROR HANDLER
 func download_video_from_url(url: String, file_name: String, write_thumbnail: bool = false, get_infos: bool = false):
 	if not YtDlp.is_setup():
+		Global.logs_display.write("Waiting for YTDLP to be setup.", LogsDisplay.MESSAGE.INFO, true)
 		await YtDlp.setup_completed
 	
 	var time = Time.get_ticks_msec()
@@ -26,10 +27,11 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 	download.convert_to_audio(Config.audio_format)
 	download.start()
 	
-	Global.logs_display.write("Starting the download", LogsDisplay.MESSAGE.INFO)
-	var output: Array = await Tools.await_or_timeout(download.download_completed, 15.0, [])
-	Global.logs_display.write("Download finished in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
-	print("Download finished")
+	Global.logs_display.write("Starting the download.", LogsDisplay.MESSAGE.INFO, true)
+	print("Starting the download.")
+	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
+	Global.logs_display.write("Download finished in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO, true)
+	print("Download finished.")
 	
 	if output == []:
 		Global.logs_display.write("Download was interrupted because of a timeout.", LogsDisplay.MESSAGE.WARNING)
@@ -40,7 +42,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 	if output.size() >= 1:
 		if output[0] == "interrupt":
 			Global.logs_display.write("Download was interrupted.", LogsDisplay.MESSAGE.WARNING)
-			return {"interrupt": 0}
+			return {"interrupt": "No information"}
 	
 	# success
 	Global.downloads_folder_changed.emit.call_deferred()
@@ -73,7 +75,9 @@ func download_thumbnail_from_url(url: String, file_name: String) -> Dictionary:
 	download.no_download()
 	download.start()
 
-	var output: Array = await download.download_completed
+	#var output: Array = await download.download_completed
+	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
+	
 	Global.logs_display.write("Thumbnail download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
 	print("Thumbnail download complete")
 	
@@ -98,7 +102,8 @@ func get_video_infos_from_url(url: String) -> Dictionary:
 		#.set_get_progression_function(func (progression): print("progression ", progression)) \
 		.start()
 
-	var output: Array = await download.download_completed
+	#var output: Array = await download.download_completed
+	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
 	var infos: Dictionary = {}
 	if output.size() >= 1:
 		infos = JSON.parse_string(output[0])

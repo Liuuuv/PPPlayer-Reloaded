@@ -39,7 +39,7 @@ func _ready() -> void:
 	Global.logs_display = self
 	
 	
-	save_timer.wait_time = 2.0
+	save_timer.wait_time = 1.0
 	save_timer.autostart = false
 	save_timer.one_shot = true
 	save_timer.timeout.connect(_on_save_timer_timeout)
@@ -76,12 +76,12 @@ func close():
 	is_open = false
 	hide()
 
-func write(message: String, type: MESSAGE = MESSAGE.DEBUG):
+func write(message: String, type: MESSAGE = MESSAGE.DEBUG, force_save: bool = false):
 	if Config.disable_logs:
 		return
 	if type < minimum_level:
 		return
-	_write.call_deferred(message, type)
+	_write.call_deferred(message, type, force_save)
 	#_write(message, type) # write the same frame for the benchmark
 	
 
@@ -107,7 +107,7 @@ func update_num_errors():
 		num_errors = count
 	
 
-func _write(message: String, type: MESSAGE = MESSAGE.DEBUG):
+func _write(message: String, type: MESSAGE = MESSAGE.DEBUG, force_save: bool = false):
 	var type_message: String = ""
 	match type:
 		MESSAGE.DEBUG:
@@ -122,7 +122,8 @@ func _write(message: String, type: MESSAGE = MESSAGE.DEBUG):
 	#logs.text += type_message + message + "\n "
 	logs.append_text(type_message + message + "\n")
 	
-	must_be_saved = true
+	if force_save: save()
+	else: must_be_saved = true
 	
 	#log_lines.append(type_message + message)
 	#if log_lines.size() > MAX_VISIBLE_LINES:

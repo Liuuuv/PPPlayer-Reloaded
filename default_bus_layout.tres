@@ -10,4 +10,4 @@ resource_name = "Amplify"
 bus/0/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_j3pel")
 bus/0/effect/0/enabled = true
 bus/0/effect/1/effect = SubResource("AudioEffectAmplify_j3pel")
-bus/0/effect/1/enabled = true
+bus/0/effect/1/enabled = false

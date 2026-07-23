@@ -1,4 +1,4 @@
-extends AudioStreamPlayer2D
+extends AudioStreamPlayer
 class_name MusicPlayer
 
 signal stream_changed(full_path: String)

@@ -125,8 +125,10 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- autopause downloads when too many errors in a row
 - selection box visible quand on sort la souris par la droite (current playlist par exemple)
 - dynamic sizing of audio spectrum
+- recycle bin
 - ctrl click on artist opens page
 - fix laggy logs
 - finish playlists
@@ -201,6 +203,6 @@ text = "Known issues:
 - if the bigthumbnail contains a vertical image, it might clip off
 - when reloading in the search tab, a mouse movement is needed to show proper song informations
 - Errors when displaying podcast channels for example.
-
+- If exit code 0, the thumbnail is still downlaoded.
 
 HTTP 403 forbidden"
