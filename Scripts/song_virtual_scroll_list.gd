@@ -42,11 +42,13 @@ var is_hovering_artists_label: bool = false
 func _ready() -> void:
 	super._ready()
 	_initialize_context_menu()
-	
+
+
 
 #func _physics_process(delta: float) -> void:
 	#print("selected_idx ", selected_idx)
 
+## TODO REMOVE "_"
 func _add_item(item: Variant, redraw: bool = true) -> void:
 	super._add_item(item, redraw)
 	if item is Global.BaseSongItem and not item.scroll_list_belong:
@@ -59,6 +61,11 @@ func add_song_item(id: String) -> Global.SongItem:
 	song_item.index = len(items)
 	_add_item(song_item)
 	return song_item
+
+## The function you call when you want to reload the list. [br]
+## Override this for use cases like current playlist, downloaded list...
+func reload_list() -> void:
+	pass
 
 func _initialize_context_menu():
 	context_menu = ContextMenu.new()
@@ -338,8 +345,10 @@ func _play_from_here() -> void: ## should only be called for a current_playlist 
 	var song_item: Global.SongItem = items.get(selected_idx)
 	SongManager.play_from_id(song_item.id, selected_idx)
 
+## Override this.
 func _remove_selected() -> void:
 	items.remove_at(selected_idx)
+	reload_list()
 	queue_redraw()
 
 func _show_infos() -> void:

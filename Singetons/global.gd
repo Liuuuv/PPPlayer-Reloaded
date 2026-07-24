@@ -61,7 +61,9 @@ enum SONG_ITEMS_LOCATIONS {
 	LOCAL_PLAYLIST,
 }
 
-var settings: Dictionary = DEFAULT_SETTINGS
+
+var is_in_editor: bool = OS.has_feature("editor")
+var settings: Dictionary = DEFAULT_SETTINGS ## Change this with [method change_settings].
 
 ## [codeblock]
 ## local_id: {
@@ -98,7 +100,7 @@ var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool,
 var playlists: Dictionary = {}
 ## [codeblock]
 ## {
-## 		"interrupted": [],
+## 		"interrupt": [],
 ## 		"current_queue": [],
 ## }
 ## [/codeblock]
@@ -247,8 +249,10 @@ class ResultSongItem extends BaseSongItem:
 		if scroll_list_belong.hovered_idx == index and scroll_list_belong.is_hovering_thumbnail:
 			if is_downloaded():
 				return preload("uid://dhv41h24nlxce") ## play icon
-			elif Global.downloads_tab.current_downloading_song == id or Global.downloads_tab.downloading_queue.has(id):
+			elif Global.downloads_tab.current_downloading_song == id:
 				return preload("uid://uqagxicvduqv") ## loading icon
+			elif Global.downloads_tab.downloading_queue.has(id):
+				return preload("uid://b5do7mtgrgjaf") ## is in queue icon
 			else:
 				return preload("uid://d3uf60lqrs7yd") ## download icon
 		else:
@@ -283,7 +287,7 @@ class PlaylistItem:
 
 func _ready() -> void:
 	initialize.call_deferred()
-	
+	print("editor? ", is_in_editor)
 
 func initialize() -> void:
 	print("initializing global..")
@@ -501,12 +505,17 @@ func generate_new_id() -> String:
 
 func create_song_infos(id: String, infos: Dictionary, extension: String, video_id: String = "", thumbnail_path: String = ""):
 	
-	Global.change_song_info(id, "display_name", infos.get("title", ""), false)
-	Global.change_song_info(id, "extension", extension, false)
-	Global.change_song_info(id, "video_id", video_id, false)
-	Global.change_song_info(id, "release_date", infos.get("release_date", ""), false)
-	Global.change_song_info(id, "artist", infos.get("channel", ""), false)
-	Global.change_song_info(id, "artist_id", infos.get("channel_id", ""), false)
+	Global.change_song_info(id, "display_name", infos.get("title", "") if infos.get("title", "") else "", false)
+	Global.change_song_info(id, "extension", extension if extension else "", false)
+	Global.change_song_info(id, "video_id", video_id if video_id else "", false)
+	
+	var release_date: String = infos.get("release_date", "") if infos.get("release_date", "") else ""
+	if release_date:
+		Global.change_song_info(id, "release_date", infos.get("release_date", "") if infos.get("release_date", "") else "", false)
+	else:
+		Global.change_song_info(id, "release_date", infos.get("upload_date", "") if infos.get("upload_date", "") else "", false)
+	Global.change_song_info(id, "artist", infos.get("channel", "") if infos.get("channel", "") else "", false)
+	Global.change_song_info(id, "artist_id", infos.get("channel_id", "") if infos.get("channel_id", "") else "", false)
 	#Global.change_song_info(id, "album", album)
 	save_song_infos()
 

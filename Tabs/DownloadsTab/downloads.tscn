@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ce2a1djwhou2e" path="res://Tabs/DownloadsTab/downloads_tab.gd" id="1_o1rkh"]
 [ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="2_41ngd"]
 [ext_resource type="Texture2D" uid="uid://dovdcxcr1mrr2" path="res://Sprites/Pause.png" id="3_oun8q"]
+[ext_resource type="Texture2D" uid="uid://dmk6ea13d4sel" path="res://Sprites/ResetSmall.png" id="4_1o5h7"]
 [ext_resource type="Script" uid="uid://co2277w5u6scg" path="res://BaseScripts/base_virtual_scroll_list.gd" id="4_3wgdb"]
 [ext_resource type="Texture2D" uid="uid://damod55dtxryh" path="res://Sprites/ClearSmall.png" id="4_oun8q"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="5_3wgdb"]
@@ -47,10 +48,35 @@ texture_normal = ExtResource("2_41ngd")
 texture_pressed = ExtResource("3_oun8q")
 stretch_mode = 3
 
+[node name="ReloadButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1246979972]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("4_1o5h7")
+flat = true
+expand_icon = true
+script = ExtResource("5_3wgdb")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="AddInterruptsButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1175698058]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+text = "Add interrupts"
+flat = true
+expand_icon = true
+script = ExtResource("5_3wgdb")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
 [node name="ClearButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=926894847]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_horizontal = 10
 mouse_default_cursor_shape = 2
 icon = ExtResource("4_oun8q")
 flat = true
@@ -60,6 +86,7 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="SongsDownload" type="Control" parent="VBoxContainer" unique_id=517465410 node_paths=PackedStringArray("template_viewport")]
 unique_name_in_owner = true
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("4_3wgdb")

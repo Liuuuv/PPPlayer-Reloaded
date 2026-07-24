@@ -7,6 +7,7 @@ class_name CurrentPlaylist
 
 var content_ids: Array[String] = [] ## Contains the local ids of the songs. See also [member queue_ids].
 var queue_ids: Array[String] = [] ## Contains the local ids of the queue. See also [member content_ids].
+var queue_indexes: Array[int] = []
 
 func _ready() -> void:
 	super._ready()
@@ -14,21 +15,30 @@ func _ready() -> void:
 	
 	SongManager.song_deleted.connect(_on_song_deleted)
 	
-	reload_song_items()
+	reload_list()
 
 func _initialize() -> void:
 	super._initialize()
 	Global.music_player.stream_changed.connect(_on_stream_changed)
+	Global.main_tab_container.tab_changed.connect(_on_main_tab_container_tab_changed)
 
 func clear_items() -> void:
 	content_ids.clear()
 	queue_ids.clear()
 	super.clear_items()
 
+
+func reload_list() -> void:
+	reload_song_items()
+	update_queue_indexes()
+	super.reload_list()
+
 func reload_song_items() -> void:
 	_update_items_from_content_and_queue()
 	queue_redraw()
 
+func update_queue_indexes() -> void:
+	pass
 
 #func _physics_process(delta: float) -> void:
 	##print("current_playlist items ", items)
@@ -58,8 +68,8 @@ func _remove_selected() -> void:
 		queue_ids.remove_at(selected_idx - SongManager.playing_song_index)
 	else:
 		content_ids.remove_at(selected_idx)
-	
 	super._remove_selected()
+
 
 #func clear_song_items() -> void:
 	#for child in get_children():
@@ -102,6 +112,12 @@ func _on_song_deleted(local_id: String) -> void:
 	content_ids = content_ids.filter(func(id): return id != local_id)
 	queue_ids = queue_ids.filter(func(id): return id != local_id)
 	reload_song_items()
+
+func _on_main_tab_container_tab_changed(tab: int) -> void:
+	if is_visible_in_tree(): ## reliable
+		reload_list()
+
+
 
 
 #

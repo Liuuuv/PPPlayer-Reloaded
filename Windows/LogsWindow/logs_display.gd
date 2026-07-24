@@ -39,6 +39,7 @@ func _ready() -> void:
 	Global.logs_display = self
 	
 	
+	
 	save_timer.wait_time = 1.0
 	save_timer.autostart = false
 	save_timer.one_shot = true
@@ -120,7 +121,16 @@ func _write(message: String, type: MESSAGE = MESSAGE.DEBUG, force_save: bool = f
 			type_message = "[color=red][ERROR][/color] "
 			num_errors += 1
 	#logs.text += type_message + message + "\n "
-	logs.append_text(type_message + message + "\n")
+	var time_dict: Dictionary = Time.get_datetime_dict_from_system()
+	var time_text: String = "[%s/%s/%s, %s:%s:%s] - " % [
+		time_dict.get("year", ""),
+		time_dict.get("month", ""),
+		time_dict.get("day", ""),
+		time_dict.get("hour", ""),
+		time_dict.get("minute", ""),
+		time_dict.get("second", ""),
+		]
+	logs.append_text(type_message + time_text + message + "\n")
 	
 	if force_save: save()
 	else: must_be_saved = true

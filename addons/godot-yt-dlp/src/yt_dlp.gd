@@ -1,5 +1,7 @@
 extends Node
 
+const max_character_error_output: int = 250
+
 signal got_current_version
 signal setup_completed
 signal _update_completed
@@ -323,8 +325,8 @@ class Download extends RefCounted:
 			var output_message: String = ""
 			for part in output:
 				output_message += part
-			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s.\nOutput: %s" % [exit_code, output_message.substr(0, 180)], LogsDisplay.MESSAGE.ERROR)
-			Global.logs_display.write("If you want to try the command by yourself: " + executable + " ".join(packed_options_and_arguments))
+			Global.logs_display.write("yt-dlp, error when running the command. Exit code: %s.\nOutput: %s" % [exit_code, output_message.substr(0, max_character_error_output)], LogsDisplay.MESSAGE.ERROR)
+			Global.logs_display.write("If you want to try the command by yourself: " + executable + " " + " ".join(packed_options_and_arguments))
 			push_error("yt-dlp, error when running the command for the file name %s. Exit code: %s." % [_file_name, exit_code])
 			self._thread_stopped.call_deferred()
 			return

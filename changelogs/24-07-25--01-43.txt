@@ -1,0 +1,4 @@
+- Added a random waiting time between downloads to avoid repeated errors.
+- The logs now writes the executed command when exit code in not zero.
+- Now deletes the thumbnail of a song if it failed to download the audio.
+- Fixed a audio panning issue where it was biased to the left.

@@ -1,8 +1,8 @@
 extends Control
 class_name DownloadsTab
 
-var min_wait_time: float = 15.0
-var max_wait_time: float = 25.0
+var min_wait_time: float = 0.5
+var max_wait_time: float = 1.5
 
 signal queue_changed()
 #signal ready_to_dl()
@@ -11,6 +11,8 @@ signal try_dl()
 @onready var songs_download: BaseVirtualScrollList = %SongsDownload
 @onready var clear_button: ButtonComponent = %ClearButton
 @onready var is_running_button: TextureButton = %IsRunningButton
+@onready var add_interrupts_button: ButtonComponent = %AddInterruptsButton
+@onready var reload_button: ButtonComponent = %ReloadButton
 
 var is_ready_to_dl: bool = false:
 	set(on):
@@ -18,7 +20,7 @@ var is_ready_to_dl: bool = false:
 		#if on:
 			#ready_to_dl.emit()
 var downloading_queue: Array[String] = [] ## video_id s of the downloading queue. Has [member current_downloading_song].
-var current_downloading_song: String = "" ## video_id of the currently downloading song.
+var current_downloading_song: String = "" ## youtube_id of the currently downloading song.
 var paused: bool = false
 
 func _ready() -> void:
@@ -31,6 +33,8 @@ func _ready() -> void:
 	
 	is_running_button.toggled.connect(_on_is_running_button_toggled)
 	clear_button.pressed.connect(_on_clear_button_pressed)
+	add_interrupts_button.pressed.connect(_on_add_interrupts_button_pressed)
+	reload_button.pressed.connect(_on_reload_button_pressed)
 	#ready_to_dl.connect(_on_ready_to_dl)
 	try_dl.connect(_on_try_dl)
 	queue_changed.connect(_on_queue_changed)
@@ -42,8 +46,10 @@ func _initialize() -> void:
 		downloading_queue = stored_queue
 		reload_queue_song_items()
 		is_running_button.button_pressed = false
+	
+	Global.main_tab_container.tab_changed.connect(_on_main_tab_container_tab_changed)
 
-func add_id_to_queue(video_id: String):
+func add_id_to_queue(video_id: String) -> void:
 	if video_id == "":
 		Global.logs_display.write("YouTube ID is empty, I can't download the song.", LogsDisplay.MESSAGE.ERROR)
 		return
@@ -53,7 +59,7 @@ func add_id_to_queue(video_id: String):
 	try_dl.emit()
 	queue_changed.emit()
 
-func add_multiple_ids_to_queue(ids: PackedStringArray):
+func add_multiple_ids_to_queue(ids: PackedStringArray) -> void:
 	Global.logs_display.write("Adding multiple IDs to the download queue: %s" % ids, LogsDisplay.MESSAGE.DEBUG)
 	downloading_queue.append_array(ids)
 	#print("downloading_queue ", downloading_queue)
@@ -61,7 +67,7 @@ func add_multiple_ids_to_queue(ids: PackedStringArray):
 	try_dl.emit()
 	queue_changed.emit()
 
-func remove_from_queue(id: String):
+func remove_from_queue(id: String) -> void:
 	if id in downloading_queue:
 		downloading_queue.erase(id)
 		queue_changed.emit()
@@ -146,7 +152,7 @@ func _on_try_dl():
 		var thumbnail_path: String = ""
 		
 		Global.create_song_infos(local_id, infos, extension, video_id, thumbnail_path)
-		Global.downloaded_tab.reload_song_list()
+		Global.downloaded_tab.reload_list()
 		Global.downloaded_song_add(video_id, local_id)
 		Global.save_downloaded_songs()
 	
@@ -166,10 +172,7 @@ func _on_queue_changed():
 	#Global.logs_display.write("Downloading queue changed: " + str(downloading_queue))
 	reload_queue_song_items()
 	
-	#if downloading_queue.is_empty():
-		#var global_interrupt_queue: Array = Global.downloads_tracking.get("interrupt", [])
-		#if not global_interrupt_queue.is_empty():
-			#downloading_queue = global_interrupt_queue
+	
 	Global.save_downloads_tracking()
 
 func _on_is_running_button_toggled(toggled_on: bool):
@@ -188,8 +191,21 @@ func _on_clear_button_pressed() -> void:
 	stored_queue = []
 	Global.save_downloads_tracking()
 
+func _on_add_interrupts_button_pressed() -> void:
+	var global_interrupt_queue: Array = Global.downloads_tracking.get("interrupt", [])
+	if not global_interrupt_queue.is_empty():
+		add_multiple_ids_to_queue(global_interrupt_queue)
+		Global.downloads_tracking.set("interrupt", [])
+		Global.save_downloads_tracking()
+	print("Added %s songs to the download queue" % global_interrupt_queue.size())
+	Global.logs_display.write("Added %s songs to the download queue" % global_interrupt_queue.size(), LogsDisplay.MESSAGE.INFO)
+
+func _on_reload_button_pressed() -> void:
+	reload_queue_song_items()
 
 
-
+func _on_main_tab_container_tab_changed(tab: int) -> void:
+	if is_visible_in_tree(): ## reliable
+		reload_queue_song_items()
 
 #

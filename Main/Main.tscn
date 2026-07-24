@@ -239,12 +239,11 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("16_wxqep")
 
 [node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=2111112156]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("17_fqgfq")
@@ -265,6 +264,7 @@ unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Search"
 clear_button_enabled = true
+caret_blink = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer" unique_id=1964252526]
 layout_mode = 2
@@ -380,7 +380,6 @@ expand_mode = 5
 stretch_mode = 5
 
 [node name="AudioSpectrum" type="Node2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart" unique_id=1071830942]
-position = Vector2(70, 37)
 script = ExtResource("31_gmaup")
 vu_count = 64
 width = 575.67
@@ -390,6 +389,7 @@ low_color = Color(0.4333334, 0, 1, 1)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search/SearchContainer/HBoxContainer/RightPart/AudioSpectrum" unique_id=2090390931]
 editor_description = "Stops the _process and thus the drawing and the calculations of the audio spectrum"
+position = Vector2(85, 55)
 
 [node name="Pages" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer/Search" unique_id=1431809108]
 layout_mode = 1
@@ -415,6 +415,7 @@ layout_mode = 1
 offset_top = 32.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")

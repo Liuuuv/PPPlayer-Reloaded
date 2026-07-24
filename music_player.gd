@@ -37,6 +37,12 @@ func start_song(full_path: String):
 	#stream = Global.song_streams[id]
 	play(0.0)
 	stream_changed.emit(full_path)
+	
+	#print(stream)
+	#if stream is AudioStreamMP3:
+		#await get_tree().process_frame
+		#print("bpm ", stream.bpm, " ", stream.bar_beats)
+	
 	playing_changed.emit()
 
 func pause_song() -> void:

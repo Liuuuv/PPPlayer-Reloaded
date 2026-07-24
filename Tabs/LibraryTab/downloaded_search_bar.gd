@@ -6,7 +6,7 @@ func _ready() -> void:
 func _on_text_changed(new_text: String):
 	if new_text != "":
 		var words: PackedStringArray = new_text.split(" ")
-		var id_to_display: Array = []
+		var id_to_display: Array[String] = []
 		
 		## ID SEARCH
 		if new_text.begins_with("id:"):
@@ -17,11 +17,22 @@ func _on_text_changed(new_text: String):
 						id_to_display.append(id)
 		else:
 			## BASIC SEARCH
+			var all_ids: Array[String] = []
+			all_ids.assign(Global.all_displayed_names.keys())
+			
 			for word in words:
-				for display_name_id: String in Global.all_displayed_names.keys():
-					var display_name: String = Global.all_displayed_names.get(display_name_id, "")
+				if word == "":
+					continue
+				
+				var matching_ids: Array[String] = []
+				for id: String in all_ids:
+					var display_name: String = Global.all_displayed_names.get(id, "")
 					if display_name.containsn(word):
-						id_to_display.append(display_name_id)
+						matching_ids.append(id)
+				
+				all_ids = matching_ids
+			
+			id_to_display = all_ids
 		
 		Global.downloaded_tab.reload_song_list(id_to_display)
 	else:

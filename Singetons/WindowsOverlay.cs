@@ -77,7 +77,6 @@ public partial class WindowsOverlay : Node
 			return;
 		}
 
-		// Chemin cache unique (écrasé à chaque fois)
 		string cachePath = "user://smtc_thumbnail.jpg";
 
 		// Sauvegarde en JPG
@@ -85,6 +84,7 @@ public partial class WindowsOverlay : Node
 		if (error != Error.Ok)
 		{
 			GD.PrintErr($"Impossible de sauvegarder la miniature : {cachePath}");
+			updater.Update(); // update other metadatas
 			return;
 		}
 

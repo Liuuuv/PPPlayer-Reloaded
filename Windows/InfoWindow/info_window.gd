@@ -87,8 +87,7 @@ func _edit_line_toggled(line: Control, toggled_on: bool):
 				Global.logs_display.write("No song info found for ID: %s" % id_infos_displayed, LogsDisplay.MESSAGE.ERROR)
 		else:
 			Global.logs_display.write("Changes are discarded because the info window was closed", LogsDisplay.MESSAGE.ERROR)
-		
-	print(line.get_node("Label").text, " edited toggled ", toggled_on)
+	
 
 func open():
 	show()

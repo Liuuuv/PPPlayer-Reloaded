@@ -588,7 +588,7 @@ class SignalRelay:
 func await_or_timeout(signal1: Signal, timeout := 15.0, timeout_output = null):
 	var relay := SignalRelay.new()
 	var done := false
-
+	
 	var timer := get_tree().create_timer(timeout)
 
 	signal1.connect(func(value = timeout_output):

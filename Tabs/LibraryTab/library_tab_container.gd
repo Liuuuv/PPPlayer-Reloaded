@@ -9,7 +9,7 @@ func _ready() -> void:
 func _on_tab_clicked(tab: int):
 	
 	if tab == 0:
-		downloaded_tab.reload_song_list()
+		downloaded_tab.reload_list()
 	elif tab == 1:
 		playlists_tab.reload_playlists()
 	

@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dotm7dksllgpe" path="res://Windows/SettingsWindow/Scripts/update_downloaded_songs_song_infos.gd" id="5_2oix8"]
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
 [ext_resource type="Script" uid="uid://bop3jkdcdd0uv" path="res://Windows/SettingsWindow/Scripts/open_user_button.gd" id="6_nnm61"]
+[ext_resource type="Script" uid="uid://d0kr18l2adjv6" path="res://Windows/SettingsWindow/Scripts/timeout_edit.gd" id="12_k720b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shqcg"]
 shader = ExtResource("2_nrwrv")
@@ -45,10 +46,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_k720b")
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 
 [node name="General" type="Control" parent="TabContainer" unique_id=279442251]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -111,10 +111,33 @@ script = ExtResource("6_nnm61")
 
 [node name="EnableLogs" type="CheckButton" parent="TabContainer/General/VBoxContainer" unique_id=501971915]
 layout_mode = 2
+size_flags_horizontal = 8
 button_pressed = true
 text = "Enable Logs"
 alignment = 1
 script = ExtResource("6_5nis2")
+
+[node name="TimeoutEdit" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=1027877041]
+layout_mode = 2
+script = ExtResource("12_k720b")
+
+[node name="Label" type="Label" parent="TabContainer/General/VBoxContainer/TimeoutEdit" unique_id=706981504]
+layout_mode = 2
+text = "Timeout after"
+
+[node name="TimeoutSlider" type="HSlider" parent="TabContainer/General/VBoxContainer/TimeoutEdit" unique_id=737873995]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 500.0
+value = 80.0
+rounded = true
+
+[node name="TimeoutSeconds" type="Label" parent="TabContainer/General/VBoxContainer/TimeoutEdit" unique_id=1633764570]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Xs"
 
 [node name="ColorRect" type="ColorRect" parent="TabContainer/General/VBoxContainer" unique_id=1840421715]
 custom_minimum_size = Vector2(0, 7.71)
@@ -128,6 +151,7 @@ text = "TODO:
 - autopause downloads when too many errors in a row
 - selection box visible quand on sort la souris par la droite (current playlist par exemple)
 - dynamic sizing of audio spectrum
+- update song infos of a selected song
 - recycle bin
 - ctrl click on artist opens page
 - fix laggy logs
@@ -151,6 +175,7 @@ text = "TODO:
 - check \"#TODO\" in code
 - update info from youtube (by right click on song item)
 - fade in out
+- force order of certain songs
 - blindtest"
 
 [node name="Shortcuts" type="Control" parent="TabContainer" unique_id=374568893]
@@ -174,6 +199,7 @@ text = "[u]Local search bars[/u]:
 - Ctrl + LMB to open its YouTube page on your default browser."
 
 [node name="Other" type="Control" parent="TabContainer" unique_id=2133455322]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -203,6 +229,6 @@ text = "Known issues:
 - if the bigthumbnail contains a vertical image, it might clip off
 - when reloading in the search tab, a mouse movement is needed to show proper song informations
 - Errors when displaying podcast channels for example.
-- If exit code 0, the thumbnail is still downlaoded.
+- If exit code 0, the thumbnail is still downlaoded (may be fixed).
 
 HTTP 403 forbidden"

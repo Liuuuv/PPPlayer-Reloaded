@@ -1,6 +1,6 @@
 extends Node
 
-var timeout_duration: float = 15.0
+
 
 func _ready() -> void:
 	YtDlp.setup()
@@ -29,7 +29,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 	
 	Global.logs_display.write("Starting the download.", LogsDisplay.MESSAGE.INFO, true)
 	print("Starting the download.")
-	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
+	var output: Array = await Tools.await_or_timeout(download.download_completed, Config.timeout_duration, [])
 	Global.logs_display.write("Download finished in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO, true)
 	print("Download finished.")
 	
@@ -76,7 +76,7 @@ func download_thumbnail_from_url(url: String, file_name: String) -> Dictionary:
 	download.start()
 
 	#var output: Array = await download.download_completed
-	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
+	var output: Array = await Tools.await_or_timeout(download.download_completed, Config.timeout_duration, [])
 	
 	Global.logs_display.write("Thumbnail download complete in %s ms, file_name: %s" % [Time.get_ticks_msec() - time, file_name], LogsDisplay.MESSAGE.INFO)
 	print("Thumbnail download complete")
@@ -103,7 +103,7 @@ func get_video_infos_from_url(url: String) -> Dictionary:
 		.start()
 
 	#var output: Array = await download.download_completed
-	var output: Array = await Tools.await_or_timeout(download.download_completed, timeout_duration, [])
+	var output: Array = await Tools.await_or_timeout(download.download_completed, Config.timeout_duration, [])
 	var infos: Dictionary = {}
 	if output.size() >= 1:
 		infos = JSON.parse_string(output[0])

@@ -1,0 +1,12 @@
+- Fixed an issue where the windows 10 overlay was not updating if no webp thumbnail was found.
+- Added a way to add failed downloads back to the queue.
+- Fixed an issue where removing a song from the current playlist caused desync with the hovering.
+- Fixed an issue where local search was not searching as the intersection of word (from union).
+- Fixed an issue where a local search was dicarded when reloading the downloaded song list (for example after a download).
+- Added a way to change timeout duration in the settings.
+- Added timestamps to logs.
+- Added a new thumbnail hover icon for search result: in queue (three people in a queue lol).
+- Added a reload button for the downloads tab.
+- Current playlist and downloads liste now reload itself when changing tab to the search one.
+- Fixed an issue where queued items kept in queue when starting the all-songs-shuffle.
+- Timeout duration is now written in the settings json, thus it is not reset anymore upon launching.

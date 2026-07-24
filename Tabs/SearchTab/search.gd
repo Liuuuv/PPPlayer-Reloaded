@@ -13,7 +13,6 @@ class_name SearchTab
 
 
 func _ready() -> void:
-	content_tabs.current_tab = 0
 	
 	Global.search_tab = self
 	
@@ -43,6 +42,9 @@ func _on_stream_changed(full_path):
 
 func _on_search_bar_text_submitted(new_text: String):
 	pass
+
+#func _on_tab_changed() -> void:
+	#print(is_visible_in_tree())
 
 
 #func _on_play_button_pressed():

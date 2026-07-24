@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://plb4bhbcq0lb"]
+
+[ext_resource type="Script" uid="uid://d20y7kvi7nsu1" path="res://Tabs/LibraryTab/downloaded.gd" id="1_82mna"]
+[ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="3_gvrmq"]
+[ext_resource type="Texture2D" uid="uid://c4ocsfn8yjx5k" path="res://Sprites/Random.png" id="4_drrgo"]
+[ext_resource type="Script" uid="uid://cfn5i4ai7i2br" path="res://Tabs/LibraryTab/downloaded_search_bar.gd" id="5_rkn6h"]
+[ext_resource type="PackedScene" uid="uid://dj7jqql5touiq" path="res://Tabs/LibraryTab/VirtualScrollList.tscn" id="8_wg2no"]
+[ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="9_a7yld"]
+[ext_resource type="Script" uid="uid://cea6vcsudf8sf" path="res://Tabs/LibraryTab/downloaded_songs.gd" id="9_nr44e"]
+[ext_resource type="Texture2D" uid="uid://digfmgwh34dpq" path="res://Sprites/default_thumbnail.webp" id="10_xl7mu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycudd"]
+
+[node name="Downloaded" type="Control" unique_id=288002480]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_82mna")
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=897709192]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=663064776]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ShuffleButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1901609467]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("4_drrgo")
+script = ExtResource("3_gvrmq")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="DownloadedSearchBar" type="LineEdit" parent="VBoxContainer" unique_id=1556363475]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Search for a song"
+script = ExtResource("5_rkn6h")
+
+[node name="DownloadedSongList" parent="VBoxContainer" unique_id=1986626170 node_paths=PackedStringArray("artists_label") instance=ExtResource("8_wg2no")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("9_nr44e")
+location = 2
+artists_label = NodePath("Template/HBoxContainer/Infos/+get_artists")
+template_path = NodePath("Template")
+
+[node name="Template" type="Panel" parent="VBoxContainer/DownloadedSongList" unique_id=1680884477]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DownloadedSongList/Template" unique_id=1318569568]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -17.0
+offset_right = -7.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Thumbnail" type="PanelContainer" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=1794516155]
+custom_minimum_size = Vector2(75, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ycudd")
+
+[node name="Thumbnail" type="TextureRect" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer/Thumbnail" unique_id=744210858]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("10_xl7mu")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="+when_thumbnail_hovered" type="TextureRect" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer/Thumbnail" unique_id=2110104378]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_a7yld")
+stretch_mode = 2
+
+[node name="Infos" type="VBoxContainer" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=336684220]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="-title" type="Label" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos" unique_id=343938103]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SONG ITEM"
+vertical_alignment = 1
+
+[node name="+get_artists" type="Label" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer/Infos" unique_id=469263681]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.64, 0.64, 1)
+theme_override_font_sizes/font_size = 12
+text = "ARTIST"
+vertical_alignment = 1
+
+[node name="-duration_string" type="Label" parent="VBoxContainer/DownloadedSongList/Template/HBoxContainer" unique_id=883633353]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+text = "XX:XX"
+horizontal_alignment = 2
+
+[node name="Separator" type="ColorRect" parent="VBoxContainer/DownloadedSongList/Template" unique_id=830573783]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41, 0.41, 0.41, 1)

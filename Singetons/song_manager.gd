@@ -113,7 +113,8 @@ func add_to_current_playlist(id: String):
 func add_to_queue_end(id: String):
 	print("Adding last to queue %s" % id)
 	Global.current_playlist.queue_ids.append(id)
-	Global.current_playlist.reload_song_items()
+	Global.current_playlist.update_queue_indexes()
+	Global.current_playlist.reload_list()
 
 func play_last_song_from_current_playlist() -> void: ## Plays the last song in the [member Global.current_playlist]
 	if Global.current_playlist.content_ids.is_empty():
