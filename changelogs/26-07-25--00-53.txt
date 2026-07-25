@@ -1,0 +1,5 @@
+- Added a "debug version" label when running the editor version.
+- Fixed queue and is now working as intented :).
+- Added a support for jpg thumbnails (including for the Win10 overlay).
+- Fixed an issue where selection boxes where often visible when they should not.
+- Added a way to calculate and display all songs' BPM.

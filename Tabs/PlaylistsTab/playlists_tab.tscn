@@ -379,7 +379,6 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 30
 text = "☐"
-horizontal_alignment = 1
 
 [node name="Separator" type="ColorRect" parent="TabContainer/PlaylistContentTab/VBoxContainer/Nest/PlaylistContent/PlaylistTemplate" unique_id=156062477]
 layout_mode = 1

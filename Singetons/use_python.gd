@@ -44,15 +44,45 @@ func _ready() -> void:
 func _initialize() -> void:
 	log_func = Global.logs_display.write
 
-## [param callback] MUST be Dictionary -> X
-func execute_python_script(args: Array, callback: Callable) -> void:
+## [param callback] MUST be Dictionary -> whatever [br]
+## Example: [br]
+## [codeblock]
+## UsePython.execute_python_script(
+##		[
+##			search_script_path,
+##			python_script_argument1,
+##			python_script_argument2
+##		],
+##		_process_result
+##	)
+## [/codeblock]
+## This will call the callback with the argument: [br]
+## [codeblock]
+## {
+## 		"success": true,
+## 		"result": {}
+## }
+## [/codeblock]
+## [b]OR[/b] [br]
+## [codeblock]
+## {
+## 		"success": false,
+## 		"error": "An error message."
+## }
+## [/codeblock]
+func execute_python_script(args: Array, callback: Callable, asap: bool = false) -> void:
 	if busy:
-		# Ajoute à la file d'attente
-		pending_requests.push_back({
+		
+		var request: Dictionary = {
 			"args": args,
 			"callback": callback
-		})
-		print("Ajouté à la queue (", pending_requests.size(), " en attente)")
+		}
+		if asap:
+			pending_requests.push_back(request)
+			print("Added to queue (", pending_requests.size(), " waiting).")
+		else:
+			pending_requests.push_front(request)
+			print("Added to queue front (", pending_requests.size(), " waiting).")
 		return
 	
 	_start_execution(args, callback)

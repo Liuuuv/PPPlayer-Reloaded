@@ -7,6 +7,7 @@ oversampling_override = 1.0
 title = "Song informations for ID %s"
 initial_position = 4
 size = Vector2i(800, 500)
+popup_window = true
 script = ExtResource("1_3nq6m")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1627635791]
@@ -167,6 +168,26 @@ text = "dsdsdsdsds"
 editable = false
 
 [node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/thumbnail_path" unique_id=1581706216]
+layout_mode = 2
+toggle_mode = true
+text = "edit"
+
+[node name="bpm" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1505803826]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/bpm" unique_id=94869043]
+layout_mode = 2
+size_flags_vertical = 1
+text = "BPM"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/bpm" unique_id=1775490496]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_spacing = -3
+text = "dsdsdsdsds"
+editable = false
+
+[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/bpm" unique_id=742117546]
 layout_mode = 2
 toggle_mode = true
 text = "edit"

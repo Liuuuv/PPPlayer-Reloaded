@@ -55,9 +55,8 @@ public partial class WindowsOverlay : Node
 		}
 	}
 
-	// 👉 API appelée depuis GDScript
 
-	public void SetMetadata(string title, string artist, string webpPath = null)
+	public void SetMetadata(string title, string artist, Image img)
 	{
 		var updater = smtc.DisplayUpdater;
 		
@@ -66,36 +65,39 @@ public partial class WindowsOverlay : Node
 		updater.MusicProperties.Artist = artist;
 		
 		// Thumbnail
+		//if (!FileAccess.FileExists(webpPath))
+		//{
+			//GD.Print($"Miniature absente : {webpPath}");
+			//updater.Update();
+			//return;
+		//}
+		//
+		//var img = new Image();
 		
-		// Charge l'image WebP
-		var img = new Image();
-
-		var error = img.Load(webpPath);
-		if (error != Error.Ok)
+		//if (error != Error.Ok)
+		//{
+			//GD.Print($"Impossible de charger la miniature : {webpPath}");
+			//updater.Update(); // update other metadatas
+			//return;
+		//}
+		if (img != null)
 		{
-			GD.PrintErr($"Impossible de charger la miniature : {webpPath}");
-			return;
+			string cachePath = "user://smtc_thumbnail.jpg";
+			var error = img.SaveJpg(cachePath);
+			if (error != Error.Ok)
+			{
+				GD.PrintErr($"Can't save the thumbnail: {cachePath}");
+				updater.Update(); // update other metadatas
+				return;
+			}
+
+			string globalPath = ProjectSettings.GlobalizePath(cachePath);
+			globalPath = globalPath.Replace('/', '\\');
+			StorageFile file = StorageFile.GetFileFromPathAsync(globalPath).AsTask().Result;
+			var thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromFile(file);
+			updater.Thumbnail = thumbnail;
 		}
-
-		string cachePath = "user://smtc_thumbnail.jpg";
-
-		// Sauvegarde en JPG
-		error = img.SaveJpg(cachePath);
-		if (error != Error.Ok)
-		{
-			GD.PrintErr($"Impossible de sauvegarder la miniature : {cachePath}");
-			updater.Update(); // update other metadatas
-			return;
-		}
-
-		// Convertit user:// en chemin Windows absolu
-		string globalPath = ProjectSettings.GlobalizePath(cachePath);
 		
-		
-		globalPath = globalPath.Replace('/', '\\');
-		StorageFile file = StorageFile.GetFileFromPathAsync(globalPath).AsTask().Result;
-		var thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromFile(file);
-		updater.Thumbnail = thumbnail;
 		
 		updater.Update();
 	}
@@ -107,14 +109,14 @@ public partial class WindowsOverlay : Node
 			: MediaPlaybackStatus.Paused;
 	}
 
-	// Appelle ça quand aucune musique n'est lancée
+	// When no song is played.
 	public void HideOverlay()
 	{
 		smtc.PlaybackStatus = MediaPlaybackStatus.Closed;
 		smtc.IsEnabled = false;
 	}
 
-	// Appelle ça quand tu commences à jouer
+	// When a song plays.
 	public void ShowOverlay()
 	{
 		smtc.IsEnabled = true;

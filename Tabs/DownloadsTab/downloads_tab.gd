@@ -4,6 +4,8 @@ class_name DownloadsTab
 var min_wait_time: float = 0.5
 var max_wait_time: float = 1.5
 
+signal new_song_downloaded(local_id: String)
+
 signal queue_changed()
 #signal ready_to_dl()
 signal try_dl()
@@ -52,6 +54,9 @@ func _initialize() -> void:
 func add_id_to_queue(video_id: String) -> void:
 	if video_id == "":
 		Global.logs_display.write("YouTube ID is empty, I can't download the song.", LogsDisplay.MESSAGE.ERROR)
+		return
+	if downloading_queue.has(video_id):
+		Global.logs_display.write("YouTube ID already in the queue.", LogsDisplay.MESSAGE.DEBUG)
 		return
 	#print("adding ", id, "to queue")
 	Global.logs_display.write("Adding an ID to the download queue: %s" % video_id, LogsDisplay.MESSAGE.DEBUG)
@@ -124,7 +129,7 @@ func _on_try_dl():
 	Global.logs_display.write("Downloading a new content, video ID: %s" % video_id)
 	if Global.downloaded_songs.has(video_id):
 		Global.logs_display.write("This video has already been downloaded, removing it from the queue: video ID: %s" % video_id)
-		downloading_queue.erase(video_id)
+		remove_from_queue(video_id)
 		is_ready_to_dl = true
 		try_dl.emit()
 		return
@@ -155,6 +160,7 @@ func _on_try_dl():
 		Global.downloaded_tab.reload_list()
 		Global.downloaded_song_add(video_id, local_id)
 		Global.save_downloaded_songs()
+		new_song_downloaded.emit(local_id)
 	
 	var wait_time: float = randf_range(min_wait_time, max_wait_time)
 	print("Waiting %.2fs..." % wait_time)

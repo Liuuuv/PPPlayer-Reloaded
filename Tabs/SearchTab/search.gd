@@ -3,6 +3,7 @@ class_name SearchTab
 
 @onready var waveform: ColorRect = %Waveform
 @onready var big_thumbnail: TextureRect = %BigThumbnail
+@onready var bpm_label: Label = %BPMLabel
 
 @onready var default_thumbnail_tex: Texture2D = big_thumbnail.texture
 @onready var content_tabs: TabContainer = %ContentTabs
@@ -38,7 +39,16 @@ func _on_stream_changed(full_path):
 		big_thumbnail.texture = default_thumbnail_tex
 	else:
 		var id: String = full_path.get_file().get_basename()
+		
 		big_thumbnail.texture = Tools.get_cached_thumbnail(id)
+		
+		var song_info: Dictionary = Global.song_infos.get(id, {})
+		if song_info.get("bpm", 0.0):
+			bpm_label.text = "%s BPM" % song_info.get("bpm", 0.0)
+		else:
+			bpm_label.text = "No BPM calculated"
+
+
 
 func _on_search_bar_text_submitted(new_text: String):
 	pass

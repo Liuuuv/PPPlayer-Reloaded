@@ -46,6 +46,7 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Search for a song"
+clear_button_enabled = true
 script = ExtResource("5_rkn6h")
 
 [node name="DownloadedSongList" parent="VBoxContainer" unique_id=1986626170 node_paths=PackedStringArray("artists_label") instance=ExtResource("8_wg2no")]

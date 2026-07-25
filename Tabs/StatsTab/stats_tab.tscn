@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://h6xllrn7wss1"]
+
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="1_pha5w"]
+[ext_resource type="Script" uid="uid://dyphxj8nhw73r" path="res://Tabs/StatsTab/stats_tab.gd" id="1_uhi4w"]
+[ext_resource type="Theme" uid="uid://b15ml05yp44ww" path="res://addons/easy_charts/control_charts/dark_chart_theme.tres" id="2_d0iov"]
+[ext_resource type="Script" uid="uid://8swcxgp5aqcl" path="res://Tabs/StatsTab/bpm_bar_chart.gd" id="2_pha5w"]
+[ext_resource type="PackedScene" uid="uid://dlwq4kmdb3bhs" path="res://addons/easy_charts/control_charts/chart.tscn" id="3_d0iov"]
+[ext_resource type="Script" uid="uid://b7bmsu6mibbbd" path="res://Tabs/StatsTab/full_bpm_chart.gd" id="6_gpbsh"]
+[ext_resource type="Script" uid="uid://c8ktyqlvhi7kr" path="res://Tabs/StatsTab/horizontal_bar_chart.gd" id="7_4xkh2"]
+
+[node name="StatsTab" type="Control" unique_id=24048220]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pha5w")
+script = ExtResource("1_uhi4w")
+metadata/_tab_index = 4
+metadata/_tab_name = "Stats"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1625670145]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_vertical = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1575609289]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1493912878]
+layout_mode = 2
+text = "Number of songs with given BPM"
+horizontal_alignment = 1
+
+[node name="BPMBarChart" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=567714831]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 500)
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_d0iov")
+script = ExtResource("2_pha5w")
+
+[node name="BPMChart" parent="ScrollContainer/VBoxContainer/BPMBarChart" unique_id=1493155437 instance=ExtResource("3_d0iov")]
+unique_name_in_owner = true
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullBPMChart" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=2093144673]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("6_gpbsh")
+
+[node name="HorizontalBarChart" type="Control" parent="ScrollContainer/VBoxContainer/FullBPMChart" unique_id=535150562 node_paths=PackedStringArray("template_viewport")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_4xkh2")
+can_grab_scroll_focus = true
+stretch_focus_expand_margin = 0.0
+template_viewport = NodePath("SubViewport")
+template_path = NodePath("Template")
+metadata/_custom_type_script = "uid://co2277w5u6scg"
+
+[node name="SubViewport" type="SubViewport" parent="ScrollContainer/VBoxContainer/FullBPMChart/HorizontalBarChart" unique_id=1143854475]
+own_world_3d = true
+handle_input_locally = false
+gui_disable_input = true
+gui_embed_subwindows = true
+render_target_update_mode = 0
+
+[node name="Template" type="Panel" parent="ScrollContainer/VBoxContainer/FullBPMChart/HorizontalBarChart" unique_id=788252064]
+editor_description = "Used as a template for the virtual scroll list."
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FullBPMChart/HorizontalBarChart/Template" unique_id=15364317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="-display_name" type="Label" parent="ScrollContainer/VBoxContainer/FullBPMChart/HorizontalBarChart/Template/HBoxContainer" unique_id=1173102393]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 14
+text = "song name"
+vertical_alignment = 1
+
+[node name="~xget_size_x" type="ColorRect" parent="ScrollContainer/VBoxContainer/FullBPMChart/HorizontalBarChart/Template/HBoxContainer" unique_id=1215316916]
+layout_mode = 2
+size_flags_horizontal = 3

@@ -262,24 +262,29 @@ func build_youtube_url(id: String):
 
 
 func get_thumbnail(id: String) -> ImageTexture:
-	var thumbnail_path: String = Global.get_thumbnail_path(id)
-	if thumbnail_path == "":
-		return null
-	
-	if not FileAccess.file_exists(thumbnail_path):
-		#Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.INFO)
-		return null
-	
-	var image := Image.new()
-	image = image.load_from_file(thumbnail_path)
-	#var error := image.load(thumbnail_path)
-	#if error != OK:
-		#Global.logs_display.write("get_thumbnail, failed to load image: %s, error: %s" % [thumbnail_path, error], LogsDisplay.MESSAGE.ERROR)
-		#return null
+	var image: Image = get_thumbnail_image(id)
 	if image:
 		return ImageTexture.create_from_image(image)
 	else:
 		return null
+
+func get_thumbnail_image(id: String) -> Image:
+	for extension in ["webp", "jpg"]:
+		var thumbnail_path: String = Global.get_thumbnail_path(id, extension)
+		if thumbnail_path == "":
+			continue
+		
+		if not FileAccess.file_exists(thumbnail_path):
+			Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.INFO)
+			continue
+		
+		var image := Image.new()
+		image = image.load_from_file(thumbnail_path)
+		if image:
+			return image
+		else:
+			continue
+	return null
 
 func get_cache_path() -> String:
 	return Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
@@ -419,9 +424,7 @@ func _save_to_cache(content: Resource, fullpath: String) -> void:
 		print("Erreur lors de la sauvegarde du cache: ", error)
 
 
-## (ASYNC) Sets the biggest thumbnail to [param target].
-## [br]
-## [param callback] is called with argument [param target].
+## (ASYNC) Calls [param callback] with the downloaded [Image] as single argument.
 func download_biggest_thumbnail(thumbnails: Array, callback: Callable = Callable()) -> void:
 	var max_url: String = get_biggest_thumbnail_url(thumbnails)
 	if max_url != "":
@@ -576,6 +579,10 @@ func _color_distance(a: Color, b: Color) -> float:
 	# Distance euclidienne dans l'espace RGB
 	return sqrt(pow(a.r - b.r, 2) + pow(a.g - b.g, 2) + pow(a.b - b.b, 2))
 
+## [param script_name] example: [code]"ytmusic_get_artist_infos"[/code].
+func get_python_script_fullpath(script_name: String) -> String:
+	var script = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH.path_join(script_name + ".py"))
+	return script
 
 class SignalRelay:
 	extends RefCounted
@@ -606,5 +613,33 @@ func await_or_timeout(signal1: Signal, timeout := 15.0, timeout_output = null):
 	, CONNECT_ONE_SHOT)
 
 	return await relay.finished
+
+
+func clear_file_cache() -> void:
+	Global.logs_display.write("Deleting file cache...", LogsDisplay.MESSAGE.DEBUG)
+	var full_path: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME
+	if DirAccess.dir_exists_absolute(full_path):
+		
+		var error: Error = Tools.clear_directory_contents(full_path)
+		if error != OK:
+			Global.logs_display.write("Error when deleting cache: %s" % error, LogsDisplay.MESSAGE.ERROR)
+		else:
+			Global.logs_display.write("Cache deleted successfully", LogsDisplay.MESSAGE.INFO)
+	else:
+		Global.logs_display.write("Cache didn't exist", LogsDisplay.MESSAGE.INFO)
+
+func get_full_path_from_id(id: String) -> String:
+	var song_info = Global.song_infos.get(id)
+	if song_info:
+		var extension = song_info.get("extension")
+		if extension:
+			var full_path = Global.get_downloads_path() + id + "." + extension
+			return full_path
+		else:
+			push_error("no extension available for id %s" % id)
+			return ""
+	else:
+		push_error("no song info available for id  %s" % id)
+		return ""
 
 #

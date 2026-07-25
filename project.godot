@@ -51,7 +51,7 @@ project/assembly_name="PPPlayer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/godot_tree_table/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-engine.easy-charts-main/addons/easy_charts/plugin.cfg", "res://addons/godot-webview-main/example/addons/webview/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/godot_tree_table/plugin.cfg")
 
 [file_customization]
 

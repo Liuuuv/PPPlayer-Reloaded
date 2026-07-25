@@ -5,7 +5,18 @@ class_name SummaryWindow
 
 var is_open: bool = false
 
-var header: Array[String] = ["id", "has_song_info", "has_artist", "has_display_name", "has_extension", "has_release_date", "has_thumbnail_path", "has_video_id", "is_duplicate_video_id"]
+var header: Array[String] = [
+	"id",
+	"has_song_info",
+	"has_artist",
+	"has_display_name",
+	"has_extension",
+	"has_release_date",
+	"has_thumbnail_path",
+	"has_video_id",
+	"is_duplicate_video_id",
+	"file_exists",
+]
 
 
 

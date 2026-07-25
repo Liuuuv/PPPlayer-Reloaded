@@ -123,6 +123,7 @@ var edit_lyrics_window: EditLyricsWindow
 var current_playlist: CurrentPlaylist ## what's playing now.
 var downloaded_tab: DownloadedTab ## all the downloaded songs.
 var downloads_tab: DownloadsTab ## currently downloading.
+var stats_tab: StatsTab ## where stats are displayed/processed.
 var playlists_tab: PlaylistsTab ## Where all the local playlists are shown.
 var music_player: MusicPlayer ## not meant to be accesed.
 var song_panel: SongPanel
@@ -519,13 +520,13 @@ func create_song_infos(id: String, infos: Dictionary, extension: String, video_i
 	#Global.change_song_info(id, "album", album)
 	save_song_infos()
 
-func get_thumbnail_path(id: String):
+func get_thumbnail_path(id: String, extension: String = "webp"):
 	var song_info: Dictionary = song_infos.get(id)
 	if song_info:
 		var thumbnail_path: String = song_info.get("thumbnail_path", "")
 		if thumbnail_path == "":
 			#Global.logs_display.write("song_item > load_thumbnail, no thumbnail path provided. Trying using: %s" % id + ".webp", LogsDisplay.MESSAGE.WARNING)
-			thumbnail_path = id + ".webp"
+			thumbnail_path = id + "." + extension
 		
 		var full_path: String = Global.get_downloads_path() + thumbnail_path
 		return full_path

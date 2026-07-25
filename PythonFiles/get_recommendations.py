@@ -1,4 +1,3 @@
-# get_recommendations.py
 import sys
 import json
 from ytmusicapi import YTMusic
@@ -23,7 +22,6 @@ def get_recommendations(video_id):
 					'thumbnail': track.get('thumbnail', '')
 				})
 		
-		# Imprimer le JSON pour Godot
 		print(json.dumps({
 			'success': True,
 			'count': len(recommendations),

@@ -6,8 +6,9 @@ class_name CurrentPlaylist
 
 
 var content_ids: Array[String] = [] ## Contains the local ids of the songs. See also [member queue_ids].
-var queue_ids: Array[String] = [] ## Contains the local ids of the queue. See also [member content_ids].
-var queue_indexes: Array[int] = []
+#var queue_ids: Array[String] = [] ## Contains the local ids of the queue. See also [member content_ids].
+var queue_size: int = 0
+#var queue_indexes: Array[int] = []
 
 func _ready() -> void:
 	super._ready()
@@ -24,21 +25,18 @@ func _initialize() -> void:
 
 func clear_items() -> void:
 	content_ids.clear()
-	queue_ids.clear()
+	#queue_ids.clear()
 	super.clear_items()
 
 
 func reload_list() -> void:
 	reload_song_items()
-	update_queue_indexes()
 	super.reload_list()
 
 func reload_song_items() -> void:
 	_update_items_from_content_and_queue()
 	queue_redraw()
 
-func update_queue_indexes() -> void:
-	pass
 
 #func _physics_process(delta: float) -> void:
 	##print("current_playlist items ", items)
@@ -60,12 +58,21 @@ func _gui_input(event: InputEvent) -> void:
 		
 
 func _remove_selected() -> void:
+	#if selected_idx <= SongManager.playing_song_index:
+		#content_ids.remove_at(selected_idx)
+		#if selected_idx == SongManager.playing_song_index:
+			#SongManager.play_next_song()
+	#elif selected_idx <= SongManager.playing_song_index + queue_ids.size() - 1:
+		#queue_ids.remove_at(selected_idx - SongManager.playing_song_index)
+	#else:
+		#content_ids.remove_at(selected_idx)
+	
 	if selected_idx <= SongManager.playing_song_index:
-		content_ids.remove_at(selected_idx)
 		if selected_idx == SongManager.playing_song_index:
 			SongManager.play_next_song()
-	elif selected_idx <= SongManager.playing_song_index + queue_ids.size() - 1:
-		queue_ids.remove_at(selected_idx - SongManager.playing_song_index)
+		content_ids.remove_at(selected_idx)
+	elif selected_idx <= SongManager.playing_song_index + queue_size: ## can't be equal if queue_size is 0
+		queue_size -= 1
 	else:
 		content_ids.remove_at(selected_idx)
 	super._remove_selected()
@@ -77,21 +84,27 @@ func _remove_selected() -> void:
 	#content_ids = []
 	
 func _update_items_from_content_and_queue() -> void:
-	if content_ids.is_empty() and queue_ids.is_empty():
+	if content_ids.is_empty():
 		return
 	
 	items.clear()
 	var playing_index: int = SongManager.playing_song_index
 	
 	var song_item: Global.SongItem
-	if not content_ids.is_empty():
-		for idx in range(playing_index + 1):
-			add_song_item(content_ids.get(idx))
-	for idx in range(len(queue_ids)):
-		song_item = add_song_item(queue_ids.get(idx))
-		song_item.IsInQueue = true
-	for idx in range(playing_index + 1, len(content_ids)):
-		add_song_item(content_ids.get(idx))
+	#if not content_ids.is_empty():
+		#for idx in range(playing_index + 1):
+			#add_song_item(content_ids.get(idx))
+	#for idx in range(len(queue_ids)):
+		#song_item = add_song_item(queue_ids.get(idx))
+		#song_item.IsInQueue = true
+	#for idx in range(playing_index + 1, len(content_ids)):
+		#add_song_item(content_ids.get(idx))
+	
+	for idx in content_ids.size():
+		song_item = add_song_item(content_ids.get(idx))
+		if idx > SongManager.playing_song_index and idx <= SongManager.playing_song_index + queue_size:
+			song_item.IsInQueue = true
+	
 
 func _add_selected_to_queue_end() -> void:
 	super._add_selected_to_queue_end()
@@ -110,7 +123,7 @@ func _on_stream_changed(filepath: String):
 
 func _on_song_deleted(local_id: String) -> void:
 	content_ids = content_ids.filter(func(id): return id != local_id)
-	queue_ids = queue_ids.filter(func(id): return id != local_id)
+	#queue_ids = queue_ids.filter(func(id): return id != local_id)
 	reload_song_items()
 
 func _on_main_tab_container_tab_changed(tab: int) -> void:

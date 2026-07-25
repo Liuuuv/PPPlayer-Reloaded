@@ -40,10 +40,11 @@ The project relies on the Python library ytmusicapi (https://github.com/sigma67/
 ## Addons:
 ### Addons used (a majority if not all are modified):
 - yt-dlp (https://github.com/yt-dlp/yt-dlp) (not directly used as it is not a godot addon)
-- godot-yt-dlp (https://github.com/Nolkaloid/godot-yt-dlp) (v3.0.6)
+- Godot YT-DLP (https://github.com/Nolkaloid/godot-yt-dlp) (v3.0.6)
 - GDContextMenu (https://github.com/Schimiongames/GDContextMenu)
 - Godot-GlobalInput-Addon (https://github.com/Darnoman/Godot-GlobalInput-Addon)
 - godot_tree_table (https://github.com/EinRainerZufall/godot_tree_table)
+- Godot Easy Charts (https://github.com/fenix-hub/godot-engine.easy-charts)
 
 ### Changes to Godot YT-DLP (https://github.com/Nolkaloid/godot-yt-dlp):
 - Added a pull from the GitHub (https://github.com/Nolkaloid/godot-yt-dlp/pull/13) that handles abandoning DL/search requests.
@@ -51,14 +52,15 @@ The project relies on the Python library ytmusicapi (https://github.com/sigma67/
 - Added a stop if there is an error (```error != 0```) when executing the command.
 - Added additional arguments for preferring the best quality (```options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])```)
 
-You need to have deno (the .exe for Win10 users) at the same path as ffmpeg, ffmprobe, yt-flp (```user://```).
+You need to have deno (the .exe for Win10 users) at the same path as ffmpeg, ffmprobe, yt-dlp (```user://```).
 
 The changed addon by itself does not work because I made it dependent of my project (because of logs, if you have a solution I'm down).
 I advise using the original addon for your own project: https://github.com/Nolkaloid/godot-yt-dlp
 
-### Changes to Godot Global Input Addon:
+### Changes to Godot-GlobalInput-Addon:
 - Set the pressed property of the returning object of GetInputEventMouseButton to false (had an issue with mouse inputs).
-(```<ItemGroup>
+
+(Add ```<ItemGroup>
     <PackageReference Include="SharpHook" Version="6.1.2" />
   </ItemGroup>``` in the ```.csproj``` in case you want to use it.)
 
@@ -89,6 +91,9 @@ if (!embededSubwindows)
     "
 )
 
+### Changes to Godot Easy Charts:
+- At `res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.gd`, fixed an issue where tooltips were not resizing properly when lots of elements were visible.
+- Added a chart property that y-offsets one of two x-labels (for clarity).
 
 ## Complementary informations
 - This software has not been release yet and is work in progress.

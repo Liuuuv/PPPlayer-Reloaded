@@ -58,7 +58,7 @@ func download_video_from_url(url: String, file_name: String, write_thumbnail: bo
 		Global.logs_display.write("Download infos complete")
 		#Tools.write_json_file(infos, "res://test.json")
 		return infos
-	return {"interrupt": 0}
+	return {"success": 0} ## sucess
 
 
 func download_thumbnail_from_url(url: String, file_name: String) -> Dictionary:

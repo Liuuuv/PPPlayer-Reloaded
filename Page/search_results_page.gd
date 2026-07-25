@@ -59,13 +59,14 @@ func _on_search_bar_text_submitted(new_text: String):
 	else:
 		is_loaded_from_cache.hide()
 	
-	var search_script_path = ProjectSettings.globalize_path(Global.PYTHON_SCRIPTS_PATH.path_join("ytmusic_search.py"))
+	var search_script_path = Tools.get_python_script_fullpath("ytmusic_search")
 	UsePython.execute_python_script(
 		[
 			search_script_path,
 			new_text
 		],
-		_process_search_results
+		_process_search_results,
+		true
 	)
 
 func _process_search_results(output: Dictionary):

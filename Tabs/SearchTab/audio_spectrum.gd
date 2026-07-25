@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @onready var big_thumbnail: TextureRect = %BigThumbnail
 
@@ -17,6 +17,7 @@ extends Node2D
 @export var attack_speed := 30.0
 @export var release_speed := 6.0
 @export var peak_fall_speed := 0.45
+@export_range(0.1, 5.0, 0.05) var energy_exponent: float = 0.7
 
 @export_group("Bass")
 @export var bass_boost: float = 1.3
@@ -91,7 +92,7 @@ func _process(delta):
 		
 		energy *= lerp(bass_boost,1.0,t)
 	
-		energy = pow(energy,0.70)
+		energy = pow(energy, energy_exponent)
 		
 		# attack - release
 		if energy > bars[i]:

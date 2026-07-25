@@ -20,6 +20,10 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7oiaf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tdfv3"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvktn"]
 
 [resource]
@@ -29,6 +33,8 @@ Button/styles/focus = SubResource("StyleBoxEmpty_sduji")
 Button/styles/hover = SubResource("StyleBoxFlat_wi0rm")
 Button/styles/normal = SubResource("StyleBoxEmpty_ru76s")
 Button/styles/pressed = SubResource("StyleBoxFlat_j8kk6")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_7oiaf")
 Label/font_sizes/font_size = 16
 Panel/styles/panel = null
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_tdfv3")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_wvktn")

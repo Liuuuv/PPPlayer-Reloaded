@@ -6,7 +6,7 @@ class_name Main
 func _ready() -> void:
 	Global.main = self
 	
-	DisplayServer.window_set_min_size(Vector2i(200,200))
+	DisplayServer.window_set_min_size(Vector2i(1140,200)) ## doesnt work :c
 	
 	
 	#benchmark.call_deferred()
@@ -29,16 +29,16 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
 		print("debug")
 		#benchmark()
-		
-	#if Input.is_action_just_pressed("toggle_visibility"):
-	if Input.is_action_just_pressed("debug"):
+	
 		pass
 		#var window: Window = get_viewport().get_window()
 		#match window.mode:
 			#Window.MODE_MINIMIZED: window.mode = Window.MODE_MAXIMIZED
 			#Window.MODE_MAXIMIZED: window.mode = Window.MODE_MINIMIZED
 		
-
+		
+		#Global.stats_tab.bpm_bar_chart.update_bpm(Global.current_playlist.content_ids.get(SongManager.playing_song_index))
+		
 
 
 

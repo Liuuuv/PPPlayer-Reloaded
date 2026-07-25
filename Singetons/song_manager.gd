@@ -11,7 +11,7 @@ var has_stream: bool = false:
 		if has_stream != on:
 			has_stream = on
 			has_stream_changed.emit()
-var playing_song_index: int = -1
+var playing_song_index: int = -1 ## Should only be changed with [method play_from_index] with [member change_index] = [code]true[/code]
 
 func _ready() -> void:
 	initialize.call_deferred()
@@ -47,34 +47,35 @@ func unpause_song():
 	song_unpaused.emit()
 
 func play_next_song() -> void:
-	playing_song_index += 1
 	if playing_song_index >= (Global.current_playlist.content_ids).size():
 		Global.music_player.clear_stream()
 		return
-	play_from_index(playing_song_index)
+	play_from_index(playing_song_index + 1)
 
 func play_previous_song() -> void:
-	playing_song_index -= 1
-	if playing_song_index < 0:
-		playing_song_index = 0
+	if playing_song_index == 0:
 		print("This is already the first song!")
-	play_from_index(playing_song_index)
+	play_from_index(playing_song_index - 1 if playing_song_index > 1 else playing_song_index)
 
 func change_song_progression(progression: float): ## 0-100
 	if Global.music_player.stream:
 		var target_time: float = Global.music_player.stream.get_length() * progression / 100
 		Global.music_player.seek(target_time)
 
-func play_from_index(index: int, change_index: bool = false) -> void:
+## Don't change [member playing_song_index] by yourself.
+func play_from_index(index: int, change_index: bool = true) -> void:
 	if index < 0 or index >= Global.current_playlist.content_ids.size():
 		push_error("index out of range of current playlist size")
 		return
 	
-	if change_index:
-		playing_song_index = index
+	
 	
 	var id: String = Global.current_playlist.content_ids[index]
-	play_from_id(id)
+	if change_index:
+		play_from_id(id, index)
+	else:
+		play_from_id(id)
+	
 	
 	
 	
@@ -91,9 +92,27 @@ func play_from_index(index: int, change_index: bool = false) -> void:
 		#push_error("no song info available for index ", index)
 		#return
 
+## Always used.
+func play_from_id(id: String, new_index: int = -1) -> void:
+	if new_index >= 0:
+		## update queue
+		if new_index < playing_song_index:
+			Global.current_playlist.queue_size = 0
+		else:
+			Global.current_playlist.queue_size -= min(new_index - playing_song_index, Global.current_playlist.queue_size)
+		
+		playing_song_index = new_index
+	
+	if Global.current_playlist.queue_size != 0:
+		Global.current_playlist.reload_list()
+	
+	var full_path: String = Tools.get_full_path_from_id(id)
+	if full_path:
+		start_song(full_path)
+	
 
 func add_song_from_file(path: String):
-	print("adding song from file.. : ", path)
+	print("Adding song from file.. : ", path)
 	var id: String = Global.generate_new_id() ## new filename
 	Tools.duplicate_file(path, Global.get_downloads_path(), id)
 	var extension: String = path.get_extension()
@@ -105,15 +124,22 @@ func add_song_from_file(path: String):
 
 
 func add_to_current_playlist(id: String):
-	print("adding to current playlist: ", id)
+	print("Adding to current playlist: ", id)
 	Global.current_playlist.content_ids.append(id)
 	Global.current_playlist.reload_song_items()
 	
 
 func add_to_queue_end(id: String):
 	print("Adding last to queue %s" % id)
-	Global.current_playlist.queue_ids.append(id)
-	Global.current_playlist.update_queue_indexes()
+	var new_content_ids: Array[String] = []
+	for i in Global.current_playlist.content_ids.size():
+		new_content_ids.append(Global.current_playlist.content_ids.get(i))
+		if i == playing_song_index + Global.current_playlist.queue_size:
+			new_content_ids.append(id)
+			
+	
+	Global.current_playlist.content_ids = new_content_ids
+	Global.current_playlist.queue_size += 1
 	Global.current_playlist.reload_list()
 
 func play_last_song_from_current_playlist() -> void: ## Plays the last song in the [member Global.current_playlist]
@@ -124,19 +150,13 @@ func play_last_song_from_current_playlist() -> void: ## Plays the last song in t
 	var id: String = Global.current_playlist.content_ids[-1]
 	play_from_id(id)
 
-func play_from_id(id: String, new_index: int = -1) -> void:
-	if new_index > 0:
-		playing_song_index = new_index
-	
-	var full_path: String = _get_full_path_from_id(id)
-	if full_path:
-		start_song(full_path)
-	
+
 	
 
 func clear_current_playlist(): ## clears the current_playlist
 	Global.current_playlist.clear_items()
-	playing_song_index = 0
+	Global.current_playlist.queue_size = 0
+	playing_song_index = -1
 	Global.music_player.clear_stream()
 
 #func update_downloaded_songs_from_song_infos():
@@ -159,19 +179,7 @@ func _on_song_finished():
 	else:
 		Global.music_player.clear_stream()
 	
-func _get_full_path_from_id(id: String) -> String:
-	var song_info = Global.song_infos.get(id)
-	if song_info:
-		var extension = song_info.get("extension")
-		if extension:
-			var full_path = Global.get_downloads_path() + id + "." + extension
-			return full_path
-		else:
-			push_error("no extension available for id %s" % id)
-			return ""
-	else:
-		push_error("no song info available for id  %s" % id)
-		return ""
+
 
 
 func _on_play():

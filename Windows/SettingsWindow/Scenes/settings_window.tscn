@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bshg530s1tmee" path="res://Windows/SettingsWindow/Scripts/settings_window.gd" id="1_gxk38"]
 [ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Windows/SettingsWindow/Scripts/do_checkup.gd" id="2_e3bw5"]
-[ext_resource type="Script" uid="uid://dm7cqtwn6us8q" path="res://Windows/SettingsWindow/Scripts/clear_cache.gd" id="2_kbi0k"]
 [ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://Shaders/background.gdshader" id="2_nrwrv"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="3_4qfth"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_k720b"]
@@ -12,6 +11,7 @@
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
 [ext_resource type="Script" uid="uid://bop3jkdcdd0uv" path="res://Windows/SettingsWindow/Scripts/open_user_button.gd" id="6_nnm61"]
 [ext_resource type="Script" uid="uid://d0kr18l2adjv6" path="res://Windows/SettingsWindow/Scripts/timeout_edit.gd" id="12_k720b"]
+[ext_resource type="Script" uid="uid://dwqaubpnsluse" path="res://Windows/SettingsWindow/Scripts/calculate_missing_bpms_button.gd" id="12_wbdh8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shqcg"]
 shader = ExtResource("2_nrwrv")
@@ -26,6 +26,7 @@ oversampling_override = 1.0
 title = "Settings"
 position = Vector2i(0, 36)
 size = Vector2i(670, 480)
+popup_window = true
 script = ExtResource("1_gxk38")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=321408159]
@@ -63,14 +64,16 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General/VBoxContainer" unique_id=912974446]
 layout_mode = 2
 
-[node name="ClearCache" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=100665118]
+[node name="ClearFileCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=160099973]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Clear file cache"
-script = ExtResource("2_kbi0k")
+script = ExtResource("3_4qfth")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="ClearMemoryCache" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=546088184]
+[node name="ClearFileMemoryCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=546088184]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -79,10 +82,19 @@ text = "Clear file + memory cache"
 script = ExtResource("3_4qfth")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
+[node name="ClearMemoryCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=1671962794]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Clear memory cache"
+script = ExtResource("3_4qfth")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
 [node name="DoCheckup" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=2113952229]
 layout_mode = 2
 focus_mode = 0
-text = "create summary"
+text = "Create summary"
 script = ExtResource("2_e3bw5")
 
 [node name="UpdateDownloadedSongsFolder" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1518767812]
@@ -112,6 +124,7 @@ script = ExtResource("6_nnm61")
 [node name="EnableLogs" type="CheckButton" parent="TabContainer/General/VBoxContainer" unique_id=501971915]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_default_cursor_shape = 2
 button_pressed = true
 text = "Enable Logs"
 alignment = 1
@@ -130,6 +143,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 max_value = 500.0
 value = 80.0
 rounded = true
@@ -138,6 +152,12 @@ rounded = true
 unique_name_in_owner = true
 layout_mode = 2
 text = "Xs"
+
+[node name="CalculateMissingBPMsButton" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1630893837]
+layout_mode = 2
+focus_mode = 0
+text = "Calculate missing BPMs"
+script = ExtResource("12_wbdh8")
 
 [node name="ColorRect" type="ColorRect" parent="TabContainer/General/VBoxContainer" unique_id=1840421715]
 custom_minimum_size = Vector2(0, 7.71)

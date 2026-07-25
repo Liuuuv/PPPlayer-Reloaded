@@ -186,8 +186,7 @@ func _gui_input(event: InputEvent) -> void:
 				#mouse_default_cursor_shape = Control.CURSOR_ARROW
 		
 		if is_selected_template:
-			var template_box: Rect2 = template.get_rect()
-			if mm.position.x >= template_box.size.x - is_selected_template.size.x:
+			if _is_hovering_node(mm.position, is_selected_template) and hovered_idx >= 0:
 				is_hovering_selection_box = true
 			else:
 				is_hovering_selection_box = false
@@ -199,7 +198,7 @@ func _gui_input(event: InputEvent) -> void:
 				break
 		
 
-## check if [param pos] (local) is in [param node]'s rect, independently of the scroll.
+## Checks if [param pos] (local) is in [param node]'s rect, independently of the scroll.
 func _is_hovering_node(pos: Vector2, node: Control) -> bool:
 	pos += Vector2(-get_grid_margin(), scroll)
 	
@@ -224,7 +223,7 @@ func _is_hovering_node(pos: Vector2, node: Control) -> bool:
 		fposmod(pos.y, item_size.y)
 	)
 	var node_rect: Rect2 = node.get_rect()
-	node_rect.position.x = node.global_position.x - global_position.x ## idk why artists_label.global_position - global_position does not work lol
+	node_rect.position.x = node.global_position.x - global_position.x ## idk why artists_label.global_position - global_position does not work lol but hey .x is all we need
 	return node_rect.has_point(pos_in_item)
 	
 
@@ -241,6 +240,11 @@ func _set_header_text(text: String) -> void:
 
 func _set_item_text(index: int, text: String) -> void:
 	context_menu._menu.set_item_text(index, text)
+
+func _on_mouse_exited() -> void:
+	super._on_mouse_exited()
+	is_hovering_selection_box = false
+	is_hovering_thumbnail = false
 
 func _on_item_left_clicked(idx: int) -> void:
 	super._on_item_left_clicked(idx)
@@ -278,7 +282,6 @@ func _on_item_left_clicked(idx: int) -> void:
 		if video_id:
 			OS.shell_open(Tools.build_youtube_url(video_id))
 
-	
 
 func _on_item_right_clicked(idx: int) -> void:
 	super._on_item_right_clicked(idx)
@@ -312,7 +315,7 @@ func _on_playlists_sub_menu_id_pressed(id: int):
 	var song_item: Global.SongItem = items.get(hovered_idx)
 	Global.playlists_tab.add_song_to_playlist(song_item.id, _sub_menu_id_mapping.get(id, ""))
 
-func _preview_selected_song() -> void:
+func _preview_selected_song() -> void: ## unused
 	var song_item: Global.SongItem = items.get(selected_idx)
 	if song_item == null:
 		if not items.has(selected_idx):

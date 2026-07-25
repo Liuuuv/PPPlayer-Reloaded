@@ -88,7 +88,7 @@ func _ready() -> void:
 		shader_bg.hide()
 	
 	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
+	mouse_exited.connect(_on_mouse_exited_control)
 	
 	visibility_changed.connect(_on_visibility_changed)
 	
@@ -424,6 +424,19 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 			if shader_bg:
 				if item is Global.SongItem and item.is_playing():
 					shader_bg.position = item_box.position + template_control.position
+		elif str(template_control.name)[0] == '~': ## "~xmy_method" to change size.x to item.my_method() (same goes for y)
+			var color_rect: ColorRect = template_control
+			var method_name: String = template_control.name.substr(2)
+			var new_rect: Rect2
+			new_rect.position = item_box.position
+			new_rect.size = Vector2(item.call(method_name), item_box.size.y) if str(template_control.name)[1] == "x" else Vector2(item_box.size.x, item.call(method_name))
+
+			draw_rect(
+				new_rect,
+				color_rect.color,
+				true
+			)
+
 		else:
 			var color_rect: ColorRect = template_control
 			draw_rect(item_box, color_rect.color, true)
@@ -503,10 +516,19 @@ func _on_item_right_clicked(idx: int) -> void: # does not work as intended with 
 func _on_mouse_entered() -> void:
 	pass
 
+## When exists the control. Not really reliable, use [method _on_mouse_exited] instead.
+func _on_mouse_exited_control() -> void:
+	if not Rect2(Vector2(), size).has_point(get_local_mouse_position()): ## to be sure (useful)
+		_on_mouse_exited()
+
 func _on_mouse_exited() -> void:
 	if can_grab_scroll_focus:
-		if not Rect2(Vector2(), size).has_point(get_local_mouse_position()):
-			_release_focus()
+		_release_focus()
+	
+	hovered_idx = -1
+	selected_idx = -1
+	
+	queue_redraw()
 
 func _release_focus(): ## for scroll focus
 	mouse_force_pass_scroll_events = true

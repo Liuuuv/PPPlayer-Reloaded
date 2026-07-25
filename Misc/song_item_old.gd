@@ -77,7 +77,7 @@ func _delete() -> void:
 	match location:
 		Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 			#_on_clicked_in_current_playlist()
-			Global.current_playlist.reload_song_items()
+			Global.current_play()
 		Global.SONG_ITEMS_LOCATIONS.DOWNLOADS:
 			Global.downloads_tab.reload_song_items()
 		_:
