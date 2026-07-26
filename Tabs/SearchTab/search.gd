@@ -40,7 +40,7 @@ func _on_stream_changed(full_path):
 	else:
 		var id: String = full_path.get_file().get_basename()
 		
-		big_thumbnail.texture = Tools.get_cached_thumbnail(id)
+		big_thumbnail.texture = CacheManager.get_cached_thumbnail(id)
 		
 		var song_info: Dictionary = Global.song_infos.get(id, {})
 		if song_info.get("bpm", 0.0):

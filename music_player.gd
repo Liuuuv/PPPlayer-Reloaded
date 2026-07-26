@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 		var total_sec = int(total_time) % 60
 		time_label.text = "%02d:%02d / %02d:%02d" % [current_min, current_sec, total_min, total_sec]
 	
-	var volume_multiplier: float = 1.2
+	var volume_multiplier: float = 1.0
 	var main_volume_linear = (Global.song_panel.main_volume / 100.0) * volume_multiplier
 	var volume_offset_linear = (Global.song_panel.volume_offset / 100.0)
 	volume_linear = main_volume_linear * (1.0 + volume_offset_linear)

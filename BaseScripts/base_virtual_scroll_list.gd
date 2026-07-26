@@ -36,6 +36,7 @@ var scroll_tick_amount: float = default_scroll_tick_amount
 var template: Control
 
 var items: Array = []
+var items_size: int = 0
 var scroll: float = 0.0
 var selected_idx: int = -1
 var hovered_idx: int = -1
@@ -49,7 +50,7 @@ var left_click_pressed: bool = false:
 			return
 		left_click_pressed = on
 		if on:
-			if selected_idx != -1:
+			if selected_idx != -1 and selected_idx < items_size:
 				item_left_clicked.emit(selected_idx)
 		else:
 			selected_idx = -1
@@ -60,7 +61,7 @@ var right_click_pressed: bool = false:
 			return
 		right_click_pressed = on
 		if on:
-			if selected_idx != -1:
+			if selected_idx != -1 and selected_idx < items_size:
 				item_right_clicked.emit(selected_idx)
 		else:
 			selected_idx = -1
@@ -102,15 +103,15 @@ func _on_template_exiting() -> void:
 	template = null
 
 
-
-
 func _add_item(item: Variant, redraw: bool = true) -> void:
 	items.append(item)
+	items_size += 1
 	if redraw:
 		queue_redraw()
 
 func clear_items() -> void:
 	items.clear()
+	items_size = 0
 	queue_redraw()
 
 func _process(delta: float) -> void:
@@ -133,8 +134,6 @@ func _process(delta: float) -> void:
 		queue_redraw()
 	else:
 		var end_position: float = get_end_position()
-		#end_position += size.y * below_margin_factor
-		
 		var max_scroll: float = end_position - size.y + template.size.y
 		
 		if max_scroll < 0:
@@ -158,9 +157,12 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb: InputEventMouseButton = event
 		
+		
+		
 		if mb.button_index == MOUSE_BUTTON_LEFT:
 			if mb.pressed:
 				selected_idx = get_index_at_position(mb.position)
+				
 			
 			left_click_pressed = mb.pressed # order is important, need to be processed after changing selected_idx
 			queue_redraw()
@@ -186,7 +188,7 @@ func _gui_input(event: InputEvent) -> void:
 	
 	elif event is InputEventMouseMotion:
 		var mm: InputEventMouseMotion = event
-		hovered_idx = get_index_at_position(mm.position)
+		hovered_idx = min(get_index_at_position(mm.position), items_size - 1)
 		queue_redraw()
 
 func get_item_size() -> Vector2:
@@ -371,7 +373,7 @@ func draw_item(template_control: Control, box: Rect2, item) -> void:
 		if str(template_control.name) == "Thumbnail":
 			if item is Global.SongItem:
 				var texture_rect: TextureRect = template_control
-				var thumbnail: Texture2D = Tools.get_cached_thumbnail(item.id)
+				var thumbnail: Texture2D = CacheManager.get_cached_thumbnail(item.id)
 				
 				var texture_to_draw: Texture2D = thumbnail if thumbnail else texture_rect.texture
 				if texture_to_draw:

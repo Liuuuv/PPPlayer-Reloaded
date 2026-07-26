@@ -10,7 +10,17 @@ initial_position = 4
 size = Vector2i(800, 500)
 script = ExtResource("1_fsc2t")
 
-[node name="Table" type="PanelContainer" parent="." unique_id=950066786]
+[node name="UIRoot" type="Control" parent="." unique_id=774933268]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Table" type="PanelContainer" parent="UIRoot" unique_id=950066786]
+unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

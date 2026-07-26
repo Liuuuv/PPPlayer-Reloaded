@@ -10,7 +10,7 @@ func _ready() -> void:
 	_initialize.call_deferred()
 
 func _initialize() -> void:
-	timeout_slider.value = Global.settings.get("timeout_duration", 80.0)
+	timeout_slider.set_value_no_signal(Global.settings.get("timeout_duration", 80.0))
 
 func _on_timeout_slider_value_changed(value: float):
 	Config.timeout_duration = value

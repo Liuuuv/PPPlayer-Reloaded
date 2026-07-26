@@ -1,6 +1,15 @@
 extends Node
 
+## Requests are processed in this order (first to last): HIGH, MED, LOW.[br]
+## Requests that are the same priority will be processed in the order they were received.
+enum REQUEST_PRIORITY {
+	HIGH,
+	MED,
+	LOW,
+}
+
 var log_func: Callable
+
 
 #func execute_python_script(args: Array, callback: Callable) -> void:
 	### UsePython.execute_python_script(
@@ -34,7 +43,21 @@ var mutex: Mutex
 var thread_output: Array = []
 var thread_exit_code: int = -1
 var busy: bool = false
-var pending_requests: Array = []  # [{args: Array, callback: Callable}]
+
+## [codeblock]
+## {
+## 		"REQUEST_PRIORITY.HIGH": {
+## 			{args: Array, callback: Callable}
+## 		},
+## 		"REQUEST_PRIORITY.MED": {
+## 			{args: Array, callback: Callable}
+## 		},
+## 		"REQUEST_PRIORITY.LOW": {
+## 			{args: Array, callback: Callable}
+## 		},
+## }
+## [/codeblock]
+var pending_requests: Dictionary = {}
 
 func _ready() -> void:
 	mutex = Mutex.new()
@@ -49,11 +72,12 @@ func _initialize() -> void:
 ## [codeblock]
 ## UsePython.execute_python_script(
 ##		[
-##			search_script_path,
+##			script_path,
 ##			python_script_argument1,
 ##			python_script_argument2
 ##		],
-##		_process_result
+##		_process_result,
+## 		UsePython.REQUEST_PRIORITY.HIGH
 ##	)
 ## [/codeblock]
 ## This will call the callback with the argument: [br]
@@ -70,19 +94,17 @@ func _initialize() -> void:
 ## 		"error": "An error message."
 ## }
 ## [/codeblock]
-func execute_python_script(args: Array, callback: Callable, asap: bool = false) -> void:
+func execute_python_script(args: Array, callback: Callable, priority: REQUEST_PRIORITY = REQUEST_PRIORITY.MED) -> void:
 	if busy:
 		
 		var request: Dictionary = {
 			"args": args,
 			"callback": callback
 		}
-		if asap:
-			pending_requests.push_back(request)
-			print("Added to queue (", pending_requests.size(), " waiting).")
-		else:
-			pending_requests.push_front(request)
-			print("Added to queue front (", pending_requests.size(), " waiting).")
+		
+		var same_priority_requests: Array = pending_requests.get_or_add(priority, [])
+		same_priority_requests.append(request)
+		print("Added to queue (", pending_requests.size(), " waiting).")
 		return
 	
 	_start_execution(args, callback)
@@ -161,8 +183,13 @@ func _on_thread_completed(callback: Callable) -> void:
 
 func _check_queue() -> void:
 	if not pending_requests.is_empty():
-		var request = pending_requests.pop_front()
-		_start_execution(request["args"], request["callback"])
+		var priority_requests: Array
+		for priority in REQUEST_PRIORITY.values():
+			priority_requests = pending_requests.get_or_add(priority, [])
+			if not priority_requests.is_empty():
+				var request = priority_requests.pop_front()
+				_start_execution(request["args"], request["callback"])
+				return
 
 
 

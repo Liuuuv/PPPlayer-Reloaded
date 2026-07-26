@@ -17,7 +17,7 @@ func display_playlist(playlist_name: String) -> void:
 	var content: Array = Global.playlists.get("playlists", {}).get(playlist_name, {}).get("content", [])
 	
 	var song_item: Global.SongItem
-	var id: String
+	var id: String ## will be a YouTube ID except if it starts with "local__". In this case, it's a local ID.
 	for idx in len(content):
 		id = content.get(idx)
 		if id.begins_with("local__"): ## local id

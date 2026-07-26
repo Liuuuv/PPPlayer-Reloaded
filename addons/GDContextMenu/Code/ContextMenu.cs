@@ -214,6 +214,11 @@ public partial class ContextMenu : Control
 			}
 		}
 	}
+	public void force_show_item(Control parent)
+	{
+		show_item(parent);
+	}
+	
 	#endregion
 
 	#region "Private Functions"

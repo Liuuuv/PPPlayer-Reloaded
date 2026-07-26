@@ -38,6 +38,9 @@ Config="*uid://54pmoutdoiwu"
 MusicRecommendation="*uid://d3ubf80vbov6l"
 Scrapper="*uid://yh3cefmuiggi"
 UsePython="*uid://dnro2lp8ux1i"
+YoutubeIdFinder="*uid://xxq2rfbpv48v"
+PlaylistManager="*uid://dp7hja3wj5j0t"
+CacheManager="*uid://by8ch2c1lic40"
 
 [display]
 
@@ -51,7 +54,7 @@ project/assembly_name="PPPlayer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-engine.easy-charts-main/addons/easy_charts/plugin.cfg", "res://addons/godot-webview-main/example/addons/webview/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/godot_tree_table/plugin.cfg")
+enabled=PackedStringArray("res://addons/GDContextMenu/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/godot_tree_table/plugin.cfg")
 
 [file_customization]
 

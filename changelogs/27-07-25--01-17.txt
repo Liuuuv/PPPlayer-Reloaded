@@ -1,0 +1,11 @@
+- Fixed an issue where deleting a local song did not removed its entry from some dictionary, making it impossible to download again.
+- Added more checks when deleting a local song.
+- Refactored the code of the HTML import (it is becoming a smart import from clipboard). Now supports YouTube playlists (currently using yt-dlp but it's also possible to use ytmusic-api).
+- Added a parameter in godot yt-dlp to get informations about a YouTube playlist.
+- Added a loading icon to indicate that a demand is already processing.
+- Modified godot yt-dlp: made so that it does not update if it is already updated
+- Added a way to delete a playlist (right click > delete)
+- When importing a playlist, it is now possible to create a playlist with the same name.
+- Added a way to clear logs by right clicking on the logs icon.
+- Added a way to update song infos (in song list and in the summary window).
+- Improved the handling of errors for yt-dlp.

@@ -117,6 +117,7 @@ func _initialize_context_menu_downloaded() -> void:
 	context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
 	context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
 	context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
+	context_menu.add_item("Re-download infos", _redownload_infos, false, null)
 	
 	sub_menu_id = context_menu._nextId
 	playlist_sub_menu = context_menu.add_submenu("Add to...")
@@ -371,6 +372,14 @@ func _redownload_thumbnail() -> void:
 	var url: String = Tools.build_youtube_url(video_id)
 	DownloadsManager.download_thumbnail_from_url(url, song_item.id)
 
+func _redownload_infos() -> void:
+	var song_item: Global.SongItem = items.get(selected_idx)
+	
+	var video_id: String = song_item.youtube_id
+	
+	SongManager.update_infos(video_id)
+
+
 func _delete() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)
 	var song_id: String = song_item.id
@@ -414,7 +423,6 @@ func _delete() -> void:
 		Global.delete_song_informations(song_id)
 		#items.remove_at(selected_idx)
 		SongManager.song_deleted.emit(song_id)
-		
 
 func _download_song():
 	var song_item: Global.ResultSongItem = items.get(selected_idx)
@@ -425,7 +433,6 @@ func _remove_from_playlist() -> void:
 	if selected_idx < 0:
 		return
 	Global.playlists_tab.remove_from_displayed_playlist(selected_idx)
-	Global.playlists_tab.reload_playlist_content()
 	#var playlist_content: Dictionary = playlists_infos.get()
 
 

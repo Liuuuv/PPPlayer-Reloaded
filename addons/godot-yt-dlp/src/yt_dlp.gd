@@ -33,13 +33,7 @@ func _ready() -> void:
 	setup_completed.connect(_on_setup_completed)
 
 func _on_setup_completed() -> void:
-	var executable: String = (
-			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
-		)
-	var output: Array = []
-	var exit_code = OS.execute(executable, PackedStringArray(["--version"]), output, true)
-	if output[0] is String:
-		current_version = output[0]
+	pass
 
 func is_setup() -> bool:
 	return _is_setup
@@ -62,28 +56,67 @@ func search(search_term: String, number_of_results: int) -> Search:
 
 
 func setup() -> void:
+	print("Starting the setup of yt-dlp")
+	
+	## gets the current version of yt-dlp
+	var executable: String = (
+			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
+		)
+	var output: Array = []
+	var exit_code = OS.execute(executable, PackedStringArray(["--version"]), output, true)
+	if output[0] is String:
+		current_version = output[0].strip_edges()
+	
+	var latest_version: String = await _get_latest_github_version()
+	
 	_downloader = Downloader.new()
 	var executable_name: String = "yt-dlp.exe" if OS.get_name() == "Windows" else "yt-dlp"
 
 	if not FileAccess.file_exists("user://%s" % executable_name):
 		# Download new yt-dlp binary
 		_downloader.download(yt_dlp_sources[OS.get_name()], "user://%s" % executable_name)
+		print("Waiting for the download of yt-dlp.exe to finish.")
 		await _downloader.download_completed
 	else:
 		# Update existing yt-dlp
-		_thread.start(_update_yt_dlp.bind(executable_name))
-		await _update_completed
-		# Wait for the next idle frame to join thread
-		await (Engine.get_main_loop() as SceneTree).process_frame
-		_thread.wait_to_finish()
+		if current_version == latest_version:
+			print("yt-dlp already updated.")
+		else:
+			print("Current version: %s, latest_version: %s" % [current_version, latest_version])
+			_thread.start(_update_yt_dlp.bind(executable_name))
+			print("Waiting for the update of yt-dlp.exe to finish.")
+			await _update_completed
+			# Wait for the next idle frame to join thread
+			await (Engine.get_main_loop() as SceneTree).process_frame
+			_thread.wait_to_finish()
 
 	if OS.get_name() == "Windows":
+		print("Waiting for ffmpeg to setup.")
 		await _setup_ffmpeg()
 	else:
 		OS.execute("chmod", PackedStringArray(["+x", OS.get_user_data_dir() + "/yt-dlp"]))
 
 	_is_setup = true
 	setup_completed.emit()
+
+
+
+
+func _get_latest_github_version() -> String:
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	
+	http_request.request("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest")
+	var result = await http_request.request_completed
+	
+	if result[0] == HTTPRequest.RESULT_SUCCESS:
+		var data = JSON.parse_string(result[3].get_string_from_utf8())
+		if data and data.has("tag_name"):
+			return data.tag_name ## the same as (cmd) "yt-dlp --version"
+	return ""
+
+
+
 
 func _cleanup_ffmpeg_release_archive(ffmpeg_release_filepath: String) -> void:
 	if not FileAccess.file_exists(ffmpeg_release_filepath):
@@ -159,6 +192,7 @@ class Download extends RefCounted:
 	var _no_download: bool = false
 	
 	var _progress_func: Callable
+	var _getting_playlist_info: bool = false
 	var _output: Array = []
 	
 
@@ -219,6 +253,11 @@ class Download extends RefCounted:
 		_no_download = true
 		return self
 	
+	## Overrides everything, simply executes "yt-dlp -J --flat-playlist "URL_PLAYLIST""
+	func set_is_playlist() -> Download:
+		_getting_playlist_info = true
+		return self
+	
 	func get_status() -> Status:
 		return _status
 
@@ -244,67 +283,76 @@ class Download extends RefCounted:
 		if _progress_func:
 			#_execute_on_thread_process()
 			push_error("Progress func not supported.")
-			return
 		var executable: String = (
 			OS.get_user_data_dir() + ("/yt-dlp.exe" if OS.get_name() == "Windows" else "/yt-dlp")
 		)
 
 		var options_and_arguments: Array = []
 		
-		## ffmpeg
-		if not _no_download:
-			match OS.get_name():
-				"Windows":
-					options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://ffmpeg.exe")])
-				"Linux", "macOS":
-					# Get the path of system ffmpeg 
-					var output := []
-					OS.execute("which", ["ffmpeg"], output)
-					var ffmpeg_path = output[0].get_base_dir()
-					
-					options_and_arguments.append_array(["--ffmpeg-location", ffmpeg_path])
-		if not _no_download:
-			if _convert_to_audio:
-				var format: String = (Audio.keys()[_audio_format] as String).to_lower()
-				options_and_arguments.append_array(["-x", "--audio-format", format])
-			else:
-				var format: String
+		if _getting_playlist_info:
+			options_and_arguments.append_array(["-J", "--flat-playlist"])
+		else:
+			## ffmpeg
+			if not _no_download:
+				match OS.get_name():
+					"Windows":
+						options_and_arguments.append_array(["--ffmpeg-location", ProjectSettings.globalize_path("user://ffmpeg.exe")])
+					"Linux", "macOS":
+						# Get the path of system ffmpeg 
+						var output := []
+						OS.execute("which", ["ffmpeg"], output)
+						var ffmpeg_path = output[0].get_base_dir()
+						
+						options_and_arguments.append_array(["--ffmpeg-location", ffmpeg_path])
+			if not _no_download:
+				if _convert_to_audio:
+					var format: String = (Audio.keys()[_audio_format] as String).to_lower()
+					options_and_arguments.append_array(["-x", "--audio-format", format])
+				else:
+					var format: String
 
-				match _video_format:
-					Video.WEBM:
-						format = "bestvideo[ext=webm]+bestaudio"
-					Video.MP4:
-						format = "bestvideo[ext=mp4]+m4a"
+					match _video_format:
+						Video.WEBM:
+							format = "bestvideo[ext=webm]+bestaudio"
+						Video.MP4:
+							format = "bestvideo[ext=mp4]+m4a"
 
-				options_and_arguments.append_array(["--format", format])
-		
-		#if not _no_download:
-		var file_path: String = (
-			"{destination}{file_name}.%(ext)s"
-			. format(
-				{
-					"destination": _destination,
-					"file_name": _file_name,
-				}
+					options_and_arguments.append_array(["--format", format])
+			
+			#if not _no_download:
+			var file_path: String = (
+				"{destination}{file_name}.%(ext)s"
+				. format(
+					{
+						"destination": _destination,
+						"file_name": _file_name,
+					}
+				)
 			)
-		)
-
-		options_and_arguments.append_array(["--no-continue", "-o", file_path])
+			
+			if not _no_download:
+				## "-o" for defining the file output.
+				## "--no-continue" to forbid continuing a download. Essentially forcing the entier download.
+				options_and_arguments.append_array(["--no-continue", "-o", file_path])
+			
+			
+			if _gather_infos:
+				## "-J" to force an ouput in form of one big dictionary.
+				options_and_arguments.append_array(["--dump-json", "--no-simulate", "-J"])
+			
+			if _write_thumbnail:
+				options_and_arguments.append_array(["--write-thumbnail"])
+			
+			if _no_download:
+				options_and_arguments.append_array(["--skip-download"])
+			#else:
+				#options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"]) # i think it's useless
+			
+			#if _track_progression:
+				#options_and_arguments.append_array(["--progress"])
+			
 		
 		
-		if _gather_infos:
-			options_and_arguments.append_array(["--dump-json", "--no-simulate"])
-		
-		if _write_thumbnail:
-			options_and_arguments.append_array(["--write-thumbnail"])
-		
-		if _no_download:
-			options_and_arguments.append_array(["--skip-download"])
-		#else:
-			#options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"]) # i think it's useless bc of
-		
-		#if _track_progression:
-			#options_and_arguments.append_array(["--progress"])
 		
 		options_and_arguments.append(_url)
 		
@@ -315,7 +363,7 @@ class Download extends RefCounted:
 
 		var output: Array = []
 		
-		#print("executable: ", executable)
+		
 		#print("YTDLP options_and_arguments: ", options_and_arguments)
 		Global.logs_display.write("Executable: " + executable)
 		Global.logs_display.write("YTDLP options and arguments: " + str(options_and_arguments))

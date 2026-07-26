@@ -5,7 +5,7 @@ var regex_js_id = RegEx.new()
 func _ready() -> void:
 	regex_js_id.compile('id="([^"]+)"')
 
-# Méthode principale pour extraire les URLs YouTube d'une page HTML
+
 func extract_youtube_ids_from_html(html_content: String) -> PackedStringArray:
 	var youtube_ids := PackedStringArray()
 	

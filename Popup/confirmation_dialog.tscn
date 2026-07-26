@@ -12,7 +12,6 @@ script = ExtResource("1_kuur2")
 
 [node name="ExtraInfos" type="RichTextLabel" parent="." unique_id=1066215896]
 unique_name_in_owner = true
-custom_maximum_size = Vector2(500, 500)
 anchors_preset = -1
 anchor_left = 0.040000003
 anchor_top = -0.010000001

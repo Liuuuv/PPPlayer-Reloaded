@@ -19,7 +19,6 @@ def get_bpm(fullpath: str):
         duration = len(y) / sr
 
         bpm, _ = librosa.beat.beat_track(y=y, sr=sr)
-        print(bpm)
         bpm = safe_to_float(bpm)
         
         print(json.dumps({

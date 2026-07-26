@@ -66,7 +66,7 @@ func _on_search_bar_text_submitted(new_text: String):
 			new_text
 		],
 		_process_search_results,
-		true
+		UsePython.REQUEST_PRIORITY.HIGH
 	)
 
 func _process_search_results(output: Dictionary):
@@ -78,11 +78,11 @@ func _process_search_results(output: Dictionary):
 	for track: Dictionary in result:
 		var youtube_id: String = track.get("videoId")
 		search_result_ids.append(youtube_id)
-		Tools.save_youtube_video_infos_to_cache(track)
+		CacheManager.save_youtube_video_infos_to_cache(track)
 	
 	var search_res: SearchCacheResource = SearchCacheResource.new()
 	search_res.results = search_result_ids
 	var query: String = output.get("query", "")
-	Tools._save_to_cache(search_res, Tools.get_results_cache_path() + Global.RESULTS_CACHE_SEARCH_RESULT_TEMPLATE % query + ".res")
+	CacheManager._save_to_cache(search_res, CacheManager.get_results_cache_path() + Global.RESULTS_CACHE_SEARCH_RESULT_TEMPLATE % query + ".res")
 	
 	display_search_results(search_result_ids, query)

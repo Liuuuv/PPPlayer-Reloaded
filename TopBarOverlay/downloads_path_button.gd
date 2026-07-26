@@ -26,7 +26,7 @@ func _initialize_context_menu():
 	context_menu.attach_to(self)
 	context_menu.set_minimum_size(Vector2i(400, 0))
 	#context_menu.add_placeholder_item("%s" % _get_selected_idx(), true, null)
-	context_menu.add_header_item("HEADER", null)
+	context_menu.add_header_item("Downloads", null)
 	context_menu.add_item("Open Folder", _open_downloads_folder, false, null)
 
 	context_menu.connect_to(self)

@@ -15,10 +15,13 @@ func _pressed() -> void:
 	#Global.artist_page.gather_and_display_infos("UCgwteC3ja-6FkDDHiK8diQw")
 	#Global.artist_page.gather_and_display_infos("UCMluca6I7VG2G0lFAZnTThw")
 	print("debug pressed")
-	for id in Global.song_infos.keys():
-		var song_info: Dictionary = Global.song_infos.get(id, {})
-		if song_info.get("bpm", 0):
-			song_info.set("bpm", roundi(song_info.get("bpm", 0)))
-			Global.save_song_infos()
-		else:
-			Global.stats_tab.bpm_bar_chart.calculate_bpm(id)
+	
+	print("UPDATE ALL BPMS DISABLED BECAUSE OF MEMORY")
+	#for id in Global.song_infos.keys():
+		#var song_info: Dictionary = Global.song_infos.get(id, {})
+		#if song_info.get("bpm", 0):
+			#song_info.set("bpm", roundi(song_info.get("bpm", 0)))
+			#Global.save_song_infos()
+			#
+		#else:
+			#Global.stats_tab.bpm_bar_chart.calculate_bpm(id)

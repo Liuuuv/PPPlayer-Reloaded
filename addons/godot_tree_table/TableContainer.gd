@@ -61,8 +61,10 @@ func set_table(table:Array[Array], header_size:int) -> void:
 			
 			if value == "true":
 				item.set_custom_bg_color(column, Color(0.179, 0.26, 0.181, 1.0))
+				#item.set_text(column, value)
 			elif value == "false":
 				item.set_custom_bg_color(column, Color(0.26, 0.179, 0.179, 1.0))
+				#item.set_text(column, value)
 			else:
 				item.set_text(column, value)
 
@@ -194,6 +196,7 @@ func get_cell_pos_double_click() -> void:
 func get_row_data() -> void:
 	var result:Array
 	var sel_item:TreeItem = tree.get_selected()
+	print(sel_item)
 	for i:int in tree.columns:
 		result.append(sel_item.get_text(i))
 	

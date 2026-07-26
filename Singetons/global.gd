@@ -85,7 +85,7 @@ var song_preferences: Dictionary = {} ## {id: {volume_offset: float, like: bool,
 ## 		"playlists": {
 ## 			playlist_name: String: {
 ## 				"content": [
-## 					String 	## ('local__XXXX' for local song IDs, otherwise YouTube IDs. In this case 'youtube_id' refers to a local_id, not sharable)
+## 					String 	## ('local__XXXX' for local ONLY song IDs, otherwise YouTube IDs. In this case it refers to a local_id, not sharable)
 ## 				],
 ## 				"thumbnail": String,
 ## 				"description": String,
@@ -120,6 +120,7 @@ var info_window: InfoWindow
 var list_window: ListWindow
 var edit_lyrics_window: EditLyricsWindow
 
+var root_ui: RootUI ## the root of everything
 var current_playlist: CurrentPlaylist ## what's playing now.
 var downloaded_tab: DownloadedTab ## all the downloaded songs.
 var downloads_tab: DownloadsTab ## currently downloading.
@@ -169,7 +170,6 @@ class BaseSongItem:
 
 class SongItem extends BaseSongItem: ## Local song items, used to display local songs.
 	var IsInQueue: bool = false
-	
 	var youtube_id: String = ""
 	
 	func _init() -> void:
@@ -181,7 +181,7 @@ class SongItem extends BaseSongItem: ## Local song items, used to display local 
 		var song_info: Dictionary = Global.song_infos.get(id, {})
 		youtube_id = song_info.get("video_id", "")
 		title = song_info.get("display_name", "")
-		artists = [{"name": song_info.get("artist", ""), "id": song_info.get("artist_id", "")}] ## TODO CHANGE THIS SHI
+		artists = [{"name": song_info.get("artist", ""), "id": song_info.get("artist_id", "")}]
 		#duration_string = song_info.get("display_name", "")
 	
 	func is_selected() -> String:
@@ -409,6 +409,7 @@ func load_song_infos() -> void:
 		song_infos_changed.emit()
 
 func save_downloaded_songs() -> void:
+	logs_display.write("Song infos saved.", LogsDisplay.MESSAGE.INFO)
 	Tools.write_json_file(downloaded_songs, DOWNLOADED_SONGS_PATH)
 
 func load_downloaded_songs() -> void:
@@ -448,7 +449,10 @@ func downloaded_song_add(youtube_id: String, local_id: String =""): ## [param lo
 	downloaded_songs.set(youtube_id, local_id)
 
 func downloaded_song_remove(video_id: String):
-	downloaded_songs.erase(video_id)
+	if downloaded_songs.has(video_id):
+		downloaded_songs.erase(video_id)
+	else:
+		push_error("downloaded_songs does not have the video_id you're tring to delete. (ID: %s)" % video_id)
 
 func change_settings(setting_name: String, value: Variant) -> void:
 	settings.set(setting_name, value)
@@ -540,17 +544,40 @@ func can_delete_song(id: String) -> bool:
 			return false
 	return true
 
-func delete_song_informations(id: String):
-	logs_display.write("Deleting song informations from ID %s" % id, LogsDisplay.MESSAGE.DEBUG)
-	Global.song_infos.erase(id)
-	Global.save_song_infos()
-	Global.song_preferences.erase(id)
-	Global.save_song_preferences()
-	Global.lyrics.erase(id)
-	Global.save_lyrics()
-	Global.downloaded_song_remove(id)
-	Global.save_downloaded_songs()
-	if Global.current_playlist.content_ids.has(id):
-		Global.current_playlist.content_ids.erase(id)
+func delete_song_informations(local_id: String):
+	logs_display.write("Deleting song informations from ID %s" % local_id, LogsDisplay.MESSAGE.DEBUG)
 	
-	logs_display.write("Successfully deleted the song informations for the ID: %s" % id, LogsDisplay.MESSAGE.INFO)
+	var song_info: Dictionary = Global.song_infos.get(local_id, {})
+	if song_info:
+		Global.downloaded_song_remove(song_info.get("video_id", ""))
+		Global.save_downloaded_songs()
+	
+	if Global.song_infos.has(local_id):
+		Global.song_infos.erase(local_id)
+		Global.save_song_infos()
+	else:
+		push_error("song_infos does not have the local_id you're tring to delete (ID: %s)" % local_id)
+	
+	if Global.song_preferences.has(local_id):
+		Global.song_preferences.erase(local_id)
+		Global.save_song_preferences()
+	else:
+		push_error("song_preferences does not have the local_id you're tring to delete (ID: %s)" % local_id)
+	
+	Global.lyrics.erase(local_id)
+	Global.save_lyrics()
+	
+	if Global.current_playlist.content_ids.has(local_id):
+		Global.current_playlist.content_ids.erase(local_id)
+	
+	logs_display.write("Finished deleting the song informations for the local ID: %s" % local_id, LogsDisplay.MESSAGE.INFO)
+
+
+func set_global_loading_screen() -> void:
+	pass
+
+func hide_global_loading_screen() -> void:
+	pass
+
+
+#

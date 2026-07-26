@@ -77,6 +77,7 @@ if (!embededSubwindows)
 }
 ```
 (This is clearly not the most optimized way to do it, but hey it works and surely won't be used that often :D)
+- Added a ```force_show_item``` method.
 
 ### Changes to godot_tree_table:
 - Made so that "true" and "false" (bool or string) are displayed as green and red color respectively instead of just text.

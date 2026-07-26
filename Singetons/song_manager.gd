@@ -151,13 +151,31 @@ func play_last_song_from_current_playlist() -> void: ## Plays the last song in t
 	play_from_id(id)
 
 
-	
-
 func clear_current_playlist(): ## clears the current_playlist
 	Global.current_playlist.clear_items()
 	Global.current_playlist.queue_size = 0
 	playing_song_index = -1
 	Global.music_player.clear_stream()
+
+func update_infos(youtube_id: String, callback: Callable = Callable()) -> void:
+	print("Updating infos for YouTube ID: %s" % youtube_id)
+	if youtube_id == "":
+		Global.logs_display.write("No YouTube ID provided.", LogsDisplay.MESSAGE.ERROR)
+		return
+	if not Global.downloaded_songs.has(youtube_id):
+		push_error("Downloaded songs does not have YouTube ID: %s" % youtube_id)
+		return
+	var local_id: String = Global.downloaded_songs.get(youtube_id, "")
+	var song_info: Dictionary = Global.song_infos.get(local_id, {})
+	if song_info:
+		var url: String = Tools.build_youtube_url(youtube_id)
+		var infos: Dictionary = await DownloadsManager.get_video_infos_from_url(url)
+		Global.create_song_infos(local_id, infos, song_info.get("extension", ""), youtube_id, "")
+		
+		if callback:
+			callback.call()
+	else:
+		push_error("No song info found for ID: %s" % local_id)
 
 #func update_downloaded_songs_from_song_infos():
 	#print("Scanning downloaded songs (from song_infos.json)...")
@@ -179,8 +197,6 @@ func _on_song_finished():
 	else:
 		Global.music_player.clear_stream()
 	
-
-
 
 func _on_play():
 	unpause_song()

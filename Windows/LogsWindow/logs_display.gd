@@ -147,22 +147,25 @@ func _on_close_requested():
 func _on_clear_logs():
 	var confirm: bool =  await Global.confirmation_dialog.ask_for_confirmation("Confirm", "Are you sure to delete the logs?")
 	if confirm:
-		num_errors = 0
-		if Config.disable_logs:
-			logs.text = "---------- LOGS DISABLED [CLEARED] ----------"
-		else:
-			var time_dict: Dictionary = Time.get_datetime_dict_from_system()
-			logs.text = "\n [color=purple][START SESSION (RESET)][/color] %s/%s/%s, %s:%s:%s %s DST \n" % [
-				time_dict.get("year", ""),
-				time_dict.get("month", ""),
-				time_dict.get("day", ""),
-				time_dict.get("hour", ""),
-				time_dict.get("minute", ""),
-				time_dict.get("second", ""),
-				"" if time_dict.get("dst") else "no"
-			]
-			#Tools.save_string(logs.text, Global.LOGS_PATH)
-			save()
+		clear_logs()
+
+func clear_logs() -> void:
+	num_errors = 0
+	if Config.disable_logs:
+		logs.text = "---------- LOGS DISABLED [CLEARED] ----------"
+	else:
+		var time_dict: Dictionary = Time.get_datetime_dict_from_system()
+		logs.text = "\n [color=purple][START SESSION (RESET)][/color] %s/%s/%s, %s:%s:%s %s DST \n" % [
+			time_dict.get("year", ""),
+			time_dict.get("month", ""),
+			time_dict.get("day", ""),
+			time_dict.get("hour", ""),
+			time_dict.get("minute", ""),
+			time_dict.get("second", ""),
+			"" if time_dict.get("dst") else "no"
+		]
+		#Tools.save_string(logs.text, Global.LOGS_PATH)
+		save()
 		
 
 func _exit_tree() -> void:

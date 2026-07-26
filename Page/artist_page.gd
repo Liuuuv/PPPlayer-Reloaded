@@ -101,7 +101,7 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 		Tools.download_biggest_thumbnail(
 			thumbnails,
 			func(artist_thumbnail: Texture2D):
-				Tools._save_to_cache.call_deferred(artist_thumbnail, Tools.get_results_cache_path() + Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % channel_id + ".res")
+				CacheManager._save_to_cache.call_deferred(artist_thumbnail, CacheManager.get_results_cache_path() + Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % channel_id + ".res")
 				if self.get("current_display_id") == channel_id:
 					artist_cover.texture = artist_thumbnail
 		)
@@ -115,7 +115,7 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 			return
 	else:
 		for track in songs.get("result", {}).get("tracks", []):
-			var song_id: String = Tools.save_youtube_video_infos_to_cache(track)
+			var song_id: String = CacheManager.save_youtube_video_infos_to_cache(track)
 			cached_infos.songs.append(song_id)
 	
 	## save to memory cache
@@ -126,7 +126,7 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
 	var path_to_results_cach_dir: String = path_to_cach_dir + Global.RESULTS_CACHE_DIR_NAME + "/"
 	var full_path: String = path_to_results_cach_dir + cache_name + ".res"
-	Tools._save_to_cache(cached_infos, full_path)
+	CacheManager._save_to_cache(cached_infos, full_path)
 
 func _display_infos(infos: ArtistCacheResource) -> void:
 	#print('display infos ', infos)

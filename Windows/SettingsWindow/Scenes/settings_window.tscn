@@ -156,7 +156,7 @@ text = "Xs"
 [node name="CalculateMissingBPMsButton" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1630893837]
 layout_mode = 2
 focus_mode = 0
-text = "Calculate missing BPMs"
+text = "Calculate missing BPMs (ram oof)"
 script = ExtResource("12_wbdh8")
 
 [node name="ColorRect" type="ColorRect" parent="TabContainer/General/VBoxContainer" unique_id=1840421715]

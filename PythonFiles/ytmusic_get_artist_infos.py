@@ -5,7 +5,7 @@ from ytmusicapi import YTMusic
 def get_artist_infos(artist_id: str):
     try:
         ytmusic = YTMusic()
-        # Récupérer les résultats de recherche
+        
         artist_infos_raw = ytmusic.get_artist(artist_id)
         
         
@@ -47,7 +47,7 @@ def get_artist_infos(artist_id: str):
                     'error': str(e)
                 }
         
-        # Imprimer le JSON pour Godot
+        
         print(json.dumps({
             'success': True,
             'infos': artist_infos
