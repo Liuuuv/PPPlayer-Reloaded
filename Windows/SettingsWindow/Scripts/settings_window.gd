@@ -37,13 +37,13 @@ func _on_clear_file_cache_button_pressed() -> void:
 	Tools.clear_file_cache()
 
 func _on_clear_memory_cache_button_pressed() -> void:
-	Tools._result_thumbnail_cache = {}
-	Tools._thumbnail_cache = {}
+	CacheManager._result_thumbnail_cache = {}
+	CacheManager._thumbnail_cache = {}
 
 func _on_clear_file_memory_cache_button_pressed() -> void:
 	Tools.clear_file_cache()
-	Tools._result_thumbnail_cache = {}
-	Tools._thumbnail_cache = {}
+	CacheManager._result_thumbnail_cache = {}
+	CacheManager._thumbnail_cache = {}
 
 func _on_got_current_version() -> void:
 	ytdlp_version_label.text = ytdlp_version_label.text % YtDlp.current_version.strip_edges()

@@ -43,7 +43,7 @@ func gather_and_display_infos(channel_id: String) -> void:
 	show_loading_overlay()
 	current_display_id = channel_id
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
-	var cache_result: Resource = Tools.get_cached_results(cache_name)
+	var cache_result: Resource = CacheManager.get_cached_results(cache_name)
 	if cache_result:
 		Global.logs_display.write("Artist's infos found in cache for channel ID: %s" % channel_id, LogsDisplay.MESSAGE.DEBUG)
 		_display_infos(cache_result)
@@ -71,7 +71,7 @@ func _data_callback(data: Dictionary, channel_id: String):
 		_save_infos_to_cache(data.get("infos", {}), channel_id)
 		await get_tree().process_frame ## some are call deferred
 		var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
-		var cache_result: ArtistCacheResource = Tools.get_cached_results(cache_name)
+		var cache_result: ArtistCacheResource = CacheManager.get_cached_results(cache_name)
 		if cache_result:
 			_display_infos(cache_result)
 		else:
@@ -120,7 +120,7 @@ func _save_infos_to_cache(infos: Dictionary, channel_id: String) -> void:
 	
 	## save to memory cache
 	var cache_name: String = Global.RESULTS_CACHE_ARTIST_TEMPLATE % channel_id
-	Tools._result_thumbnail_cache[cache_name] = cached_infos
+	CacheManager._result_thumbnail_cache[cache_name] = cached_infos
 	
 	## save to cache
 	var path_to_cach_dir: String = Global.get_downloads_path() + Global.CACHE_DIR_NAME + "/"
@@ -149,7 +149,7 @@ func _display_infos(infos: ArtistCacheResource) -> void:
 	channel_description.text = infos.get("description")
 	
 	
-	var artist_thumbnail: Texture2D = Tools.get_cached_results(Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % infos.channel_id)
+	var artist_thumbnail: Texture2D = CacheManager.get_cached_results(Global.RESULTS_CACHE_ARTIST_THUMBNAIL_TEMPLATE % infos.channel_id)
 	if artist_thumbnail:
 		artist_cover.texture = artist_thumbnail
 	else:
@@ -181,7 +181,7 @@ func _display_popular_titles(songs: Array[String]) -> void:
 	popular_titles.clear_items()
 	for song_id in songs:
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
-		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)
+		var song_result_res: SongCacheResource = CacheManager.get_cached_results(song_cache_name)
 		if song_result_res:
 			var result_song_item: Global.ResultSongItem = Global.create_result_song_item(song_id)
 			result_song_item.scroll_list_belong = popular_titles

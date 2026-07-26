@@ -251,13 +251,12 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("4_730hx")
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 tab_3/title = "Stats"
 script = ExtResource("16_wxqep")
 
 [node name="Search" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=2111112156]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("17_fqgfq")
@@ -456,6 +455,7 @@ layout_mode = 1
 offset_top = 32.0
 
 [node name="Library" type="Control" parent="UILayer/UI/VBoxContainer/MainTabContainer" unique_id=1369401924]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("29_ucuw1")

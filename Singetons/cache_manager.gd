@@ -121,7 +121,7 @@ func save_youtube_video_infos_to_cache(track_infos: Dictionary) -> String:
 		return ""
 	var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % song_id
 	
-	var song_cache_res: SongCacheResource = SongCacheResource.new(
+	var song_cache_res: SongCacheResource = SongCacheResource.create(
 		song_id,
 		track_infos.get("title", ""),
 		track_infos.get("artists", "")

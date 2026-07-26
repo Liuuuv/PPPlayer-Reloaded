@@ -263,7 +263,7 @@ class ResultSongItem extends BaseSongItem:
 		return ", ".join(artists.map(func(a): return a["name"]))
 	
 	func get_thumbnail() -> Texture2D:
-		return Tools.get_cached_results(Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % id)
+		return CacheManager.get_cached_results(Global.RESULTS_CACHE_SONG_THUMBNAIL_TEMPLATE % id)
 	
 	func is_downloaded() -> bool:
 		return Global.downloaded_songs.has(id) ## id is youtube_id here

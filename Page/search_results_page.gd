@@ -29,7 +29,7 @@ func display_search_results(youtube_ids: Array[String], query: String) -> void:
 	for youtube_id in youtube_ids:
 
 		var song_cache_name: String = Global.RESULTS_CACHE_SONG_TEMPLATE % youtube_id
-		var song_result_res: SongCacheResource = Tools.get_cached_results(song_cache_name)
+		var song_result_res: SongCacheResource = CacheManager.get_cached_results(song_cache_name) as SongCacheResource
 		if song_result_res:
 			var result_song_item: Global.ResultSongItem = Global.ResultSongItem.new()
 			result_song_item.initialize(
@@ -47,11 +47,14 @@ func display_search_results(youtube_ids: Array[String], query: String) -> void:
 
 ## TODO "topic" thing
 func _on_search_bar_text_submitted(new_text: String):
+	if new_text == "":
+		close()
+		return
 	open()
 	show_loading_overlay()
 	loading_info.text = "Requesting search results."
 	
-	var search_res: SearchCacheResource = Tools.get_cached_results(Global.RESULTS_CACHE_SEARCH_RESULT_TEMPLATE % new_text)
+	var search_res: SearchCacheResource = CacheManager.get_cached_results(Global.RESULTS_CACHE_SEARCH_RESULT_TEMPLATE % new_text)
 	if search_res:
 		display_search_results(search_res.results, new_text)
 		is_loaded_from_cache.show()
