@@ -22,6 +22,20 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7oiaf"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5d77"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7oiaf"]
+bg_color = Color(0.09, 0.09, 0.09, 0.47058824)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tdfv3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvktn"]
@@ -35,6 +49,8 @@ Button/styles/normal = SubResource("StyleBoxEmpty_ru76s")
 Button/styles/pressed = SubResource("StyleBoxFlat_j8kk6")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_7oiaf")
 Label/font_sizes/font_size = 16
+LineEdit/styles/normal = SubResource("StyleBoxFlat_j5d77")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_7oiaf")
 Panel/styles/panel = null
 PanelContainer/styles/panel = SubResource("StyleBoxEmpty_tdfv3")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_wvktn")

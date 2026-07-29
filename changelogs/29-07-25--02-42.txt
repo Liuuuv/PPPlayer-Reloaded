@@ -1,0 +1,12 @@
+- Added a way to search for artist specific songs (using the "art:" prefix).
+- Changed the way artists are stored to support multiple artists.
+- Fixed an issue where the local search would not reload properly if a query has been entered before you delete a song found in this query.
+- Added a support for arrays in the infos popup.
+- (finally) Added a display for the duration of the songs in song lists.
+- Added reload animations.
+- (I almost lost my song_infos.json file with +2.5k entries) Added a backup system: the app backups a json file (excepted downloaded_songs.json because it can be rebuilt fast and logs.json) if one of the following is true:
+	- The app just got launched (all are saved as backups).
+	- It has been modified
+- Added a drag and drop support to import local files.
+- Added a way to change the thumbnail of a song by your clipboard (in the info window).
+- Added a preview of the thumbnail of the selected song when opening the info window.

@@ -1,6 +1,25 @@
 [gd_scene format=3 uid="uid://cej6v7oecv1vj"]
 
 [ext_resource type="Script" uid="uid://bpajiibwgsy25" path="res://Windows/InfoWindow/info_window.gd" id="1_3nq6m"]
+[ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="2_oehed"]
+[ext_resource type="Shader" uid="uid://b1lm8sxaavhk1" path="res://Shaders/blur.gdshader" id="2_yhv7u"]
+[ext_resource type="Texture2D" uid="uid://cpm47nyvruvbb" path="res://placeholder_thumbnail.webp" id="3_btglj"]
+[ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="5_27eki"]
+[ext_resource type="Texture2D" uid="uid://bxu7o38jsc07q" path="res://Sprites/ThumbnailFromClipboard.png" id="5_uy1ud"]
+[ext_resource type="Texture2D" uid="uid://bpjpa8fkv138p" path="res://Sprites/Confirm.png" id="7_j5d77"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yhv7u"]
+shader = ExtResource("2_yhv7u")
+shader_parameter/offset = 7.6830003649425
+shader_parameter/luminosity = 0.8050000382375
+shader_parameter/transparency = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shqcg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [node name="InfoWindow" type="Window" unique_id=1919218813]
 oversampling_override = 1.0
@@ -16,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_oehed")
 tab_alignment = 1
 current_tab = 0
 
@@ -23,171 +43,239 @@ current_tab = 0
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="LinesContainer" type="VBoxContainer" parent="TabContainer/General" unique_id=2121928988]
+[node name="BGTextureRect" type="TextureRect" parent="TabContainer/General" unique_id=603970425]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yhv7u")
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 469.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_btglj")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/General" unique_id=1033883112]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="display_name" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1458705019]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/General/MarginContainer" unique_id=1957680979]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/display_name" unique_id=1176101046]
+[node name="LinesContainer" type="VBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer" unique_id=2121928988]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="display_name" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=151660590]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/display_name" unique_id=2081534390]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Display name"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/display_name" unique_id=1958783950]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/display_name" unique_id=1031432612]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/display_name" unique_id=860561664]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/display_name" unique_id=1827564594]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="artist" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1510016284]
+[node name="artists" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=665518887]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/artist" unique_id=1193921345]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artists" unique_id=1184088384]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Artist"
+text = "Artists"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/artist" unique_id=493635852]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artists" unique_id=325571751]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/artist" unique_id=1748823464]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artists" unique_id=720177652]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="release_date" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1248245807]
+[node name="release_date" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=1248245807]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/release_date" unique_id=863094523]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/release_date" unique_id=863094523]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Release date"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/release_date" unique_id=2014852451]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/release_date" unique_id=727247833]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/release_date" unique_id=457714482]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/release_date" unique_id=457714482]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="extension" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=503799663]
+[node name="extension" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=503799663]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/extension" unique_id=1658954893]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/extension" unique_id=1658954893]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Extension"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/extension" unique_id=1296109902]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/extension" unique_id=30351391]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/extension" unique_id=912407556]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/extension" unique_id=912407556]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="artist_id" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=660304127]
+[node name="artist_id" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=660304127]
+visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/artist_id" unique_id=841064613]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artist_id" unique_id=841064613]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Artist ID (YouTube)"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/artist_id" unique_id=1377574633]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artist_id" unique_id=446802422]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/artist_id" unique_id=656476860]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/artist_id" unique_id=656476860]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="video_id" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=75122670]
+[node name="video_id" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=75122670]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/video_id" unique_id=74978803]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/video_id" unique_id=74978803]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Video ID (YouTube)"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/video_id" unique_id=88979560]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/video_id" unique_id=536514856]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/video_id" unique_id=294738745]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/video_id" unique_id=294738745]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="thumbnail_path" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1791242506]
+[node name="thumbnail_path" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=1791242506]
+visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/thumbnail_path" unique_id=1497990226]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/thumbnail_path" unique_id=1497990226]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Thumbnail Path"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/thumbnail_path" unique_id=118059757]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/thumbnail_path" unique_id=368134882]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/thumbnail_path" unique_id=1581706216]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/thumbnail_path" unique_id=1581706216]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
 
-[node name="bpm" type="HBoxContainer" parent="TabContainer/General/LinesContainer" unique_id=1505803826]
+[node name="bpm" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer" unique_id=1505803826]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/General/LinesContainer/bpm" unique_id=94869043]
+[node name="Label" type="Label" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/bpm" unique_id=94869043]
 layout_mode = 2
 size_flags_vertical = 1
 text = "BPM"
 
-[node name="TextEdit" type="TextEdit" parent="TabContainer/General/LinesContainer/bpm" unique_id=1775490496]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/bpm" unique_id=1213211694]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/line_spacing = -3
-text = "dsdsdsdsds"
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+text = "hello there"
 editable = false
 
-[node name="EditButton" type="Button" parent="TabContainer/General/LinesContainer/bpm" unique_id=742117546]
+[node name="EditButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/LinesContainer/bpm" unique_id=742117546]
 layout_mode = 2
 toggle_mode = true
 text = "edit"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer" unique_id=1201562549]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/HBoxContainer" unique_id=515766444]
+layout_mode = 2
+alignment = 1
+
+[node name="ThumbnailFromClipboardButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=652204022]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("5_uy1ud")
+expand_icon = true
+script = ExtResource("5_27eki")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="ConfirmThumbnailFromClipboardButton" type="Button" parent="TabContainer/General/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1066765469]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("7_j5d77")
+expand_icon = true
+script = ExtResource("5_27eki")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="ClipboardThumbnailContainer" type="PanelContainer" parent="TabContainer/General/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2094255471]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 125)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_shqcg")
+
+[node name="ClipboardThumbnailRect" type="TextureRect" parent="TabContainer/General/MarginContainer/VBoxContainer/HBoxContainer/ClipboardThumbnailContainer" unique_id=2086446498]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("3_btglj")
+expand_mode = 1
+stretch_mode = 5

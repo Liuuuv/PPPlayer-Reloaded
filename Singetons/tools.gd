@@ -28,6 +28,8 @@ func write_json_file(data: Dictionary, full_file_path: String):
 
 
 func load_json_file(full_file_path: String) -> Dictionary:
+	if full_file_path == "":
+		return {}
 	var file = FileAccess.open(full_file_path, FileAccess.READ)
 	
 	if file == null:
@@ -277,7 +279,7 @@ func get_thumbnail_image(id: String) -> Image:
 			continue
 		
 		if not FileAccess.file_exists(thumbnail_path):
-			Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.INFO)
+			#Global.logs_display.write("get_thumbnail, file not found: %s" % thumbnail_path, LogsDisplay.MESSAGE.INFO)
 			continue
 		
 		var image := Image.new()
@@ -510,5 +512,83 @@ func get_full_path_from_id(id: String) -> String:
 	else:
 		push_error("no song info available for id  %s" % id)
 		return ""
+
+func contains_japanese_character(text: String) -> bool:
+	for character in text:
+		var code: int = character.unicode_at(0)
+		
+		# Hiragana (3040-309F)
+		if code >= 0x3040 and code <= 0x309F:
+			return true
+		
+		# Katakana (30A0-30FF)
+		if code >= 0x30A0 and code <= 0x30FF:
+			return true
+		
+		# Kanji (4E00-9FFF) - CJK Unified Ideographs
+		if code >= 0x4E00 and code <= 0x9FFF:
+			return true
+		
+		# Katakana Phonetic Extensions (31F0-31FF)
+		if code >= 0x31F0 and code <= 0x31FF:
+			return true
+		
+		# CJK Radicals Supplement (2E80-2EFF)
+		if code >= 0x2E80 and code <= 0x2EFF:
+			return true
+	
+	return false
+
+func duration_to_string(seconds: float) -> String:
+	var minutes = int(seconds) / 60
+	var secs = int(seconds) % 60
+	return "%02d:%02d" % [minutes, secs]
+
+func fullpath_to_filename(full_path: String) -> String:
+	return full_path.get_file().get_basename()
+
+## Calculates recursively and returns the size (in bytes) of the given folder.
+func get_directory_size(path: String) -> int:
+	var total_size: int = 0
+	
+	var dir = DirAccess.open(path)
+	if dir == null:
+		push_error("Unable to open the folder: %s" % path)
+		return 0
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	
+	while file_name != "":
+		if file_name == "." or file_name == "..":
+			file_name = dir.get_next()
+			continue
+		
+		var full_path = path + "/" + file_name
+		
+		if dir.current_is_dir():
+			total_size += get_directory_size(full_path)
+		else:
+			var file = FileAccess.open(full_path, FileAccess.READ)
+			if file:
+				total_size += file.get_length()
+				file.close()
+		
+		file_name = dir.get_next()
+	
+	dir.list_dir_end()
+	return total_size
+
+
+func get_byte_string(bytes: int) -> String:
+	if bytes < 1024:
+		return "%d o" % bytes
+	elif bytes < 1024 * 1024:
+		return "%.1f Ko" % (bytes / 1024.0)
+	elif bytes < 1024 * 1024 * 1024:
+		return "%.1f Mo" % (bytes / (1024.0 * 1024.0))
+	else:
+		return "%.2f Go" % (bytes / (1024.0 * 1024.0 * 1024.0))
+
 
 #

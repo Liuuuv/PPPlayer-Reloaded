@@ -1,4 +1,4 @@
-extends Control
+extends BaseTab
 class_name PlaylistsListTab
 
 @onready var playlists_list: PlaylistList = %PlaylistsList

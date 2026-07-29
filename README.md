@@ -8,7 +8,7 @@ PP Player is and open-source local music player with online integrations (YouTub
 - I am afraid some songs I listen to get deleted someday, I'd like to 'pause time'.
 - Some songs are not on YouTube Music, maybe because they do not have the 'song' tag.
 - Youtube Music lacks some feature like cropping songs or offsetting the volume for individual songs. I don't like raising my entire volume for one single track.
-- Of course playing two versions of the same song in a row `:')`.
+- And of course having two versions of the same song in a row `:')` is pretty frustrating.
 
 So I thought to myself 'can I really complain?', so my goal is to recreate a music player that is objectively better that YouTube Music (even if it relies on it to works).
 
@@ -17,7 +17,8 @@ So I thought to myself 'can I really complain?', so my goal is to recreate a mus
 - Ctrl + LMB on a song to open its page on your default browser.
 
 ### Search bar:
-- Use 'id:' for id search only.
+- Use 'id:' for searching by the id.
+- Use 'art:' for searching by the artists.
 
 ## How to install
 - Download the [PythonFiles](https://github.com/Liuuuv/PPPlayer-Reloaded/tree/main/PythonFiles) folder and put it in the `user://` directory.
@@ -50,7 +51,6 @@ The project relies on the Python library ytmusicapi (https://github.com/sigma67/
 - Added a pull from the GitHub (https://github.com/Nolkaloid/godot-yt-dlp/pull/13) that handles abandoning DL/search requests.
 - Added possibility of not downloading or only get infos (not parsed).
 - Added a stop if there is an error (```error != 0```) when executing the command.
-- Added additional arguments for preferring the best quality (```options_and_arguments.append_array(["-f bestaudio", "--audio-quality 0"])```)
 
 You need to have deno (the .exe for Win10 users) at the same path as ffmpeg, ffmprobe, yt-dlp (```user://```).
 
@@ -94,7 +94,7 @@ if (!embededSubwindows)
 
 ### Changes to Godot Easy Charts:
 - At `res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.gd`, fixed an issue where tooltips were not resizing properly when lots of elements were visible.
-- Added a chart property that y-offsets one of two x-labels (for clarity).
+- Added a chart property that y-offsets one out of two x-labels (for clarity).
 
 ## Complementary informations
 - This software has not been release yet and is work in progress.

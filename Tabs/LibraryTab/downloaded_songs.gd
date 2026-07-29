@@ -41,7 +41,7 @@ func reload_list() -> void:
 				#continue
 			#if not dir.current_is_dir():
 				#var extension = file_name.get_extension()
-				#if extension in ["mp3", "ogg", "wav"]:
+				#if extension in Global.SUPPORTED_EXTENSIONS:
 					#var full_path = Global.get_downloads_path() + file_name
 					##print("reload_list > fullpath ", full_path)
 					##Global.logs_display.write("reload_list > fullpath " + full_path)

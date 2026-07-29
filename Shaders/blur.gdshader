@@ -1,0 +1,27 @@
+shader_type canvas_item;
+// originates from https://godotshaders.com/shader/dual-kawase-up-fast-blur/
+// by SanderVanhove
+
+uniform float offset: hint_range(0.0, 10.0);
+uniform float luminosity: hint_range(0.0, 2.0) = 1.0;
+uniform float transparency: hint_range(0.0, 1.0) = 1.0;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+
+void fragment() {
+	vec2 uv = UV;
+	vec2 halfpixel = SCREEN_PIXEL_SIZE / 2.0;
+	
+	vec4 sum = texture(TEXTURE, uv + vec2(-halfpixel.x * 2.0, 0.0) * offset);
+	sum += texture(TEXTURE, uv + vec2(-halfpixel.x, halfpixel.y) * offset) * 2.0;
+	sum += texture(TEXTURE, uv + vec2(0.0, halfpixel.y * 2.0) * offset);
+	sum += texture(TEXTURE, uv + vec2(halfpixel.x, halfpixel.y) * offset) * 2.0;
+	sum += texture(TEXTURE, uv + vec2(halfpixel.x * 2.0, 0.0) * offset);
+	sum += texture(TEXTURE, uv + vec2(halfpixel.x, -halfpixel.y) * offset) * 2.0;
+	sum += texture(TEXTURE, uv + vec2(0.0, -halfpixel.y * 2.0) * offset);
+	sum += texture(TEXTURE, uv + vec2(-halfpixel.x, -halfpixel.y) * offset) * 2.0;
+	
+	vec4 blurred = sum / 12.0;
+	vec3 color = blurred.rgb * luminosity;
+	COLOR = vec4(color, transparency);
+}

@@ -27,10 +27,14 @@ func start_song(full_path: String):
 	var id: String = full_path.get_file().get_basename()
 	var thumbnail_image: Image = Tools.get_thumbnail_image(id)
 	var song_info: Dictionary = Global.song_infos.get(id)
+	var artists: Array = song_info.get("artists", [])
+	var artist_text: String = ", ".join(artists.map(func(a): return a["name"]))
+	if artist_text == "":
+		artist_text = "No artist provided"
 	if song_info:
 		WindowsOverlay.SetMetadata(
 			song_info.get('display_name', "no display_name provided"),
-			song_info.get('artist', "no artist provided"), 
+			artist_text, 
 			thumbnail_image
 		)
 	

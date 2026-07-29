@@ -35,12 +35,45 @@ func get_cached_thumbnail(id: String) -> Texture2D:
 			return texture
 	
 	# .res does not exists and the id is not in the memory cache, so create the .res and save into the memory cache
-	var thumbnail: Texture2D = Tools.get_thumbnail(id)
+	var thumbnail: ImageTexture = Tools.get_thumbnail(id)
 	if thumbnail != null:
 		_thumbnail_cache[id] = thumbnail
+		#thumbnail = compress_thumbnail(thumbnail) ## TODO TEMP
 		_save_to_cache.call_deferred(thumbnail, full_path)
 	
 	return thumbnail
+
+## TODO TEMP
+func compress_thumbnail(texture: ImageTexture, max_size: int = 256, quality: float = 0.8) -> ImageTexture:
+	
+	# Convertir Texture → Image
+	var image: Image = texture.get_image()
+	
+	# Redimensionner si trop grand
+	var width = image.get_width()
+	var height = image.get_height()
+	
+	if width > max_size or height > max_size:
+		# Calculer le ratio pour garder les proportions
+		var ratio = min(float(max_size) / width, float(max_size) / height)
+		var new_width = int(width * ratio)
+		var new_height = int(height * ratio)
+		image.resize(new_width, new_height, Image.INTERPOLATE_LANCZOS)
+	
+	# Compresser (WebP lossy)
+	var compressed_data = image.save_webp_to_buffer(false, quality)
+	
+	# Alternative : JPEG
+	# var compressed_data = image.save_jpg_to_buffer(quality)
+	
+	# Alternative : PNG (lossless)
+	# var compressed_data = image.save_png_to_buffer()
+	
+	# Recréer l'ImageTexture
+	var compressed_image = Image.new()
+	compressed_image.load_webp_from_buffer(compressed_data)
+	
+	return ImageTexture.create_from_image(compressed_image)
 
 ## Eg: returns the associated resource
 ## [br]

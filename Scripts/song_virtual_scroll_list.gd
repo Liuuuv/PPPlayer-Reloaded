@@ -62,10 +62,7 @@ func add_song_item(id: String) -> Global.SongItem:
 	_add_item(song_item)
 	return song_item
 
-## The function you call when you want to reload the list. [br]
-## Override this for use cases like current playlist, downloaded list...
-func reload_list() -> void:
-	pass
+
 
 func _initialize_context_menu():
 	context_menu = ContextMenu.new()
@@ -86,7 +83,10 @@ func _initialize_context_menu():
 		Global.SONG_ITEMS_LOCATIONS.CURRENT_PLAYLIST:
 			context_menu.add_item("Play from here", _play_from_here, false, null)
 			#context_menu.add_item("Preview", _preview_selected_song, false, null)
+			context_menu.add_item("Add to the queue (end)", _add_selected_to_queue_end, false, null)
 			context_menu.add_item("Infos", Callable(self, "_show_infos"), false, null)
+			context_menu.add_item("Re-download thumbnail", _redownload_thumbnail, false, null)
+			context_menu.add_item("Re-download infos", _redownload_infos, false, null)
 			context_menu.add_item("Remove", Callable(self, "_remove_selected"), false, null)
 		Global.SONG_ITEMS_LOCATIONS.RESULTS:
 			context_menu.add_item("Download", _download_song, false, null)
@@ -356,10 +356,15 @@ func _remove_selected() -> void:
 	queue_redraw()
 
 func _show_infos() -> void:
+	if selected_idx < 0:
+		return
 	var song_item: Global.SongItem = items.get(selected_idx)
 	Global.info_window.display_info(song_item.id)
 
 func _redownload_thumbnail() -> void:
+	if selected_idx < 0:
+		push_error("Selected index is negative, skipping.")
+		return
 	var song_item: Global.SongItem = items.get(selected_idx)
 	if song_item == null:
 		if not items.has(selected_idx):
@@ -376,7 +381,6 @@ func _redownload_infos() -> void:
 	var song_item: Global.SongItem = items.get(selected_idx)
 	
 	var video_id: String = song_item.youtube_id
-	
 	SongManager.update_infos(video_id)
 
 

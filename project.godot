@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="PPPlayer-(4.7)"
 run/main_scene="uid://ck2xb0mwofdp1"
 config/features=PackedStringArray("4.7", "C#", "Mobile")
-boot_splash/show_image=false
+boot_splash/image="uid://uujlswguhi4r"
 config/icon="uid://bxdelljv7kbwc"
 
 [audio]
@@ -41,6 +41,8 @@ UsePython="*uid://dnro2lp8ux1i"
 YoutubeIdFinder="*uid://xxq2rfbpv48v"
 PlaylistManager="*uid://dp7hja3wj5j0t"
 CacheManager="*uid://by8ch2c1lic40"
+SongFeatures="*uid://dxb6fr1ipyer0"
+BackupManager="*uid://c18ua6alrg80i"
 
 [display]
 

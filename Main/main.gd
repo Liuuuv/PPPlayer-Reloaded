@@ -8,9 +8,14 @@ func _ready() -> void:
 	
 	DisplayServer.window_set_min_size(Vector2i(1140,200)) ## doesnt work :c
 	
-	
+	get_window().files_dropped.connect(on_files_dropped)
 	#benchmark.call_deferred()
 	#select_folder_dialog.dir_selected.connect(_on_select_folder_dialog_selected)
+
+
+## [param files] example: ["C:\\Users\\YOURNAME\\Downloads\\This_is_a_song.mp3"]
+func on_files_dropped(files):
+	pass
 
 func benchmark():
 	Benchmark.benchmark(Global.downloaded_tab.reload_song_list)

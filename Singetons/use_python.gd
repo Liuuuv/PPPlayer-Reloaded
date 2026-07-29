@@ -104,7 +104,7 @@ func execute_python_script(args: Array, callback: Callable, priority: REQUEST_PR
 		
 		var same_priority_requests: Array = pending_requests.get_or_add(priority, [])
 		same_priority_requests.append(request)
-		print("Added to queue (", pending_requests.size(), " waiting).")
+		print("Added to queue (", same_priority_requests.size(), " waiting).")
 		return
 	
 	_start_execution(args, callback)

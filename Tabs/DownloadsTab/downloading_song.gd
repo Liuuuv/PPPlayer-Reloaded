@@ -1,4 +1,6 @@
 extends VBoxContainer
+## UNUSED
+
 #class_name SongsDownload
 #
 #signal queue_changed()
@@ -73,9 +75,8 @@ extends VBoxContainer
 		#Global.logs_display.write("Did not manage to download videoID: %s, ID: %s" % [video_id, id], LogsDisplay.MESSAGE.ERROR)
 	#
 	#var extension: String = "mp3"
-	#var thumbnail_path: String = ""
 	#
-	#Global.create_song_infos(id, infos, extension, video_id, thumbnail_path)
+	#Global.create_song_infos(id, infos, extension, video_id)
 	#remove_from_queue(video_id)
 	#is_ready_to_dl = true
 	#try_dl.emit()

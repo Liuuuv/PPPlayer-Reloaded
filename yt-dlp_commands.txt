@@ -1,0 +1,5 @@
+Print playlist content:
+    yt-dlp -J --flat-playlist "URL_PLAYLIST"
+
+
+yt-dlp -J "URL_VIDEO"

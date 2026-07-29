@@ -10,6 +10,11 @@ func _ready() -> void:
 	Global.playlists_tab = self
 	tab_container.current_tab = 0
 	
+	for i in tab_container.get_child_count():
+		var child: BaseTab = tab_container.get_children()[i] as BaseTab
+		child.tab_index = i
+		child.parent_tab_container = tab_container
+	
 	playlist_content_tab.back_button.pressed.connect(_on_playlist_content_tab_back_button_pressed)
 	playlist_content_tab.reload_button.pressed.connect(_on_playlist_content_tab_reload_button_pressed)
 	

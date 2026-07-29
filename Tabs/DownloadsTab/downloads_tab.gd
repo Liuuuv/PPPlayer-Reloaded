@@ -154,9 +154,27 @@ func _on_try_dl():
 		Global.logs_display.write("Did not manage to download videoID: %s, ID: %s, reason: %s" % [video_id, local_id, infos.get("interrupt", "")], LogsDisplay.MESSAGE.ERROR)
 	else: ## success
 		var extension: String = Config.default_audio_format_string
-		var thumbnail_path: String = ""
 		
-		Global.create_song_infos(local_id, infos, extension, video_id, thumbnail_path)
+		var release_date: String = infos.get("release_date", "") if infos.get("release_date", "") else ""
+		if release_date == "":
+			release_date = infos.get("upload_date", "") if infos.get("upload_date", "") else ""
+		
+		## from yt dlp: only get one artist
+		var artist_name: String = infos.get("channel", "") if infos.get("channel", "") else ""
+		var artist_id: String = infos.get("channel_id", "") if infos.get("channel_id", "") else ""
+		
+		
+		
+		Global.create_song_infos(
+				local_id, ## local_id
+				infos.get("title", "") if infos.get("title", "") else "", ## display_name
+				extension, ## extension
+				release_date, ## release date
+				[{"name": artist_name, "id": artist_id}], ## artists
+				"", ## album
+				video_id, ## youtube_id
+				infos.get("duration_string", "") if infos.get("duration_string", "") else "",
+			)
 		Global.downloaded_tab.reload_list()
 		Global.downloaded_song_add(video_id, local_id)
 		Global.save_downloaded_songs()

@@ -33,7 +33,7 @@ func start_song(full_path: String): ## starts the song from the given path.
 	print("starting song : ", full_path)
 	Global.music_player.start_song(full_path)
 	
-	var id: String = full_path.get_file().get_basename()
+	var id: String = Tools.fullpath_to_filename(full_path)
 	var song_infos = Global.song_infos.get(id)
 	if song_infos:
 		Global.song_panel.song_label.text = song_infos.get("display_name", "[i]Untitled[/i]")
@@ -55,7 +55,7 @@ func play_next_song() -> void:
 func play_previous_song() -> void:
 	if playing_song_index == 0:
 		print("This is already the first song!")
-	play_from_index(playing_song_index - 1 if playing_song_index > 1 else playing_song_index)
+	play_from_index(playing_song_index - 1 if playing_song_index >= 1 else playing_song_index)
 
 func change_song_progression(progression: float): ## 0-100
 	if Global.music_player.stream:
@@ -112,14 +112,25 @@ func play_from_id(id: String, new_index: int = -1) -> void:
 	
 
 func add_song_from_file(path: String):
+	if path.get_extension() not in Global.SUPPORTED_EXTENSIONS:
+		push_error("Filepath %s does not has a supported extension (%s)" % [path, ", ".join(Global.SUPPORTED_EXTENSIONS)])
+		return
 	print("Adding song from file.. : ", path)
 	var id: String = Global.generate_new_id() ## new filename
 	Tools.duplicate_file(path, Global.get_downloads_path(), id)
 	var extension: String = path.get_extension()
 	var song_name: String = path.get_file().get_basename()
 	
-	var infos = {"title": song_name}
-	Global.create_song_infos(id, infos, extension)
+	Global.create_song_infos(
+		id, ## local_id
+		song_name, ## display_name
+		extension, ## extension
+		"", ## release date
+		[], ## artists
+		"", ## album
+		"", ## youtube_id
+		"", ## duration_string
+	)
 	Global.downloads_folder_changed.emit()
 
 
@@ -170,25 +181,43 @@ func update_infos(youtube_id: String, callback: Callable = Callable()) -> void:
 	if song_info:
 		var url: String = Tools.build_youtube_url(youtube_id)
 		var infos: Dictionary = await DownloadsManager.get_video_infos_from_url(url)
-		Global.create_song_infos(local_id, infos, song_info.get("extension", ""), youtube_id, "")
+		
+		var release_date: String = infos.get("release_date", "") if infos.get("release_date", "") else ""
+		if release_date == "":
+			release_date = infos.get("upload_date", "") if infos.get("upload_date", "") else ""
+		
+		## from yt dlp: only get one artist
+		var artist_name: String = infos.get("channel", "") if infos.get("channel", "") else ""
+		var artist_id: String = infos.get("channel_id", "") if infos.get("channel_id", "") else ""
+		
+		Global.create_song_infos(
+			local_id, ## local_id
+			infos.get("title", "") if infos.get("title", "") else "", ## display_name
+			song_info.get("extension", ""), ## extension
+			release_date, ## release date
+			[{"name": artist_name, "id": artist_id}], ## artists
+			"", ## album
+			youtube_id, ## youtube_id
+			infos.get("duration_string", "") if infos.get("duration_string", "") else "",
+		)
 		
 		if callback:
 			callback.call()
 	else:
 		push_error("No song info found for ID: %s" % local_id)
 
-#func update_downloaded_songs_from_song_infos():
-	#print("Scanning downloaded songs (from song_infos.json)...")
-	#var downloaded_songs: Dictionary = {}
-	#for id in Global.song_infos:
-		#var song_info: Dictionary = Global.song_infos.get(id, {})
-		#if song_info.has("video_id"):
-			#downloaded_songs.set(song_info.get("video_id"), 0)
-	#Global.downloaded_songs = downloaded_songs
-	#Global.save_downloaded_songs()
 
 func _on_stream_changed(fullpath: String): ## from the music player
 	has_stream = Global.music_player.stream != null
+	
+	var local_id: String = Tools.fullpath_to_filename(fullpath)
+	var song_info: Dictionary = Global.song_infos_get(local_id)
+	if song_info:
+		if not song_info.has("duration_string"):
+			var duration: float = Global.music_player.stream.get_length()
+			var duration_string: String = Tools.duration_to_string(duration)
+			song_info.set("duration_string", duration_string)
+			Global.save_song_infos()
 
 func _on_song_finished():
 	if playing_song_index < Global.current_playlist.content_ids.size():

@@ -1,13 +1,11 @@
 [gd_scene format=3 uid="uid://bhlj3f6rlotp6"]
 
 [ext_resource type="Script" uid="uid://bshg530s1tmee" path="res://Windows/SettingsWindow/Scripts/settings_window.gd" id="1_gxk38"]
-[ext_resource type="Script" uid="uid://d2twkler1vk16" path="res://rescan_downloaded_song.gd" id="1_noev4"]
 [ext_resource type="Script" uid="uid://caojqnn4dfgxp" path="res://Windows/SettingsWindow/Scripts/do_checkup.gd" id="2_e3bw5"]
 [ext_resource type="Shader" uid="uid://eikm1dm8edtv" path="res://Shaders/background.gdshader" id="2_nrwrv"]
 [ext_resource type="Script" uid="uid://bay6lh0jv21oo" path="res://Components/button_component.gd" id="3_4qfth"]
 [ext_resource type="Theme" uid="uid://bpi0gh7js67xt" path="res://Themes/theme.tres" id="3_k720b"]
 [ext_resource type="Script" uid="uid://d05uwomuoxor4" path="res://Windows/SettingsWindow/Scripts/remove_duplicate.gd" id="3_y72ja"]
-[ext_resource type="Script" uid="uid://dotm7dksllgpe" path="res://Windows/SettingsWindow/Scripts/update_downloaded_songs_song_infos.gd" id="5_2oix8"]
 [ext_resource type="Script" uid="uid://crcxbgt8jkjl8" path="res://Windows/LogsWindow/enable_logs_button.gd" id="6_5nis2"]
 [ext_resource type="Script" uid="uid://bop3jkdcdd0uv" path="res://Windows/SettingsWindow/Scripts/open_user_button.gd" id="6_nnm61"]
 [ext_resource type="Script" uid="uid://d0kr18l2adjv6" path="res://Windows/SettingsWindow/Scripts/timeout_edit.gd" id="12_k720b"]
@@ -73,15 +71,6 @@ text = "Clear file cache"
 script = ExtResource("3_4qfth")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
-[node name="ClearFileMemoryCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=546088184]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-text = "Clear file + memory cache"
-script = ExtResource("3_4qfth")
-metadata/_custom_type_script = "uid://bay6lh0jv21oo"
-
 [node name="ClearMemoryCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=1671962794]
 unique_name_in_owner = true
 layout_mode = 2
@@ -91,23 +80,28 @@ text = "Clear memory cache"
 script = ExtResource("3_4qfth")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
+[node name="ClearFileMemoryCacheButton" type="Button" parent="TabContainer/General/VBoxContainer/HBoxContainer" unique_id=546088184]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Clear file + memory cache"
+script = ExtResource("3_4qfth")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
 [node name="DoCheckup" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=2113952229]
 layout_mode = 2
 focus_mode = 0
 text = "Create summary"
 script = ExtResource("2_e3bw5")
 
-[node name="UpdateDownloadedSongsFolder" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=1518767812]
+[node name="FixFileDesyncButton" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=673252696]
+unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
-text = "update downloaded song from folder"
-script = ExtResource("1_noev4")
-
-[node name="UpdateDownloadedSongsSongInfos" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=848123551]
-layout_mode = 2
-focus_mode = 0
-text = "update downloaded song from song infos"
-script = ExtResource("5_2oix8")
+text = "Fix file desync"
+script = ExtResource("3_4qfth")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 
 [node name="RemoveDuplicate" type="Button" parent="TabContainer/General/VBoxContainer" unique_id=119951918]
 layout_mode = 2
@@ -168,32 +162,28 @@ color = Color(0, 0, 0, 1)
 layout_mode = 2
 size_flags_vertical = 3
 text = "TODO:
+- change backup folder
+- faster thumbnail loading with smaller size thumbnail (for scrolling)
+-ajouter pending playlist aux songs qui se font télécharger pour direct les mettre dans une playlist après le dl (un peu fait)
 - autopause downloads when too many errors in a row
-- selection box visible quand on sort la souris par la droite (current playlist par exemple)
 - dynamic sizing of audio spectrum
-- update song infos of a selected song
+- add smth like \"--js-runtimes \"C:\\Users\\olivi\\AppData\\Roaming\\Godot\\app_userdata\\PPPlayer-(4.7)\"'
 - recycle bin
 - ctrl click on artist opens page
 - fix laggy logs
-- finish playlists
 - download errors: make ui to manage them
 - finish multiselection
 - recommandation (make it work at least)
-- when a queue exists, when pressing next song, skip the queue
 - when hovering songitem, if the title is too long, make it scroll
-- downloaded reload empeche la recherche
 - logs doivent follow que si on n'a pas scroll tout en bas
 - changer le level des logs a afficher dynamiquement
 - audio sprectrum parameters
 - display a song even if has no mp3 (same if has no song info)
-- finish queue
-- miniatures jpg ne sont pas affichées
 - multiselection selectionne toutes les musiques de meme id, probleme
 - add track number in windows overlay
 - make windows overlay deactivable
 - download progress hook
 - check \"#TODO\" in code
-- update info from youtube (by right click on song item)
 - fade in out
 - force order of certain songs
 - blindtest"

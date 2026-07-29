@@ -69,7 +69,7 @@ func do_checkup() -> void:
 				continue
 			if not dir.current_is_dir():
 				var extension = file_name.get_extension()
-				if extension in ["mp3", "ogg", "wav"]:
+				if extension in Global.SUPPORTED_EXTENSIONS:
 					#var full_path = Global.get_downloads_path() + file_name
 					#print("reload_song_list > fullpath ", full_path)
 					
@@ -94,7 +94,9 @@ func process_from_folder(id: String):
 		info.set("has_song_info", true)
 	else:
 		info.set("has_song_info", false)
+	
 	info.set("has_artist", true if song_info.get("artist", "") != "" else false)
+	
 	#info.set("has_artist", false)
 	info.set("has_display_name", true if song_info.get("display_name", "") != "" else false)
 	info.set("has_extension", true if song_info.get("extension", "") != "" else false)

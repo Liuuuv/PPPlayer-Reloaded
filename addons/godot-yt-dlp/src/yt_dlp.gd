@@ -1,7 +1,7 @@
 ## modified version of godot yt dlp.
 extends Node
 
-const max_character_error_output: int = 250
+const max_character_error_output: int = 300
 
 signal got_current_version
 signal setup_completed
@@ -322,7 +322,7 @@ class Download extends RefCounted:
 			#if not _no_download:
 			var file_path: String = (
 				"{destination}{file_name}.%(ext)s"
-				. format(
+				.format(
 					{
 						"destination": _destination,
 						"file_name": _file_name,
@@ -330,10 +330,10 @@ class Download extends RefCounted:
 				)
 			)
 			
-			if not _no_download:
-				## "-o" for defining the file output.
-				## "--no-continue" to forbid continuing a download. Essentially forcing the entier download.
-				options_and_arguments.append_array(["--no-continue", "-o", file_path])
+			#if not _no_download:
+			## "-o" for defining the file output.
+			## "--no-continue" to forbid continuing a download. Essentially forcing the entier download.
+			options_and_arguments.append_array(["--no-continue", "-o", file_path])
 			
 			
 			if _gather_infos:

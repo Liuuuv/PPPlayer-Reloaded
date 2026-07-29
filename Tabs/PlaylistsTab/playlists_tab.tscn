@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dhv41h24nlxce" path="res://Sprites/play_thumbnail.png" id="7_x2l70"]
 [ext_resource type="Texture2D" uid="uid://dmk6ea13d4sel" path="res://Sprites/ResetSmall.png" id="8_1q6vd"]
 [ext_resource type="Shader" uid="uid://7cr13mj6m7bf" path="res://Shaders/playing_song_bg.gdshader" id="8_s2514"]
+[ext_resource type="Texture2D" uid="uid://cgutd2sl81wxd" path="res://Sprites/Play.png" id="9_1q6vd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1q6vd"]
 
@@ -49,11 +50,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="PlaylistsListTab" type="Control" parent="TabContainer" unique_id=191207729]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_l738f")
@@ -232,7 +234,6 @@ horizontal_alignment = 1
 
 [node name="PlaylistContentTab" type="Control" parent="TabContainer" unique_id=735071853]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 script = ExtResource("5_w50fg")
 metadata/_tab_index = 1
@@ -260,6 +261,15 @@ metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("8_1q6vd")
+script = ExtResource("7_s2514")
+metadata/_custom_type_script = "uid://bay6lh0jv21oo"
+
+[node name="PlayButton" type="Button" parent="TabContainer/PlaylistContentTab/VBoxContainer/HBoxContainer" unique_id=1159246939]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("9_1q6vd")
+expand_icon = true
 script = ExtResource("7_s2514")
 metadata/_custom_type_script = "uid://bay6lh0jv21oo"
 

@@ -9,6 +9,10 @@ enum GridAlignment {LEFT, RIGHT, CENTER}
 
 @onready var initial_custom_minimum_size: Vector2 = custom_minimum_size
 
+@export_group("Misc")
+@export var reload_animation: bool = true
+var reload_tween: Tween
+
 @export_group("Scroll Focus")
 @export var can_grab_scroll_focus: bool = false
 @export var stretch_focus_duration: float = 0.1
@@ -88,6 +92,9 @@ func _ready() -> void:
 	if shader_bg:
 		shader_bg.hide()
 	
+	if reload_animation:
+		offset_transform_enabled = true
+	
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited_control)
 	
@@ -108,6 +115,19 @@ func _add_item(item: Variant, redraw: bool = true) -> void:
 	items_size += 1
 	if redraw:
 		queue_redraw()
+
+## The function you call when you want to reload the list. [br]
+## Override this for use cases like current playlist, downloaded list...
+func reload_list() -> void:
+	if reload_animation:
+		if reload_tween:
+			reload_tween.kill()
+		reload_tween = create_tween()
+		reload_tween.set_ease(Tween.EASE_IN_OUT)
+		reload_tween.set_trans(Tween.TRANS_CUBIC)
+		
+		offset_transform_position_ratio.y = 1.0
+		reload_tween.tween_property(self, "offset_transform_position_ratio:y", 0.0, 0.2)
 
 func clear_items() -> void:
 	items.clear()
